@@ -1,0 +1,16 @@
+name: D-n rule 자동화(일자마다 D-Day 감소)
+on:
+  schedule:
+    - cron: '0 15 * * *'
+permissions:
+  issues: write
+  pull-requests: write
+jobs:
+  dnrule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dnrule
+        uses: zxcv9203/dnRule@v1.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-repository: ${{ github.repository }}
