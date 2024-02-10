@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'com.google.cloud.tools.jib' version '3.4.0'
 }
 
 group = 'com.stumeet'
@@ -61,4 +62,17 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+jib {
+    from {
+        image = "eclipse-temurin:21"
+    }
+    to {
+        image = "tngtied/triplaner"
+        tags = ["latest"]
+    }
+    container {
+        jvmFlags = ["-Xms128m", "-Xmx128m"]
+    }
 }
