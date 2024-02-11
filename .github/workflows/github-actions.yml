@@ -3,7 +3,6 @@ name: CI/CD using github actions & docker
 
 # event trigger
 # main 브랜치에 push가 되었을 때 실행
-# test 용도: STMT-6-github-actions에 push 되었을 때 실행
 on:
   push:
     branches:
