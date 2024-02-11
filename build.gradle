@@ -69,8 +69,8 @@ jib {
         image = "eclipse-temurin:21"
     }
     to {
-        image = "tngtied/triplaner"
-        tags = ["latest"]
+        image = "stumeet/server"
+        tags = [version]
     }
     container {
         jvmFlags = ["-Xms128m", "-Xmx128m"]

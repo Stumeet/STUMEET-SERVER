@@ -2,7 +2,7 @@
 name: CI/CD using github actions & docker
 
 # event trigger
-# main이나 develop 브랜치에 push가 되었을 때 실행
+# main 브랜치에 push가 되었을 때 실행
 on:
   push:
     branches:
@@ -18,10 +18,10 @@ jobs:
 
       # JDK setting - github actions에서 사용할 JDK 설정
       - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 
       # gradle caching - 빌드 시간 향상
@@ -62,8 +62,9 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           port: ${{ secrets.AWS_SSH_PORT }}
           script: |
-            sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/stumeet
-            sudo docker run -it -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/stumeet
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
+            sudo docker stop stumeet-server
+            docker container prune -f
+            sudo docker run -it -d -p 8080:8080 --name stumeet-server ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker image prune -f
 
