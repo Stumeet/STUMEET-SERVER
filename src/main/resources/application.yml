@@ -1,0 +1,16 @@
+jwt:
+  issuer: "STUMEET"
+  secret: "c3R1bWVldC1zZXJ2ZXItand0LXNlY3JldC1rZXktZW5jb2Rl"
+  validate-time: 86400
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
