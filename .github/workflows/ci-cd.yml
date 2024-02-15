@@ -55,7 +55,8 @@ jobs:
           chmod +x gradlew 
           ./gradlew jib \
           -Djib.from.auth.username=${{ secrets.DOCKER_USERNAME }} \
-          -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} 
+          -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} \
+          -Dspring.profiles.active=prod
 
       ## deploy to production
       - name: Deploy to prod
