@@ -1,0 +1,29 @@
+version: '3.8'
+
+networks:
+  server-connection:
+    driver: bridge
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - server-connection
+    environment:
+      - TZ=Asia/Seoul
+    depends_on:
+      - stumeet-server
+
+  stumeet-server:
+    container_name: stumeet-server
+    image: stumeet/server
+    restart: always
+    expose:
+      - '8080'
+    networks:
+      - server-connection
