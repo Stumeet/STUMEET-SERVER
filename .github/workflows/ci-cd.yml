@@ -27,7 +27,6 @@ jobs:
       - name: set environment variables
         working-directory: ./
         run: |
-          pwd
           touch src/main/resources/application-secret.properties
           echo ${{ secrets.ENV }} >> src/main/resources/application-secret.properties
 
