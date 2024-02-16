@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: application-secret.properties
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
+    username: ${DEV_DB_USER}
+    password: ${DEV_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret: ${JWT_SECRET}
+  validate-time: ${ACCESS_TOKEN_EXPIRED_TIME}
