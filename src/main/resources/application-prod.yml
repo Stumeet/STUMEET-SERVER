@@ -23,9 +23,3 @@ jwt:
   issuer: ${JWT_ISSUER}
   secret: ${JWT_SECRET}
   validate-time: ${ACCESS_TOKEN_EXPIRED_TIME}
-
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
