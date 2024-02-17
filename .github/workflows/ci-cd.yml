@@ -24,6 +24,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Set environment variables
+        working-directory: ./
+        run: |
+          touch src/main/resources/application-secret.properties
+          echo ${{ secrets.ENV }} >> src/main/resources/application-secret.properties
+          
       # gradle caching - 빌드 시간 향상
       - name: Gradle Caching
         uses: actions/cache@v3
