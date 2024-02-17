@@ -4,7 +4,7 @@ name: CI/CD using github actions & docker
 # event trigger
 on:
   push:
-    branches: [ "dev", "main" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -61,7 +61,7 @@ jobs:
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
         id: deploy-prod
-        if: contains(github.ref, 'main') || contains(github.ref, 'dev')
+        if: contains(github.ref, 'main')
         with:
           host: ${{ secrets.AWS_PUBLIC_IP }}
           username: ${{ secrets.AWS_USER }}
