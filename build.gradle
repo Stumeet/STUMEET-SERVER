@@ -88,5 +88,8 @@ jib {
     }
     container {
         jvmFlags = ["-Xms128m", "-Xmx128m"]
+        environment = [
+            'SPRING_PROFILES_ACTIVE': 'prod'
+        ]
     }
 }
