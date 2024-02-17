@@ -71,5 +71,5 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
             sudo docker stop stumeet-server
             docker container prune -f
-            sudo docker-compose up -d --no-deps --force-recreate server
+            sudo docker-compose up -d --no-deps --force-recreate stumeet-server
             sudo docker image prune -f
