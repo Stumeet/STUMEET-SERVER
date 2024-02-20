@@ -5,6 +5,7 @@ import com.stumeet.server.common.auth.token.StumeetAuthenticationToken;
 import com.stumeet.server.common.client.oauth.OAuthClient;
 import com.stumeet.server.common.client.oauth.model.OAuthUserProfileResponse;
 import com.stumeet.server.common.token.JwtTokenProvider;
+import com.stumeet.server.common.token.service.RefreshTokenService;
 import com.stumeet.server.member.application.port.in.MemberOAuthUseCase;
 import com.stumeet.server.member.domain.Member;
 import feign.FeignException;
@@ -22,6 +23,8 @@ public class OAuthAuthenticationProvider implements AuthenticationProvider {
     private final OAuthClient oAuthClient;
     private final MemberOAuthUseCase memberOAuthUseCase;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenService refreshTokenService;
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -34,12 +37,14 @@ public class OAuthAuthenticationProvider implements AuthenticationProvider {
             Member member = memberOAuthUseCase.getMemberOrCreate(myProfile, provider);
             LoginMember loginMember = new LoginMember(member);
 
-            String accessToken = jwtTokenProvider.generateToken(loginMember);
+            String accessToken = jwtTokenProvider.generateAccessToken(loginMember);
+            String refreshToken = jwtTokenProvider.generateRefreshToken();
+            refreshTokenService.save(accessToken, refreshToken);
 
-            // TODO refresh token 생성 필요
-            return StumeetAuthenticationToken.createAuthenticationOAuthToken(
+            return StumeetAuthenticationToken.authenticateOAuth(
                     loginMember.getAuthorities(),
                     accessToken,
+                    refreshToken,
                     provider,
                     loginMember
             );
