@@ -1,4 +1,4 @@
-package com.stumeet.server.common.exception.error;
+package com.stumeet.server.common.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package com.stumeet.server.common.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stumeet.server.common.exception.error.Error;
-import com.stumeet.server.common.exception.error.ErrorCode;
+import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.exception.error.ErrorField;
 import java.util.List;
 import org.springframework.validation.BindingResult;

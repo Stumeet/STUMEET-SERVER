@@ -1,8 +1,8 @@
 package com.stumeet.server.common.exception.handler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.stumeet.server.common.exception.BusinessException;
-import com.stumeet.server.common.exception.error.ErrorCode;
+import com.stumeet.server.common.exception.model.BusinessException;
+import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
