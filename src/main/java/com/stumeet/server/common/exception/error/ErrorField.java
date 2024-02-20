@@ -12,7 +12,7 @@ public class ErrorField extends Error {
         this.code = code;
     }
 
-    public static List<Error> of(BindingResult bindingResult) {
+    public static List<Error> toErrors(BindingResult bindingResult) {
         return bindingResult.getAllErrors().stream()
                 .map(error ->
                         new ErrorField(
