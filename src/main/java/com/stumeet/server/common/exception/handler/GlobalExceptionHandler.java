@@ -3,7 +3,7 @@ package com.stumeet.server.common.exception.handler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.stumeet.server.common.exception.BusinessException;
 import com.stumeet.server.common.exception.error.ErrorCode;
-import com.stumeet.server.common.exception.error.ErrorResponse;
+import com.stumeet.server.common.model.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,51 +20,59 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class GlobalExceptionHandler {
 
     private static final String ERROR_LOG_MESSAGE = "[ERROR] {} : {}";
+    private static final String WARN_LOG_MESSAGE = "[WARN] {} : {}";
 
     @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
-        log.error(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+    protected ResponseEntity<ApiResponse> handleBusinessException(final BusinessException e) {
+        log.warn(WARN_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+        log.debug(e.getMessage(), e);
 
         ErrorCode errorCode = e.getErrorCode();
-        ErrorResponse response = ErrorResponse.of(errorCode);
+        ApiResponse response = ApiResponse.fail(errorCode);
 
-        return new ResponseEntity<>(response, errorCode.getHttpStatus());
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(response);
     }
 
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ErrorResponse> handleException(final Exception e) {
+    protected ResponseEntity<ApiResponse> handleException(final Exception e) {
         log.error(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+        log.debug(e.getMessage(), e);
 
-        ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
+        ApiResponse response = ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR);
 
-        return ResponseEntity.internalServerError().body(response);
+        return ResponseEntity.internalServerError()
+                .body(response);
     }
 
     @ExceptionHandler(BindException.class)
-    protected ResponseEntity<ErrorResponse> handleBindException(final BindException e) {
+    protected ResponseEntity<ApiResponse> handleBindException(final BindException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(ErrorCode.BIND_EXCEPTION, e);
+        ApiResponse response = ApiResponse.fail(ErrorCode.BIND_EXCEPTION, e);
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest()
+                .body(response);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+    protected ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(ErrorCode.METHOD_ARGUMENT_NOT_VALID_EXCEPTION, e);
+        ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_NOT_VALID_EXCEPTION, e);
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest()
+                .body(response);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
+    protected ResponseEntity<ApiResponse> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION);
+        ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION);
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest()
+                .body(response);
     }
 
     @ExceptionHandler({
@@ -73,12 +81,13 @@ public class GlobalExceptionHandler {
             ServletRequestBindingException.class,
             MissingServletRequestParameterException.class
     })
-    protected ResponseEntity<ErrorResponse> handleInvalidFormatException(final Exception e) {
+    protected ResponseEntity<ApiResponse> handleInvalidFormatException(final Exception e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_FORMAT_EXCEPTION);
+        ApiResponse response = ApiResponse.fail(ErrorCode.INVALID_FORMAT_EXCEPTION);
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest()
+                .body(response);
     }
 }
 
