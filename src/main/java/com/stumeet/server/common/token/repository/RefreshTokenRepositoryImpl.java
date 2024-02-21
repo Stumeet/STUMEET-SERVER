@@ -16,4 +16,22 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
         redisTemplate.opsForValue()
                 .set(accessToken, refreshToken);
     }
+
+    @Override
+    public String getByAccessToken(String accessToken) {
+        String refreshToken = redisTemplate.opsForValue().get(accessToken);
+        if (refreshToken == null) {
+            throw new IllegalArgumentException("전달받은 Access Token과 매칭되는 Refresh Token이 존재하지 않습니다.");
+        }
+
+        return refreshToken;
+    }
+
+    @Override
+    public void deleteByAccessToken(String accessToken) {
+        boolean isDeleted = Boolean.TRUE.equals(redisTemplate.delete(accessToken));
+        if (!isDeleted) {
+            throw new IllegalArgumentException("전달받은 Access Token과 매칭되는 Refresh Token이 존재하지 않습니다.");
+        }
+    }
 }

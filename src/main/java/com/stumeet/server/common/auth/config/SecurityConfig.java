@@ -54,6 +54,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers("/api/v1/oauth").permitAll();
+            auth.requestMatchers("/api/v1/tokens").permitAll();
             auth.requestMatchers("/h2-console/**").permitAll();
             auth.requestMatchers("/api/v1/signup").hasAnyAuthority("FIRST_LOGIN");
             auth.anyRequest().authenticated();
