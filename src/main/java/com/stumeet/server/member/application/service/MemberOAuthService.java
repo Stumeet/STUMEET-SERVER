@@ -30,8 +30,6 @@ public class MemberOAuthService implements MemberOAuthUseCase {
         } else {
             member = memberCommandPort.save(
                     Member.builder()
-                            .name(response.name())
-                            .image(response.imageUrl())
                             .sugarContents(0.0)
                             .authType(AuthType.OAUTH)
                             .role(UserRole.FIRST_LOGIN)

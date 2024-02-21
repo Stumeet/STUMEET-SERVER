@@ -15,15 +15,12 @@ public class KakaoOAuthClient implements OAuthClient {
 
     @Override
     public OAuthUserProfileResponse getMyProfile(String accessToken) {
-        String propertyKey = "property_keys=[\"kakao_account.profile\"]";
-        ResponseEntity<KakaoUserProfileResponse> response = kakaoOAuthClient.getMyProfile(accessToken, propertyKey);
+        ResponseEntity<KakaoUserProfileResponse> response = kakaoOAuthClient.getUserId(accessToken);
 
         KakaoUserProfileResponse responseBody = response.getBody();
 
         return new OAuthUserProfileResponse(
-                responseBody.id(),
-                responseBody.kakaoAccount().profile().nickname(),
-                responseBody.kakaoAccount().profile().thumbnailImageUrl()
+                responseBody.id()
         );
     }
 }
