@@ -22,11 +22,11 @@ public class MemberJpaEntity extends BaseTimeEntity {
     @Comment("멤버 아이디")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     @Comment("멤버 이름")
     private String name;
 
-    @Column(name = "image", nullable = false)
+    @Column(name = "image")
     @Comment("멤버 이미지 URL")
     private String image;
 
