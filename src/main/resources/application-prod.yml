@@ -11,6 +11,10 @@ spring:
     url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
     username: ${DEV_DB_USER}
     password: ${DEV_DB_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_URL}
+      port: ${REDIS_PORT}
   jpa:
     hibernate:
       ddl-auto: validate

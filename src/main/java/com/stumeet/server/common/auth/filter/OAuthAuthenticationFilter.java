@@ -34,7 +34,7 @@ public class OAuthAuthenticationFilter extends AbstractAuthenticationProcessingF
 
         checkAuthorizationInfo(accessToken, provider);
 
-        return getAuthenticationManager().authenticate(StumeetAuthenticationToken.createUnAuthenticationToken(accessToken, provider));
+        return getAuthenticationManager().authenticate(StumeetAuthenticationToken.unAuthenticate(accessToken, provider));
     }
 
 

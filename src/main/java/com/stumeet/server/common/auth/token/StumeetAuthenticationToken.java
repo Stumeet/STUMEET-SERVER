@@ -11,26 +11,45 @@ import java.util.Objects;
 public class StumeetAuthenticationToken extends AbstractAuthenticationToken {
     private final LoginMember principal;
     private final String accessToken;
+    private final String refreshToken;
     private final String provider;
 
-    private StumeetAuthenticationToken(Collection<? extends GrantedAuthority> authorities, String accessToken, String provider, LoginMember principal, boolean isAuthenticated) {
+    private StumeetAuthenticationToken(
+            Collection<? extends GrantedAuthority> authorities,
+            String accessToken,
+            String refreshToken,
+            String provider,
+            LoginMember principal,
+            boolean isAuthenticated
+    ) {
         super(authorities);
         this.principal = principal;
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.provider = provider;
         super.setAuthenticated(isAuthenticated);
     }
 
-    public static StumeetAuthenticationToken createUnAuthenticationToken(String accessToken, String provider) {
-        return new StumeetAuthenticationToken(List.of(), accessToken, provider, null, false);
+    public static StumeetAuthenticationToken unAuthenticate(String accessToken, String provider) {
+        return new StumeetAuthenticationToken(List.of(), accessToken, null, provider, null, false);
     }
 
-    public static StumeetAuthenticationToken createAuthenticationOAuthToken(Collection<? extends GrantedAuthority> authorities, String accessToken, String provider, LoginMember principal) {
-        return new StumeetAuthenticationToken(authorities, accessToken, provider, principal, true);
+    public static StumeetAuthenticationToken authenticateOAuth(
+            Collection<? extends GrantedAuthority> authorities,
+            String accessToken,
+            String refreshToken,
+            String provider,
+            LoginMember principal
+    ) {
+        return new StumeetAuthenticationToken(authorities, accessToken, refreshToken, provider, principal, true);
     }
 
-    public static StumeetAuthenticationToken createAuthenticationJwtToken(Collection<? extends GrantedAuthority> authorities, String accessToken, LoginMember principal) {
-        return new StumeetAuthenticationToken(authorities, accessToken, null, principal, true);
+    public static StumeetAuthenticationToken createAuthenticationJwtToken(
+            Collection<? extends GrantedAuthority> authorities,
+            String accessToken,
+            LoginMember principal
+    ) {
+        return new StumeetAuthenticationToken(authorities, accessToken, null, null, principal, true);
     }
 
     @Override
@@ -45,6 +64,10 @@ public class StumeetAuthenticationToken extends AbstractAuthenticationToken {
 
     public String getProvider() {
         return provider;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     @Override

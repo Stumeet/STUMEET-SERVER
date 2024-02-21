@@ -33,7 +33,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
         ApiResponse<OAuthLoginResponse> apiResponse = ApiResponse.success(
                 HttpStatus.OK.value(),
                 "OAuth 인증에 성공했습니다.",
-                new OAuthLoginResponse(token.getCredentials(), isFirstLogin)
+                new OAuthLoginResponse(token.getCredentials(), token.getRefreshToken(), isFirstLogin)
         );
 
         response.setContentType("application/json;charset=UTF-8");

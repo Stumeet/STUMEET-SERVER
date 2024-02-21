@@ -42,7 +42,7 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(LoginMember member) {
+    public String generateAccessToken(LoginMember member) {
         String authorities = member.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -56,7 +56,15 @@ public class JwtTokenProvider {
                 .signWith(secretKey)
                 .expiration(validityTime)
                 .compact();
+    }
 
+    public String generateRefreshToken() {
+        return Jwts.builder()
+                .issuer(issuer)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3))
+                .signWith(secretKey)
+                .compact();
     }
 
     public boolean validateToken(String token) {
