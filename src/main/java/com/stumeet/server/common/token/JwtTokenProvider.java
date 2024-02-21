@@ -87,4 +87,10 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload();
     }
+
+    public String getSubject(String token) {
+        return getClaims(token)
+                .getSubject();
+    }
+
 }
