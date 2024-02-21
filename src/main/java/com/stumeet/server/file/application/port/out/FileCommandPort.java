@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.stumeet.server.file.domain.FileUrl;
-
 public interface FileCommandPort {
 	FileUrl uploadImageFile(MultipartFile multipartFile, String directoryPath);
 

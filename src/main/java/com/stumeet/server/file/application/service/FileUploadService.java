@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.file.application.port.in.FileUploadUseCase;
 import com.stumeet.server.file.application.port.out.FileCommandPort;
-import com.stumeet.server.file.domain.FileUrl;
+import com.stumeet.server.file.application.port.out.FileUrl;
 
 import lombok.RequiredArgsConstructor;
 
