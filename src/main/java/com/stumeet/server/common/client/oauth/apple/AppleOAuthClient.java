@@ -3,6 +3,7 @@ package com.stumeet.server.common.client.oauth.apple;
 import com.stumeet.server.common.client.oauth.OAuthClient;
 import com.stumeet.server.common.client.oauth.apple.model.ApplePublicKeyResponses;
 import com.stumeet.server.common.client.oauth.model.OAuthUserProfileResponse;
+import com.stumeet.server.common.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,9 @@ public class AppleOAuthClient implements OAuthClient {
     @Override
     public OAuthUserProfileResponse getUserId(String accessToken) {
         ApplePublicKeyResponses publicKeys = appleOAuthClient.getPublicKeys();
-        PublicKey publicKey = appleIdTokenProvider.getSecretKey(publicKeys, accessToken);
-        String id = appleIdTokenProvider.extractUserId(publicKey, accessToken);
+        String parseAccessToken = JwtUtil.resolveToken(accessToken);
+        PublicKey publicKey = appleIdTokenProvider.getSecretKey(publicKeys, parseAccessToken);
+        String id = appleIdTokenProvider.extractUserId(publicKey, parseAccessToken);
 
         return new OAuthUserProfileResponse(id);
     }
