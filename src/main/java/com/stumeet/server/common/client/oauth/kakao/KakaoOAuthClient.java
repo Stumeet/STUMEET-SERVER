@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component(value = "kakao")
 @RequiredArgsConstructor
 public class KakaoOAuthClient implements OAuthClient {
 
     private final KakaoOAuthFeignClient kakaoOAuthClient;
 
     @Override
-    public OAuthUserProfileResponse getMyProfile(String accessToken) {
+    public OAuthUserProfileResponse getUserId(String accessToken) {
         ResponseEntity<KakaoUserProfileResponse> response = kakaoOAuthClient.getUserId(accessToken);
 
         KakaoUserProfileResponse responseBody = response.getBody();

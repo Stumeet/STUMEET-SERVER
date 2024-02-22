@@ -3,6 +3,7 @@ package com.stumeet.server.common.auth.filter;
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.common.auth.service.JwtAuthenticationService;
 import com.stumeet.server.common.token.JwtTokenProvider;
+import com.stumeet.server.common.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         SecurityContext context = SecurityContextHolder.getContext();
         if (context.getAuthentication() == null) {
-            String token = resolveToken(request.getHeader(AuthenticationHeader.ACCESS_TOKEN.getName()));
+            String token = JwtUtil.resolveToken(request.getHeader(AuthenticationHeader.ACCESS_TOKEN.getName()));
 
             if (jwtTokenProvider.validateToken(token)) {
                 Authentication auth = jwtAuthenticationService.getAuthentication(token);
@@ -38,10 +39,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String resolveToken(String token) {
-        if (token != null && token.startsWith("Bearer ")) {
-            return token.substring(7);
-        }
-        return null;
-    }
 }
