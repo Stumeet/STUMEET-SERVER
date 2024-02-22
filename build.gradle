@@ -49,6 +49,9 @@ dependencies {
     implementation 'org.flywaydb:flyway-mysql'
     implementation 'org.flywaydb:flyway-core'
 
+    implementation(platform("software.amazon.awssdk:bom:2.21.1"))
+    implementation 'software.amazon.awssdk:s3'
+
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
