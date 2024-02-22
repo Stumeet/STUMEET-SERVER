@@ -1,7 +1,9 @@
 package com.stumeet.server.common.client.oauth.apple;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stumeet.server.common.client.oauth.apple.model.ApplePublicKeyResponses;
 import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -13,13 +15,12 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 
 @Component
+@RequiredArgsConstructor
 public class AppleIdTokenProvider {
+    private final ObjectMapper objectMapper;
+
     public PublicKey getSecretKey(ApplePublicKeyResponses publicKeys, String accessToken) {
-        String kid = Jwts.parser()
-                .build()
-                .parseSignedClaims(accessToken)
-                .getHeader()
-                .getKeyId();
+        String kid = extractKid(accessToken);
 
         ApplePublicKeyResponses.ApplePublicKeyResponse applePublicKey = publicKeys.keys().stream()
                 .filter(key -> key.kid().equals(kid))
@@ -34,9 +35,17 @@ public class AppleIdTokenProvider {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
             return keyFactory.generatePublic(keySpec);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
+        }
+    }
+
+    private String extractKid(String accessToken) {
+        String[] splitToken = accessToken.split("\\.");
+        String header = new String(Base64.getUrlDecoder().decode(splitToken[0]));
+        try {
+            return objectMapper.readTree(header).get("kid").asText();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
