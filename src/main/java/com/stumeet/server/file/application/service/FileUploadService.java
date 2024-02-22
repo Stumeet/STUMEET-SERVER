@@ -15,8 +15,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FileUploadService implements FileUploadUseCase {
 
-	private final static String USER_PROFILE_IMAGE_DIRECTORY_PATH = "/user/%d/profile";
-	private final static String STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH = "/study/%d/activity";
+	private final static String USER_PROFILE_IMAGE_DIRECTORY_PATH = "user/%d/profile";
+	private final static String STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH = "study/%d/activity";
+
 	private final FileCommandPort fileCommandPort;
 
 	@Override
