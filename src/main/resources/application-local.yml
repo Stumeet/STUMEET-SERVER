@@ -14,11 +14,21 @@ spring:
       port: 6379
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+  cloud:
+    config:
+      server:
+        awss3:
+          region: ${S3_REGION}
+          bucket: ${S3_BUCKET_NAME}
+          endpoint: ${S3_ENDPOINT}
+          credentials:
+            access-key: ${S3_ACCESS_KEY}
+            secret-key: ${S3_SECRET_KEY}
 
 jwt:
   issuer: ${JWT_ISSUER}
