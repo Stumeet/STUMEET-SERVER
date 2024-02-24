@@ -1,5 +1,6 @@
 package com.stumeet.server.member.domain;
 
+import com.stumeet.server.file.application.port.out.FileUrl;
 import com.stumeet.server.member.application.port.in.MemberSignupCommand;
 import lombok.*;
 
@@ -23,7 +24,9 @@ public class Member {
 
     private UserRole role;
 
-    public void registerWithAdditionalDetails(MemberSignupCommand request) {
+    public void registerWithAdditionalDetails(MemberSignupCommand request, FileUrl profileImage) {
+        this.image = profileImage.url();
+        this.name = request.nickname();
         this.region = request.region();
         this.profession = request.profession();
         this.role = UserRole.MEMBER;

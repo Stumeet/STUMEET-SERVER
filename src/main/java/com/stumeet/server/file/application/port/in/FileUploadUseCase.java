@@ -7,7 +7,7 @@ import com.stumeet.server.file.application.port.out.FileUrl;
 
 	public interface FileUploadUseCase {
 
-	FileUrl uploadUserProfileImage(int userId, MultipartFile multipartFile);
+	FileUrl uploadUserProfileImage(Long userId, MultipartFile multipartFile);
 
-	FileUrl uploadStudyActivityImage(int studyId, List<MultipartFile> multipartFile);
+	FileUrl uploadStudyActivityImage(Long studyId, List<MultipartFile> multipartFile);
 }
