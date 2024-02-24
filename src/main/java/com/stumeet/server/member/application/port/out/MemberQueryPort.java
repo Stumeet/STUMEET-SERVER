@@ -8,4 +8,6 @@ public interface MemberQueryPort {
 
     Member getById(Long id);
 
+    boolean isDuplicateNickname(String name);
+
 }
