@@ -1,12 +1,11 @@
 package com.stumeet.server.member.adapter.in.web;
 
 import com.stumeet.server.common.annotation.WebAdapter;
-import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.member.adapter.in.web.response.TokenResponse;
-import com.stumeet.server.member.application.port.in.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.MemberAuthUseCase;
+import com.stumeet.server.member.application.port.in.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.TokenRenewCommand;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @WebAdapter
@@ -28,7 +26,7 @@ public class MemberAuthApi {
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Void>> signup(
             @AuthenticationPrincipal LoginMember loginMember,
-            @RequestBody @Valid MemberSignupCommand request
+            @Valid MemberSignupCommand request
     ) {
         memberAuthUseCase.signup(loginMember.getMember(), request);
 
