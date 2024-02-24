@@ -3,6 +3,8 @@ package com.stumeet.server.common.auth.config;
 import com.stumeet.server.common.auth.filter.JwtAuthenticationFilter;
 import com.stumeet.server.common.auth.filter.OAuthAuthenticationFilter;
 import com.stumeet.server.common.auth.handler.InvalidAuthenticationFailureHandler;
+import com.stumeet.server.common.auth.handler.JwtLogoutHandler;
+import com.stumeet.server.common.auth.handler.JwtLogoutSuccessHandler;
 import com.stumeet.server.common.auth.handler.OAuthAuthenticationSuccessHandler;
 import com.stumeet.server.common.auth.service.JwtAuthenticationService;
 import com.stumeet.server.common.auth.service.OAuthAuthenticationProvider;
@@ -10,6 +12,7 @@ import com.stumeet.server.common.token.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,6 +24,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @RequiredArgsConstructor
@@ -34,6 +38,8 @@ public class SecurityConfig {
     private final OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final AccessDeniedHandler accessDeniedHandler;
+    private final JwtLogoutHandler jwtLogoutHandler;
+    private final JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,6 +57,12 @@ public class SecurityConfig {
 
         http.addFilterBefore(new OAuthAuthenticationFilter(invalidAuthenticationFailureHandler, authenticationManager, oAuthAuthenticationSuccessHandler), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, jwtAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+
+        http.logout(logout -> {
+            logout.addLogoutHandler(jwtLogoutHandler);
+            logout.logoutSuccessHandler(jwtLogoutSuccessHandler);
+            logout.logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/logout", HttpMethod.POST.name()));
+        });
 
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers("/api/v1/oauth").permitAll();
