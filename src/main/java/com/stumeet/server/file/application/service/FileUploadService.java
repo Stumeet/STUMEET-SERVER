@@ -15,20 +15,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FileUploadService implements FileUploadUseCase {
 
-	private final static String USER_PROFILE_IMAGE_DIRECTORY_PATH = "user/%d/profile";
-	private final static String STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH = "study/%d/activity";
+	private static final String USER_PROFILE_IMAGE_DIRECTORY_PATH = "user/%d/profile";
+	private static final String STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH = "study/%d/activity";
 
 	private final FileCommandPort fileCommandPort;
 
 	@Override
-	public FileUrl uploadUserProfileImage(int userId, MultipartFile multipartFile) {
+	public FileUrl uploadUserProfileImage(Long userId, MultipartFile multipartFile) {
 		String path = String.format(USER_PROFILE_IMAGE_DIRECTORY_PATH, userId);
 
 		return fileCommandPort.uploadImageFile(multipartFile, path);
 	}
 
 	@Override
-	public FileUrl uploadStudyActivityImage(int studyId, List<MultipartFile> multipartFiles) {
+	public FileUrl uploadStudyActivityImage(Long studyId, List<MultipartFile> multipartFiles) {
 		String path = String.format(STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH, studyId);
 
 		return fileCommandPort.uploadImageFiles(multipartFiles, path);
