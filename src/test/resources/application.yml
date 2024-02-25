@@ -1,0 +1,42 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+    import: application-secret.properties
+  datasource:
+    url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
+    username: sa
+    password:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  cloud:
+    config:
+      server:
+        awss3:
+          region: ${S3_REGION}
+          bucket: ${S3_BUCKET_NAME}
+          endpoint: ${S3_ENDPOINT}
+          credentials:
+            access-key: ${S3_ACCESS_KEY}
+            secret-key: ${S3_SECRET_KEY}
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret: ${JWT_SECRET}
+  validate-time: ${ACCESS_TOKEN_EXPIRED_TIME}
+
+oauth:
+  client:
+    apple:
+      url: http://localhost:8089
+    kakao:
+      url: http://localhost:8089
