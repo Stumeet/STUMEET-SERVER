@@ -37,3 +37,10 @@ jwt:
   issuer: ${JWT_ISSUER}
   secret: ${JWT_SECRET}
   validate-time: ${ACCESS_TOKEN_EXPIRED_TIME}
+
+oauth:
+  client:
+    apple:
+      url: https://appleid.apple.com
+    kakao:
+      url: https://kapi.kakao.com
