@@ -37,3 +37,5 @@ out/
 .vscode/
 
 application-secret.properties
+
+src/main/resources/static/docs/index.html

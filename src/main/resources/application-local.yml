@@ -35,8 +35,9 @@ jwt:
   secret: ${JWT_SECRET}
   validate-time: ${ACCESS_TOKEN_EXPIRED_TIME}
 
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
+oauth:
+  client:
+    apple:
+      url: https://appleid.apple.com
+    kakao:
+      url: https://kapi.kakao.com

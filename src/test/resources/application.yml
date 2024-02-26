@@ -1,27 +1,23 @@
-server:
-  port: 8080
-
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: test
     import: application-secret.properties
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
-    username: ${DEV_DB_USER}
-    password: ${DEV_DB_PASSWORD}
+    url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
+    username: sa
+    password:
   data:
     redis:
-      host: ${REDIS_URL}
-      port: ${REDIS_PORT}
+      host: localhost
+      port: 6379
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
   cloud:
     config:
       server:
@@ -41,6 +37,6 @@ jwt:
 oauth:
   client:
     apple:
-      url: https://appleid.apple.com
+      url: http://localhost:8089
     kakao:
-      url: https://kapi.kakao.com
+      url: http://localhost:8089

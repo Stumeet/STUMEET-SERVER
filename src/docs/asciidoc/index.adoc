@@ -1,0 +1,22 @@
+:toc-title: Stumeet API
+:toc: left
+:toclevels: 2
+:sectnums:
+:hardbreaks:
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+
+= 회원 API
+
+== 소셜 로그인
+
+=== POST /api/v1/oauth
+
+.Request
+include::{snippets}/social_login/success/http-request.adoc[]
+include::{snippets}/social_login/success/request-headers.adoc[]
+
+.Response
+include::{snippets}/social_login/success/response-body.adoc[]
+include::{snippets}/social_login/success/response-fields.adoc[]
