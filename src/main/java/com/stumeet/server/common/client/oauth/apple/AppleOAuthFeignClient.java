@@ -4,7 +4,7 @@ import com.stumeet.server.common.client.oauth.apple.model.ApplePublicKeyResponse
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "appleOAuthClient", url = "https://appleid.apple.com")
+@FeignClient(name = "appleOAuthClient", url = "${oauth.client.apple.url}")
 public interface AppleOAuthFeignClient {
 
     @GetMapping("/auth/keys")
