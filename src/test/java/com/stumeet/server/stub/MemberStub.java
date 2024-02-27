@@ -13,4 +13,12 @@ public class MemberStub {
     public static String getKakaoAccessToken() {
         return "rjdizj7Ae09H0oWlW46Oll9_x7AhzaJkp1gKKwzTAAABjd_1h0EhI_W2iN1234";
     }
+
+    public static String getInvalidKakaoAccessToken() {
+        return "invalidToken";
+    }
+
+    public static String getInvalidKakaoAccessTokenInfo() {
+        return "{\"msg\":\"this access token does not exist\",\"code\":-401}";
+    }
 }
