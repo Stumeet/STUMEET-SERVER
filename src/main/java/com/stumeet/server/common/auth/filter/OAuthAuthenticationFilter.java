@@ -40,7 +40,7 @@ public class OAuthAuthenticationFilter extends AbstractAuthenticationProcessingF
 
     private void checkAuthorizationInfo(String accessToken, String provider) {
         if (accessToken == null || provider == null) {
-            throw new BadCredentialsException("잘못된 인증 정보가 전달되었습니다. 확인해주세요");
+            throw new BadCredentialsException("인증정보가 존재하지 않습니다.");
         }
     }
 }

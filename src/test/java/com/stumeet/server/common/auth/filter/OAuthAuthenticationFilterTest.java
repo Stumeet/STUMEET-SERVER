@@ -34,9 +34,9 @@ class OAuthAuthenticationFilterTest extends ApiTest {
         private final String path = "/api/v1/oauth";
 
         @Test
-        @DisplayName("[성공] 소셜 로그인(카카오) 성공")
+        @DisplayName("[성공] 소셜 로그인(카카오)에 성공합니다.")
         void successKakaoTest() throws Exception {
-            mockKakaoTokenInfoApi();
+            mockSuccessKakaoTokenInfoApi();
 
             mockMvc.perform(post(path)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), MemberStub.getKakaoAccessToken())
@@ -60,7 +60,59 @@ class OAuthAuthenticationFilterTest extends ApiTest {
                     );
         }
 
-        private void mockKakaoTokenInfoApi() {
+        @Test
+        @DisplayName("[실패] 잘못된 토큰을 전달하는 경우 인증이 실패합니다.")
+        void invalidAccessTokenTest() throws Exception {
+            mockFailKakaoTokenInfoApi();
+
+            mockMvc.perform(post(path)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), MemberStub.getKakaoAccessToken())
+                            .header(AuthenticationHeader.X_OAUTH_PROVIDER.getName(), OAuthProvider.KAKAO.getProvider()))
+                    .andExpect(status().isUnauthorized())
+                    .andDo(document("social_login/fail/invalid-token",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestHeaders(
+                                            headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("OAuth Provider로 부터 전달받은 토큰"),
+                                            headerWithName(AuthenticationHeader.X_OAUTH_PROVIDER.getName()).description("OAuth Provider 이름")
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                            fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                                    )
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("[실패] 인증 정보를 헤더에 포함하지 않는 경우 인증에 실패합니다.")
+        void notExistHeaderTest() throws Exception {
+            mockMvc.perform(post(path))
+                    .andExpect(status().isUnauthorized())
+                    .andDo(document("social_login/fail/not-exist-header",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    responseFields(
+                                            fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                            fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                                    )
+                            )
+                    );
+        }
+
+        private void mockFailKakaoTokenInfoApi() {
+            stubFor(
+                    WireMock.get(WireMock.urlEqualTo("/v1/user/access_token_info"))
+                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(MemberStub.getInvalidKakaoAccessToken()))
+                            .willReturn(aResponse()
+                                    .withStatus(HttpStatus.UNAUTHORIZED.value())
+                                    .withHeader("content-type", APPLICATION_JSON)
+                                    .withBody(MemberStub.getInvalidKakaoAccessTokenInfo())
+                            )
+            );
+        }
+
+        private void mockSuccessKakaoTokenInfoApi() {
             stubFor(
                     WireMock.get(WireMock.urlEqualTo("/v1/user/access_token_info"))
                             .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(MemberStub.getKakaoAccessToken()))
