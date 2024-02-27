@@ -116,7 +116,7 @@ jib {
         paths {
             path {
                 from = "build/docs/asciidoc"
-                into = "/app/main/resources/static/docs"
+                into = "/app/resources/static/docs"
             }
         }
     }
