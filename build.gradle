@@ -32,9 +32,8 @@ dependencies {
     // jwt 의존성 추가
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-    testImplementation 'org.testcontainers:mysql'
+    testImplementation "org.testcontainers:junit-jupiter"
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
@@ -95,6 +94,10 @@ tasks.register('copyDocs', Copy) {
     into 'src/main/resources/static/docs'
 }
 
+tasks.named('jib') {
+    dependsOn(asciidoctor)
+}
+
 jib {
     from {
         image = "eclipse-temurin:21"
@@ -106,7 +109,15 @@ jib {
     container {
         jvmFlags = ["-Xms128m", "-Xmx128m"]
         environment = [
-            'SPRING_PROFILES_ACTIVE': 'prod'
+                'SPRING_PROFILES_ACTIVE': 'prod'
         ]
+    }
+    extraDirectories {
+        paths {
+            path {
+                from = "build/docs/asciidoc"
+                into = "/app/main/resources/static/docs"
+            }
+        }
     }
 }
