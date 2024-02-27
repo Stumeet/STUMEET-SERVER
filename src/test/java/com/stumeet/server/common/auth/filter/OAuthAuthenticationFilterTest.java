@@ -6,11 +6,9 @@ import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.member.domain.OAuthProvider;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.template.ApiTest;
-import com.stumeet.server.template.RedisTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +25,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WireMockTest(httpPort = 8089)
-@Import(RedisTestConfig.class)
 @Transactional
 class OAuthAuthenticationFilterTest extends ApiTest {
 
