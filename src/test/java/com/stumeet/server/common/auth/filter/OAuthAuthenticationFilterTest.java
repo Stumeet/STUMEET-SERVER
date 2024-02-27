@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.member.domain.OAuthProvider;
 import com.stumeet.server.stub.MemberStub;
+import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class OAuthAuthenticationFilterTest extends ApiTest {
 
     @Nested
-    @DisplayName("OAuth2를 이용한 소셜 로그인 필터")
+    @DisplayName("OAuth2를 이용한 소셜 로그인")
     class oauthLogin {
         private final String path = "/api/v1/oauth";
 
@@ -39,7 +40,7 @@ class OAuthAuthenticationFilterTest extends ApiTest {
             mockSuccessKakaoTokenInfoApi();
 
             mockMvc.perform(post(path)
-                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), MemberStub.getKakaoAccessToken())
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken())
                             .header(AuthenticationHeader.X_OAUTH_PROVIDER.getName(), OAuthProvider.KAKAO.getProvider()))
                     .andExpect(status().isOk())
                     .andDo(document("social_login/success",
@@ -66,7 +67,7 @@ class OAuthAuthenticationFilterTest extends ApiTest {
             mockFailKakaoTokenInfoApi();
 
             mockMvc.perform(post(path)
-                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), MemberStub.getKakaoAccessToken())
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken())
                             .header(AuthenticationHeader.X_OAUTH_PROVIDER.getName(), OAuthProvider.KAKAO.getProvider()))
                     .andExpect(status().isUnauthorized())
                     .andDo(document("social_login/fail/invalid-token",
@@ -103,7 +104,7 @@ class OAuthAuthenticationFilterTest extends ApiTest {
         private void mockFailKakaoTokenInfoApi() {
             stubFor(
                     WireMock.get(WireMock.urlEqualTo("/v1/user/access_token_info"))
-                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(MemberStub.getInvalidKakaoAccessToken()))
+                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(TokenStub.getInvalidKakaoAccessToken()))
                             .willReturn(aResponse()
                                     .withStatus(HttpStatus.UNAUTHORIZED.value())
                                     .withHeader("content-type", APPLICATION_JSON)
@@ -115,7 +116,7 @@ class OAuthAuthenticationFilterTest extends ApiTest {
         private void mockSuccessKakaoTokenInfoApi() {
             stubFor(
                     WireMock.get(WireMock.urlEqualTo("/v1/user/access_token_info"))
-                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(MemberStub.getKakaoAccessToken()))
+                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(TokenStub.getKakaoAccessToken()))
                             .willReturn(aResponse()
                                     .withStatus(HttpStatus.CREATED.value())
                                     .withHeader("content-type", APPLICATION_JSON)

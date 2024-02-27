@@ -41,7 +41,7 @@ public class MemberAuthService implements MemberAuthUseCase {
         String savedRefreshToken = refreshTokenService.getRefreshToken(request.accessToken(), request.refreshToken());
         refreshTokenService.deleteByAccessToken(request.accessToken());
 
-        Long id = Long.parseLong(jwtTokenProvider.getSubject(request.accessToken()));
+        Long id = Long.parseLong(jwtTokenProvider.getSubject(request.refreshToken()));
         Member member = memberQueryPort.getById(id);
         String renewAccessToken = jwtTokenProvider.generateAccessToken(new LoginMember(member));
         refreshTokenService.save(renewAccessToken, savedRefreshToken);

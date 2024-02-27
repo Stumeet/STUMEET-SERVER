@@ -58,10 +58,11 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String generateRefreshToken() {
+    public String generateRefreshToken(Long memberId) {
         return Jwts.builder()
                 .issuer(issuer)
                 .issuedAt(new Date(System.currentTimeMillis()))
+                .subject(String.valueOf(memberId))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3))
                 .signWith(secretKey)
                 .compact();

@@ -7,13 +7,18 @@ ifndef::snippets[]
 :snippets: build/generated-snippets
 endif::[]
 
-= 회원 API
+= Stumeet API 문서
 
 == 소셜 로그인
 
+소셜 로그인 시 사용되는 API입니다.
+현재 카카오, 애플 로그인이 가능합니다.
+
 === POST /api/v1/oauth
 
-.Request
+==== 요청
+
+.카카오 로그인
 include::{snippets}/social_login/success/http-request.adoc[]
 include::{snippets}/social_login/success/request-headers.adoc[]
 
@@ -30,4 +35,18 @@ include::{snippets}/social_login/fail/not-exist-header/response-body.adoc[]
 
 include::{snippets}/social_login/fail/invalid-token/response-fields.adoc[]
 
+== 토큰 재발급
 
+서버로 부터 받은 액세스 토큰이 만료된 경우 액세스 토큰 재발급을 위해 사용되는 API입니다.
+
+=== POST /api/v1/tokens
+
+==== 요청
+include::{snippets}/token_renew/success/http-request.adoc[]
+
+include::{snippets}/token_renew/success/request-body.adoc[]
+include::{snippets}/token_renew/success/request-fields.adoc[]
+
+==== 응답 성공 (200)
+include::{snippets}/token_renew/success/response-body.adoc[]
+include::{snippets}/token_renew/success/response-fields.adoc[]
