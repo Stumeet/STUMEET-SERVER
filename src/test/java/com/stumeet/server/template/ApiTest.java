@@ -32,18 +32,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @Testcontainers
 public abstract class ApiTest {
 
-    private static final DockerImageName REDIS_CONTAINER_VERSION = DockerImageName.parse("redis:5.0.3-alpine");
+    protected static final DockerImageName REDIS_CONTAINER_VERSION = DockerImageName.parse("redis:5.0.3-alpine");
 
     protected MockMvc mockMvc;
 
     @Autowired
     protected ObjectMapper objectMapper;
-
-    @Container
-    @ServiceConnection
-    private static GenericContainer<?> REDIS_CONTAINER = new GenericContainer<>(REDIS_CONTAINER_VERSION)
-            .withExposedPorts(6379)
-            .withReuse(true);
 
     @BeforeEach
     void setUpMockMvc(WebApplicationContext context, RestDocumentationContextProvider provider) {

@@ -10,9 +10,12 @@ import com.stumeet.server.template.ApiTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.springframework.cloud.contract.spec.internal.MediaTypes.APPLICATION_JSON;
@@ -28,6 +31,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WireMockTest(httpPort = 8089)
 @Transactional
 class OAuthAuthenticationFilterTest extends ApiTest {
+
+    @Container
+    @ServiceConnection
+    private static GenericContainer<?> REDIS_CONTAINER = new GenericContainer<>(REDIS_CONTAINER_VERSION)
+            .withExposedPorts(6379);
 
     @Nested
     @DisplayName("OAuth2를 이용한 소셜 로그인")
