@@ -40,7 +40,7 @@ public class OAuthAuthenticationProvider implements AuthenticationProvider {
             LoginMember loginMember = new LoginMember(member);
 
             String accessToken = jwtTokenProvider.generateAccessToken(loginMember);
-            String refreshToken = jwtTokenProvider.generateRefreshToken();
+            String refreshToken = jwtTokenProvider.generateRefreshToken(member.getId());
             refreshTokenService.save(accessToken, refreshToken);
 
             return StumeetAuthenticationToken.authenticateOAuth(
