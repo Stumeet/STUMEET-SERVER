@@ -7,6 +7,8 @@ import com.stumeet.server.profession.application.port.out.ProfessionQueryPort;
 import com.stumeet.server.profession.domain.Profession;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class ProfessionPersistenceAdapter implements ProfessionQueryPort {
@@ -19,5 +21,12 @@ public class ProfessionPersistenceAdapter implements ProfessionQueryPort {
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_EXIST_EXCEPTION));
 
         return professionPersistenceMapper.toDomain(entity);
+    }
+
+    @Override
+    public List<Profession> findAll() {
+        return jpaProfessionRepository.findAll().stream()
+                .map(professionPersistenceMapper::toDomain)
+                .toList();
     }
 }
