@@ -1,10 +1,15 @@
 package com.stumeet.server.member.adapter.out.persistence;
 
 import com.stumeet.server.member.domain.Member;
+import com.stumeet.server.profession.adapter.out.persistence.ProfessionPersistenceMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class MemberPersistenceMapper {
+
+    private final ProfessionPersistenceMapper professionPersistenceMapper;
 
     public MemberJpaEntity toEntity(Member domain) {
         return MemberJpaEntity.builder()
@@ -13,7 +18,7 @@ public class MemberPersistenceMapper {
                 .image(domain.getImage())
                 .sugarContents(domain.getSugarContents())
                 .region(domain.getRegion())
-                .profession(domain.getProfession())
+                .profession(professionPersistenceMapper.toEntity(domain.getProfession()))
                 .authType(domain.getAuthType())
                 .role(domain.getRole())
                 .build();
@@ -26,7 +31,7 @@ public class MemberPersistenceMapper {
                 .image(entity.getImage())
                 .sugarContents(entity.getSugarContents())
                 .region(entity.getRegion())
-                .profession(entity.getProfession())
+                .profession(professionPersistenceMapper.toDomain(entity.getProfession()))
                 .authType(entity.getAuthType())
                 .role(entity.getRole())
                 .build();
