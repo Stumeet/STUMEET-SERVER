@@ -26,7 +26,7 @@ public class OAuthLoginJpaEntity extends BaseTimeEntity {
 
     @Column(name = "provider_name", length = 50, nullable = false)
     @Enumerated(EnumType.STRING)
-    @Comment("제공자 이름")
+    @Comment("제공자 이름(kakao, apple)")
     private OAuthProvider providerName;
 
     @Column(name = "provider_id", length = 50, nullable = false)

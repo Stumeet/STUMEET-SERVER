@@ -3,6 +3,7 @@ package com.stumeet.server.member.adapter.out.persistence;
 import com.stumeet.server.common.model.BaseTimeEntity;
 import com.stumeet.server.member.domain.AuthType;
 import com.stumeet.server.member.domain.UserRole;
+import com.stumeet.server.profession.adapter.out.persistence.ProfessionJpaEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -22,6 +23,11 @@ public class MemberJpaEntity extends BaseTimeEntity {
     @Comment("멤버 아이디")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "profession_id")
+    @Comment("분야")
+    private ProfessionJpaEntity profession;
+
     @Column(name = "name")
     @Comment("멤버 이름")
     private String name;
@@ -38,10 +44,6 @@ public class MemberJpaEntity extends BaseTimeEntity {
     @Comment("지역")
     private String region;
 
-    @Column(name = "profession", length = 50)
-    @Comment("분야")
-    private String profession;
-
     @Column(name = "auth_type", length = 50, nullable = false)
     @Enumerated(EnumType.STRING)
     @Comment("인증 방법(OAuth, 자체 로그인 등)")
@@ -49,7 +51,7 @@ public class MemberJpaEntity extends BaseTimeEntity {
 
     @Column(name = "role", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
-    @Comment("권한")
+    @Comment("권한(FIRST_LOGIN, MEMBER)")
     private UserRole role;
 
     @Column(name = "is_deleted", nullable = false)
