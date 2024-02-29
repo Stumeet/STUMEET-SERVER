@@ -13,6 +13,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
@@ -79,7 +80,8 @@ public class GlobalExceptionHandler {
             HttpMessageNotReadableException.class,
             InvalidFormatException.class,
             ServletRequestBindingException.class,
-            MissingServletRequestParameterException.class
+            MissingServletRequestParameterException.class,
+            HandlerMethodValidationException.class
     })
     protected ResponseEntity<ApiResponse> handleInvalidFormatException(final Exception e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
