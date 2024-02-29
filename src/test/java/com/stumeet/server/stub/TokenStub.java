@@ -5,7 +5,7 @@ public class TokenStub {
     private TokenStub() {}
 
     public static String getKakaoAccessToken() {
-        return "rjdizj7Ae09H0oWlW46Oll9_x7AhzaJkp1gKKwzTAAABjd_1h0EhI_W2iN1234";
+        return "Bearer rjdizj7Ae09H0oWlW46Oll9_x7AhzaJkp1gKKwzTAAABjd_1h0EhI_W2iN1234";
     }
 
     public static String getInvalidKakaoAccessToken() {
@@ -17,6 +17,6 @@ public class TokenStub {
     }
 
     public static String getMockAccessToken() {
-        return "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTA0MTM1Mn0.1dU2fb1wUgJeV8R1RAjFpKxBg3qToRZnft1lxSejL7o";
+        return "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTA0MTM1Mn0.1dU2fb1wUgJeV8R1RAjFpKxBg3qToRZnft1lxSejL7o";
     }
 }
