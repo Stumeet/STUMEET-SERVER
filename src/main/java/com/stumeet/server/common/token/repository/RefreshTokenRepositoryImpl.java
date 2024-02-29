@@ -1,8 +1,11 @@
 package com.stumeet.server.common.token.repository;
 
+import com.stumeet.server.common.exception.model.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+
+import static com.stumeet.server.common.response.ErrorCode.NOT_MATCHED_TOKEN_EXCEPTION;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     public String getByAccessToken(String accessToken) {
         String refreshToken = redisTemplate.opsForValue().get(accessToken);
         if (refreshToken == null) {
-            throw new IllegalArgumentException("전달받은 Access Token과 매칭되는 Refresh Token이 존재하지 않습니다.");
+            throw new BusinessException(NOT_MATCHED_TOKEN_EXCEPTION);
         }
 
         return refreshToken;
@@ -31,7 +34,7 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     public void deleteByAccessToken(String accessToken) {
         boolean isDeleted = Boolean.TRUE.equals(redisTemplate.delete(accessToken));
         if (!isDeleted) {
-            throw new IllegalArgumentException("전달받은 Access Token과 매칭되는 Refresh Token이 존재하지 않습니다.");
+            throw new BusinessException(NOT_MATCHED_TOKEN_EXCEPTION);
         }
     }
 }

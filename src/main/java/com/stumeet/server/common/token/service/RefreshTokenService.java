@@ -1,5 +1,7 @@
 package com.stumeet.server.common.token.service;
 
+import com.stumeet.server.common.exception.model.BusinessException;
+import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.token.JwtTokenProvider;
 import com.stumeet.server.common.token.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,11 @@ public class RefreshTokenService {
         String savedRefreshToken = refreshTokenRepository.getByAccessToken(accessToken);
 
         if (!refreshToken.equals(savedRefreshToken)) {
-            throw new IllegalArgumentException(
-                    MessageFormat.format("리프레시 토큰이 일치하지 않습니다.\n전달받은 토큰 : {} 저장된 토큰{}", refreshToken, savedRefreshToken)
-            );
+            throw new BusinessException(ErrorCode.NOT_MATCHED_REFRESH_TOKEN_EXCEPTION);
         }
-        jwtTokenProvider.validateToken(refreshToken);
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            throw new BusinessException(ErrorCode.EXPIRED_REFRESH_TOKEN_EXCEPTION);
+        }
 
         return savedRefreshToken;
     }

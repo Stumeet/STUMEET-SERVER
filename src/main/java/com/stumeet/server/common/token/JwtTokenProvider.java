@@ -78,6 +78,7 @@ public class JwtTokenProvider {
         } catch (JwtException e) {
             log.warn("신뢰할 수 없는 JWT 토큰 입니다.", e);
         }
+
         return false;
     }
 
