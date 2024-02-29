@@ -5,7 +5,7 @@ public class TokenStub {
     private TokenStub() {}
 
     public static String getKakaoAccessToken() {
-        return "rjdizj7Ae09H0oWlW46Oll9_x7AhzaJkp1gKKwzTAAABjd_1h0EhI_W2iN1234";
+        return "Bearer rjdizj7Ae09H0oWlW46Oll9_x7AhzaJkp1gKKwzTAAABjd_1h0EhI_W2iN1234";
     }
 
     public static String getInvalidKakaoAccessToken() {
@@ -16,7 +16,15 @@ public class TokenStub {
         return "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTAzOTIzNH0.5EPRp2zAJgXCOMgGKASF586R44o6U8-fla-IqTsrDBA";
     }
 
-    public static String getMockAccessToken() {
-        return "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTA0MTM1Mn0.1dU2fb1wUgJeV8R1RAjFpKxBg3qToRZnft1lxSejL7o";
+    public static String getInvalidToken() {
+        return "invalidToken";
     }
+    public static String getMockAccessToken() {
+        return "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTA0MTM1Mn0.1dU2fb1wUgJeV8R1RAjFpKxBg3qToRZnft1lxSejL7o";
+    }
+
+    public static String getExpiredRefreshToken() {
+        return "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwiaWF0IjoxNzA5MTkzMzgwLCJzdWIiOiIxIiwiZXhwIjoxNzA5MTkzMzgwfQ.faFrP-sNlCnu5vGPfl0vQieMZ_Iydk_UjhaYIkhz4P4";
+    }
+
 }
