@@ -17,7 +17,7 @@ public class TokenStub {
     }
 
     public static String getInvalidToken() {
-        return "invalidToken";
+        return "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTA0MTM1Mn0.1dU2fb1wUgJeV8R1RAjFpKx3g3qToRZnft1lxSejL7o";
     }
     public static String getMockAccessToken() {
         return "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTVFVNRUVUIiwic3ViIjoiMSIsImF1dGgiOiJGSVJTVF9MT0dJTiIsImV4cCI6MTcwOTA0MTM1Mn0.1dU2fb1wUgJeV8R1RAjFpKxBg3qToRZnft1lxSejL7o";

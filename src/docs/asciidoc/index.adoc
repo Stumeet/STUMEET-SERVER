@@ -35,6 +35,21 @@ include::{snippets}/social_login/fail/not-exist-header/response-body.adoc[]
 
 include::{snippets}/social_login/fail/invalid-token/response-fields.adoc[]
 
+== 로그아웃
+
+로그아웃 시 사용되는 API입니다.
+
+=== POST /api/v1/logout
+
+==== 요청
+
+include::{snippets}/logout/success/http-request.adoc[]
+include::{snippets}/logout/success/request-headers.adoc[]
+
+==== 응답 성공 (200)
+include::{snippets}/logout/success/response-body.adoc[]
+include::{snippets}/logout/success/response-fields.adoc[]
+
 == 토큰 재발급
 
 서버로 부터 받은 액세스 토큰이 만료된 경우 액세스 토큰 재발급을 위해 사용되는 API입니다.
