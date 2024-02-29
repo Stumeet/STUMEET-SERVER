@@ -23,6 +23,7 @@ public class MemberStub {
     public static MemberJpaEntity getMemberEntity() {
         return MemberJpaEntity.builder()
                 .id(1L)
+                .name("test")
                 .role(UserRole.FIRST_LOGIN)
                 .authType(AuthType.OAUTH)
                 .sugarContents(0.0)
