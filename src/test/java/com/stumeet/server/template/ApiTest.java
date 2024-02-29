@@ -41,7 +41,6 @@ public abstract class ApiTest {
 
     @BeforeEach
     void setUpMockMvc(WebApplicationContext context, RestDocumentationContextProvider provider) {
-
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .addFilter(new CharacterEncodingFilter("UTF-8", true))
                 .apply(documentationConfiguration(provider))
