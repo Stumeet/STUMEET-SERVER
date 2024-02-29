@@ -21,7 +21,9 @@ public enum ErrorCode {
     INVALID_FILE_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 파일 확장자입니다."),
     DUPLICATE_NICKNAME_EXCEPTION(HttpStatus.BAD_REQUEST, "닉네임이 중복되었습니다."),
     NOT_EXIST_EXCEPTION(HttpStatus.BAD_REQUEST, "요청으로 전달한 값이 존재하지 않습니다."),
-
+    NOT_MATCHED_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "요청으로 전달한 토큰과 매칭되는 토큰이 없습니다."),
+    NOT_MATCHED_REFRESH_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "요청으로 전달한 리프레시 토큰과 서버의 리프레시 토큰이 일치하지 않습니다."),
+    EXPIRED_REFRESH_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "리프레시 토큰이 만료되었습니다."),
 
     /*
         500 - INTERNAL SERVER ERROR

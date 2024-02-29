@@ -88,6 +88,100 @@ class MemberAuthApiTest extends ApiTest {
                     );
         }
 
+        @Test
+        @DisplayName("[실패] 액세스 토큰과 매칭되는 리프레시 토큰이 없는 경우 재발급에 실패합니다.")
+        void notMatchAccessTokenTest() throws Exception {
+            mockMvc.perform(post(path)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(new TokenRenewCommand(TokenStub.getInvalidToken(), refreshToken)))
+                    ).andExpect(status().isBadRequest())
+                    .andDo(document("token_renew/fail/not-match-access-token",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestFields(
+                                            fieldWithPath("accessToken").type(JsonFieldType.STRING).description("서버로 부터 전달받은 액세스 토큰"),
+                                            fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("서버로 부터 전달받은 리프레시 토큰")
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                            fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                                    )
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("[실패] 액세스 토큰이나 리프레시 토큰이 전달되지 않은 경우 재발급에 실패합니다.")
+        void notExistRequestTest() throws Exception {
+            mockMvc.perform(post(path)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(new TokenRenewCommand("", null))
+                            )).andExpect(status().isBadRequest())
+                    .andDo(document("token_renew/fail/not-exist-request",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestFields(
+                                    fieldWithPath("accessToken").description("서버로 부터 전달받은 액세스 토큰"),
+                                    fieldWithPath("refreshToken").description("서버로 부터 전달받은 리프레시 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                    fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지"),
+                                    fieldWithPath("data[].message").type(JsonFieldType.STRING).description("요청 실패 사유에 대한 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @DisplayName("[실패] 전달받은 리프레시 토큰이 서버의 리프레시 토큰과 다른 경우 재발급에 실패합니다.")
+        void notMatchedRefreshTokenTest() throws Exception {
+            refreshToken = jwtTokenProvider.generateRefreshToken(100L);
+
+            mockMvc.perform(post(path)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(new TokenRenewCommand(TokenStub.getExpiredAccessToken(), refreshToken)))
+                    ).andExpect(status().isBadRequest())
+                    .andDo(document("token_renew/fail/not-matched-refresh-token",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestFields(
+                                            fieldWithPath("accessToken").type(JsonFieldType.STRING).description("서버로 부터 전달받은 액세스 토큰"),
+                                            fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("서버로 부터 전달받은 리프레시 토큰")
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                            fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                                    )
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("[실패] 리프레시 토큰이 만료된 경우 재발급에 실패합니다.")
+        void expiredRefreshTokenTest() throws Exception {
+            String expiredRefreshToken = TokenStub.getExpiredRefreshToken();
+            String accessToken = TokenStub.getMockAccessToken();
+            redisTemplate.opsForValue()
+                    .set(accessToken, expiredRefreshToken);
+
+            mockMvc.perform(post(path)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(new TokenRenewCommand(accessToken, expiredRefreshToken)))
+                    ).andExpect(status().isBadRequest())
+                    .andDo(document("token_renew/fail/expired-refresh-token",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestFields(
+                                            fieldWithPath("accessToken").type(JsonFieldType.STRING).description("서버로 부터 전달받은 액세스 토큰"),
+                                            fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("서버로 부터 전달받은 리프레시 토큰")
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                            fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                                    )
+                            )
+                    );
+        }
     }
 
 }
