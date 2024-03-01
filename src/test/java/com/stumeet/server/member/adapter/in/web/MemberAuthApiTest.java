@@ -1,9 +1,12 @@
 package com.stumeet.server.member.adapter.in.web;
 
 import com.stumeet.server.common.token.JwtTokenProvider;
+import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.member.adapter.out.persistence.JpaMemberRepository;
 import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
+import com.stumeet.server.member.application.port.in.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.TokenRenewCommand;
+import com.stumeet.server.member.domain.UserRole;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
@@ -12,12 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -183,5 +188,27 @@ class MemberAuthApiTest extends ApiTest {
                     );
         }
     }
+
+    @Nested
+    @DisplayName("최초 로그인시 회원가입")
+    class Signup {
+        private final String path = "/api/v1/signup";
+
+        @Test
+        @WithMockMember(authority = UserRole.FIRST_LOGIN)
+        @DisplayName("[성공] 최초 로그인시 회원가입에 성공합니다.")
+        void successTest() throws Exception {
+            MemberSignupCommand request = MemberStub.getMemberSignupCommand();
+
+            mockMvc.perform(multipart(path)
+                    .file((MockMultipartFile) request.image())
+                    .header("Authorization", TokenStub.getMockAccessToken())
+                    .param("name", request.nickname())
+                    .param("region", request.region())
+                    .param("profession", String.valueOf(request.profession()))
+            ).andExpect(status().isOk());
+        }
+    }
+
 
 }

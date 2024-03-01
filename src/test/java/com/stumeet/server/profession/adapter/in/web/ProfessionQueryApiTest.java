@@ -3,11 +3,11 @@ package com.stumeet.server.profession.adapter.in.web;
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
+import com.stumeet.server.helper.WithMockMember;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -30,7 +30,7 @@ class ProfessionQueryApiTest extends ApiTest {
         private final String path = "/api/v1/professions";
 
         @Test
-        @WithMockUser
+        @WithMockMember
         @DisplayName("[성공] 분야 정보를 전체 조회할 수 있다.")
         void successTest() throws Exception{
             mockMvc.perform(get(path)
