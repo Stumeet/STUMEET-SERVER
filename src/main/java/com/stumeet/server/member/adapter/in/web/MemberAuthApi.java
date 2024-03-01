@@ -31,8 +31,8 @@ public class MemberAuthApi {
         memberAuthUseCase.signup(loginMember.getMember(), request);
 
         return new ResponseEntity<>(
-                ApiResponse.success(HttpStatus.CREATED.value(), "회원가입에 성공했습니다."),
-                HttpStatus.CREATED
+                ApiResponse.success(HttpStatus.OK.value(), "회원가입에 성공했습니다."),
+                HttpStatus.OK
         );
     }
 
