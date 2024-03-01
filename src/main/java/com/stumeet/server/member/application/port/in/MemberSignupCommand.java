@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public record MemberSignupCommand(
 
-        @NotNull
+        @NotNull(message = "이미지를 첨부해주세요")
         MultipartFile image,
 
         @Size(min = 2, max = 10, message = "닉네임을 2 ~ 10자로 입력해주세요")

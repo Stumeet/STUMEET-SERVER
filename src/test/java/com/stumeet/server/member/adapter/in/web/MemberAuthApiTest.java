@@ -21,11 +21,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 
+import java.io.InputStream;
+
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -201,12 +206,171 @@ class MemberAuthApiTest extends ApiTest {
             MemberSignupCommand request = MemberStub.getMemberSignupCommand();
 
             mockMvc.perform(multipart(path)
-                    .file((MockMultipartFile) request.image())
-                    .header("Authorization", TokenStub.getMockAccessToken())
-                    .param("name", request.nickname())
-                    .param("region", request.region())
-                    .param("profession", String.valueOf(request.profession()))
-            ).andExpect(status().isOk());
+                            .file((MockMultipartFile) request.image())
+                            .header("Authorization", TokenStub.getMockAccessToken())
+                            .queryParam("nickname", request.nickname())
+                            .queryParam("region", request.region())
+                            .queryParam("profession", String.valueOf(request.profession()))
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                    ).andExpect(status().isOk())
+                    .andDo(document("signup/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("nickname").description("회원 닉네임"),
+                                    parameterWithName("region").description("회원 지역"),
+                                    parameterWithName("profession").description("회원 분야")
+                            ),
+                            requestParts(
+                                    partWithName("image").description("회원 프로필 이미지")
+                            ),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                    fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 이미 가입된 회원이 회원가입을 시도하는 경우 실패합니다.")
+        void alreadySignupMemberFailTest() throws Exception {
+            MemberSignupCommand request = MemberStub.getMemberSignupCommand();
+
+            mockMvc.perform(multipart(path)
+                            .file((MockMultipartFile) request.image())
+                            .header("Authorization", TokenStub.getMockAccessToken())
+                            .queryParam("nickname", request.nickname())
+                            .queryParam("region", request.region())
+                            .queryParam("profession", String.valueOf(request.profession()))
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                    ).andExpect(status().isForbidden())
+                    .andDo(document("signup/fail/already-signup-member",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("nickname").description("회원 닉네임"),
+                                    parameterWithName("region").description("회원 지역"),
+                                    parameterWithName("profession").description("회원 분야")
+                            ),
+                            requestParts(
+                                    partWithName("image").description("회원 프로필 이미지")
+                            ),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                    fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @WithMockMember(authority = UserRole.FIRST_LOGIN)
+        @DisplayName("[실패] 회원가입 요청 값이 유효한 값이 아니면 회원가입에 실패합니다.")
+        void invalidRequestTest() throws Exception {
+            mockMvc.perform(multipart(path)
+                            .file(new MockMultipartFile("1", (InputStream) null))
+                            .header("Authorization", TokenStub.getMockAccessToken())
+                            .queryParam("nickname", "")
+                            .queryParam("region", "")
+                            .queryParam("profession", "")
+                            .contentType(MediaType.MULTIPART_FORM_DATA))
+                    .andExpect(status().isBadRequest())
+                    .andDo(document("signup/fail/invalid-request",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("nickname").description("회원 닉네임"),
+                                    parameterWithName("region").description("회원 지역"),
+                                    parameterWithName("profession").description("회원 분야")
+                            ),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                    fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지"),
+                                    fieldWithPath("data[].message").type(JsonFieldType.STRING).description("요청 실패 사유에 대한 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @WithMockMember(authority = UserRole.FIRST_LOGIN)
+        @DisplayName("[실패] 전달한 분야 정보가 존재하지 않으면 회원가입에 실패합니다.")
+        void notExistsProfessionTest() throws Exception {
+            MemberSignupCommand request = MemberStub.getMemberSignupCommand();
+            String notExistsProfession = "0";
+
+            mockMvc.perform(multipart(path)
+                            .file((MockMultipartFile) request.image())
+                            .header("Authorization", TokenStub.getMockAccessToken())
+                            .queryParam("nickname", request.nickname())
+                            .queryParam("region", request.region())
+                            .queryParam("profession", notExistsProfession)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                    ).andExpect(status().isBadRequest())
+                    .andDo(document("signup/fail/not-exists-profession",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("nickname").description("회원 닉네임"),
+                                    parameterWithName("region").description("회원 지역"),
+                                    parameterWithName("profession").description("회원 분야")
+                            ),
+                            requestParts(
+                                    partWithName("image").description("회원 프로필 이미지")
+                            ),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                    fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @WithMockMember(authority = UserRole.FIRST_LOGIN)
+        @DisplayName("[실패] 전달한 이미지가 유효한 이미지가 아니면 회원가입에 실패합니다.")
+        void invalidImageTest() throws Exception {
+            MemberSignupCommand request = MemberStub.getMemberSignupCommand();
+            MockMultipartFile invalidImage = new MockMultipartFile("image", "test.jpa", "plain/text", "test".getBytes());
+
+            mockMvc.perform(multipart(path)
+                            .file(invalidImage)
+                            .header("Authorization", TokenStub.getMockAccessToken())
+                            .queryParam("nickname", request.nickname())
+                            .queryParam("region", request.region())
+                            .queryParam("profession", String.valueOf(request.profession()))
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                    ).andExpect(status().isBadRequest())
+                    .andDo(document("signup/fail/invalid-image",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("nickname").description("회원 닉네임"),
+                                    parameterWithName("region").description("회원 지역"),
+                                    parameterWithName("profession").description("회원 분야")
+                            ),
+                            requestParts(
+                                    partWithName("image").description("회원 프로필 이미지")
+                            ),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                    fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                            )
+                    ));
+
         }
     }
 

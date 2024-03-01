@@ -52,6 +52,41 @@ include::{snippets}/logout/success/request-headers.adoc[]
 include::{snippets}/logout/success/response-body.adoc[]
 include::{snippets}/logout/success/response-fields.adoc[]
 
+
+=== 최초 로그인시 회원가입
+
+최초 로그인 시 회원가입을 위해 사용되는 API입니다.
+
+==== POST /api/v1/signup
+
+===== 요청
+include::{snippets}/signup/success/http-request.adoc[]
+include::{snippets}/signup/success/request-headers.adoc[]
+include::{snippets}/signup/success/request-parts.adoc[]
+include::{snippets}/signup/success/query-parameters.adoc[]
+
+===== 응답 성공 (201)
+include::{snippets}/signup/success/response-body.adoc[]
+include::{snippets}/signup/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.회원가입 요청 값이 유효하지 않은 경우
+include::{snippets}/signup/fail/invalid-request/response-body.adoc[]
+include::{snippets}/signup/fail/invalid-request/response-fields.adoc[]
+
+.전달한 분야 정보가 존재하지 않는 분야인 경우
+include::{snippets}/signup/fail/not-exists-profession/response-body.adoc[]
+include::{snippets}/signup/fail/not-exists-profession/response-fields.adoc[]
+
+.전달한 이미지가 유효하지 않은 경우
+include::{snippets}/signup/fail/invalid-image/response-body.adoc[]
+include::{snippets}/signup/fail/invalid-image/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.이미 가입된 회원인 경우
+include::{snippets}/signup/fail/already-signup-member/response-body.adoc[]
+include::{snippets}/signup/fail/already-signup-member/response-fields.adoc[]
+
 === 토큰 재발급
 
 서버로 부터 받은 액세스 토큰이 만료된 경우 액세스 토큰 재발급을 위해 사용되는 API입니다.
