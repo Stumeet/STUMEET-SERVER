@@ -66,6 +66,7 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     testImplementation 'org.springframework.cloud:spring-cloud-contract-stub-runner'
+    testImplementation 'org.testcontainers:localstack'
 
 
 }
