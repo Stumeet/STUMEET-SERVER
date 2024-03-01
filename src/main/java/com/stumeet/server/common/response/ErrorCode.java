@@ -26,6 +26,11 @@ public enum ErrorCode {
     EXPIRED_REFRESH_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "리프레시 토큰이 만료되었습니다."),
 
     /*
+        403 - FORBIDDEN
+    */
+    ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "유효하지 않은 요청입니다."),
+
+    /*
         500 - INTERNAL SERVER ERROR
     */
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부에서 에러가 발생하였습니다."),

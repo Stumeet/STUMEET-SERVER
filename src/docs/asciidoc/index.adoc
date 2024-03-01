@@ -9,24 +9,26 @@ endif::[]
 
 = Stumeet API 문서
 
-== 소셜 로그인
+== 회원 관리
+
+=== 소셜 로그인
 
 소셜 로그인 시 사용되는 API입니다.
 현재 카카오, 애플 로그인이 가능합니다.
 
-=== POST /api/v1/oauth
+==== POST /api/v1/oauth
 
-==== 요청
+===== 요청
 
 .카카오 로그인
 include::{snippets}/social_login/success/http-request.adoc[]
 include::{snippets}/social_login/success/request-headers.adoc[]
 
-==== 응답 성공 (200)
+===== 응답 성공 (200)
 include::{snippets}/social_login/success/response-body.adoc[]
 include::{snippets}/social_login/success/response-fields.adoc[]
 
-==== 응답 실패 (401)
+===== 응답 실패 (401)
 
 .유효한 토큰이 아닌 경우
 include::{snippets}/social_login/fail/invalid-token/response-body.adoc[]
@@ -35,38 +37,73 @@ include::{snippets}/social_login/fail/not-exist-header/response-body.adoc[]
 
 include::{snippets}/social_login/fail/invalid-token/response-fields.adoc[]
 
-== 로그아웃
+=== 로그아웃
 
 로그아웃 시 사용되는 API입니다.
 
-=== POST /api/v1/logout
+==== POST /api/v1/logout
 
-==== 요청
+===== 요청
 
 include::{snippets}/logout/success/http-request.adoc[]
 include::{snippets}/logout/success/request-headers.adoc[]
 
-==== 응답 성공 (200)
+===== 응답 성공 (200)
 include::{snippets}/logout/success/response-body.adoc[]
 include::{snippets}/logout/success/response-fields.adoc[]
 
-== 토큰 재발급
+
+=== 최초 로그인시 회원가입
+
+최초 로그인 시 회원가입을 위해 사용되는 API입니다.
+
+==== POST /api/v1/signup
+
+===== 요청
+include::{snippets}/signup/success/http-request.adoc[]
+include::{snippets}/signup/success/request-headers.adoc[]
+include::{snippets}/signup/success/request-parts.adoc[]
+include::{snippets}/signup/success/query-parameters.adoc[]
+
+===== 응답 성공 (201)
+include::{snippets}/signup/success/response-body.adoc[]
+include::{snippets}/signup/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.회원가입 요청 값이 유효하지 않은 경우
+include::{snippets}/signup/fail/invalid-request/response-body.adoc[]
+include::{snippets}/signup/fail/invalid-request/response-fields.adoc[]
+
+.전달한 분야 정보가 존재하지 않는 분야인 경우
+include::{snippets}/signup/fail/not-exists-profession/response-body.adoc[]
+include::{snippets}/signup/fail/not-exists-profession/response-fields.adoc[]
+
+.전달한 이미지가 유효하지 않은 경우
+include::{snippets}/signup/fail/invalid-image/response-body.adoc[]
+include::{snippets}/signup/fail/invalid-image/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.이미 가입된 회원인 경우
+include::{snippets}/signup/fail/already-signup-member/response-body.adoc[]
+include::{snippets}/signup/fail/already-signup-member/response-fields.adoc[]
+
+=== 토큰 재발급
 
 서버로 부터 받은 액세스 토큰이 만료된 경우 액세스 토큰 재발급을 위해 사용되는 API입니다.
 
-=== POST /api/v1/tokens
+==== POST /api/v1/tokens
 
-==== 요청
+===== 요청
 include::{snippets}/token_renew/success/http-request.adoc[]
 
 include::{snippets}/token_renew/success/request-body.adoc[]
 include::{snippets}/token_renew/success/request-fields.adoc[]
 
-==== 응답 성공 (200)
+===== 응답 성공 (200)
 include::{snippets}/token_renew/success/response-body.adoc[]
 include::{snippets}/token_renew/success/response-fields.adoc[]
 
-==== 응답 실패(400)
+===== 응답 실패(400)
 .액세스 토큰과 매칭되는 리프레시 토큰이 없는 경우
 include::{snippets}/token_renew/fail/not-match-access-token/response-body.adoc[]
 include::{snippets}/token_renew/fail/not-match-access-token/response-fields.adoc[]
@@ -84,20 +121,20 @@ include::{snippets}/token_renew/fail/expired-refresh-token/response-body.adoc[]
 include::{snippets}/token_renew/fail/expired-refresh-token/response-fields.adoc[]
 
 
-== 사용자 닉네임 유효성 검사
+=== 사용자 닉네임 유효성 검사
 
 사용자 닉네임의 유효성을 검사하는 API입니다.
 
-=== GET /api/v1/members/validate-nickname
+==== GET /api/v1/members/validate-nickname
 
-==== 요청
+===== 요청
 include::{snippets}/validate_nickname/success/http-request.adoc[]
 include::{snippets}/validate_nickname/success/request-headers.adoc[]
 include::{snippets}/validate_nickname/success/query-parameters.adoc[]
 
-==== 응답 성공 (200)
+===== 응답 성공 (200)
 
-==== 응답 실패 (400)
+===== 응답 실패 (400)
 
 .닉네임이 유효성 검사에 실패한 경우
 include::{snippets}/validate_nickname/fail/invalid/response-body.adoc[]
@@ -107,17 +144,18 @@ include::{snippets}/validate_nickname/fail/invalid/response-fields.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-body.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-fields.adoc[]
 
-== 분야 정보 전체 조회
+== 분야 관리
+=== 분야 정보 전체 조회
 
 모든 분야 정보를 조회하는 API입니다.
 
-=== GET /api/v1/professions
+==== GET /api/v1/professions
 
-==== 요청
+===== 요청
 include::{snippets}/find_professions/success/http-request.adoc[]
 
 include::{snippets}/find_professions/success/request-headers.adoc[]
-==== 응답 성공 (200)
+===== 응답 성공 (200)
 
 include::{snippets}/find_professions/success/response-body.adoc[]
 include::{snippets}/find_professions/success/response-fields.adoc[]

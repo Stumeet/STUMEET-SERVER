@@ -6,12 +6,12 @@ import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
+import com.stumeet.server.helper.WithMockMember;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -45,7 +45,7 @@ class MemberValidApiTest extends ApiTest {
         }
 
         @Test
-        @WithMockUser
+        @WithMockMember
         @DisplayName("[성공] 유효한 닉네임을 입력하면 중복 검증에 통과한다.")
         void successTest() throws Exception {
             String nickname = "닉네임";
@@ -69,7 +69,7 @@ class MemberValidApiTest extends ApiTest {
         }
 
         @Test
-        @WithMockUser
+        @WithMockMember
         @DisplayName("[실패] 유효하지 않은 닉네임을 입력하면 검증에 실패합니다.")
         void invalidRequestTest() throws Exception {
             String nickname = "닉";
@@ -93,7 +93,7 @@ class MemberValidApiTest extends ApiTest {
         }
 
         @Test
-        @WithMockUser
+        @WithMockMember
         @DisplayName("[실패] 닉네임이 중복되면 검증에 실패합니다.")
         void duplicateNicknameTest() throws Exception {
             String nickname = member.getName();
