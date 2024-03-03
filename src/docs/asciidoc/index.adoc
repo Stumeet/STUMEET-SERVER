@@ -144,6 +144,24 @@ include::{snippets}/validate_nickname/fail/invalid/response-fields.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-body.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-fields.adoc[]
 
+=== 사용자 정보 수정
+
+==== PATCH /api/v1/members/me
+
+===== 요청
+include::{snippets}/update-my-profile/success/http-request.adoc[]
+include::{snippets}/update-my-profile/success/request-headers.adoc[]
+include::{snippets}/update-my-profile/success/request-parts.adoc[]
+include::{snippets}/update-my-profile/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/update-my-profile/success/response-body.adoc[]
+include::{snippets}/update-my-profile/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+include::{snippets}/update-my-profile/fail/invalid-request/response-body.adoc[]
+include::{snippets}/update-my-profile/fail/invalid-request/response-fields.adoc[]
+
 == 분야 관리
 === 분야 정보 전체 조회
 

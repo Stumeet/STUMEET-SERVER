@@ -1,7 +1,8 @@
 package com.stumeet.server.stub;
 
 import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
-import com.stumeet.server.member.application.port.in.MemberSignupCommand;
+import com.stumeet.server.member.application.port.in.command.MemberSignupCommand;
+import com.stumeet.server.member.application.port.in.command.MemberUpdateCommand;
 import com.stumeet.server.member.domain.AuthType;
 import com.stumeet.server.member.domain.Member;
 import com.stumeet.server.member.domain.UserRole;
@@ -50,5 +51,15 @@ public class MemberStub {
                 .region(null)
                 .image(null)
                 .build();
+    }
+
+    public static MemberUpdateCommand getMemberUpdateCommand() {
+        MockMultipartFile image = new MockMultipartFile("image", "test.jpg", "image/jpeg", "test".getBytes());
+        return new MemberUpdateCommand(image, "test2", "서울", 1L);
+    }
+
+    public static MemberUpdateCommand getInvalidMemberUpdateCommand() {
+        MockMultipartFile invalidImage = new MockMultipartFile("image", "test.jpa", "plain/text", "test".getBytes());
+        return new MemberUpdateCommand(invalidImage, "닉", "   ", -1L);
     }
 }
