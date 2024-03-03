@@ -1,4 +1,4 @@
-package com.stumeet.server.member.application.port.in;
+package com.stumeet.server.member.application.port.in.command;
 
 import jakarta.validation.constraints.NotBlank;
 

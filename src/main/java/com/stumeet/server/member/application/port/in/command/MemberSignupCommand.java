@@ -1,7 +1,8 @@
-package com.stumeet.server.member.application.port.in;
+package com.stumeet.server.member.application.port.in.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +17,7 @@ public record MemberSignupCommand(
         @NotBlank(message = "지역을 입력해주세요")
         String region,
 
-        @NotNull(message = "분야를 선택해주세요")
+        @Positive(message = "분야를 선택해주세요")
         Long profession
 ) {
 }
