@@ -1,7 +1,6 @@
 package com.stumeet.server.member.domain;
 
-import com.stumeet.server.file.application.port.out.FileUrl;
-import com.stumeet.server.member.application.port.in.MemberSignupCommand;
+import com.stumeet.server.member.application.port.in.command.MemberProfileCommand;
 import com.stumeet.server.profession.domain.Profession;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,11 +27,11 @@ public class Member {
 
     private UserRole role;
 
-    public void registerWithAdditionalDetails(MemberSignupCommand request, FileUrl profileImage, Profession profession) {
-        this.image = profileImage.url();
-        this.name = request.nickname();
-        this.region = request.region();
-        this.profession = profession;
+    public void registerWithAdditionalDetails(MemberProfileCommand command) {
+        this.image = command.url() == null ? this.image : command.url();
+        this.name = command.nickname() == null ? this.name : command.nickname();
+        this.region = command.region() == null ? this.region : command.region();
+        this.profession = command.profession() == null ? this.profession : command.profession();
         this.role = UserRole.MEMBER;
     }
 }
