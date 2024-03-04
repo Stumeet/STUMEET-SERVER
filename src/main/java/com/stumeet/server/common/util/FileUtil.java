@@ -2,13 +2,11 @@ package com.stumeet.server.common.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
 import java.util.UUID;
 
 import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.response.ErrorCode;
+import com.stumeet.server.common.util.model.ValidImageContentType;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -16,44 +14,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtil {
 
-	private static final Set<String> VALID_CONTENT_TYPES = new HashSet<>();
+	private static final String FILE_NAME_FORMAT = "%s/%s%s-%s";
+	private static final String FILE_DATE_TIME_FORMAT = "yyyyMMddHHmmss";
 
-	static {
-		VALID_CONTENT_TYPES.add("jpg");
-		VALID_CONTENT_TYPES.add("jpeg");
-		VALID_CONTENT_TYPES.add("png");
-	}
-
-	public static String getContentType(String fileName) {
-		if (fileName.isEmpty()) {
-			throw new BusinessException(ErrorCode.INVALID_IMAGE_EXCEPTION);
-		}
-
-        String contentType = extractContentType(fileName);
-
-        if (!VALID_CONTENT_TYPES.contains(contentType)) {
-			throw new BusinessException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION);
-		}
+	public static String getValidImageContentType(String contentType) {
+		validateImageFile(contentType);
 
 		return contentType;
 	}
 
-    private static String extractContentType(String fileName) {
-        return fileName
-            .substring(fileName.lastIndexOf(".") + 1)
-            .toLowerCase(Locale.ROOT);
-    }
+	private static void validateImageFile(String contentType) {
+		if (contentType == null) {
+			throw new BusinessException(ErrorCode.INVALID_IMAGE_EXCEPTION);
+		}
+
+		if (!isValidImageFile(contentType)) {
+			throw new BusinessException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION);
+		}
+	}
 
     public static String createFileName(String directoryPath, String fileName) {
 		String dateTime = LocalDateTime.now()
-			.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+			.format(DateTimeFormatter.ofPattern(FILE_DATE_TIME_FORMAT));
 
-		return String.format("%s/%s%s-%s", directoryPath, dateTime, UUID.randomUUID(), fileName);
+		return String.format(FILE_NAME_FORMAT, directoryPath, dateTime, UUID.randomUUID(), fileName);
 	}
 
-	public static boolean isImageFile(String fileName) {
-        String contentType = extractContentType(fileName);
-
-        return VALID_CONTENT_TYPES.contains(contentType);
+	public static boolean isValidImageFile(String contentType) {
+        return ValidImageContentType.hasContentType(contentType);
 	}
 }

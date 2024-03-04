@@ -12,6 +12,6 @@ public class NullOrImageFileValidator implements ConstraintValidator<NullOrImage
             return true;
         }
 
-        return FileUtil.isImageFile(value.getOriginalFilename());
+        return FileUtil.isValidImageFile(value.getContentType());
     }
 }
