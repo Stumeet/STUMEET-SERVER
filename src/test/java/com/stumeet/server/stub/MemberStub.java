@@ -53,6 +53,19 @@ public class MemberStub {
                 .build();
     }
 
+    public static Member getMember() {
+        return Member.builder()
+                .id(1L)
+                .name("test")
+                .role(UserRole.MEMBER)
+                .authType(AuthType.OAUTH)
+                .sugarContents(0.0)
+                .profession(null)
+                .region(null)
+                .image(null)
+                .build();
+    }
+
     public static MemberUpdateCommand getMemberUpdateCommand() {
         MockMultipartFile image = new MockMultipartFile("image", "test.jpg", "image/jpeg", "test".getBytes());
         return new MemberUpdateCommand(image, "test2", "서울", 1L);
