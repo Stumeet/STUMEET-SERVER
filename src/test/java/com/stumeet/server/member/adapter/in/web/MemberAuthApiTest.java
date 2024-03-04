@@ -4,8 +4,8 @@ import com.stumeet.server.common.token.JwtTokenProvider;
 import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.member.adapter.out.persistence.JpaMemberRepository;
 import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
-import com.stumeet.server.member.application.port.in.MemberSignupCommand;
-import com.stumeet.server.member.application.port.in.TokenRenewCommand;
+import com.stumeet.server.member.application.port.in.command.MemberSignupCommand;
+import com.stumeet.server.member.application.port.in.command.TokenRenewCommand;
 import com.stumeet.server.member.domain.UserRole;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.TokenStub;
@@ -305,7 +305,7 @@ class MemberAuthApiTest extends ApiTest {
         @DisplayName("[실패] 전달한 분야 정보가 존재하지 않으면 회원가입에 실패합니다.")
         void notExistsProfessionTest() throws Exception {
             MemberSignupCommand request = MemberStub.getMemberSignupCommand();
-            String notExistsProfession = "0";
+            String notExistsProfession = "9999";
 
             mockMvc.perform(multipart(path)
                             .file((MockMultipartFile) request.image())

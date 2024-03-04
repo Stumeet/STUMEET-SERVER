@@ -29,21 +29,31 @@ public class FileUtil {
 			throw new BusinessException(ErrorCode.INVALID_IMAGE_EXCEPTION);
 		}
 
-		String contentType = fileName
-			.substring(fileName.lastIndexOf(".") + 1)
-			.toLowerCase(Locale.ROOT);
+        String contentType = extractContentType(fileName);
 
-		if (!VALID_CONTENT_TYPES.contains(contentType)) {
+        if (!VALID_CONTENT_TYPES.contains(contentType)) {
 			throw new BusinessException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION);
 		}
 
 		return contentType;
 	}
 
-	public static String createFileName(String directoryPath, String fileName) {
+    private static String extractContentType(String fileName) {
+        return fileName
+            .substring(fileName.lastIndexOf(".") + 1)
+            .toLowerCase(Locale.ROOT);
+    }
+
+    public static String createFileName(String directoryPath, String fileName) {
 		String dateTime = LocalDateTime.now()
 			.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
 		return String.format("%s/%s%s-%s", directoryPath, dateTime, UUID.randomUUID(), fileName);
+	}
+
+	public static boolean isImageFile(String fileName) {
+        String contentType = extractContentType(fileName);
+
+        return VALID_CONTENT_TYPES.contains(contentType);
 	}
 }
