@@ -20,8 +20,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final String ERROR_LOG_MESSAGE = "[ERROR] {} : {}";
-    private static final String WARN_LOG_MESSAGE = "[WARN] {} : {}";
+    public static final String ERROR_LOG_MESSAGE = "[ERROR] {} : {}";
+    public static final String WARN_LOG_MESSAGE = "[WARN] {} : {}";
 
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ApiResponse> handleBusinessException(final BusinessException e) {
