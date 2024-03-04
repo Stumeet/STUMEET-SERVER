@@ -9,6 +9,7 @@ import com.stumeet.server.common.auth.handler.OAuthAuthenticationSuccessHandler;
 import com.stumeet.server.common.auth.service.JwtAuthenticationService;
 import com.stumeet.server.common.auth.service.OAuthAuthenticationProvider;
 import com.stumeet.server.common.token.JwtTokenProvider;
+import com.stumeet.server.member.domain.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -69,8 +70,9 @@ public class SecurityConfig {
             auth.requestMatchers(HttpMethod.POST, "/api/v1/tokens").permitAll();
             auth.requestMatchers("/h2-console/**").permitAll();
             auth.requestMatchers("/docs/**").permitAll();
-            auth.requestMatchers("/api/v1/signup").hasAnyAuthority("FIRST_LOGIN");
-            auth.anyRequest().authenticated();
+            auth.requestMatchers("/api/v1/signup").hasAnyAuthority(UserRole.FIRST_LOGIN.toString());
+            auth.requestMatchers("/api/v1/professions").hasAnyAuthority(UserRole.FIRST_LOGIN.toString(), UserRole.MEMBER.toString());
+            auth.anyRequest().hasAnyAuthority(UserRole.MEMBER.toString());
         });
 
         http.securityContext(securityContext -> securityContext.securityContextRepository(securityContextRepository()));
