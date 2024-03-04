@@ -6,4 +6,5 @@ public interface MemberCommandPort {
 
     Member save(Member member);
 
+    void update(Member member);
 }

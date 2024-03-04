@@ -27,11 +27,18 @@ public class Member {
 
     private UserRole role;
 
-    public void registerWithAdditionalDetails(MemberProfileCommand command) {
+    public void signup(MemberProfileCommand command) {
+        this.image = command.url();
+        this.name = command.nickname();
+        this.region = command.region();
+        this.profession = command.profession();
+        this.role = UserRole.MEMBER;
+    }
+
+    public void updateProfile(MemberProfileCommand command) {
         this.image = command.url() == null ? this.image : command.url();
         this.name = command.nickname() == null ? this.name : command.nickname();
         this.region = command.region() == null ? this.region : command.region();
         this.profession = command.profession() == null ? this.profession : command.profession();
-        this.role = UserRole.MEMBER;
     }
 }

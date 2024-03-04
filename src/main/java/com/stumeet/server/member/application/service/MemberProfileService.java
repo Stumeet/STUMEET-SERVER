@@ -34,7 +34,9 @@ public class MemberProfileService implements MemberProfileUseCase {
                 .region(request.region())
                 .build();
 
-        registerProfile(member, command);
+        member.signup(command);
+
+        memberCommandPort.save(member);
     }
 
     @Override
@@ -54,12 +56,9 @@ public class MemberProfileService implements MemberProfileUseCase {
                 .region(request.region())
                 .build();
 
-        registerProfile(member, command);
+        member.updateProfile(command);
+
+        memberCommandPort.update(member);
     }
 
-    private void registerProfile(Member member, MemberProfileCommand command) {
-        member.registerWithAdditionalDetails(command);
-
-        memberCommandPort.save(member);
-    }
 }

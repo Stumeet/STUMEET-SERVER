@@ -22,6 +22,11 @@ public class MemberPersistenceAdapter implements MemberQueryPort, MemberCommandP
     }
 
     @Override
+    public void update(Member member) {
+        save(member);
+    }
+
+    @Override
     public Member getByOAuthProviderId(String oAuthProviderId, OAuthProvider provider) {
         return memberMapper.toDomain(
                 jpaMemberRepository.getByOAuthProviderId(oAuthProviderId, provider)
