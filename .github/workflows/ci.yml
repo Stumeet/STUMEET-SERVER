@@ -1,10 +1,9 @@
-name: CI triggered by PR
+name: CI triggered by CI trigger
 
 on:
-  pull_request:
-    branches:
-      - dev
-      - main
+  workflow_run:
+    workflows: [CI trigger]
+    types: [completed]
 
 jobs:
   ci:
