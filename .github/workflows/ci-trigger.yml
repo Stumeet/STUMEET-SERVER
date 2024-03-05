@@ -5,6 +5,9 @@ on:
     branches:
       - dev
       - main
+  push:
+    branches:
+      - dev
 
 jobs:
   run-CI-workflow:
