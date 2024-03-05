@@ -1,4 +1,4 @@
-name: TEST - CI triggered by CI trigger
+name: CI triggered by CI trigger
 
 on:
   workflow_run:
