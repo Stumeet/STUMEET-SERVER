@@ -28,9 +28,13 @@ public class MemberOAuthService implements MemberOAuthUseCase {
         if (isRegisterUser) {
             member = memberQueryPort.getByOAuthProviderId(response.id(), oAuthProvider);
         } else {
+            MemberLevel initialLevel = MemberLevel.builder()
+                    .rank(MemberRank.SEED)
+                    .experience(0.0)
+                    .build();
             member = memberCommandPort.save(
                     Member.builder()
-                            .sugarContents(0.0)
+                            .level(initialLevel)
                             .authType(AuthType.OAUTH)
                             .role(UserRole.FIRST_LOGIN)
                             .build()
