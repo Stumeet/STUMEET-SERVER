@@ -5,7 +5,7 @@ on:
     branches:
       - main
   workflow_run:
-    workflows: ["CI trigger"]
+    workflows: [CI trigger]
     types: [completed]
 
 jobs:
