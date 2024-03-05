@@ -18,12 +18,12 @@ public class FileUtil {
 	private static final String FILE_DATE_TIME_FORMAT = "yyyyMMddHHmmss";
 
 	public static String getValidImageContentType(String contentType) {
-		validateImageFile(contentType);
+		validateImageContentType(contentType);
 
 		return contentType;
 	}
 
-	private static void validateImageFile(String contentType) {
+	private static void validateImageContentType(String contentType) {
 		if (contentType == null) {
 			throw new BusinessException(ErrorCode.INVALID_IMAGE_EXCEPTION);
 		}
@@ -33,14 +33,14 @@ public class FileUtil {
 		}
 	}
 
+	public static boolean isValidImageFile(String contentType) {
+		return ValidImageContentType.hasContentType(contentType);
+	}
+
     public static String createFileName(String directoryPath, String fileName) {
 		String dateTime = LocalDateTime.now()
 			.format(DateTimeFormatter.ofPattern(FILE_DATE_TIME_FORMAT));
 
 		return String.format(FILE_NAME_FORMAT, directoryPath, dateTime, UUID.randomUUID(), fileName);
-	}
-
-	public static boolean isValidImageFile(String contentType) {
-        return ValidImageContentType.hasContentType(contentType);
 	}
 }
