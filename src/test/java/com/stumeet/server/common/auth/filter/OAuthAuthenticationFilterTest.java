@@ -29,7 +29,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WireMockTest(httpPort = 8089)
-@Transactional
 class OAuthAuthenticationFilterTest extends ApiTest {
 
     @Container
