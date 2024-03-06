@@ -2,9 +2,7 @@ name: CI trigger
 
 on:
   pull_request:
-    branches:
-      - dev
-      - main
+    branches: [ dev, main ]
 
 jobs:
   run-CI-workflow:
