@@ -19,7 +19,7 @@ public class Member {
 
     private String image;
 
-    private Double sugarContents;
+    private MemberLevel level;
 
     private String region;
 

@@ -3,9 +3,7 @@ package com.stumeet.server.stub;
 import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
 import com.stumeet.server.member.application.port.in.command.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.command.MemberUpdateCommand;
-import com.stumeet.server.member.domain.AuthType;
-import com.stumeet.server.member.domain.Member;
-import com.stumeet.server.member.domain.UserRole;
+import com.stumeet.server.member.domain.*;
 import com.stumeet.server.helper.WithMockMember;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -31,7 +29,8 @@ public class MemberStub {
                 .name("test")
                 .role(UserRole.FIRST_LOGIN)
                 .authType(AuthType.OAUTH)
-                .sugarContents(0.0)
+                .rank(MemberRank.SEED)
+                .experience(0.0)
                 .build();
     }
 
@@ -41,12 +40,17 @@ public class MemberStub {
     }
 
     public static Member getMember(WithMockMember annotation) {
+        MemberLevel level = MemberLevel.builder()
+                .rank(MemberRank.SEED)
+                .experience(0.0)
+                .build();
+
         return Member.builder()
                 .id(1L)
                 .name("test")
                 .role(annotation.authority())
                 .authType(AuthType.OAUTH)
-                .sugarContents(0.0)
+                .level(level)
                 .profession(null)
                 .region(null)
                 .image(null)
@@ -54,12 +58,16 @@ public class MemberStub {
     }
 
     public static Member getMember() {
+        MemberLevel level = MemberLevel.builder()
+                .rank(MemberRank.SEED)
+                .experience(0.0)
+                .build();
         return Member.builder()
                 .id(1L)
                 .name("test")
                 .role(UserRole.MEMBER)
                 .authType(AuthType.OAUTH)
-                .sugarContents(0.0)
+                .level(level)
                 .profession(null)
                 .region(null)
                 .image(null)
