@@ -2,23 +2,20 @@ package com.stumeet.server.member.adapter.in.web;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
-import com.stumeet.server.member.adapter.out.persistence.JpaMemberRepository;
 import com.stumeet.server.member.application.port.in.command.MemberUpdateCommand;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -26,22 +23,13 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional
 class MemberProfileApiTest extends ApiTest {
-
-    @Autowired
-    private JpaMemberRepository memberRepository;
 
     @Nested
     @DisplayName("내 프로필 수정")
     class UpdateMyProfile {
 
         private final String path = "/api/v1/members/me";
-
-        @BeforeEach
-        void setUp() {
-            memberRepository.save(MemberStub.getMemberEntity());
-        }
 
         @Test
         @WithMockMember
@@ -109,6 +97,35 @@ class MemberProfileApiTest extends ApiTest {
                                     fieldWithPath("code").description("응답 상태"),
                                     fieldWithPath("message").description("응답 메시지"),
                                     fieldWithPath("data[].message").description("유효하지 않은 요청에 대한 상세 메시지")
+                            )));
+        }
+    }
+
+    @Nested
+    @DisplayName("내 프로필 조회")
+    class GetMyProfile {
+
+        @Test
+        @WithMockMember
+        @DisplayName("[성공] 회원 프로필 조회에 성공한다.")
+        void successTest() throws Exception {
+            mockMvc.perform(get("/api/v1/members/me")
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(document("get-my-profile/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 상태"),
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data.id").description("회원 ID"),
+                                    fieldWithPath("data.image").description("프로필 이미지 URL"),
+                                    fieldWithPath("data.nickname").description("닉네임"),
+                                    fieldWithPath("data.region").description("지역"),
+                                    fieldWithPath("data.profession").description("분야 이름"),
+                                    fieldWithPath("data.rank").description("회원 레벨 - 랭크"),
+                                    fieldWithPath("data.experience").description("회원 레벨 - 경험치")
                             )));
         }
     }
