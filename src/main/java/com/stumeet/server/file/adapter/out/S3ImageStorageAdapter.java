@@ -10,9 +10,10 @@ import com.stumeet.server.common.annotation.StorageAdapter;
 import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.exception.model.NotImplementedException;
 import com.stumeet.server.common.response.ErrorCode;
-import com.stumeet.server.common.util.ImageFileUtil;
+import com.stumeet.server.common.util.FileUtil;
 import com.stumeet.server.file.application.port.out.FileCommandPort;
 import com.stumeet.server.file.application.port.out.FileUrl;
+import com.stumeet.server.file.domain.ImageFile;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +35,12 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 	private final S3Client s3Client;
 
 	@Override
-	public FileUrl uploadImageFile(MultipartFile multipartFile, String directoryPath) {
-		String originalFileName = multipartFile.getOriginalFilename();
-		String key = ImageFileUtil.createFileName(directoryPath, originalFileName);
+	public FileUrl uploadImageFile(MultipartFile file, String directoryPath) {
+		ImageFile imageFile = new ImageFile(file);
+		String key = FileUtil.generateKey(directoryPath, imageFile.getName());
 
 		PutObjectRequest objectRequest = PutObjectRequest.builder()
-			.contentType(ImageFileUtil.getValidImageContentType(multipartFile.getContentType()))
+			.contentType(imageFile.getContentType())
 			.bucket(bucket)
 			.key(key)
 			.build();
@@ -48,9 +49,7 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 			s3Client.putObject(
 				objectRequest,
 				RequestBody
-					.fromInputStream(
-						multipartFile.getInputStream(),
-						multipartFile.getSize()));
+					.fromInputStream(file.getInputStream(), file.getSize()));
 		} catch (IOException e) {
 			throw new BusinessException(e, ErrorCode.UPLOAD_FILE_FAIL_ERROR);
 		}

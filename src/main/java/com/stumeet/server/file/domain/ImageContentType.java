@@ -1,4 +1,4 @@
-package com.stumeet.server.common.util.model;
+package com.stumeet.server.file.domain;
 
 import java.util.Arrays;
 
