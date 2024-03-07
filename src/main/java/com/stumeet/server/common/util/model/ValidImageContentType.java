@@ -17,11 +17,7 @@ public enum ValidImageContentType {
 	}
 
 	public static boolean hasContentType(String contentType) {
-		for (ValidImageContentType type : ValidImageContentType.values()) {
-			if(type.getContentType().equalsIgnoreCase(contentType)) {
-				return true;
-			}
-		}
-		return false;
+return Arrays.stream(ValidImageContentType.values())
+             .anyMatch(type -> type.getContentType().equalsIgnoreCase(contentType));
 	}
 }
