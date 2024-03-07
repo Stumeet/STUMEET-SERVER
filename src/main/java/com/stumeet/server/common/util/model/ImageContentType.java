@@ -2,7 +2,7 @@ package com.stumeet.server.common.util.model;
 
 import java.util.Arrays;
 
-public enum ValidImageContentType {
+public enum ImageContentType {
 	JPG("image/jpg"),
 	JPEG("image/jpeg"),
 	PNG("image/png")
@@ -10,7 +10,7 @@ public enum ValidImageContentType {
 
 	private final String contentType;
 
-	ValidImageContentType(String contentType) {
+	ImageContentType(String contentType) {
 		this.contentType = contentType;
 	}
 
@@ -19,7 +19,7 @@ public enum ValidImageContentType {
 	}
 
 	public static boolean hasContentType(String contentType) {
-		return Arrays.stream(ValidImageContentType.values())
+		return Arrays.stream(ImageContentType.values())
              .anyMatch(type -> type.getContentType().equalsIgnoreCase(contentType));
 	}
 }

@@ -10,7 +10,7 @@ import com.stumeet.server.common.annotation.StorageAdapter;
 import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.exception.model.NotImplementedException;
 import com.stumeet.server.common.response.ErrorCode;
-import com.stumeet.server.common.util.FileUtil;
+import com.stumeet.server.common.util.ImageFileUtil;
 import com.stumeet.server.file.application.port.out.FileCommandPort;
 import com.stumeet.server.file.application.port.out.FileUrl;
 
@@ -36,10 +36,10 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 	@Override
 	public FileUrl uploadImageFile(MultipartFile multipartFile, String directoryPath) {
 		String originalFileName = multipartFile.getOriginalFilename();
-		String key = FileUtil.createFileName(directoryPath, originalFileName);
+		String key = ImageFileUtil.createFileName(directoryPath, originalFileName);
 
 		PutObjectRequest objectRequest = PutObjectRequest.builder()
-			.contentType(FileUtil.getValidImageContentType(multipartFile.getContentType()))
+			.contentType(ImageFileUtil.getValidImageContentType(multipartFile.getContentType()))
 			.bucket(bucket)
 			.key(key)
 			.build();

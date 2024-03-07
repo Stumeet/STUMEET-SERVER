@@ -6,13 +6,13 @@ import java.util.UUID;
 
 import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.response.ErrorCode;
-import com.stumeet.server.common.util.model.ValidImageContentType;
+import com.stumeet.server.common.util.model.ImageContentType;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FileUtil {
+public class ImageFileUtil {
 
 	private static final String FILE_NAME_FORMAT = "%s/%s%s-%s";
 	private static final String FILE_DATE_TIME_FORMAT = "yyyyMMddHHmmss";
@@ -34,7 +34,7 @@ public class FileUtil {
 	}
 
 	public static boolean isValidImageFile(String contentType) {
-		return ValidImageContentType.hasContentType(contentType);
+		return ImageContentType.hasContentType(contentType);
 	}
 
     public static String createFileName(String directoryPath, String fileName) {

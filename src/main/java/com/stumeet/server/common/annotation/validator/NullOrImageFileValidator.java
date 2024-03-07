@@ -1,6 +1,6 @@
 package com.stumeet.server.common.annotation.validator;
 
-import com.stumeet.server.common.util.FileUtil;
+import com.stumeet.server.common.util.ImageFileUtil;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +12,6 @@ public class NullOrImageFileValidator implements ConstraintValidator<NullOrImage
             return true;
         }
 
-        return FileUtil.isValidImageFile(value.getContentType());
+        return ImageFileUtil.isValidImageFile(value.getContentType());
     }
 }
