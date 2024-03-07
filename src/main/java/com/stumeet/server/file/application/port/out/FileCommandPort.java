@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileCommandPort {
 	FileUrl uploadImageFile(MultipartFile multipartFile, String directoryPath);
 
-	FileUrl uploadImageFiles(List<MultipartFile> multipartFileList, String directoryPath);
+	List<FileUrl> uploadImageFiles(List<MultipartFile> multipartFileList, String directoryPath);
 }

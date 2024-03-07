@@ -59,7 +59,7 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 	}
 
 	@Override
-	public FileUrl uploadImageFiles(List<MultipartFile> multipartFileList, String directoryPath) {
+	public List<FileUrl> uploadImageFiles(List<MultipartFile> multipartFileList, String directoryPath) {
 		throw new NotImplementedException();
 	}
 
