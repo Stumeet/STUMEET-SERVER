@@ -1,7 +1,5 @@
 package com.stumeet.server.file.adapter.out;
 
-import static com.stumeet.server.common.exception.handler.GlobalExceptionHandler.*;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -54,10 +52,7 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 						multipartFile.getInputStream(),
 						multipartFile.getSize()));
 		} catch (IOException e) {
-			log.warn(WARN_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
-			log.debug(e.getMessage(), e);
-
-			throw new BusinessException(ErrorCode.UPLOAD_FILE_FAIL_ERROR);
+			throw new BusinessException(e, ErrorCode.UPLOAD_FILE_FAIL_ERROR);
 		}
 
 		return getS3FileUrl(key);
