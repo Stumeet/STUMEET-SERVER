@@ -32,11 +32,7 @@ public class ImageFile {
 			throw new BusinessException(ErrorCode.INVALID_IMAGE_FILE_EXCEPTION);
 		}
 
-		if (!contentType.contains(extension)) {
-			throw new BusinessException(ErrorCode.INVALID_IMAGE_FILE_EXCEPTION);
-		}
-
-		if (!ImageContentType.hasContentType(extension)) {
+		if (!ImageContentType.isValid(contentType, extension)) {
 			throw new BusinessException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION);
 		}
 	}

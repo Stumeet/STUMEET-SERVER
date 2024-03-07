@@ -5,6 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.UUID;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtil {
 
 	private static final String FILE_NAME_FORMAT = "%s/%s%s-%s";
