@@ -34,7 +34,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@Transactional
 class MemberAuthApiTest extends ApiTest {
 
     @Container
@@ -61,8 +60,7 @@ class MemberAuthApiTest extends ApiTest {
 
         @BeforeEach
         void setUp() {
-            MemberJpaEntity entity = jpaMemberRepository.save(MemberStub.getMemberEntity());
-            refreshToken = jwtTokenProvider.generateRefreshToken(entity.getId());
+            refreshToken = jwtTokenProvider.generateRefreshToken(MemberStub.getMember().getId());
             redisTemplate.opsForValue()
                     .set(TokenStub.getExpiredAccessToken(), refreshToken);
         }
