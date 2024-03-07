@@ -144,6 +144,18 @@ include::{snippets}/validate_nickname/fail/invalid/response-fields.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-body.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-fields.adoc[]
 
+=== 내 정보 조회
+
+==== GET /api/v1/members/me
+
+===== 요청
+include::{snippets}/get-my-profile/success/http-request.adoc[]
+include::{snippets}/get-my-profile/success/request-headers.adoc[]
+
+===== 응답 (200)
+include::{snippets}/get-my-profile/success/response-body.adoc[]
+include::{snippets}/get-my-profile/success/response-fields.adoc[]
+
 === 사용자 정보 수정
 
 ==== PATCH /api/v1/members/me
