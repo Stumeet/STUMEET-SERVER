@@ -35,9 +35,9 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "domain_id", nullable = false)
+	@JoinColumn(name = "study_field_id", nullable = false)
 	@Comment("분야")
-	private StudyFieldJpaEntity field;
+	private StudyFieldJpaEntity studyField;
 
 	@Column(name = "name", length = 20, nullable = false)
 	@Comment("스터디명")

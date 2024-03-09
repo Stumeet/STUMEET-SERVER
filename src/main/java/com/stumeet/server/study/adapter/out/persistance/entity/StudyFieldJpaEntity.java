@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "study_domain")
+@Table(name = "study_field")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
