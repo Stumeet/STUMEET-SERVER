@@ -1,8 +1,8 @@
 package com.stumeet.server.study.application.port.in;
 
-import com.stumeet.server.study.domain.Study;
+import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 
 public interface StudyQueryUseCase {
 
-	Study getById(Long id);
+	StudyDetailResponse getStudyDetailById(Long id);
 }
