@@ -12,7 +12,7 @@ public class StudyUseCaseMapper {
 		return StudyDetailResponse.builder()
 			.id(study.getId())
 			.name(study.getName())
-			.field(study.getFieldName())
+			.field(study.getStudyFieldName())
 			.topics(study.getStudyTopics().getTopics())
 			.region(study.getRegion())
 			.intro(study.getIntro())

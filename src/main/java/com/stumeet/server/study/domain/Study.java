@@ -16,7 +16,7 @@ public class Study {
 
 	private String name;
 
-	private StudyField field;
+	private StudyField studyField;
 
 	private StudyTopics studyTopics;
 
@@ -36,8 +36,8 @@ public class Study {
 
 	private Boolean isDeleted;
 
-	public String getFieldName() {
-		return field.getName();
+	public String getStudyFieldName() {
+		return studyField.getName();
 	}
 
 	public String getAssembledTopics() {
