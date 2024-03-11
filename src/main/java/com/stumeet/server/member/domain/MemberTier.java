@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum MemberRank {
+public enum MemberTier {
     SEED("씨앗"),
     SPROUT("새싹"),
     LEAF("잎"),

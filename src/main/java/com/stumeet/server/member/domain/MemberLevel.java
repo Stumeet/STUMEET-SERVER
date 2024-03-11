@@ -9,6 +9,6 @@ import lombok.*;
 @Builder
 public class MemberLevel {
 
-    private MemberRank rank;
+    private MemberTier tier;
     private double experience;
 }

@@ -124,7 +124,7 @@ class MemberProfileApiTest extends ApiTest {
                                     fieldWithPath("data.nickname").description("닉네임"),
                                     fieldWithPath("data.region").description("지역"),
                                     fieldWithPath("data.profession").description("분야 이름"),
-                                    fieldWithPath("data.rank").description("회원 레벨 - 랭크"),
+                                    fieldWithPath("data.tier").description("회원 레벨 - 랭크"),
                                     fieldWithPath("data.experience").description("회원 레벨 - 경험치")
                             )));
         }

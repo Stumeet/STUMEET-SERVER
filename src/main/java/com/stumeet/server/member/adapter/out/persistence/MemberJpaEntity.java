@@ -2,7 +2,7 @@ package com.stumeet.server.member.adapter.out.persistence;
 
 import com.stumeet.server.common.model.BaseTimeEntity;
 import com.stumeet.server.member.domain.AuthType;
-import com.stumeet.server.member.domain.MemberRank;
+import com.stumeet.server.member.domain.MemberTier;
 import com.stumeet.server.member.domain.UserRole;
 import com.stumeet.server.profession.adapter.out.persistence.ProfessionJpaEntity;
 import jakarta.persistence.*;
@@ -37,10 +37,10 @@ public class MemberJpaEntity extends BaseTimeEntity {
     @Comment("멤버 이미지 URL")
     private String image;
 
-    @Column(name = "rank", length = 50, nullable = false)
+    @Column(name = "tier", length = 50, nullable = false)
     @Enumerated(EnumType.STRING)
     @Comment("등급")
-    private MemberRank rank;
+    private MemberTier tier;
 
     @Column(name = "experience", nullable = false)
     @Comment("경험치")
