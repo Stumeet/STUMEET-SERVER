@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stumeet.server.common.exception.error.Error;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.exception.error.ErrorField;
-import com.stumeet.server.common.response.SuccessCode;
-
 import java.util.List;
 import org.springframework.validation.BindingResult;
 
@@ -15,9 +13,17 @@ public record ApiResponse<T>(
         @JsonInclude(value = JsonInclude.Include.NON_NULL)
         T data
 ) {
+    public static <T> ApiResponse<T> success(int code, String message, T data) {
+        return new ApiResponse<>(code, message, data);
+    }
 
-    public static <T> ApiResponse<T> success(SuccessCode code, T data) {
-        return new ApiResponse<>(code.getHttpStatusCode(), code.getMessage(), data);
+    public static ApiResponse<Void> success(int code, String message) {
+        return new ApiResponse<>(code, message, null);
+    }
+
+    // TODO: 삭제 예정 메서드 : 해당 메서드를 사용 부분 수정 요망
+    public static ApiResponse<Void> fail(int code, String message) {
+        return new ApiResponse<>(code, message, null);
     }
 
     public static ApiResponse<Void> fail(ErrorCode errorCode) {
@@ -35,19 +41,4 @@ public record ApiResponse<T>(
                 ErrorField.toErrors(bindingResult)
         );
     }
-
-    // TODO: 삭제 예정 메서드 : 해당 메서드를 사용 부분 수정 요망
-
-    public static <T> ApiResponse<T> success(int code, String message, T data) {
-        return new ApiResponse<>(code, message, data);
-    }
-
-    public static ApiResponse<Void> success(int code, String message) {
-        return new ApiResponse<>(code, message, null);
-    }
-
-    public static ApiResponse<Void> fail(int code, String message) {
-        return new ApiResponse<>(code, message, null);
-    }
-
 }
