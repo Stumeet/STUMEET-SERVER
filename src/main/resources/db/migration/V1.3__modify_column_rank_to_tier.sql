@@ -1,0 +1,1 @@
+ALTER TABLE member RENAME COLUMN `rank` TO `tier`

@@ -14,7 +14,7 @@ public class MemberUseCaseMapper {
                 .nickname(member.getName())
                 .region(member.getRegion())
                 .profession(member.getProfession().getName())
-                .rank(member.getLevel().getRank().getName())
+                .tier(member.getLevel().getTier().getName())
                 .experience(member.getLevel().getExperience())
                 .build();
     }

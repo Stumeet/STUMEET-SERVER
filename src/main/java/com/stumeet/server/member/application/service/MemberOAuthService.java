@@ -29,7 +29,7 @@ public class MemberOAuthService implements MemberOAuthUseCase {
             member = memberQueryPort.getByOAuthProviderId(response.id(), oAuthProvider);
         } else {
             MemberLevel initialLevel = MemberLevel.builder()
-                    .rank(MemberRank.SEED)
+                    .tier(MemberTier.SEED)
                     .experience(0.0)
                     .build();
             member = memberCommandPort.save(
