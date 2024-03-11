@@ -17,7 +17,7 @@ public class MemberPersistenceMapper {
                 .id(domain.getId())
                 .name(domain.getName())
                 .image(domain.getImage())
-                .rank(domain.getLevel().getRank())
+                .tier(domain.getLevel().getTier())
                 .experience(domain.getLevel().getExperience())
                 .region(domain.getRegion())
                 .profession(professionPersistenceMapper.toEntity(domain.getProfession()))
@@ -28,7 +28,7 @@ public class MemberPersistenceMapper {
 
     public Member toDomain(MemberJpaEntity entity) {
         MemberLevel level = MemberLevel.builder()
-                .rank(entity.getRank())
+                .tier(entity.getTier())
                 .experience(entity.getExperience())
                 .build();
 

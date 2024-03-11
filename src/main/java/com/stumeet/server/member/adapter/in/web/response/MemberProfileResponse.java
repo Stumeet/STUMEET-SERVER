@@ -9,7 +9,7 @@ public record MemberProfileResponse(
         String nickname,
         String region,
         String profession,
-        String rank,
+        String tier,
         double experience
 ) {
 }

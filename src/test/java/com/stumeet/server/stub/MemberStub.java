@@ -33,7 +33,7 @@ public class MemberStub {
                 .profession(ProfessionStub.getProfessionEntity())
                 .role(UserRole.FIRST_LOGIN)
                 .authType(AuthType.OAUTH)
-                .rank(MemberRank.SEED)
+                .tier(MemberTier.SEED)
                 .experience(0.0)
                 .build();
     }
@@ -45,7 +45,7 @@ public class MemberStub {
 
     public static Member getMember(WithMockMember annotation) {
         MemberLevel level = MemberLevel.builder()
-                .rank(MemberRank.SEED)
+                .tier(MemberTier.SEED)
                 .experience(0.0)
                 .build();
 
@@ -63,7 +63,7 @@ public class MemberStub {
 
     public static Member getMember() {
         MemberLevel level = MemberLevel.builder()
-                .rank(MemberRank.SEED)
+                .tier(MemberTier.SEED)
                 .experience(0.0)
                 .build();
         return Member.builder()
@@ -95,7 +95,7 @@ public class MemberStub {
                 .nickname(member.getName())
                 .region(member.getRegion())
                 .profession(member.getProfession().getName())
-                .rank(member.getLevel().getRank().getName())
+                .tier(member.getLevel().getTier().getName())
                 .experience(member.getLevel().getExperience())
                 .build();
     }
