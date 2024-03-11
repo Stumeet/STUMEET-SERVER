@@ -33,7 +33,7 @@ public class MemberStub {
                 .profession(ProfessionStub.getProfessionEntity())
                 .role(UserRole.FIRST_LOGIN)
                 .authType(AuthType.OAUTH)
-                .rank(MemberRank.SEED)
+                .tier(MemberTier.SEED)
                 .experience(0.0)
                 .build();
     }
