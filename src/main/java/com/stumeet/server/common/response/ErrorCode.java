@@ -26,6 +26,13 @@ public enum ErrorCode {
     EXPIRED_REFRESH_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "리프레시 토큰이 만료되었습니다."),
 
     /*
+        401 - UNAUTHORIZED
+    */
+    JWT_INVALID_SIGNATURE_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 서명이 유효하지 않습니다."),
+    ILLEGAL_KEY_ALGORITHM_EXCEPTION(HttpStatus.UNAUTHORIZED, "유효하지 않은 키 알고리즘입니다."),
+    JWT_TOKEN_PARSING_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 토큰 파싱에 실패했습니다."),
+
+    /*
         403 - FORBIDDEN
     */
     ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "유효하지 않은 요청입니다."),

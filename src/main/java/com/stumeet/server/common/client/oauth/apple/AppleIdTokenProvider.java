@@ -1,8 +1,14 @@
 package com.stumeet.server.common.client.oauth.apple;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stumeet.server.common.client.oauth.apple.model.ApplePublicKeyResponses;
+import com.stumeet.server.common.auth.exception.IllegalKeyAlgorithmException;
+import com.stumeet.server.common.auth.exception.JwtInvalidSignatureException;
+import com.stumeet.server.common.auth.exception.JwtTokenParsingException;
+import com.stumeet.server.common.response.ErrorCode;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +42,7 @@ public class AppleIdTokenProvider {
 
             return keyFactory.generatePublic(keySpec);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+            throw new IllegalKeyAlgorithmException(ErrorCode.ILLEGAL_KEY_ALGORITHM_EXCEPTION, e);
         }
     }
 
@@ -45,18 +51,22 @@ public class AppleIdTokenProvider {
         String header = new String(Base64.getUrlDecoder().decode(splitToken[0]));
         try {
             return objectMapper.readTree(header).get("kid").asText();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e ) {
+            throw new JwtTokenParsingException(ErrorCode.JWT_TOKEN_PARSING_EXCEPTION, e);
         }
     }
 
 
     public String extractUserId(PublicKey publicKey, String idToken) {
-        return Jwts.parser()
-                .verifyWith(publicKey)
-                .build()
-                .parseSignedClaims(idToken)
-                .getPayload()
-                .getSubject();
+        try {
+            return Jwts.parser()
+                    .verifyWith(publicKey)
+                    .build()
+                    .parseSignedClaims(idToken)
+                    .getPayload()
+                    .getSubject();
+        } catch (SignatureException e) {
+            throw new JwtInvalidSignatureException(ErrorCode.JWT_INVALID_SIGNATURE_EXCEPTION, e);
+        }
     }
 }
