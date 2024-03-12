@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     /*
-        400 - BAD REQUEST
-    */
+	   400 - BAD REQUEST
+   */
     VALIDATION_REQUEST_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     BIND_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값을 바인딩하는 과정에서 오류가 발생하였습니다."),
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값이 검증되지 않은 값 입니다."),
@@ -26,6 +26,13 @@ public enum ErrorCode {
     INVALID_FILE_NAME_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 이름입니다."),
     INVALID_FILE_CONTENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 컨텐트 타입 입니다."),
     INVALID_FILE_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 확장자입니다."),
+
+    /*
+	    401 - UNAUTHORIZED
+    */
+    JWT_INVALID_SIGNATURE_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 서명이 유효하지 않습니다."),
+    ILLEGAL_KEY_ALGORITHM_EXCEPTION(HttpStatus.UNAUTHORIZED, "유효하지 않은 키 알고리즘입니다."),
+    JWT_TOKEN_PARSING_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 토큰 파싱에 실패했습니다."),
 
     /*
         403 - FORBIDDEN
