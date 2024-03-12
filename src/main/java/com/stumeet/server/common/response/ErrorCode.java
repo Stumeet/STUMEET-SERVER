@@ -45,11 +45,6 @@ public enum ErrorCode {
     STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 입니다."),
 
     /*
-	    415 - UNSUPPORTED MEDIA TYPE
-    */
-    UNSUPPORTED_FILE_CONTENT_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 파일 형식입니다."),
-
-    /*
         500 - INTERNAL SERVER ERROR
     */
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부에서 에러가 발생하였습니다."),

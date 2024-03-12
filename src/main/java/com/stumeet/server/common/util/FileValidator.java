@@ -17,10 +17,7 @@ public class FileValidator {
 		String contentType = file.getContentType();
 		String extension = FileUtil.extractExtension(fileName);
 
-		validateFileName(fileName);
-		validateImageContentType(contentType, extension);
-
-		return true;
+		return isFileNameValid(fileName) && isFileContentTypeValid(contentType, extension);
 	}
 
 	public static void validateImageFile(MultipartFile file) {
@@ -33,18 +30,22 @@ public class FileValidator {
 	}
 
 	public static void validateFileName(String fileName) {
-		if (fileName == null || !fileName.contains(".")) {
+		if (!isFileNameValid(fileName)) {
 			throw new InvalidFileException(ErrorCode.INVALID_FILE_NAME_EXCEPTION);
 		}
 	}
 
 	public static void validateImageContentType(String contentType, String extension) {
-		if (contentType == null) {
+		if (!isFileContentTypeValid(contentType, extension)) {
 			throw new InvalidFileException(ErrorCode.INVALID_FILE_CONTENT_TYPE_EXCEPTION);
 		}
+	}
 
-		if (!ImageContentType.exists(contentType, extension)) {
-			throw new InvalidFileException(ErrorCode.UNSUPPORTED_FILE_CONTENT_TYPE);
-		}
+	private static boolean isFileNameValid(String fileName) {
+		return fileName != null && fileName.contains(".");
+	}
+
+	private static boolean isFileContentTypeValid(String contentType, String extension) {
+		return contentType != null && ImageContentType.exists(contentType, extension);
 	}
 }
