@@ -11,9 +11,9 @@ import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.exception.model.NotImplementedException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.util.FileUtil;
+import com.stumeet.server.common.util.FileValidator;
 import com.stumeet.server.file.application.port.out.FileCommandPort;
 import com.stumeet.server.file.application.port.out.FileUrl;
-import com.stumeet.server.file.domain.ImageFile;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,11 +36,11 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 
 	@Override
 	public FileUrl uploadImageFile(MultipartFile file, String directoryPath) {
-		ImageFile imageFile = new ImageFile(file);
-		String key = FileUtil.generateKey(directoryPath, imageFile.getName());
+		FileValidator.validateImageFile(file);
+		String key = FileUtil.generateKey(directoryPath, file.getOriginalFilename());
 
 		PutObjectRequest objectRequest = PutObjectRequest.builder()
-			.contentType(imageFile.getContentType())
+			.contentType(file.getContentType())
 			.bucket(bucket)
 			.key(key)
 			.build();
