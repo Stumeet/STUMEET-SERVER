@@ -26,7 +26,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.queryPar
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@Transactional
 class MemberValidApiTest extends ApiTest {
 
     @Autowired
@@ -37,12 +36,6 @@ class MemberValidApiTest extends ApiTest {
     class IsDuplicateNickname {
 
         private final String path = "/api/v1/members/validate-nickname";
-        private MemberJpaEntity member;
-
-        @BeforeEach
-        void setUp() {
-            member = jpaMemberRepository.save(MemberStub.getMemberEntity());
-        }
 
         @Test
         @WithMockMember
@@ -96,7 +89,7 @@ class MemberValidApiTest extends ApiTest {
         @WithMockMember
         @DisplayName("[실패] 닉네임이 중복되면 검증에 실패합니다.")
         void duplicateNicknameTest() throws Exception {
-            String nickname = member.getName();
+            String nickname = MemberStub.getMember().getName();
             mockMvc.perform(get(path)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .param("nickname", nickname))

@@ -32,10 +32,14 @@ include::{snippets}/social_login/success/response-fields.adoc[]
 
 .유효한 토큰이 아닌 경우
 include::{snippets}/social_login/fail/invalid-token/response-body.adoc[]
+
 .토큰이 전달되지 않은 경우
 include::{snippets}/social_login/fail/not-exist-header/response-body.adoc[]
-
 include::{snippets}/social_login/fail/invalid-token/response-fields.adoc[]
+
+.전달한 JWT 토큰의 서명이 유효하지 않은 경우
+include::{snippets}/social_login/fail/invalid-signature/response-body.adoc[]
+include::{snippets}/social_login/fail/invalid-signature/response-fields.adoc[]
 
 === 로그아웃
 
@@ -143,6 +147,18 @@ include::{snippets}/validate_nickname/fail/invalid/response-fields.adoc[]
 .닉네임이 이미 존재하는 경우
 include::{snippets}/validate_nickname/fail/duplicate/response-body.adoc[]
 include::{snippets}/validate_nickname/fail/duplicate/response-fields.adoc[]
+
+=== 내 정보 조회
+
+==== GET /api/v1/members/me
+
+===== 요청
+include::{snippets}/get-my-profile/success/http-request.adoc[]
+include::{snippets}/get-my-profile/success/request-headers.adoc[]
+
+===== 응답 (200)
+include::{snippets}/get-my-profile/success/response-body.adoc[]
+include::{snippets}/get-my-profile/success/response-fields.adoc[]
 
 === 사용자 정보 수정
 

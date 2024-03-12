@@ -29,7 +29,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional
 public class LogoutFilterTest extends ApiTest {
 
     @Container
@@ -54,11 +53,10 @@ public class LogoutFilterTest extends ApiTest {
 
         @BeforeEach
         void setUp() {
-            MemberJpaEntity entity = jpaMemberRepository.save(MemberStub.getMemberEntity());
             redisTemplate.opsForValue()
                     .set(
                             JwtUtil.resolveToken(TokenStub.getMockAccessToken()),
-                            jwtTokenProvider.generateRefreshToken(entity.getId())
+                            jwtTokenProvider.generateRefreshToken(MemberStub.getMember().getId())
                     );
         }
 

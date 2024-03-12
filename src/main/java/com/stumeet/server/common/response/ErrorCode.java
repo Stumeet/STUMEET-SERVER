@@ -33,6 +33,11 @@ public enum ErrorCode {
     ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "유효하지 않은 요청입니다."),
 
     /*
+	    404 - NOT FOUND
+    */
+    STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 입니다."),
+
+    /*
 	    415 - UNSUPPORTED MEDIA TYPE
     */
     UNSUPPORTED_FILE_CONTENT_TYPE(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 파일 형식입니다."),

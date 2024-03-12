@@ -37,6 +37,7 @@ public record ApiResponse<T>(
     }
 
     // TODO: 삭제 예정 메서드 : 해당 메서드를 사용 부분 수정 요망
+
     public static <T> ApiResponse<T> success(int code, String message, T data) {
         return new ApiResponse<>(code, message, data);
     }
@@ -48,4 +49,5 @@ public record ApiResponse<T>(
     public static ApiResponse<Void> fail(int code, String message) {
         return new ApiResponse<>(code, message, null);
     }
+
 }

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 
@@ -29,7 +28,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WireMockTest(httpPort = 8089)
-@Transactional
 class OAuthAuthenticationFilterTest extends ApiTest {
 
     @Container
@@ -41,6 +39,7 @@ class OAuthAuthenticationFilterTest extends ApiTest {
     @DisplayName("OAuth2를 이용한 소셜 로그인")
     class oauthLogin {
         private final String path = "/api/v1/oauth";
+
 
         @Test
         @DisplayName("[성공] 소셜 로그인(카카오)에 성공합니다.")
@@ -75,7 +74,7 @@ class OAuthAuthenticationFilterTest extends ApiTest {
             mockFailKakaoTokenInfoApi();
 
             mockMvc.perform(post(path)
-                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken())
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getInvalidToken())
                             .header(AuthenticationHeader.X_OAUTH_PROVIDER.getName(), OAuthProvider.KAKAO.getProvider()))
                     .andExpect(status().isUnauthorized())
                     .andDo(document("social_login/fail/invalid-token",
@@ -109,10 +108,34 @@ class OAuthAuthenticationFilterTest extends ApiTest {
                     );
         }
 
+        @Test
+        @DisplayName("[실패] 잘못 서명된 토큰을 전달하는 경우 인증에 실패합니다.")
+        void invalidSignatureTest() throws Exception {
+            mockFailAppleInvalidSignatureTokenInfoApi();
+
+            mockMvc.perform(post(path)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getInvalidSignatureAccessToken())
+                            .header(AuthenticationHeader.X_OAUTH_PROVIDER.getName(), OAuthProvider.APPLE.getProvider()))
+                    .andExpect(status().isUnauthorized())
+                    .andDo(document("social_login/fail/invalid-signature",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestHeaders(
+                                            headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("OAuth Provider로 부터 전달받은 토큰"),
+                                            headerWithName(AuthenticationHeader.X_OAUTH_PROVIDER.getName()).description("OAuth Provider 이름")
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
+                                            fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지")
+                                    )
+                            )
+                    );
+        }
+
         private void mockFailKakaoTokenInfoApi() {
             stubFor(
                     WireMock.get(WireMock.urlEqualTo("/v1/user/access_token_info"))
-                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(TokenStub.getInvalidKakaoAccessToken()))
+                            .withHeader(AuthenticationHeader.ACCESS_TOKEN.getName(), equalTo(TokenStub.getInvalidToken()))
                             .willReturn(aResponse()
                                     .withStatus(HttpStatus.UNAUTHORIZED.value())
                                     .withHeader("content-type", APPLICATION_JSON)
@@ -129,6 +152,17 @@ class OAuthAuthenticationFilterTest extends ApiTest {
                                     .withStatus(HttpStatus.CREATED.value())
                                     .withHeader("content-type", APPLICATION_JSON)
                                     .withBody(MemberStub.getKakaoAccessTokenInfo())
+                            )
+            );
+        }
+
+        private void mockFailAppleInvalidSignatureTokenInfoApi() {
+            stubFor(
+                    WireMock.get(WireMock.urlEqualTo("/auth/keys"))
+                            .willReturn(aResponse()
+                                    .withStatus(HttpStatus.OK.value())
+                                    .withHeader("content-type", APPLICATION_JSON)
+                                    .withBody(MemberStub.getAppleInvalidSignatureTokenInfo())
                             )
             );
         }
