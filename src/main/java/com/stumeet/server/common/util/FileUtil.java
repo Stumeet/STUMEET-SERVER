@@ -15,14 +15,11 @@ public class FileUtil {
 	private static final String FILE_DATE_TIME_FORMAT = "yyyyMMddHHmmss";
 
 	public static String extractExtension(String fileName) {
-		if (isFileNameValid(fileName)) {
-			throw new IllegalArgumentException("파일 이름이 존재하지 않습니다.");
-		}
-		return fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase(Locale.ROOT);
-	}
+		FileValidator.validateFileName(fileName);
 
-	private static boolean isFileNameValid(String fileName) {
-		return fileName == null || !fileName.contains(".");
+		return fileName
+			.substring(fileName.lastIndexOf(".") + 1)
+			.toLowerCase(Locale.ROOT);
 	}
 
 	public static String generateKey(String directoryPath, String fileName) {

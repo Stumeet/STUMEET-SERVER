@@ -18,7 +18,7 @@ public enum ErrorCode {
     METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값의 타입이 잘못되었습니다."),
     INVALID_FORMAT_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값이 유효하지 않은 데이터입니다."),
     INVALID_FILE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일입니다."),
-    INVALID_IMAGE_FILE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 이미지 파일입니다."),
+    INVALID_FILE_CONTENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 컨텐트 타입 입니다."),
     INVALID_FILE_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 확장자입니다."),
     DUPLICATE_NICKNAME_EXCEPTION(HttpStatus.BAD_REQUEST, "닉네임이 중복되었습니다."),
     NOT_EXIST_EXCEPTION(HttpStatus.BAD_REQUEST, "요청으로 전달한 값이 존재하지 않습니다."),
