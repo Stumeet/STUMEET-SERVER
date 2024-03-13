@@ -9,11 +9,13 @@ import com.stumeet.server.common.model.BaseTimeEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,13 +41,13 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("분야")
 	private StudyFieldJpaEntity studyField;
 
+	@OneToOne(mappedBy = "study_tag")
+	@Comment("태그")
+	private StudyTagJpaEntity studyTag;
+
 	@Column(name = "name", length = 20, nullable = false)
 	@Comment("스터디명")
 	private String name;
-
-	@Column(name = "tags")
-	@Comment("태그")
-	private String tags;
 
 	@Column(name = "intro", length = 100, nullable = false)
 	@Comment("소개")
