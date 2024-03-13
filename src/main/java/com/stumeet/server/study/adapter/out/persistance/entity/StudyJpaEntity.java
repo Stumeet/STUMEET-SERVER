@@ -43,9 +43,9 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("스터디명")
 	private String name;
 
-	@Column(name = "topics")
-	@Comment("주제")
-	private String topics;
+	@Column(name = "tags")
+	@Comment("태그")
+	private String tags;
 
 	@Column(name = "intro", length = 100, nullable = false)
 	@Comment("소개")
@@ -59,14 +59,14 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("규칙")
 	private String rule;
 
-	@Column(name = "main_image", length = 500)
-	@Comment("메인 이미지")
-	private String mainImage;
+	@Column(name = "image", length = 500)
+	@Comment("스터디 이미지")
+	private String image;
 
-	@Column(name = "head_count", length = 100, nullable = false)
+	@Column(name = "headcount", length = 100, nullable = false)
 	@ColumnDefault("1")
 	@Comment("현재 인원")
-	private int headCount;
+	private int headcount;
 
 	@Column(name = "start_date", nullable = false)
 	@Comment("시작일")

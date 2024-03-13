@@ -6,7 +6,7 @@ import com.stumeet.server.study.adapter.out.persistance.entity.StudyJpaEntity;
 import com.stumeet.server.study.domain.Study;
 import com.stumeet.server.study.domain.StudyHeadCount;
 import com.stumeet.server.study.domain.StudyPeriod;
-import com.stumeet.server.study.domain.StudyTopics;
+import com.stumeet.server.study.domain.StudyTags;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,14 +21,14 @@ public class StudyPersistenceMapper {
 			.id(domain.getId())
 			.name(domain.getName())
 			.studyField(studyFieldPersistenceMapper.toEntity(domain.getStudyField()))
-			.topics(domain.getAssembledTopics())
+			.tags(domain.getAssembledTags())
 			.region(domain.getRegion())
 			.intro(domain.getIntro())
 			.rule(domain.getRule())
 			.startDate(domain.getStartDate())
 			.endDate(domain.getEndDate())
-			.headCount(domain.getHeadCountNumber())
-			.mainImage(domain.getMainImage())
+			.headcount(domain.getHeadcountNumber())
+			.image(domain.getImage())
 			.isFinished(domain.getIsFinished())
 			.isDeleted(domain.getIsDeleted())
 			.build();
@@ -39,13 +39,13 @@ public class StudyPersistenceMapper {
 			.id(entity.getId())
 			.name(entity.getName())
 			.studyField(studyFieldPersistenceMapper.toDomain(entity.getStudyField()))
-			.studyTopics(StudyTopics.from(entity.getTopics()))
+			.studyTags(StudyTags.from(entity.getTags()))
 			.region(entity.getRegion())
 			.intro(entity.getIntro())
 			.rule(entity.getRule())
 			.period(StudyPeriod.of(entity.getStartDate(), entity.getEndDate()))
-			.headCount(StudyHeadCount.from(entity.getHeadCount()))
-			.mainImage(entity.getMainImage())
+			.headcount(StudyHeadCount.from(entity.getHeadcount()))
+			.image(entity.getImage())
 			.isFinished(entity.getIsFinished())
 			.isDeleted(entity.getIsDeleted())
 			.build();

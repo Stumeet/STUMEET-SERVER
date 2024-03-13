@@ -18,7 +18,7 @@ public class Study {
 
 	private StudyField studyField;
 
-	private StudyTopics studyTopics;
+	private StudyTags studyTags;
 
 	private String region;
 
@@ -28,9 +28,9 @@ public class Study {
 
 	private StudyPeriod period;
 
-	private StudyHeadCount headCount;
+	private StudyHeadCount headcount;
 
-	private String mainImage;
+	private String image;
 
 	private Boolean isFinished;
 
@@ -40,12 +40,12 @@ public class Study {
 		return studyField.getName();
 	}
 
-	public String getAssembledTopics() {
-		return studyTopics.assemble();
+	public String getAssembledTags() {
+		return studyTags.assemble();
 	}
 
-	public int getHeadCountNumber() {
-		return headCount.getNumber();
+	public int getHeadcountNumber() {
+		return headcount.getNumber();
 	}
 
 	public LocalDateTime getStartDate() {
