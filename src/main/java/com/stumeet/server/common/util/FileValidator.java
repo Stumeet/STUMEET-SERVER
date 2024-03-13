@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileValidator {
 
-	public static boolean isImageFileValid(MultipartFile file) {
+	public static boolean isValidImageFile(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
 		String contentType = file.getContentType();
 		String extension = FileUtil.extractExtension(fileName);
 
-		return isFileNameValid(fileName) && isFileContentTypeValid(contentType, extension);
+		return isValidFileName(fileName) && isValidFileContentType(contentType, extension);
 	}
 
 	public static void validateImageFile(MultipartFile file) {
@@ -30,22 +30,22 @@ public class FileValidator {
 	}
 
 	public static void validateFileName(String fileName) {
-		if (!isFileNameValid(fileName)) {
+		if (!isValidFileName(fileName)) {
 			throw new InvalidFileException(ErrorCode.INVALID_FILE_NAME_EXCEPTION);
 		}
 	}
 
 	public static void validateImageContentType(String contentType, String extension) {
-		if (!isFileContentTypeValid(contentType, extension)) {
+		if (!isValidFileContentType(contentType, extension)) {
 			throw new InvalidFileException(ErrorCode.INVALID_FILE_CONTENT_TYPE_EXCEPTION);
 		}
 	}
 
-	private static boolean isFileNameValid(String fileName) {
+	private static boolean isValidFileName(String fileName) {
 		return fileName != null && fileName.contains(".");
 	}
 
-	private static boolean isFileContentTypeValid(String contentType, String extension) {
+	private static boolean isValidFileContentType(String contentType, String extension) {
 		return contentType != null && ImageContentType.exists(contentType, extension);
 	}
 }
