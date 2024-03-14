@@ -28,7 +28,7 @@ public class FileUploadService implements FileUploadUseCase {
 	}
 
 	@Override
-	public FileUrl uploadStudyActivityImage(Long studyId, List<MultipartFile> multipartFiles) {
+	public List<FileUrl> uploadStudyActivityImage(Long studyId, List<MultipartFile> multipartFiles) {
 		String path = String.format(STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH, studyId);
 
 		return fileCommandPort.uploadImageFiles(multipartFiles, path);
