@@ -19,6 +19,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    open-in-view: false
   cloud:
     config:
       server:
