@@ -33,6 +33,7 @@ public enum ErrorCode {
     JWT_INVALID_SIGNATURE_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 서명이 유효하지 않습니다."),
     ILLEGAL_KEY_ALGORITHM_EXCEPTION(HttpStatus.UNAUTHORIZED, "유효하지 않은 키 알고리즘입니다."),
     JWT_TOKEN_PARSING_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 토큰 파싱에 실패했습니다."),
+    NOT_EXIST_OAUTH_PROVIDER(HttpStatus.UNAUTHORIZED, "존재하지 않는 OAuth 제공자입니다."),
 
     /*
         403 - FORBIDDEN
@@ -43,6 +44,7 @@ public enum ErrorCode {
 	    404 - NOT FOUND
     */
     STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 입니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 멤버 입니다."),
 
     /*
         500 - INTERNAL SERVER ERROR

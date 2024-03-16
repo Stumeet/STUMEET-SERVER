@@ -31,7 +31,7 @@ public class AppleIdTokenProvider {
         ApplePublicKeyResponses.ApplePublicKeyResponse applePublicKey = publicKeys.keys().stream()
                 .filter(key -> key.kid().equals(kid))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("매칭되는 kid가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalKeyAlgorithmException(ErrorCode.ILLEGAL_KEY_ALGORITHM_EXCEPTION));
 
         BigInteger modulus = new BigInteger(1, Base64.getUrlDecoder().decode(applePublicKey.n()));
         BigInteger publicExponent = new BigInteger(1, Base64.getUrlDecoder().decode(applePublicKey.e()));
