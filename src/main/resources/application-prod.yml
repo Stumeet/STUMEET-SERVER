@@ -22,6 +22,7 @@ spring:
       hibernate:
         show_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
   cloud:
     config:
       server:
