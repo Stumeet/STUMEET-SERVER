@@ -31,10 +31,10 @@ public class StudyFieldJpaEntity {
 	@Comment("스터디 분야 아이디")
 	private Long id;
 
-	@Column(name = "name", length = 20)
+	@Column(name = "name", length = 20, nullable = false)
 	@Comment("분야명")
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<StudyDomainJpaEntity> studyRelated;
+	private List<StudyDomainJpaEntity> studyDomain;
 }

@@ -29,7 +29,7 @@ public class StudyDomainJpaEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Comment("스터디 관련 id")
+	@Comment("스터디 도메인 id")
 	private Long id;
 	
 	@ManyToOne

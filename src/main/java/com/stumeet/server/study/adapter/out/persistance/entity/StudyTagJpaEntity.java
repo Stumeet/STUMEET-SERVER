@@ -27,7 +27,7 @@ public class StudyTagJpaEntity {
 	@Comment("스터디 태그 id")
 	private Long id;
 
-	@Comment("스터디 관련 id")
+	@Comment("스터디 도메인 id")
 	@Column(name = "study_domain_id")
 	private Long studyDomainId;
 
