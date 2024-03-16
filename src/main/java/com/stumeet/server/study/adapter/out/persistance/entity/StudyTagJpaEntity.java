@@ -1,16 +1,12 @@
 package com.stumeet.server.study.adapter.out.persistance.entity;
 
-import java.util.List;
-
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,22 +15,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "study_field")
+@Table(name = "study_tag")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class StudyFieldJpaEntity {
+public class StudyTagJpaEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Comment("스터디 분야 아이디")
+	@Comment("스터디 태그 id")
 	private Long id;
 
-	@Column(name = "name", length = 20, nullable = false)
-	@Comment("분야명")
-	private String name;
+	@Comment("스터디 도메인 id")
+	@Column(name = "study_domain_id")
+	private Long studyDomainId;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<StudyDomainJpaEntity> studyDomain;
+	@Column(name = "name", length = 10, nullable = true)
+	@Comment("태그명")
+	private String name;
 }

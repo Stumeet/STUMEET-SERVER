@@ -13,7 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,18 +34,14 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("스터디 그룹 아이디")
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "study_field_id", nullable = false)
-	@Comment("분야")
-	private StudyFieldJpaEntity studyField;
+	@OneToOne
+	@JoinColumn(name = "study_domain_id")
+	@Comment("스터디 관련")
+	private StudyDomainJpaEntity studyDomain;
 
 	@Column(name = "name", length = 20, nullable = false)
 	@Comment("스터디명")
 	private String name;
-
-	@Column(name = "topics")
-	@Comment("주제")
-	private String topics;
 
 	@Column(name = "intro", length = 100, nullable = false)
 	@Comment("소개")
@@ -59,14 +55,14 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("규칙")
 	private String rule;
 
-	@Column(name = "main_image", length = 500)
-	@Comment("메인 이미지")
-	private String mainImage;
+	@Column(name = "image", length = 500)
+	@Comment("스터디 이미지")
+	private String image;
 
-	@Column(name = "head_count", length = 100, nullable = false)
+	@Column(name = "headcount", length = 100, nullable = false)
 	@ColumnDefault("1")
 	@Comment("현재 인원")
-	private int headCount;
+	private int headcount;
 
 	@Column(name = "start_date", nullable = false)
 	@Comment("시작일")
