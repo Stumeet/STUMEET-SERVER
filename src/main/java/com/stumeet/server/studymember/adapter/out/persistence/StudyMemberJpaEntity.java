@@ -25,7 +25,7 @@ public class StudyMemberJpaEntity extends BaseTimeEntity {
     @Comment("멤버")
     private MemberJpaEntity member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     @Comment("스터디")
     private StudyJpaEntity study;
