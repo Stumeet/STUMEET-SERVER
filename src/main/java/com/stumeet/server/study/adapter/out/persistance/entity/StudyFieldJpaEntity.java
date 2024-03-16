@@ -1,12 +1,16 @@
 package com.stumeet.server.study.adapter.out.persistance.entity;
 
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,4 +34,7 @@ public class StudyFieldJpaEntity {
 	@Column(name = "name", length = 20)
 	@Comment("분야명")
 	private String name;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<StudyDomainJpaEntity> studyRelated;
 }
