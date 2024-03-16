@@ -1,5 +1,7 @@
 package com.stumeet.server.member.domain;
 
+import com.stumeet.server.common.auth.exception.NotExistsOAuthProviderException;
+import com.stumeet.server.common.response.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,6 @@ public enum OAuthProvider {
         return Arrays.stream(values())
                 .filter(p -> p.getProvider().equals(provider))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("알 수 없는 OAuth provider 입니다."));
+                .orElseThrow(() -> new NotExistsOAuthProviderException(ErrorCode.NOT_EXIST_OAUTH_PROVIDER));
     }
 }
