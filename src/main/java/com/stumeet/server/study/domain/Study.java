@@ -1,13 +1,16 @@
 package com.stumeet.server.study.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Builder
 @Getter
 public class Study {
@@ -16,9 +19,7 @@ public class Study {
 
 	private String name;
 
-	private StudyField studyField;
-
-	private StudyTags studyTags;
+	private StudyDomain studyDomain;
 
 	private String region;
 
@@ -32,16 +33,16 @@ public class Study {
 
 	private String image;
 
-	private Boolean isFinished;
+	private boolean isFinished;
 
-	private Boolean isDeleted;
+	private boolean isDeleted;
 
 	public String getStudyFieldName() {
-		return studyField.getName();
+		return studyDomain.getStudyFieldName();
 	}
 
-	public String getAssembledTags() {
-		return studyTags.assemble();
+	public List<String> getStudyTagNames() {
+		return studyDomain.getStudyTagNames();
 	}
 
 	public int getHeadcountNumber() {

@@ -13,7 +13,7 @@ public class StudyUseCaseMapper {
 			.id(study.getId())
 			.name(study.getName())
 			.field(study.getStudyFieldName())
-			.tags(study.getStudyTags().getTags())
+			.tags(study.getStudyTagNames())
 			.region(study.getRegion())
 			.intro(study.getIntro())
 			.rule(study.getRule())
@@ -21,8 +21,8 @@ public class StudyUseCaseMapper {
 			.endDate(study.getEndDate())
 			.headcount(study.getHeadcountNumber())
 			.image(study.getImage())
-			.isFinished(study.getIsFinished())
-			.isDeleted(study.getIsDeleted())
+			.isFinished(study.isFinished())
+			.isDeleted(study.isDeleted())
 			.build();
 	}
 }
