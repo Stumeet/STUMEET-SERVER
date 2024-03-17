@@ -19,4 +19,9 @@ public class StudyRepositoryImpl implements StudyRepository {
 		return jpaStudyRepository.findById(id)
 			.orElseThrow(() -> new BusinessException(ErrorCode.STUDY_NOT_FOUND));
 	}
+
+	@Override
+	public boolean existsById(Long id) {
+		return jpaStudyRepository.existsById(id);
+	}
 }
