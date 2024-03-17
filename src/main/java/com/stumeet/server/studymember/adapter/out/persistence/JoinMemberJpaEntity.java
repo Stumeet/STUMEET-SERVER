@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Entity
-@Table(name = "study_member")
+@Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
@@ -20,7 +20,7 @@ public class JoinMemberJpaEntity {
     @Comment("스터디 참여 멤버 이름")
     private String name;
 
-    @Column(name = "image", length = 100, nullable = false)
+    @Column(name = "image")
     @Comment("스터디 참여 멤버 프로필 사진")
     private String image;
 
