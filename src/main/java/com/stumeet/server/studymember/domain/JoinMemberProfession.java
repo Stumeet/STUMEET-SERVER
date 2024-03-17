@@ -8,14 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
-public class StudyMember {
+public class JoinMemberProfession {
+
     private Long id;
 
-    private JoinMember member;
-
-    private JoinStudy study;
-
-    private boolean isAdmin;
-
-    private boolean isSentGrape;
+    private String name;
 }
