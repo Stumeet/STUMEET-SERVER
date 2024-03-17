@@ -1,7 +1,6 @@
 package com.stumeet.server.member.adapter.out.persistence;
 
 import com.stumeet.server.common.annotation.PersistenceAdapter;
-import com.stumeet.server.common.exception.model.NotExistsException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.member.application.port.out.MemberCommandPort;
 import com.stumeet.server.member.application.port.out.MemberQueryPort;
@@ -48,5 +47,10 @@ public class MemberPersistenceAdapter implements MemberQueryPort, MemberCommandP
     public boolean isDuplicateNickname(String name) {
         return jpaMemberRepository.findByName(name)
                 .isPresent();
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return jpaMemberRepository.existsById(id);
     }
 }
