@@ -24,10 +24,6 @@ public class JoinMemberPersistenceMapper {
     public JoinMemberJpaEntity toEntity(JoinMember domain) {
         return JoinMemberJpaEntity.builder()
                 .id(domain.getId())
-                .name(domain.getName())
-                .image(domain.getImage())
-                .profession(joinMemberProfessionPersistenceMapper.toEntity(domain.getProfession()))
-                .region(domain.getRegion())
                 .build();
     }
 }

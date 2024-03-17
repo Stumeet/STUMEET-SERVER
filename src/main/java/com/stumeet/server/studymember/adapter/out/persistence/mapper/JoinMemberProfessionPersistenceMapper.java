@@ -14,11 +14,4 @@ public class JoinMemberProfessionPersistenceMapper {
                 .build();
     }
 
-    public JoinMemberProfessionJpaEntity toEntity(JoinMemberProfession domain) {
-        return JoinMemberProfessionJpaEntity.builder()
-                .id(domain.getId())
-                .name(domain.getName())
-                .build();
-    }
-
 }
