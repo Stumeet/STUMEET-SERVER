@@ -1,7 +1,6 @@
-package com.stumeet.server.studymember.adapter.out.persistence;
+package com.stumeet.server.studymember.adapter.out.persistence.mapper;
 
-import com.stumeet.server.member.adapter.out.persistence.MemberPersistenceMapper;
-import com.stumeet.server.study.adapter.out.persistance.mapper.StudyPersistenceMapper;
+import com.stumeet.server.studymember.adapter.out.persistence.StudyMemberJpaEntity;
 import com.stumeet.server.studymember.domain.StudyMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class StudyMemberPersistenceMapper {
 
-    private final MemberPersistenceMapper memberPersistenceMapper;
-    private final StudyPersistenceMapper studyPersistenceMapper;
+    private final JoinMemberPersistenceMapper memberPersistenceMapper;
+    private final JoinStudyPersistenceMapper studyPersistenceMapper;
 
     public StudyMemberJpaEntity toEntity(StudyMember domain) {
         return StudyMemberJpaEntity.builder()
