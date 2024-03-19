@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS `study_member`
     `created_at`    DATETIME   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',
     `updated_at`    DATETIME   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 시간',
 
-    CONSTRAINT `fk_member_id` FOREIGN KEY (`member_id`)
+    CONSTRAINT `fk_study_member_by_member_id` FOREIGN KEY (`member_id`)
         REFERENCES `member` (`id`)
         ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT `fk_study_id` FOREIGN KEY (`study_id`)
+    CONSTRAINT `fk_study_member_by_stduy_id` FOREIGN KEY (`study_id`)
         REFERENCES `study` (`id`)
         ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB
