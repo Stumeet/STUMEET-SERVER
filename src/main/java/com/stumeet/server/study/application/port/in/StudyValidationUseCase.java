@@ -1,6 +1,6 @@
 package com.stumeet.server.study.application.port.in;
 
-public interface StudyValidUseCase {
+public interface StudyValidationUseCase {
 
     void checkById(Long id);
 }

@@ -1,5 +1,5 @@
 package com.stumeet.server.study.application.port.out;
 
-public interface StudyValidPort {
+public interface StudyValidationPort {
     boolean existsById(Long id);
 }

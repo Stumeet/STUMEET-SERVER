@@ -1,6 +1,6 @@
 package com.stumeet.server.member.application.port.in;
 
-public interface MemberValidUseCase {
+public interface MemberValidationUseCase {
 
     void validateNickname(String name);
 

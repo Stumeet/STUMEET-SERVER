@@ -1,9 +1,9 @@
 package com.stumeet.server.studymember.application.service;
 
-import com.stumeet.server.member.application.port.in.MemberValidUseCase;
+import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.member.domain.exception.MemberNotExistsException;
 import com.stumeet.server.stub.StudyMemberStub;
-import com.stumeet.server.study.application.port.in.StudyValidUseCase;
+import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
 import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoinCommand;
 import com.stumeet.server.studymember.application.port.in.mapper.StudyMemberUseCaseMapper;
@@ -26,10 +26,10 @@ class StudyMemberJoinServiceTest extends UnitTest {
     private StudyMemberJoinService studyMemberJoinService;
 
     @Mock
-    private MemberValidUseCase memberValidUseCase;
+    private MemberValidationUseCase memberValidationUseCase;
 
     @Mock
-    private StudyValidUseCase studyValidUseCase;
+    private StudyValidationUseCase studyValidationUseCase;
 
     @Mock
     private StudyMemberUseCaseMapper studyMemberUseCaseMapper;
@@ -53,8 +53,8 @@ class StudyMemberJoinServiceTest extends UnitTest {
         }
 
         private void verifyMethodCall() {
-            then(memberValidUseCase).should().checkById(any());
-            then(studyValidUseCase).should().checkById(any());
+            then(memberValidationUseCase).should().checkById(any());
+            then(studyValidationUseCase).should().checkById(any());
             then(studyMemberUseCaseMapper).should().toDomain(any());
             then(studyMemberJoinPort).should().join(any());
         }
@@ -65,7 +65,7 @@ class StudyMemberJoinServiceTest extends UnitTest {
             StudyMemberJoinCommand command = StudyMemberStub.getJoinCommand();
 
             willThrow(MemberNotExistsException.class)
-                    .given(memberValidUseCase).checkById(command.memberId());
+                    .given(memberValidationUseCase).checkById(command.memberId());
 
             assertThatCode(() -> studyMemberJoinService.join(command))
                     .isInstanceOf(MemberNotExistsException.class);
@@ -78,7 +78,7 @@ class StudyMemberJoinServiceTest extends UnitTest {
             StudyMemberJoinCommand command = StudyMemberStub.getJoinCommand();
 
             willThrow(StudyNotExistsException.class)
-                    .given(studyValidUseCase).checkById(command.memberId());
+                    .given(studyValidationUseCase).checkById(command.memberId());
 
             assertThatCode(() -> studyMemberJoinService.join(command))
                     .isInstanceOf(StudyNotExistsException.class);}
