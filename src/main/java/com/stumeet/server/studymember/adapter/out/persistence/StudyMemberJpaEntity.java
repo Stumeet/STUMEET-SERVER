@@ -1,8 +1,6 @@
 package com.stumeet.server.studymember.adapter.out.persistence;
 
 import com.stumeet.server.common.model.BaseTimeEntity;
-import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
-import com.stumeet.server.study.adapter.out.persistance.entity.StudyJpaEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -23,12 +21,12 @@ public class StudyMemberJpaEntity extends BaseTimeEntity {
     @OneToOne
     @JoinColumn(name = "member_id")
     @Comment("멤버")
-    private MemberJpaEntity member;
+    private JoinMemberJpaEntity member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     @Comment("스터디")
-    private StudyJpaEntity study;
+    private JoinStudyJpaEntity study;
 
     @Column(name = "is_admin")
     @Comment("스터디 관리자 여부")

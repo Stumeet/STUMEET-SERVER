@@ -1,18 +1,13 @@
 package com.stumeet.server.member.adapter.in.web;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
-import com.stumeet.server.member.adapter.out.persistence.JpaMemberRepository;
-import com.stumeet.server.member.adapter.out.persistence.MemberJpaEntity;
+import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
-import com.stumeet.server.helper.WithMockMember;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
@@ -26,10 +21,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.queryPar
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-class MemberValidApiTest extends ApiTest {
-
-    @Autowired
-    private JpaMemberRepository jpaMemberRepository;
+class MemberValidationApiTest extends ApiTest {
 
     @Nested
     @DisplayName("닉네임 중복 검증")
