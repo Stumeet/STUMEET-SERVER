@@ -3,6 +3,8 @@ package com.stumeet.server.studymember.application.service;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyMemberStub;
 import com.stumeet.server.stub.StudyStub;
+import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
+import com.stumeet.server.study.domain.exception.StudyNotExistsException;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberResponses;
@@ -27,6 +29,9 @@ class StudyMemberQueryServiceTest extends UnitTest {
 
     @InjectMocks
     private StudyMemberQueryService studyMemberQueryService;
+
+    @Mock
+    private StudyValidationUseCase studyValidationUseCase;
 
     @Mock
     private StudyMemberValidationUseCase studyMemberValidationUseCase;
@@ -64,6 +69,20 @@ class StudyMemberQueryServiceTest extends UnitTest {
 
             assertThatCode(() -> studyMemberQueryService.getStudyMembers(studyId, memberId))
                     .isInstanceOf(StudyMemberNotJoinedException.class);
+        }
+
+        @Test
+        @DisplayName("[실패] 스터디가 존재하지 않으면 예외가 발생한다.")
+        void notExistStudyTest() {
+            Long studyId = StudyStub.getStudyId();
+            Long memberId = MemberStub.getMemberId();
+
+            willThrow(StudyNotExistsException.class)
+                    .given(studyValidationUseCase).checkById(studyId);
+
+            assertThatCode(() -> studyMemberQueryService.getStudyMembers(studyId, memberId))
+                    .isInstanceOf(StudyNotExistsException.class);
+
         }
     }
 }
