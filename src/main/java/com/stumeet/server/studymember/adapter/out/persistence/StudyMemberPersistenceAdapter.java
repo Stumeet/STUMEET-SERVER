@@ -25,7 +25,7 @@ public class StudyMemberPersistenceAdapter implements StudyMemberJoinPort, Study
 
     @Override
     public List<SimpleStudyMemberResponse> findStudyMembers(Long studyId) {
-        return jpaStudyMemberRepository.findStudyMembers(studyId);
+        return jpaStudyMemberRepository.findStudyMembersByStudyId(studyId);
     }
 
     @Override

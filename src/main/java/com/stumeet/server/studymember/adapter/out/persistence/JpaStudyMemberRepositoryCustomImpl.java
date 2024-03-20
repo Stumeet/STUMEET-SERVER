@@ -16,7 +16,7 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
 
 
     @Override
-    public List<SimpleStudyMemberResponse> findStudyMembers(Long studyId) {
+    public List<SimpleStudyMemberResponse> findStudyMembersByStudyId(Long studyId) {
         return query
                 .select(
                         new QSimpleStudyMemberResponse(

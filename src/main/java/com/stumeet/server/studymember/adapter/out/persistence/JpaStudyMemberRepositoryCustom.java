@@ -5,7 +5,7 @@ import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMe
 import java.util.List;
 
 public interface JpaStudyMemberRepositoryCustom {
-    List<SimpleStudyMemberResponse> findStudyMembers(Long studyId);
+    List<SimpleStudyMemberResponse> findStudyMembersByStudyId(Long studyId);
 
     boolean isStudyJoinMember(Long studyId, Long memberId);
 }
