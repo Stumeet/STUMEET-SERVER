@@ -27,7 +27,6 @@ public enum ErrorCode {
     INVALID_FILE_CONTENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 컨텐트 타입 입니다."),
     INVALID_FILE_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 확장자입니다."),
 
-    STUDY_MEMBER_NOT_JOINED_EXCEPTION(HttpStatus.BAD_REQUEST, "스터디에 가입한 멤버가 아닙니다."),
 
     /*
 	    401 - UNAUTHORIZED
@@ -41,6 +40,7 @@ public enum ErrorCode {
         403 - FORBIDDEN
     */
     ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "유효하지 않은 요청입니다."),
+    STUDY_MEMBER_NOT_JOINED_EXCEPTION(HttpStatus.FORBIDDEN, "스터디에 가입한 멤버가 아닙니다."),
 
     /*
 	    404 - NOT FOUND
