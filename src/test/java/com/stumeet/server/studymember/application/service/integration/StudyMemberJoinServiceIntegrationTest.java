@@ -31,11 +31,12 @@ public class StudyMemberJoinServiceIntegrationTest extends IntegrationTest {
         @DisplayName("[성공] 스터디 가입")
         void successTest() {
             StudyMemberJoinCommand command = StudyMemberStub.getJoinCommand();
-            int want = 1;
+            long want = jpaStudyMemberRepository.countByStudyId(command.studyId()) + 1;
 
             studyMemberJoinService.join(command);
 
-            int studyMemberCount = jpaStudyMemberRepository.findAll().size();
+            long studyMemberCount = jpaStudyMemberRepository.countByStudyId(command.studyId());
+
             assertThat(studyMemberCount).isEqualTo(want);
         }
 
