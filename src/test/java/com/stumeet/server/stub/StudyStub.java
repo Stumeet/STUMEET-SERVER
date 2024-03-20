@@ -8,4 +8,8 @@ public class StudyStub {
     public static Long getStudyId() {
         return 1L;
     }
+
+    public static Long getInvalidStudyId() {
+        return 0L;
+    }
 }
