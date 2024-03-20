@@ -34,8 +34,8 @@ public class MemberStub {
                 .build();
 
         return Member.builder()
-                .id(1L)
-                .name("test")
+                .id(annotation.id())
+                .name("test" + annotation.id())
                 .role(annotation.authority())
                 .authType(AuthType.OAUTH)
                 .level(level)
@@ -52,7 +52,7 @@ public class MemberStub {
                 .build();
         return Member.builder()
                 .id(1L)
-                .name("test")
+                .name("test1")
                 .role(UserRole.MEMBER)
                 .authType(AuthType.OAUTH)
                 .level(level)
@@ -90,5 +90,9 @@ public class MemberStub {
 
     public static Long getMemberId() {
         return 1L;
+    }
+
+    public static Long getInvalidStudyId() {
+        return 0L;
     }
 }
