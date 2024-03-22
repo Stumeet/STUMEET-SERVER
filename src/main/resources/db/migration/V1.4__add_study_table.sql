@@ -8,10 +8,10 @@ CREATE TABLE `study_field`
 
 CREATE TABLE `study_domain`
 (
-    `id`             BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 태그 ID',
-    `study_field_id` BIGINT NOT NULL COMMENT '스터디 분야 ID',
+    `id`             BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 도메인 ID',
+    `study_field_id` BIGINT NULL COMMENT '스터디 분야 ID',
 
-    CONSTRAINT fk_study_field FOREIGN KEY (study_field_id)
+    CONSTRAINT fk_study_domain_with_field FOREIGN KEY (study_field_id)
         REFERENCES study_field (id)
         ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB
@@ -24,10 +24,10 @@ CREATE TABLE `study`
     `study_domain_id` BIGINT       NOT NULL COMMENT '스터디 도메인 ID',
     `name`            VARCHAR(255) NOT NULL COMMENT '스터디명',
     `region`          VARCHAR(50)  NOT NULL COMMENT '활동 지역',
-    `intro`           VARCHAR(100) NOT NULL COMMENT '소개',
-    `rule`            VARCHAR(100) NULL COMMENT '규칙',
+    `intro`           VARCHAR(200) NOT NULL COMMENT '소개',
+    `rule`            VARCHAR(200) NULL COMMENT '규칙',
     `image`           VARCHAR(500) NOT NULL COMMENT '스터디 이미지의 URL',
-    `headcount`       TINYINT(50) NOT NULL DEFAULT 1 COMMENT '인원 수',
+    `headcount`       TINYINT(100) NOT NULL DEFAULT 1 COMMENT '인원 수',
     `start_date`      DATETIME     NOT NULL COMMENT '시작일',
     `end_date`        DATETIME     NOT NULL COMMENT '종료일',
     `created_at`      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',
@@ -48,7 +48,7 @@ CREATE TABLE `study_tag`
 (
     `id`              BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 태그 ID',
     `study_domain_id` BIGINT      NOT NULL COMMENT '스터디 관련 ID',
-    `name`            VARCHAR(10) NOT NULL COMMENT '태그명',
+    `name`            VARCHAR(20) NOT NULL COMMENT '태그명',
 
     CONSTRAINT fk_study_domain_with_tag FOREIGN KEY (study_domain_id)
         REFERENCES study_domain (id)
