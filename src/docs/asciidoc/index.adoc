@@ -250,3 +250,29 @@ include::{snippets}/get-study-members/fail/not-joined-member/response-fields.ado
 ===== 응답 실패 (404)
 include::{snippets}/get-study-members/fail/not-exist-study/response-body.adoc[]
 include::{snippets}/get-study-members/fail/not-exist-study/response-fields.adoc[]
+
+=== 스터디 멤버 탈퇴
+
+전달받은 스터디에 대해 탈퇴하는 API입니다.
+
+==== DELETE /v1/api/studies/{studyId}/members/me
+
+===== 요청
+include::{snippets}/leave-study/success/http-request.adoc[]
+include::{snippets}/leave-study/success/request-headers.adoc[]
+include::{snippets}/leave-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+.스터디 탈퇴 성공
+include::{snippets}/leave-study/success/response-body.adoc[]
+include::{snippets}/leave-study/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.스터디에 가입한 멤버가 아닌 경우
+include::{snippets}/leave-study/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/leave-study/fail/not-joined-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.전달한 스터디가 존재하지 않는 경우
+include::{snippets}/leave-study/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/leave-study/fail/not-exist-study/response-fields.adoc[]

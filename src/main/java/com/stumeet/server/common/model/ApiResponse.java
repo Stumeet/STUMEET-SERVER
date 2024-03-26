@@ -20,6 +20,10 @@ public record ApiResponse<T>(
         return new ApiResponse<>(code.getHttpStatusCode(), code.getMessage(), data);
     }
 
+    public static <T> ApiResponse<T> success(SuccessCode code) {
+        return new ApiResponse<>(code.getHttpStatusCode(), code.getMessage(), null);
+    }
+
     public static ApiResponse<Void> fail(ErrorCode errorCode) {
         return new ApiResponse<>(
                 errorCode.getHttpStatusCode(),
