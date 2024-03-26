@@ -60,8 +60,6 @@ jobs:
       ## deploy to production
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
-        id: deploy-prod
-        if: contains(github.ref, 'main')
         with:
           host: ${{ secrets.AWS_PUBLIC_IP }}
           username: ${{ secrets.AWS_USER }}

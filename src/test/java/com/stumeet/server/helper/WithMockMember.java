@@ -10,6 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 @WithSecurityContext(factory = WithMockMemberSecurityContextFactory.class)
 public @interface WithMockMember {
+    long id() default 1L;
     UserRole authority() default UserRole.MEMBER;
 
 }
