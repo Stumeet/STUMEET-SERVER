@@ -1,5 +1,7 @@
 package com.stumeet.server.study.application.service;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
@@ -17,6 +19,7 @@ public class StudyQueryService implements StudyQueryUseCase {
 	private final StudyUseCaseMapper studyUseCaseMapper;
 
 	@Override
+	@Transactional(readOnly = true)
 	public StudyDetailResponse getStudyDetailById(Long id) {
 		Study study = studyQueryPort.getById(id);
 		return studyUseCaseMapper.toStudyDetailResponse(study);

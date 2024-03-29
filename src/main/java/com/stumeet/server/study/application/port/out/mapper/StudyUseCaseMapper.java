@@ -21,6 +21,9 @@ public class StudyUseCaseMapper {
 			.endDate(study.getEndDate())
 			.headcount(study.getHeadcountNumber())
 			.image(study.getImage())
+			.meetingTime(study.getMeetingTime())
+			.meetingRepeatType(study.getMeetingRepeatTypeName())
+			.meetingRepeatDays(study.getMeetingRepeatDays())
 			.isFinished(study.isFinished())
 			.isDeleted(study.isDeleted())
 			.build();
