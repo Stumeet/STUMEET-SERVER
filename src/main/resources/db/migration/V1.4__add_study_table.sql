@@ -30,6 +30,8 @@ CREATE TABLE `study`
     `headcount`       TINYINT(100) NOT NULL DEFAULT 1 COMMENT '인원 수',
     `start_date`      DATETIME     NOT NULL COMMENT '시작일',
     `end_date`        DATETIME     NOT NULL COMMENT '종료일',
+    `meeting_time`    TIME         NOT NULL COMMENT '정기모임 시간',
+    `meeting_repeat`  VARCHAR(100) NOT NULL COMMENT '정기모임 반복',
     `created_at`      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',
     `updated_at`      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 시간',
     `is_finished`     TINYINT(1) NOT NULL DEFAULT FALSE COMMENT '스터디 완료 여부',
