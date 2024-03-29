@@ -3,6 +3,7 @@ package com.stumeet.server.study.adapter.out.persistance.mapper;
 import org.springframework.stereotype.Component;
 
 import com.stumeet.server.study.adapter.out.persistance.entity.StudyJpaEntity;
+import com.stumeet.server.study.domain.StudyMeetingSchedule;
 import com.stumeet.server.study.domain.Study;
 import com.stumeet.server.study.domain.StudyHeadCount;
 import com.stumeet.server.study.domain.StudyPeriod;
@@ -26,6 +27,7 @@ public class StudyPersistenceMapper {
 				.period(StudyPeriod.of(entity.getStartDate(), entity.getEndDate()))
 				.headcount(StudyHeadCount.from(entity.getHeadcount()))
 				.image(entity.getImage())
+				.meetingSchedule(StudyMeetingSchedule.of(entity.getMeetingTime(), entity.getMeetingRepeat()))
 				.isFinished(entity.getIsFinished())
 				.isDeleted(entity.getIsDeleted())
 				.build();
@@ -43,6 +45,8 @@ public class StudyPersistenceMapper {
 				.endDate(domain.getEndDate())
 				.headcount(domain.getHeadcountNumber())
 				.image(domain.getImage())
+				.meetingTime(domain.getMeetingSchedule().getTime())
+				.meetingRepeat(domain.getMeetingSchedule().getDelimitedRepeat())
 				.isFinished(domain.isFinished())
 				.isDeleted(domain.isDeleted())
 				.build();
