@@ -1,6 +1,7 @@
 package com.stumeet.server.study.domain;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import lombok.AccessLevel;
@@ -20,6 +21,8 @@ public class Study {
 	private StudyDomain studyDomain;
 
 	private String region;
+
+	private StudyMeetingSchedule meetingSchedule;
 
 	private String intro;
 
@@ -54,5 +57,16 @@ public class Study {
 	public LocalDateTime getEndDate() {
 		return period.getEndDate();
 	}
-}
 
+	public String getMeetingRepeatTypeName() {
+		return meetingSchedule.getRepetitionType().name();
+	}
+
+	public List<String> getRepetitionDates() {
+		return meetingSchedule.getRepetitionDates();
+	}
+
+	public LocalTime getMeetingTime() {
+		return meetingSchedule.getTime();
+	}
+}

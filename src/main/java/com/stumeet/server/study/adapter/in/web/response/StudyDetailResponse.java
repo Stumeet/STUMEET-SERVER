@@ -1,6 +1,7 @@
 package com.stumeet.server.study.adapter.in.web.response;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import lombok.Builder;
@@ -18,6 +19,9 @@ public record StudyDetailResponse(
 	int headcount,
 	LocalDateTime startDate,
 	LocalDateTime endDate,
+	LocalTime meetingTime,
+	String meetingRepetitionType,
+	List<String> meetingRepetitionDates,
 	boolean isFinished,
 	boolean isDeleted
 ) {

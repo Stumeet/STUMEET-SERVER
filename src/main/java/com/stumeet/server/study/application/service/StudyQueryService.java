@@ -1,5 +1,7 @@
 package com.stumeet.server.study.application.service;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StudyQueryService implements StudyQueryUseCase {
 
 	private final StudyQueryPort studyQueryPort;

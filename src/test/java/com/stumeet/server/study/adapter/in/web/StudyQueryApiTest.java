@@ -15,13 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
+import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
 
 class StudyQueryApiTest extends ApiTest {
-
-	private final Long testStudyId = 1L;
-	private final Long notFoundTestStudyId = 0L;
 
 	@Nested
 	@DisplayName("스터디 상세 정보 가져오기")
@@ -32,7 +30,7 @@ class StudyQueryApiTest extends ApiTest {
 		@WithMockMember
 		@DisplayName("[성공] 스터디 상세 정보 조회를 성공한다.")
 		void successTest() throws Exception {
-			mockMvc.perform(get("/api/v1/studies/{id}", testStudyId)
+			mockMvc.perform(get("/api/v1/studies/{id}", StudyStub.getStudyId())
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
 					.andExpect(status().isOk())
 					.andDo(document("get-study-detail/success",
@@ -57,6 +55,11 @@ class StudyQueryApiTest extends ApiTest {
 									fieldWithPath("data.headcount").description("참여 인원 수"),
 									fieldWithPath("data.startDate").description("시작 날짜"),
 									fieldWithPath("data.endDate").description("종료 날짜"),
+									fieldWithPath("data.meetingTime").description("정기모임 시간"),
+									fieldWithPath("data.meetingRepetitionType")
+											.description("정기모임 반복 유형 / `매일`, `매주`, `매달`"),
+									fieldWithPath("data.meetingRepetitionDates")
+											.description("정기모임 반복일 / 매주: 요일, 매달: 날짜"),
 									fieldWithPath("data.isFinished").description("종료 여부"),
 									fieldWithPath("data.isDeleted").description("삭제 여부")
 							)));
@@ -66,7 +69,7 @@ class StudyQueryApiTest extends ApiTest {
 		@WithMockMember
 		@DisplayName("[실패] 존재하지 않는 스터디의 ID로 요청한 경우 스터디 상세정보 조회를 실패한다.")
 		void invalidRequestTest() throws Exception {
-			mockMvc.perform(get("/api/v1/studies/{id}", notFoundTestStudyId)
+			mockMvc.perform(get("/api/v1/studies/{id}", StudyStub.getInvalidStudyId())
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
 					.andExpect(status().isNotFound())
 					.andDo(document("get-study-detail/fail/not-found",

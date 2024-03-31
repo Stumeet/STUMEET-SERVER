@@ -1,6 +1,7 @@
 package com.stumeet.server.study.adapter.out.persistance.entity;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
@@ -71,6 +72,14 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Column(name = "end_date", nullable = false)
 	@Comment("종료일")
 	private LocalDateTime endDate;
+
+	@Column(name = "meeting_time", nullable = false)
+	@Comment("정기모임 시간")
+	private LocalTime meetingTime;
+
+	@Column(name = "meeting_repetition")
+	@Comment("정기모임 반복")
+	private String meetingRepetition;
 
 	@Column(name = "is_finished", nullable = false)
 	@ColumnDefault("false")
