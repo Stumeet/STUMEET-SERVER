@@ -7,52 +7,35 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class StudyMeetingSchedule {
 
-	private static final String REPEAT_DELIMITER = ";";
-
 	private final LocalTime time;
-	private final Repeat repeat;
+	private final Repetition repetition;
 
-	// 구분자 ;으로 연결된 형식
-	// 첫번째 요소: 반복 유형
-	// 이후: 반복 날짜/요일
-	private StudyMeetingSchedule(LocalTime time, String delimitedRepeat) {
-		List<String> repeats = List.of(delimitedRepeat.split(REPEAT_DELIMITER));
-		ScheduleRepeatType repeatType = ScheduleRepeatType.valueOf(repeats.getFirst());
+	@Getter
+	@AllArgsConstructor(staticName = "of")
+	public static class Repetition {
 
-		this.time = time;
-		this.repeat = new Repeat(repeatType, repeats.subList(1, repeats.size()));
+		private final ScheduleRepetitionType type;
+
+		private final List<String> dates;
 	}
 
-	public static StudyMeetingSchedule of(LocalTime time, String delimitedRepeat) {
-		return new StudyMeetingSchedule(time, delimitedRepeat);
+	public static StudyMeetingSchedule of(LocalTime time, Repetition repetition) {
+		return new StudyMeetingSchedule(time, repetition);
 	}
 
 	public LocalTime getTime() {
 		return time;
 	}
 
-	public ScheduleRepeatType getRepeatType() {
-		return repeat.getRepeatType();
+	public ScheduleRepetitionType getRepetitionType() {
+		return repetition.getType();
 	}
 
-	public List<String> getRepeatDays() {
-		return repeat.getRepeatDays();
-	}
-
-	public String getDelimitedRepeat() {
-		return repeat.getRepeatType().toString()
-				+ REPEAT_DELIMITER
-				+ String.join(REPEAT_DELIMITER, repeat.getRepeatDays());
-	}
-
-	@Getter
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	private class Repeat {
-
-		private final ScheduleRepeatType repeatType;
-
-		private final List<String> repeatDays;
+	public List<String> getRepetitionDates() {
+		return repetition.getDates();
 	}
 }

@@ -7,11 +7,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
 import com.stumeet.server.common.model.BaseTimeEntity;
-import com.stumeet.server.study.domain.ScheduleRepeatType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -79,9 +77,9 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("정기모임 시간")
 	private LocalTime meetingTime;
 
-	@Column(name = "meeting_repeat")
+	@Column(name = "meeting_repetition")
 	@Comment("정기모임 반복")
-	private String meetingRepeat;
+	private String meetingRepetition;
 
 	@Column(name = "is_finished", nullable = false)
 	@ColumnDefault("false")

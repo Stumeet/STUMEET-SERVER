@@ -59,11 +59,11 @@ public class Study {
 	}
 
 	public String getMeetingRepeatTypeName() {
-		return meetingSchedule.getRepeatType().name();
+		return meetingSchedule.getRepetitionType().name();
 	}
 
-	public List<String> getMeetingRepeatDays() {
-		return meetingSchedule.getRepeatDays();
+	public List<String> getRepetitionDates() {
+		return meetingSchedule.getRepetitionDates();
 	}
 
 	public LocalTime getMeetingTime() {
