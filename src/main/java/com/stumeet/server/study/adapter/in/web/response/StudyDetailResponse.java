@@ -20,8 +20,8 @@ public record StudyDetailResponse(
 	LocalDateTime startDate,
 	LocalDateTime endDate,
 	LocalTime meetingTime,
-	String meetingRepeatType,
-	List<String> meetingRepeatDays,
+	String meetingRepetitionType,
+	List<String> meetingRepetitionDates,
 	boolean isFinished,
 	boolean isDeleted
 ) {
