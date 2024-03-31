@@ -2,10 +2,8 @@ package com.stumeet.server.study.adapter.out.persistance.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.stumeet.server.study.adapter.out.persistance.entity.StudyDomainJpaEntity;
 import com.stumeet.server.study.adapter.out.persistance.entity.StudyJpaEntity;
 import com.stumeet.server.study.domain.Study;
-import com.stumeet.server.study.domain.StudyDomain;
 import com.stumeet.server.study.domain.StudyHeadCount;
 import com.stumeet.server.study.domain.StudyMeetingSchedule;
 import com.stumeet.server.study.domain.StudyPeriod;
@@ -20,36 +18,29 @@ public class StudyPersistenceMapper {
 	private final MeetingRepetitionPersistenceMapper meetingRepetitionPersistenceMapper;
 
 	public Study toDomain(StudyJpaEntity entity) {
-		StudyDomain studyDomain = studyDomainPersistenceMapper.toDomain(entity.getStudyDomain());
-		StudyPeriod studyPeriod = StudyPeriod.of(entity.getStartDate(), entity.getEndDate());
-		StudyHeadCount studyHeadCount = StudyHeadCount.from(entity.getHeadcount());
-		StudyMeetingSchedule studyMeetingSchedule = StudyMeetingSchedule
-				.of(entity.getMeetingTime(), meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition()));
-
 		return Study.builder()
 				.id(entity.getId())
 				.name(entity.getName())
-				.studyDomain(studyDomain)
+				.studyDomain(studyDomainPersistenceMapper.toDomain(entity.getStudyDomain()))
 				.region(entity.getRegion())
 				.intro(entity.getIntro())
 				.rule(entity.getRule())
-				.period(studyPeriod)
-				.headcount(studyHeadCount)
+				.period(StudyPeriod.of(entity.getStartDate(), entity.getEndDate()))
+				.headcount(StudyHeadCount.from(entity.getHeadcount()))
 				.image(entity.getImage())
-				.meetingSchedule(studyMeetingSchedule)
+				.meetingSchedule(StudyMeetingSchedule.of(
+						entity.getMeetingTime(),
+						meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition())))
 				.isFinished(entity.getIsFinished())
 				.isDeleted(entity.getIsDeleted())
 				.build();
 	}
 
 	public StudyJpaEntity toEntity(Study domain) {
-		StudyDomainJpaEntity studyDomainJpaEntity = studyDomainPersistenceMapper.toEntity(domain.getStudyDomain());
-		String meetingRepetition = meetingRepetitionPersistenceMapper.toColumn(domain.getMeetingSchedule().getRepetition());
-
 		return StudyJpaEntity.builder()
 				.id(domain.getId())
 				.name(domain.getName())
-				.studyDomain(studyDomainJpaEntity)
+				.studyDomain(studyDomainPersistenceMapper.toEntity(domain.getStudyDomain()))
 				.region(domain.getRegion())
 				.intro(domain.getIntro())
 				.rule(domain.getRule())
@@ -58,7 +49,8 @@ public class StudyPersistenceMapper {
 				.headcount(domain.getHeadcountNumber())
 				.image(domain.getImage())
 				.meetingTime(domain.getMeetingSchedule().getTime())
-				.meetingRepetition(meetingRepetition)
+				.meetingRepetition(
+						meetingRepetitionPersistenceMapper.toColumn(domain.getMeetingSchedule().getRepetition()))
 				.isFinished(domain.isFinished())
 				.isDeleted(domain.isDeleted())
 				.build();
