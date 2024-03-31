@@ -28,9 +28,10 @@ public class StudyPersistenceMapper {
 				.period(StudyPeriod.of(entity.getStartDate(), entity.getEndDate()))
 				.headcount(StudyHeadCount.from(entity.getHeadcount()))
 				.image(entity.getImage())
-				.meetingSchedule(StudyMeetingSchedule.of(
-						entity.getMeetingTime(),
-						meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition())))
+				.meetingSchedule(
+						StudyMeetingSchedule.of(
+								entity.getMeetingTime(),
+								meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition())))
 				.isFinished(entity.getIsFinished())
 				.isDeleted(entity.getIsDeleted())
 				.build();
