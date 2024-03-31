@@ -13,13 +13,13 @@ import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StudyQueryService implements StudyQueryUseCase {
 
 	private final StudyQueryPort studyQueryPort;
 	private final StudyUseCaseMapper studyUseCaseMapper;
 
 	@Override
-	@Transactional(readOnly = true)
 	public StudyDetailResponse getStudyDetailById(Long id) {
 		Study study = studyQueryPort.getById(id);
 		return studyUseCaseMapper.toStudyDetailResponse(study);
