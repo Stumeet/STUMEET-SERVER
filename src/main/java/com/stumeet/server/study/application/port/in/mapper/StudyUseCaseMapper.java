@@ -1,4 +1,4 @@
-package com.stumeet.server.study.application.port.out.mapper;
+package com.stumeet.server.study.application.port.in.mapper;
 
 import org.springframework.stereotype.Component;
 

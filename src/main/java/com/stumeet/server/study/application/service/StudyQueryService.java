@@ -6,7 +6,7 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 import com.stumeet.server.study.application.port.out.StudyQueryPort;
-import com.stumeet.server.study.application.port.out.mapper.StudyUseCaseMapper;
+import com.stumeet.server.study.application.port.in.mapper.StudyUseCaseMapper;
 import com.stumeet.server.study.domain.Study;
 
 import lombok.RequiredArgsConstructor;
