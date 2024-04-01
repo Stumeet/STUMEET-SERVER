@@ -8,4 +8,7 @@ public interface JpaStudyMemberRepositoryCustom {
     List<SimpleStudyMemberResponse> findStudyMembersByStudyId(Long studyId);
 
     boolean isStudyJoinMember(Long studyId, Long memberId);
+
+    boolean isAdmin(Long studyId, Long adminId);
+
 }

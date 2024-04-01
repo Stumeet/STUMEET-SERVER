@@ -28,4 +28,14 @@ public class StudyMemberLeaveApi {
         studyMemberLeaveUseCase.leave(studyId, member.getMember().getId());
         return new ResponseEntity<>(ApiResponse.success(SuccessCode.STUDY_LEAVE_SUCCESS), HttpStatus.OK);
     }
+
+    @DeleteMapping("/studies/{studyId}/members/{memberId}")
+    public ResponseEntity<ApiResponse<Void>> kick(
+            @PathVariable Long studyId,
+            @PathVariable Long memberId,
+            @AuthenticationPrincipal LoginMember member
+    ) {
+        studyMemberLeaveUseCase.kick(studyId, memberId, member.getMember().getId());
+        return new ResponseEntity<>(ApiResponse.success(SuccessCode.STUDY_KICK_SUCCESS), HttpStatus.OK);
+    }
 }
