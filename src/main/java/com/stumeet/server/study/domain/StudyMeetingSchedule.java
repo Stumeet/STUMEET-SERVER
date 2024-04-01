@@ -18,7 +18,7 @@ public class StudyMeetingSchedule {
 	@AllArgsConstructor(staticName = "of")
 	public static class Repetition {
 
-		private final ScheduleRepetitionType type;
+		private final RepetitionType type;
 
 		private final List<String> dates;
 	}
@@ -31,7 +31,7 @@ public class StudyMeetingSchedule {
 		return time;
 	}
 
-	public ScheduleRepetitionType getRepetitionType() {
+	public RepetitionType getRepetitionType() {
 		return repetition.getType();
 	}
 

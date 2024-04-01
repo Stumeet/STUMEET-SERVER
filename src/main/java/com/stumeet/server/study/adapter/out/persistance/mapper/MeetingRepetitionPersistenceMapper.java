@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.stumeet.server.study.domain.ScheduleRepetitionType;
+import com.stumeet.server.study.domain.RepetitionType;
 import com.stumeet.server.study.domain.StudyMeetingSchedule;
 
 @Component
@@ -16,7 +16,7 @@ public class MeetingRepetitionPersistenceMapper {
 		List<String> repetitionElements = List.of(meetingRepetition.split(REPEAT_DELIMITER));
 
 		return StudyMeetingSchedule.Repetition.of(
-				ScheduleRepetitionType.valueOf(repetitionElements.getFirst()),
+				RepetitionType.valueOf(repetitionElements.getFirst()),
 				repetitionElements.subList(1, repetitionElements.size()));
 	}
 

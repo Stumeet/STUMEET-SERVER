@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ScheduleRepetitionType {
+public enum RepetitionType {
 
 	DAILY("매일"),
 	WEEKLY("매주"),
