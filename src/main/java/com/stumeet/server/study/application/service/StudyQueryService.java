@@ -20,7 +20,7 @@ public class StudyQueryService implements StudyQueryUseCase {
 	private final StudyUseCaseMapper studyUseCaseMapper;
 
 	@Override
-	public StudyDetailResponse getStudyDetailById(Long id) {
+	public StudyDetailResponse getStudyDetailById(java.lang.Long id) {
 		Study study = studyQueryPort.getById(id);
 		return studyUseCaseMapper.toStudyDetailResponse(study);
 	}

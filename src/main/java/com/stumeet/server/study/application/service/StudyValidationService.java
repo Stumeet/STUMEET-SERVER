@@ -1,7 +1,6 @@
 package com.stumeet.server.study.application.service;
 
 import com.stumeet.server.common.annotation.UseCase;
-import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.study.application.port.out.StudyValidationPort;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
@@ -18,7 +17,7 @@ public class StudyValidationService implements StudyValidationUseCase {
     @Override
     public void checkById(Long id) {
         if (!studyValidationPort.existsById(id)) {
-            throw new StudyNotExistsException(id, ErrorCode.STUDY_NOT_FOUND);
+            throw new StudyNotExistsException(id);
         }
     }
 }
