@@ -20,11 +20,11 @@ public class StudyQueryApi {
 
 	private final StudyQueryUseCase studyQueryUseCase;
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<StudyDetailResponse>> getStudy(
-		@PathVariable(name = "id") Long id
+	@GetMapping("/{studyId}")
+	public ResponseEntity<ApiResponse<StudyDetailResponse>> getStudyDetail(
+			@PathVariable(name = "studyId") java.lang.Long studyId
 	) {
-		StudyDetailResponse response = studyQueryUseCase.getStudyDetailById(id);
+		StudyDetailResponse response = studyQueryUseCase.getStudyDetailById(studyId);
 		return ResponseEntity.ok(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
 	}
 }
