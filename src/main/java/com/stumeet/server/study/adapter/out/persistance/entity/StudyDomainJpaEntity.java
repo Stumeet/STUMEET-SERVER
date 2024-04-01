@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.annotations.Comment;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +36,7 @@ public class StudyDomainJpaEntity {
 	@Comment("분야")
 	private StudyFieldJpaEntity studyField;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
 	@JoinColumn(name = "study_domain_id")
 	private List<StudyTagJpaEntity> studyTags;
 }
