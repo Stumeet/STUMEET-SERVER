@@ -276,3 +276,28 @@ include::{snippets}/leave-study/fail/not-joined-member/response-fields.adoc[]
 .전달한 스터디가 존재하지 않는 경우
 include::{snippets}/leave-study/fail/not-exist-study/response-body.adoc[]
 include::{snippets}/leave-study/fail/not-exist-study/response-fields.adoc[]
+
+=== 스터디 멤버 강퇴
+
+스터디 멤버를 강퇴하는 API입니다.
+
+==== DELETE /v1/api/studies/{studyId}/members/{memberId}
+
+===== 요청
+include::{snippets}/kick-study/success/http-request.adoc[]
+include::{snippets}/kick-study/success/request-headers.adoc[]
+include::{snippets}/kick-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/kick-study/success/response-body.adoc[]
+include::{snippets}/kick-study/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+include::{snippets}/kick-study/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/kick-study/fail/not-joined-member/response-fields.adoc[]
+
+include::{snippets}/kick-study/fail/not-admin/response-body.adoc[]
+include::{snippets}/kick-study/fail/not-admin/response-fields.adoc[]
+===== 응답 실패 (404)
+include::{snippets}/kick-study/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/kick-study/fail/not-exist-study/response-fields.adoc[]
