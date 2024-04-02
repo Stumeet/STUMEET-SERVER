@@ -42,7 +42,7 @@ class StudyCreateApiTest extends ApiTest {
 				return http;
 			};
 			mockMvc.perform(multipart(path)
-							.file((MockMultipartFile)request.image())
+							.file((MockMultipartFile) request.image())
 							.with(postMethod)
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
@@ -113,6 +113,35 @@ class StudyCreateApiTest extends ApiTest {
 									fieldWithPath("data.isFinished").description("종료 여부"),
 									fieldWithPath("data.isDeleted").description("삭제 여부")
 							)));
+		}
+
+		@Test
+		@WithMockMember
+		@DisplayName("[성공] 이미지 파일이 없어도 요청에 성공한다.")
+		void successWithoutImageFile() throws Exception {
+			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
+
+			RequestPostProcessor postMethod = http -> {
+				http.setMethod("POST");
+				return http;
+			};
+			mockMvc.perform(multipart(path)
+					.with(postMethod)
+					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+					.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
+					.queryParam("name", request.name())
+					.queryParam("intro", request.intro())
+					.queryParam("region", request.region())
+					.queryParam("rule", request.rule())
+					.queryParam("startDate", String.valueOf(request.startDate()))
+					.queryParam("endDate", String.valueOf(request.endDate()))
+					.queryParam("meetingTime", String.valueOf(request.meetingTime()))
+					.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
+					.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
+					.queryParam("studyTags", String.valueOf(request.studyTags()))
+					.contentType(MediaType.MULTIPART_FORM_DATA)
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isCreated());
 		}
 	}
 }
