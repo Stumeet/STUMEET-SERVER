@@ -1,5 +1,6 @@
 package com.stumeet.server.study.adapter.out.persistance.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -67,11 +68,11 @@ public class StudyJpaEntity extends BaseTimeEntity {
 
 	@Column(name = "start_date", nullable = false)
 	@Comment("시작일")
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 
 	@Column(name = "end_date", nullable = false)
 	@Comment("종료일")
-	private LocalDateTime endDate;
+	private LocalDate endDate;
 
 	@Column(name = "meeting_time", nullable = false)
 	@Comment("정기모임 시간")

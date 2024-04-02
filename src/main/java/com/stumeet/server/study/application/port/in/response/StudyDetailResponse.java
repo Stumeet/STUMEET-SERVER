@@ -1,6 +1,6 @@
 package com.stumeet.server.study.application.port.in.response;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -17,8 +17,8 @@ public record StudyDetailResponse(
 	String rule,
 	String image,
 	int headcount,
-	LocalDateTime startDate,
-	LocalDateTime endDate,
+	LocalDate startDate,
+	LocalDate endDate,
 	LocalTime meetingTime,
 	String meetingRepetitionType,
 	List<String> meetingRepetitionDates,

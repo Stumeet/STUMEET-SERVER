@@ -1,6 +1,6 @@
 package com.stumeet.server.study.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -50,11 +50,11 @@ public class Study {
 		return headcount.getNumber();
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return period.getStartDate();
 	}
 
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return period.getEndDate();
 	}
 
