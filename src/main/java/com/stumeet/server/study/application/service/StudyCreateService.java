@@ -1,7 +1,6 @@
 package com.stumeet.server.study.application.service;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.file.application.port.in.FileUploadUseCase;
@@ -40,11 +39,13 @@ public class StudyCreateService implements StudyCreateUseCase {
 
 	@Override
 	@Transactional
-	public Long create(StudyCreateCommand command, Member member, MultipartFile mainImage) {
+	public Long create(StudyCreateCommand command, Member member) {
 		studyFieldQueryPort.checkById(command.studyFieldId());
 
 		StudyDomain studyDomainCreated = createStudyDomain(studyDomainUseCaseMapper.toDomain(command));
-		String mainImageUrl = fileUploadUseCase.uploadStudyMainImage(mainImage).url();
+		String mainImageUrl = command.image() != null
+				? fileUploadUseCase.uploadStudyMainImage(command.image()).url()
+				: null;
 
 		Study study = Study.builder()
 				.studyDomain(studyDomainCreated)
