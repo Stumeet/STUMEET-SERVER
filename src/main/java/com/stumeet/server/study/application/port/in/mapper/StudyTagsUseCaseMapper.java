@@ -10,9 +10,9 @@ import com.stumeet.server.study.domain.StudyTag;
 public class StudyTagsUseCaseMapper {
 
 	public List<StudyTag> toDomains(List<String> tags) {
-		return tags.stream()
-				.map(this::toDomain)
-				.toList();
+		return tags != null
+				? tags.stream().map(this::toDomain).toList()
+				: null;
 	}
 
 	private StudyTag toDomain(String tag) {

@@ -22,8 +22,12 @@ public class MeetingRepetitionPersistenceMapper {
 	}
 
 	public String toColumn(StudyMeetingSchedule.Repetition repetition) {
+		String dates = repetition.getDates() != null
+				? String.join(REPEAT_DELIMITER, repetition.getDates())
+				: null;
+
 		return repetition.getType().toString()
 				+ REPEAT_DELIMITER
-				+ String.join(REPEAT_DELIMITER, repetition.getDates());
+				+ dates;
 	}
 }
