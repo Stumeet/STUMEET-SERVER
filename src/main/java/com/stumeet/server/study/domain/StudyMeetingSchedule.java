@@ -29,7 +29,7 @@ public class StudyMeetingSchedule {
 		public Repetition(RepetitionType type, List<String> dates) {
 			validateRepetition(type, dates);
 			this.type = type;
-			this.dates = type.equals(RepetitionType.WEEKLY) ? null : dates;
+			this.dates = type.equals(RepetitionType.DAILY) ? null : dates;
 		}
 
 		private void validateRepetition(RepetitionType type, List<String> dates) {
