@@ -21,6 +21,7 @@ import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
+import com.stumeet.server.study.domain.RepetitionType;
 import com.stumeet.server.template.ApiTest;
 
 class StudyCreateApiTest extends ApiTest {
@@ -126,22 +127,100 @@ class StudyCreateApiTest extends ApiTest {
 				return http;
 			};
 			mockMvc.perform(multipart(path)
-					.with(postMethod)
-					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-					.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
-					.queryParam("name", request.name())
-					.queryParam("intro", request.intro())
-					.queryParam("region", request.region())
-					.queryParam("rule", request.rule())
-					.queryParam("startDate", String.valueOf(request.startDate()))
-					.queryParam("endDate", String.valueOf(request.endDate()))
-					.queryParam("meetingTime", String.valueOf(request.meetingTime()))
-					.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
-					.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
-					.queryParam("studyTags", String.valueOf(request.studyTags()))
-					.contentType(MediaType.MULTIPART_FORM_DATA)
-					.accept(MediaType.APPLICATION_JSON))
+							.with(postMethod)
+							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
+							.queryParam("name", request.name())
+							.queryParam("intro", request.intro())
+							.queryParam("region", request.region())
+							.queryParam("rule", request.rule())
+							.queryParam("startDate", String.valueOf(request.startDate()))
+							.queryParam("endDate", String.valueOf(request.endDate()))
+							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
+							.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
+							.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
+							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.contentType(MediaType.MULTIPART_FORM_DATA)
+							.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isCreated());
+		}
+
+		@Test
+		@WithMockMember
+		@DisplayName("[실패] 존재하지 않는 스터디 분야의 ID로 요청한 경우 스터디 생성을 실패한다.")
+		void failWithNotExistStudyFieldId() throws Exception {
+			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
+			int invalidStudyFieldId = 0;
+
+			RequestPostProcessor postMethod = http -> {
+				http.setMethod("POST");
+				return http;
+			};
+			mockMvc.perform(multipart(path)
+							.file((MockMultipartFile) request.image())
+							.with(postMethod)
+							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+							.queryParam("studyFieldId", String.valueOf(invalidStudyFieldId))
+							.queryParam("name", request.name())
+							.queryParam("intro", request.intro())
+							.queryParam("region", request.region())
+							.queryParam("rule", request.rule())
+							.queryParam("startDate", String.valueOf(request.startDate()))
+							.queryParam("endDate", String.valueOf(request.endDate()))
+							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
+							.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
+							.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
+							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.contentType(MediaType.MULTIPART_FORM_DATA)
+							.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isNotFound())
+					.andDo(document("create-study/fail/study-field-not-found",
+							preprocessRequest(prettyPrint()),
+							preprocessResponse(prettyPrint()),
+							requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+									"서버로부터 전달받은 액세스 토큰")),
+							responseFields(
+									fieldWithPath("code").description("응답 상태"),
+									fieldWithPath("message").description("응답 메시지")
+							)));
+		}
+
+		@Test
+		@WithMockMember
+		@DisplayName("[실패] 유효하지 않은 반복 일정 값으로 요청한 경우 스터디 생성을 실패한다.")
+		void failWithInvalidStudyMeetingSchedule() throws Exception {
+			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
+
+			RequestPostProcessor postMethod = http -> {
+				http.setMethod("POST");
+				return http;
+			};
+			mockMvc.perform(multipart(path)
+							.file((MockMultipartFile) request.image())
+							.with(postMethod)
+							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
+							.queryParam("name", request.name())
+							.queryParam("intro", request.intro())
+							.queryParam("region", request.region())
+							.queryParam("rule", request.rule())
+							.queryParam("startDate", String.valueOf(request.startDate()))
+							.queryParam("endDate", String.valueOf(request.endDate()))
+							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
+							.queryParam("meetingRepetitionType", RepetitionType.WEEKLY.toString())
+							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.contentType(MediaType.MULTIPART_FORM_DATA)
+							.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isBadRequest())
+					.andDo(document("create-study/fail/invalid-study-meeting-schedule",
+							preprocessRequest(prettyPrint()),
+							preprocessResponse(prettyPrint()),
+							requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+									"서버로부터 전달받은 액세스 토큰")),
+							responseFields(
+									fieldWithPath("code").description("응답 상태"),
+									fieldWithPath("message").description("응답 메시지")
+							)));
 		}
 	}
 }
