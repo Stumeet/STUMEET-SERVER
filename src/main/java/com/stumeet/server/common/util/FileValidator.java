@@ -2,9 +2,9 @@ package com.stumeet.server.common.util;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.stumeet.server.common.exception.model.InvalidFileException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.file.domain.ImageContentType;
+import com.stumeet.server.file.domain.exception.InvalidFileException;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
