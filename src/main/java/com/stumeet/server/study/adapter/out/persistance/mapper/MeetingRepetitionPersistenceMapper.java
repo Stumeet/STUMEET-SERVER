@@ -15,9 +15,10 @@ public class MeetingRepetitionPersistenceMapper {
 	public StudyMeetingSchedule.Repetition toDomain(String meetingRepetition) {
 		List<String> repetitionElements = List.of(meetingRepetition.split(REPEAT_DELIMITER));
 
-		return StudyMeetingSchedule.Repetition.of(
-				RepetitionType.valueOf(repetitionElements.getFirst()),
-				repetitionElements.subList(1, repetitionElements.size()));
+		return StudyMeetingSchedule.Repetition.builder()
+				.type(RepetitionType.valueOf(repetitionElements.getFirst()))
+				.dates(repetitionElements.subList(1, repetitionElements.size()))
+				.build();
 	}
 
 	public String toColumn(StudyMeetingSchedule.Repetition repetition) {

@@ -7,7 +7,6 @@ import com.stumeet.server.file.application.port.in.FileUploadUseCase;
 import com.stumeet.server.member.domain.Member;
 import com.stumeet.server.study.application.port.in.StudyCreateUseCase;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
-import com.stumeet.server.study.application.port.in.mapper.MeetingScheduleUseCaseMapper;
 import com.stumeet.server.study.application.port.in.mapper.StudyDomainUseCaseMapper;
 import com.stumeet.server.study.application.port.out.StudyCommandPort;
 import com.stumeet.server.study.application.port.out.StudyDomainCommandPort;
@@ -15,8 +14,6 @@ import com.stumeet.server.study.application.port.out.StudyFieldQueryPort;
 import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
 import com.stumeet.server.study.domain.Study;
 import com.stumeet.server.study.domain.StudyDomain;
-import com.stumeet.server.study.domain.StudyHeadCount;
-import com.stumeet.server.study.domain.StudyPeriod;
 import com.stumeet.server.studymember.application.port.in.StudyMemberJoinUseCase;
 import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoinCommand;
 
@@ -35,7 +32,6 @@ public class StudyCreateService implements StudyCreateUseCase {
 	private final StudyTagCommandPort studyTagCommandPort;
 
 	private final StudyDomainUseCaseMapper studyDomainUseCaseMapper;
-	private final MeetingScheduleUseCaseMapper meetingScheduleUseCaseMapper;
 
 	@Override
 	@Transactional
@@ -46,21 +42,7 @@ public class StudyCreateService implements StudyCreateUseCase {
 		String mainImageUrl = command.image() != null
 				? fileUploadUseCase.uploadStudyMainImage(command.image()).url()
 				: null;
-
-		Study study = Study.builder()
-				.studyDomain(studyDomainCreated)
-				.name(command.name())
-				.intro(command.intro())
-				.rule(command.rule())
-				.region(command.region())
-				.period(StudyPeriod.of(command.startDate(), command.endDate()))
-				.meetingSchedule(meetingScheduleUseCaseMapper.toDomain(command))
-				.headcount(StudyHeadCount.from(1))
-				.image(mainImageUrl)
-				.isFinished(false)
-				.isDeleted(false)
-				.build();
-
+		Study study = Study.create(command, studyDomainCreated, mainImageUrl);
 		Study studyCreated = studyCommandPort.save(study);
 
 		StudyMemberJoinCommand studyMemberJoinCommand = StudyMemberJoinCommand.builder()

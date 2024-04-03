@@ -4,8 +4,10 @@ import java.time.LocalDate;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class StudyPeriod {
@@ -13,8 +15,4 @@ public class StudyPeriod {
 	private LocalDate startDate;
 
 	private LocalDate endDate;
-
-	public static StudyPeriod of(LocalDate startDate, LocalDate endDate) {
-		return new StudyPeriod(startDate, endDate);
-	}
 }
