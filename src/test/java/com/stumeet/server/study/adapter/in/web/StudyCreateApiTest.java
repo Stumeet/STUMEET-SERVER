@@ -21,7 +21,6 @@ import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
-import com.stumeet.server.study.domain.RepetitionType;
 import com.stumeet.server.template.ApiTest;
 
 class StudyCreateApiTest extends ApiTest {
@@ -54,9 +53,9 @@ class StudyCreateApiTest extends ApiTest {
 							.queryParam("startDate", String.valueOf(request.startDate()))
 							.queryParam("endDate", String.valueOf(request.endDate()))
 							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
-							.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
-							.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
-							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.queryParam("meetingRepetitionType", request.meetingRepetitionType().toString())
+							.queryParam("meetingRepetitionDates", request.meetingRepetitionDates().toArray(String[]::new))
+							.queryParam("studyTags", request.studyTags().toArray(String[]::new))
 							.contentType(MediaType.MULTIPART_FORM_DATA)
 							.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isCreated())
@@ -137,9 +136,9 @@ class StudyCreateApiTest extends ApiTest {
 							.queryParam("startDate", String.valueOf(request.startDate()))
 							.queryParam("endDate", String.valueOf(request.endDate()))
 							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
-							.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
-							.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
-							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.queryParam("meetingRepetitionType", request.meetingRepetitionType().toString())
+							.queryParam("meetingRepetitionDates", request.meetingRepetitionDates().toArray(String[]::new))
+							.queryParam("studyTags", request.studyTags().toArray(String[]::new))
 							.contentType(MediaType.MULTIPART_FORM_DATA)
 							.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isCreated());
@@ -168,9 +167,9 @@ class StudyCreateApiTest extends ApiTest {
 							.queryParam("startDate", String.valueOf(request.startDate()))
 							.queryParam("endDate", String.valueOf(request.endDate()))
 							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
-							.queryParam("meetingRepetitionType", request.meetingRepetitionType().name())
-							.queryParam("meetingRepetitionDates", String.valueOf(request.meetingRepetitionDates()))
-							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.queryParam("meetingRepetitionType", request.meetingRepetitionType().toString())
+							.queryParam("meetingRepetitionDates", request.meetingRepetitionDates().toArray(String[]::new))
+							.queryParam("studyTags", request.studyTags().toArray(String[]::new))
 							.contentType(MediaType.MULTIPART_FORM_DATA)
 							.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isNotFound())
@@ -207,8 +206,8 @@ class StudyCreateApiTest extends ApiTest {
 							.queryParam("startDate", String.valueOf(request.startDate()))
 							.queryParam("endDate", String.valueOf(request.endDate()))
 							.queryParam("meetingTime", String.valueOf(request.meetingTime()))
-							.queryParam("meetingRepetitionType", RepetitionType.WEEKLY.toString())
-							.queryParam("studyTags", String.valueOf(request.studyTags()))
+							.queryParam("meetingRepetitionType", request.meetingRepetitionType().toString())
+							.queryParam("studyTags", request.studyTags().toArray(String[]::new))
 							.contentType(MediaType.MULTIPART_FORM_DATA)
 							.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isBadRequest())
