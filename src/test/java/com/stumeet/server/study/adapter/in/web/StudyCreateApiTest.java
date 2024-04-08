@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
@@ -37,13 +36,8 @@ class StudyCreateApiTest extends ApiTest {
 		void successTest() throws Exception {
 			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
 
-			RequestPostProcessor postMethod = http -> {
-				http.setMethod("POST");
-				return http;
-			};
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
-							.with(postMethod)
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
 							.queryParam("name", request.name())
@@ -121,12 +115,7 @@ class StudyCreateApiTest extends ApiTest {
 		void successWithoutImageFile() throws Exception {
 			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
 
-			RequestPostProcessor postMethod = http -> {
-				http.setMethod("POST");
-				return http;
-			};
 			mockMvc.perform(multipart(path)
-							.with(postMethod)
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
 							.queryParam("name", request.name())
@@ -151,13 +140,8 @@ class StudyCreateApiTest extends ApiTest {
 			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
 			int invalidStudyFieldId = 0;
 
-			RequestPostProcessor postMethod = http -> {
-				http.setMethod("POST");
-				return http;
-			};
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
-							.with(postMethod)
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 							.queryParam("studyFieldId", String.valueOf(invalidStudyFieldId))
 							.queryParam("name", request.name())
@@ -190,13 +174,8 @@ class StudyCreateApiTest extends ApiTest {
 		void failWithInvalidStudyMeetingSchedule() throws Exception {
 			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
 
-			RequestPostProcessor postMethod = http -> {
-				http.setMethod("POST");
-				return http;
-			};
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
-							.with(postMethod)
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
 							.queryParam("name", request.name())
