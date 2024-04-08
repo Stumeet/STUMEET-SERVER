@@ -52,7 +52,7 @@ public class StudyCreateService implements StudyCreateUseCase {
 	private StudyDomain createStudyDomain(StudyDomain studyDomain) {
 		StudyDomain created = studyDomainCommandPort.save(studyDomain);
 
-		if (created.getStudyTags() != null) {
+		if (created.isStudyTagNotEmpty()) {
 			studyTagCommandPort.saveAll(created.getStudyTags(), created.getId());
 		}
 

@@ -12,7 +12,7 @@ public class StudyTagsUseCaseMapper {
 	public List<StudyTag> toDomains(List<String> tags) {
 		return tags != null
 				? tags.stream().map(this::toDomain).toList()
-				: null;
+				: List.of();
 	}
 
 	private StudyTag toDomain(String tag) {

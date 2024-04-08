@@ -18,7 +18,7 @@ public class StudyTagPersistenceMapper {
 						.name(tagEntity.getName())
 						.build())
 				.toList()
-				: null;
+				: List.of();
 	}
 
 	public List<StudyTagJpaEntity> toEntities(List<StudyTag> domains, Long studyDomainId) {
@@ -30,6 +30,6 @@ public class StudyTagPersistenceMapper {
 						.name(tagDomain.getName())
 						.build())
 				.toList()
-				: null;
+				: List.of();
 	}
 }
