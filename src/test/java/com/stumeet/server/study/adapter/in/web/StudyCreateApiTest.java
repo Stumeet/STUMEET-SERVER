@@ -87,25 +87,7 @@ class StudyCreateApiTest extends ApiTest {
 							),
 							responseFields(
 									fieldWithPath("code").description("응답 상태"),
-									fieldWithPath("message").description("응답 메시지"),
-									fieldWithPath("data.id").description("스터디 ID"),
-									fieldWithPath("data.field").description("분야"),
-									fieldWithPath("data.name").description("스터디 이름"),
-									fieldWithPath("data.tags").description("태그 리스트"),
-									fieldWithPath("data.intro").description("소개"),
-									fieldWithPath("data.region").description("활동 지역"),
-									fieldWithPath("data.rule").description("규칙"),
-									fieldWithPath("data.image").description("이미지 URL"),
-									fieldWithPath("data.headcount").description("참여 인원 수"),
-									fieldWithPath("data.startDate").description("시작일"),
-									fieldWithPath("data.endDate").description("종료일"),
-									fieldWithPath("data.meetingTime").description("정기모임 시간"),
-									fieldWithPath("data.meetingRepetitionType")
-											.description("정기모임 반복 유형 / `매일`, `매주`, `매달`"),
-									fieldWithPath("data.meetingRepetitionDates")
-											.description("정기모임 반복일 / 매주: 요일, 매달: 날짜"),
-									fieldWithPath("data.isFinished").description("종료 여부"),
-									fieldWithPath("data.isDeleted").description("삭제 여부")
+									fieldWithPath("message").description("응답 메시지")
 							)));
 		}
 
