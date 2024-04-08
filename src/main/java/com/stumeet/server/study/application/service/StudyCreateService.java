@@ -6,13 +6,12 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.file.application.port.in.FileUploadUseCase;
 import com.stumeet.server.member.domain.Member;
 import com.stumeet.server.study.application.port.in.StudyCreateUseCase;
+import com.stumeet.server.study.application.port.in.StudyDomainCreateUseCase;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 import com.stumeet.server.study.application.port.in.mapper.StudyDomainUseCaseMapper;
 import com.stumeet.server.study.application.port.in.mapper.StudyUseCaseMapper;
 import com.stumeet.server.study.application.port.out.StudyCommandPort;
-import com.stumeet.server.study.application.port.out.StudyDomainCommandPort;
 import com.stumeet.server.study.application.port.out.StudyFieldQueryPort;
-import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
 import com.stumeet.server.study.domain.Study;
 import com.stumeet.server.study.domain.StudyDomain;
 import com.stumeet.server.studymember.application.port.in.StudyMemberJoinUseCase;
@@ -26,11 +25,10 @@ public class StudyCreateService implements StudyCreateUseCase {
 
 	private final FileUploadUseCase fileUploadUseCase;
 	private final StudyMemberJoinUseCase memberJoinUseCase;
+	private final StudyDomainCreateUseCase studyDomainCreateUseCase;
 
 	private final StudyCommandPort studyCommandPort;
 	private final StudyFieldQueryPort studyFieldQueryPort;
-	private final StudyDomainCommandPort studyDomainCommandPort;
-	private final StudyTagCommandPort studyTagCommandPort;
 
 	private final StudyUseCaseMapper studyUseCaseMapper;
 	private final StudyDomainUseCaseMapper studyDomainUseCaseMapper;
@@ -39,7 +37,7 @@ public class StudyCreateService implements StudyCreateUseCase {
 	public Long create(StudyCreateCommand command, Member member) {
 		studyFieldQueryPort.checkById(command.studyFieldId());
 
-		StudyDomain studyDomainCreated = createStudyDomain(studyDomainUseCaseMapper.toDomain(command));
+		StudyDomain studyDomainCreated = studyDomainCreateUseCase.create(studyDomainUseCaseMapper.toDomain(command));
 		String mainImageUrl = fileUploadUseCase.uploadStudyMainImage(command.image()).url();
 
 		Study study = Study.create(command, studyDomainCreated, mainImageUrl);
@@ -47,15 +45,5 @@ public class StudyCreateService implements StudyCreateUseCase {
 
 		memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(member.getId(), studyCreated.getId()));
 		return studyCreated.getId();
-	}
-
-	private StudyDomain createStudyDomain(StudyDomain studyDomain) {
-		StudyDomain created = studyDomainCommandPort.save(studyDomain);
-
-		if (created.isStudyTagNotEmpty()) {
-			studyTagCommandPort.saveAll(created.getStudyTags(), created.getId());
-		}
-
-		return created;
 	}
 }
