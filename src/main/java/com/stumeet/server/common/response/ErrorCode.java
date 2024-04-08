@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
 	/*
-	   400 - BAD REQUEST
-   */
+	  400 - BAD REQUEST
+  */
 	VALIDATION_REQUEST_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
 	BIND_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값을 바인딩하는 과정에서 오류가 발생하였습니다."),
 	METHOD_ARGUMENT_NOT_VALID_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값이 검증되지 않은 값 입니다."),
@@ -36,11 +36,12 @@ public enum ErrorCode {
 	JWT_TOKEN_PARSING_EXCEPTION(HttpStatus.UNAUTHORIZED, "JWT 토큰 파싱에 실패했습니다."),
 	NOT_EXIST_OAUTH_PROVIDER(HttpStatus.UNAUTHORIZED, "존재하지 않는 OAuth 제공자입니다."),
 
-	/*
-		403 - FORBIDDEN
-	*/
-	ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "유효하지 않은 요청입니다."),
-	STUDY_MEMBER_NOT_JOINED_EXCEPTION(HttpStatus.FORBIDDEN, "스터디에 가입한 멤버가 아닙니다."),
+  /*
+    403 - FORBIDDEN
+  */
+  ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "유효하지 않은 요청입니다."),
+  STUDY_MEMBER_NOT_JOINED_EXCEPTION(HttpStatus.FORBIDDEN, "스터디에 가입한 멤버가 아닙니다."),
+  NOT_STUDY_ADMIN_EXCEPTION(HttpStatus.FORBIDDEN, "스터디 관리자가 아닙니다."),
 
 	/*
 		404 - NOT FOUND
