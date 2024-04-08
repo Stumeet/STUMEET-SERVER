@@ -41,9 +41,9 @@ public class StudyCreateService implements StudyCreateUseCase {
 		String mainImageUrl = fileUploadUseCase.uploadStudyMainImage(command.image()).url();
 
 		Study study = Study.create(command, studyDomainCreated, mainImageUrl);
-		Study studyCreated = studyCommandPort.save(study);
+		Study createdStudy = studyCommandPort.save(study);
 
-		memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(member.getId(), studyCreated.getId()));
-		return studyCreated.getId();
+		memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(member.getId(), createdStudy.getId()));
+		return createdStudy.getId();
 	}
 }
