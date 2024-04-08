@@ -22,7 +22,7 @@ public class StudyQueryApi {
 
 	@GetMapping("/{studyId}")
 	public ResponseEntity<ApiResponse<StudyDetailResponse>> getStudyDetail(
-			@PathVariable(name = "studyId") java.lang.Long studyId
+			@PathVariable(name = "studyId") Long studyId
 	) {
 		StudyDetailResponse response = studyQueryUseCase.getStudyDetailById(studyId);
 		return ResponseEntity.ok(ApiResponse.success(SuccessCode.GET_SUCCESS, response));

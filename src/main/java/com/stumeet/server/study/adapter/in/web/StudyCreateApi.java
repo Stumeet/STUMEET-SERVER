@@ -25,7 +25,6 @@ public class StudyCreateApi {
 	private final StudyCreateUseCase studyCreateUseCase;
 	private final StudyQueryUseCase studyQueryUseCase;
 
-	@PostMapping(consumes = "multipart/form-data", produces = "application/json")
 	public ResponseEntity<ApiResponse<StudyDetailResponse>> create(
 			@AuthenticationPrincipal LoginMember member,
 			@Valid StudyCreateCommand request
