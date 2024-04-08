@@ -7,9 +7,6 @@ spring:
     url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
     username: sa
     password:
-  sql:
-    init:
-      mode: always
   data:
     redis:
       host: localhost
