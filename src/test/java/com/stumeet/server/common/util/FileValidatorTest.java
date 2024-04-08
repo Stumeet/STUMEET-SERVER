@@ -42,13 +42,7 @@ class FileValidatorTest extends UnitTest {
 		@Test
 		@DisplayName("[성공] 유효한 파일 이름이 주어졌을 때 파일 검증을 성공한다.")
 		void validFileName_validateFileName_success() {
-			assertThatCode(() -> FileValidator.validateImageFile(MockMultipartFileStub.getJpegFile()))
-					.doesNotThrowAnyException();
-
-			assertThatCode(() -> FileValidator.validateImageFile(MockMultipartFileStub.getJpgFile()))
-					.doesNotThrowAnyException();
-
-			assertThatCode(() -> FileValidator.validateImageFile(MockMultipartFileStub.getPngFile()))
+			assertThatCode(() -> FileValidator.validateFileName(MockMultipartFileStub.getJpegFile().getOriginalFilename()))
 					.doesNotThrowAnyException();
 		}
 
