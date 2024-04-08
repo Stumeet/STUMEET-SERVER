@@ -7,11 +7,10 @@ import com.stumeet.server.study.application.port.out.StudyFieldQueryPort;
 import com.stumeet.server.study.domain.StudyField;
 import com.stumeet.server.study.domain.exception.StudyFieldNotExistsException;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class StudyFieldPersistenceAdapter implements StudyFieldQueryPort {
 
 	private final JpaStudyFieldRepository studyFieldRepository;
