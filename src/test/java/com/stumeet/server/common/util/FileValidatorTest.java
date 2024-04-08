@@ -5,8 +5,12 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import com.stumeet.server.common.exception.model.InvalidFileException;
+import com.stumeet.server.file.domain.exception.InvalidFileException;
 import com.stumeet.server.stub.MockMultipartFileStub;
 import com.stumeet.server.template.UnitTest;
 
@@ -48,14 +52,12 @@ class FileValidatorTest extends UnitTest {
 					.doesNotThrowAnyException();
 		}
 
-		@Test
+		@ParameterizedTest
+		@NullSource
+		@ValueSource(strings = "filejpeg")
 		@DisplayName("[실패] 유효하지 않은 파일 이름이 주어졌을 때 파일 검증을 실패한다.")
-		void invalidFileName_validateFileName_fail() {
-			assertThatThrownBy(() -> FileValidator.validateFileName(null))
-					.isInstanceOf(InvalidFileException.class);
-
-			String fileNameNotContainDot = "filejpeg";
-			assertThatThrownBy(() -> FileValidator.validateFileName(fileNameNotContainDot))
+		void invalidFileName_validateFileName_fail(String fileName) {
+			assertThatThrownBy(() -> FileValidator.validateFileName(fileName))
 					.isInstanceOf(InvalidFileException.class);
 		}
 	}
@@ -64,26 +66,26 @@ class FileValidatorTest extends UnitTest {
 	@DisplayName("파일 컨텐트 타입 검증")
 	class ValidateFileContentType {
 
-		@Test
+		@ParameterizedTest
+		@CsvSource({
+				"image/jpeg, jpeg",
+				"image/jpeg, jpg",
+				"image/png, png"
+		})
 		@DisplayName("[성공] 유효한 파일 컨텐트 타입이 주어졌을 때 파일 검증을 성공한다.")
-		void validFileContent_validateImageContentType_success() {
-			assertThatCode(() -> FileValidator.validateImageContentType("image/jpeg", "jpeg"))
-					.doesNotThrowAnyException();
-
-			assertThatCode(() -> FileValidator.validateImageContentType("image/jpeg", "jpg"))
-					.doesNotThrowAnyException();
-
-			assertThatCode(() -> FileValidator.validateImageContentType("image/png", "png"))
+		void validFileContent_validateImageContentType_success(String contentType, String extension) {
+			assertThatCode(() -> FileValidator.validateImageContentType(contentType, extension))
 					.doesNotThrowAnyException();
 		}
 
-		@Test
+		@ParameterizedTest
+		@CsvSource({
+				"null, null",
+				"'image/tiff', 'tiff'"
+		})
 		@DisplayName("[실패] 유효하지 않은 파일 컨텐트 타입이 주어졌을 때 파일 검증을 실패한다.")
-		void invalidFileContent_validateImageContentType_fail() {
-			assertThatThrownBy(() -> FileValidator.validateImageContentType(null, null))
-					.isInstanceOf(InvalidFileException.class);
-
-			assertThatThrownBy(() -> FileValidator.validateImageContentType("image/tiff", "tiff"))
+		void invalidFileContent_validateImageContentType_fail(String contentType, String extension) {
+			assertThatThrownBy(() -> FileValidator.validateImageContentType(contentType, extension))
 					.isInstanceOf(InvalidFileException.class);
 		}
 	}

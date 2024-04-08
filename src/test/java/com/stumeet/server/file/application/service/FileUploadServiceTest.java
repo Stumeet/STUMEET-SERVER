@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.MockMultipartFileStub;
 import com.stumeet.server.template.IntegrationTest;
 
@@ -23,13 +24,13 @@ class FileUploadServiceTest extends IntegrationTest {
 		@Test
 		@DisplayName("[성공] 유효한 파일이 주어졌을 때 파일 업로드에 성공한다.")
 		void uploadUserProfileImage_success() {
-			assertThatCode(() -> fileUploadService.uploadUserProfileImage(1L, MockMultipartFileStub.getJpegFile()))
+			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartFileStub.getJpegFile()))
 					.doesNotThrowAnyException();
 
-			assertThatCode(() -> fileUploadService.uploadUserProfileImage(1L, MockMultipartFileStub.getJpgFile()))
+			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartFileStub.getJpgFile()))
 					.doesNotThrowAnyException();
 
-			assertThatCode(() -> fileUploadService.uploadUserProfileImage(1L, MockMultipartFileStub.getPngFile()))
+			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartFileStub.getPngFile()))
 					.doesNotThrowAnyException();
 		}
 	}
