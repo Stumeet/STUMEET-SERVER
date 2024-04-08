@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
+import com.stumeet.server.common.response.SuccessCode;
 import com.stumeet.server.study.application.port.in.StudyCreateUseCase;
-import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
-import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,17 +22,16 @@ import lombok.RequiredArgsConstructor;
 public class StudyCreateApi {
 
 	private final StudyCreateUseCase studyCreateUseCase;
-	private final StudyQueryUseCase studyQueryUseCase;
 
-	public ResponseEntity<ApiResponse<StudyDetailResponse>> create(
+	@PostMapping
+	public ResponseEntity<ApiResponse<Void>> create(
 			@AuthenticationPrincipal LoginMember member,
 			@Valid StudyCreateCommand request
 	) {
-		Long createdStudyId = studyCreateUseCase.create(request, member.getMember());
-		StudyDetailResponse response = studyQueryUseCase.getStudyDetailById(createdStudyId);
+		studyCreateUseCase.create(request, member.getMember());
 
 		return new ResponseEntity<>(
-				ApiResponse.success(HttpStatus.CREATED.value(), "스터디 그룹 생성에 성공했습니다.", response),
+				ApiResponse.success(SuccessCode.STUDY_CREATE_SUCCESS),
 				HttpStatus.CREATED);
 	}
 }
