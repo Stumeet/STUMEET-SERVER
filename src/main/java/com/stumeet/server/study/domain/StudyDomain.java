@@ -22,6 +22,10 @@ public class StudyDomain {
 		return studyField.getName();
 	}
 
+	public boolean isStudyTagNotEmpty() {
+		return !studyTags.isEmpty();
+	}
+
 	public List<String> getStudyTagNames() {
 		return studyTags.stream()
 				.map(StudyTag::getName)

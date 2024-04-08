@@ -9,5 +9,7 @@ import com.stumeet.server.file.application.port.out.FileUrl;
 
 	FileUrl uploadUserProfileImage(Long userId, MultipartFile multipartFile);
 
+	FileUrl uploadStudyMainImage(MultipartFile multipartFile);
+
 	List<FileUrl> uploadStudyActivityImage(Long studyId, List<MultipartFile> multipartFile);
 }

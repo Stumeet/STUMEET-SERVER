@@ -1,20 +1,18 @@
 package com.stumeet.server.study.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class StudyPeriod {
 
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 
-	private LocalDateTime endDate;
-
-	public static StudyPeriod of(LocalDateTime startDate, LocalDateTime endDate) {
-		return new StudyPeriod(startDate, endDate);
-	}
+	private LocalDate endDate;
 }

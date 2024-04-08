@@ -26,7 +26,7 @@ CREATE TABLE `study`
     `region`             VARCHAR(50)  NOT NULL COMMENT '활동 지역',
     `intro`              VARCHAR(200) NOT NULL COMMENT '소개',
     `rule`               VARCHAR(200) NULL COMMENT '규칙',
-    `image`              VARCHAR(500) NOT NULL COMMENT '스터디 이미지의 URL',
+    `image`              VARCHAR(500) NULL COMMENT '스터디 이미지의 URL',
     `headcount`          TINYINT(100) NOT NULL DEFAULT 1 COMMENT '인원 수',
     `start_date`         DATETIME     NOT NULL COMMENT '시작일',
     `end_date`           DATETIME     NOT NULL COMMENT '종료일',

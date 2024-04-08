@@ -25,13 +25,16 @@ public class StudyPersistenceMapper {
 				.region(entity.getRegion())
 				.intro(entity.getIntro())
 				.rule(entity.getRule())
-				.period(StudyPeriod.of(entity.getStartDate(), entity.getEndDate()))
-				.headcount(StudyHeadCount.from(entity.getHeadcount()))
+				.period(StudyPeriod.builder()
+						.startDate(entity.getStartDate())
+						.endDate(entity.getEndDate())
+						.build())
+				.headcount(new StudyHeadCount(entity.getHeadcount()))
 				.image(entity.getImage())
-				.meetingSchedule(
-						StudyMeetingSchedule.of(
-								entity.getMeetingTime(),
-								meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition())))
+				.meetingSchedule(StudyMeetingSchedule.builder()
+						.time(entity.getMeetingTime())
+						.repetition(meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition()))
+						.build())
 				.isFinished(entity.getIsFinished())
 				.isDeleted(entity.getIsDeleted())
 				.build();
