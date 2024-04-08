@@ -26,7 +26,7 @@ public class StudyMeetingSchedule {
 		private final List<String> dates;
 
 		@Builder
-		public Repetition(RepetitionType type, List<String> dates) {
+		private Repetition(RepetitionType type, List<String> dates) {
 			validateRepetition(type, dates);
 			this.type = type;
 			this.dates = type.equals(RepetitionType.DAILY) ? null : dates;
