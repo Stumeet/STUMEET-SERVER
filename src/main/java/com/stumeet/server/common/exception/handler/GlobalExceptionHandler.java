@@ -1,6 +1,7 @@
 package com.stumeet.server.common.exception.handler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
@@ -71,6 +72,17 @@ public class GlobalExceptionHandler {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION);
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BadRequestException e) {
+        log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+
+        String message = String.format("%s %s", e.getErrorCode().getMessage(), e.getMessage());
+        ApiResponse response = ApiResponse.fail(e.getErrorCode().getHttpStatusCode(), message);
 
         return ResponseEntity.badRequest()
                 .body(response);
