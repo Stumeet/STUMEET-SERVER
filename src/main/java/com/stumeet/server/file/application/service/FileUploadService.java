@@ -30,6 +30,9 @@ public class FileUploadService implements FileUploadUseCase {
 
 	@Override
 	public FileUrl uploadStudyMainImage(MultipartFile multipartFile) {
+		if (multipartFile == null) {
+			return new FileUrl(null);
+		}
 		return fileCommandPort.uploadImageFile(multipartFile, STUDY_MAIN_IMAGE_DIRECTORY_PATH);
 	}
 
