@@ -1,4 +1,4 @@
-CREATE TABLE `study_field`
+CREATE TABLE IF NOT EXISTS `study_field`
 (
     `id`   BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 분야 ID',
     `name` VARCHAR(50) NOT NULL COMMENT '분야명'
@@ -6,7 +6,7 @@ CREATE TABLE `study_field`
       DEFAULT CHARSET = utf8mb4
       COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `study_domain`
+CREATE TABLE IF NOT EXISTS `study_domain`
 (
     `id`             BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 도메인 ID',
     `study_field_id` BIGINT NULL COMMENT '스터디 분야 ID',
@@ -18,7 +18,7 @@ CREATE TABLE `study_domain`
       DEFAULT CHARSET = utf8mb4
       COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `study`
+CREATE TABLE IF NOT EXISTS `study`
 (
     `id`                 BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 ID',
     `study_domain_id`    BIGINT       NOT NULL COMMENT '스터디 도메인 ID',
@@ -46,7 +46,7 @@ CREATE TABLE `study`
       COLLATE = utf8mb4_unicode_ci;
 
 
-CREATE TABLE `study_tag`
+CREATE TABLE IF NOT EXISTS `study_tag`
 (
     `id`              BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 태그 ID',
     `study_domain_id` BIGINT      NOT NULL COMMENT '스터디 관련 ID',
