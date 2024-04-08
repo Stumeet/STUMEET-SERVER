@@ -1,8 +1,10 @@
 package com.stumeet.server.study.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
+import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public class Study {
+
+	private static final int INITIAL_STUDY_HEAD_COUNT = 1;
 
 	private Long id;
 
@@ -38,6 +42,38 @@ public class Study {
 
 	private boolean isDeleted;
 
+	public static Study create(StudyCreateCommand command, StudyDomain studyDomain, String imageUrl) {
+		StudyMeetingSchedule meetingSchedule =
+				StudyMeetingSchedule.builder()
+						.time(command.meetingTime())
+						.repetition(StudyMeetingSchedule.Repetition.builder()
+								.type(command.meetingRepetitionType())
+								.dates(command.meetingRepetitionDates())
+								.build())
+						.build();
+
+		StudyPeriod studyPeriod = StudyPeriod.builder()
+				.startDate(command.startDate())
+				.endDate(command.endDate())
+				.build();
+
+		StudyHeadCount studyHeadCount = new StudyHeadCount(INITIAL_STUDY_HEAD_COUNT);
+
+		return Study.builder()
+				.studyDomain(studyDomain)
+				.name(command.name())
+				.intro(command.intro())
+				.rule(command.rule())
+				.region(command.region())
+				.period(studyPeriod)
+				.meetingSchedule(meetingSchedule)
+				.headcount(studyHeadCount)
+				.image(imageUrl)
+				.isFinished(false)
+				.isDeleted(false)
+				.build();
+	}
+
 	public String getStudyFieldName() {
 		return studyDomain.getStudyFieldName();
 	}
@@ -50,11 +86,11 @@ public class Study {
 		return headcount.getNumber();
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return period.getStartDate();
 	}
 
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return period.getEndDate();
 	}
 

@@ -43,4 +43,17 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
                         studyMemberJpaEntity.member.id.eq(memberId)
                 ).fetchOne() != null;
     }
+
+    @Override
+    public boolean isAdmin(Long studyId, Long adminId) {
+        return Boolean.TRUE.equals(
+                query
+                        .select(studyMemberJpaEntity.isAdmin)
+                        .from(studyMemberJpaEntity)
+                        .where(
+                                studyMemberJpaEntity.study.id.eq(studyId),
+                                studyMemberJpaEntity.member.id.eq(adminId)
+                        ).fetchOne()
+        );
+    }
 }

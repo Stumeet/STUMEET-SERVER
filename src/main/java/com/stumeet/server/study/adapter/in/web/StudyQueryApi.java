@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
-import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
+import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class StudyQueryApi {
 
 	private final StudyQueryUseCase studyQueryUseCase;
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<StudyDetailResponse>> getStudy(
-		@PathVariable(name = "id") Long id
+	@GetMapping("/{studyId}")
+	public ResponseEntity<ApiResponse<StudyDetailResponse>> getStudyDetail(
+			@PathVariable(name = "studyId") Long studyId
 	) {
-		StudyDetailResponse response = studyQueryUseCase.getStudyDetailById(id);
+		StudyDetailResponse response = studyQueryUseCase.getStudyDetailById(studyId);
 		return ResponseEntity.ok(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
 	}
 }

@@ -24,4 +24,13 @@ public class StudyMemberLeaveService implements StudyMemberLeaveUseCase {
 
         studyMemberLeavePort.leave(studyId, memberId);
     }
+
+    @Override
+    public void kick(Long studyId, Long kickMemberId, Long loginMemberId) {
+        studyValidationUseCase.checkById(studyId);
+        studyMemberValidationUseCase.checkAdmin(studyId, loginMemberId);
+        studyMemberValidationUseCase.checkStudyJoinMember(studyId, kickMemberId);
+
+        studyMemberLeavePort.leave(studyId, kickMemberId);
+    }
 }

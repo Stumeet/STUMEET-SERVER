@@ -1,9 +1,10 @@
-package com.stumeet.server.study.application.port.out.mapper;
+package com.stumeet.server.study.application.port.in.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
+import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
 import com.stumeet.server.study.domain.Study;
+import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoinCommand;
 
 @Component
 public class StudyUseCaseMapper {
@@ -27,5 +28,13 @@ public class StudyUseCaseMapper {
 			.isFinished(study.isFinished())
 			.isDeleted(study.isDeleted())
 			.build();
+	}
+
+	public StudyMemberJoinCommand toAdminStudyMemberJoinCommand(Long memberId, Long studyId) {
+		return StudyMemberJoinCommand.builder()
+				.memberId(memberId)
+				.studyId(studyId)
+				.isAdmin(true)
+				.build();
 	}
 }

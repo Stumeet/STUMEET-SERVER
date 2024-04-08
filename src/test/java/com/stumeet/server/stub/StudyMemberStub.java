@@ -58,4 +58,8 @@ public class StudyMemberStub {
                 .isAdmin(true)
                 .build();
     }
+
+    public static Long getStudyAdminId() {
+        return 1L;
+    }
 }

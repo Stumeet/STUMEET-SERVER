@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
@@ -26,7 +25,6 @@ class StudyQueryApiTest extends ApiTest {
 	class GetStudyDetail {
 
 		@Test
-		@Transactional
 		@WithMockMember
 		@DisplayName("[성공] 스터디 상세 정보 조회를 성공한다.")
 		void successTest() throws Exception {

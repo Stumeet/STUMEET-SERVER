@@ -11,22 +11,25 @@ import com.stumeet.server.study.domain.StudyTag;
 public class StudyTagPersistenceMapper {
 
 	public List<StudyTag> toDomains(List<StudyTagJpaEntity> entities) {
-		return entities
-				.stream()
+		return entities != null
+				? entities.stream()
 				.map(tagEntity -> StudyTag.builder()
 						.id(tagEntity.getId())
 						.name(tagEntity.getName())
 						.build())
-				.toList();
+				.toList()
+				: List.of();
 	}
 
 	public List<StudyTagJpaEntity> toEntities(List<StudyTag> domains, Long studyDomainId) {
-		return domains.stream()
+		return domains != null
+				? domains.stream()
 				.map(tagDomain -> StudyTagJpaEntity.builder()
 						.id(tagDomain.getId())
 						.studyDomainId(studyDomainId)
 						.name(tagDomain.getName())
 						.build())
-				.toList();
+				.toList()
+				: List.of();
 	}
 }
