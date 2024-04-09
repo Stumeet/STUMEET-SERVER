@@ -1,3 +1,6 @@
+/**
+  PROFESSION
+ */
 INSERT INTO `profession` (name, parent_id)
 VALUES ('경영사무', NULL);
 
@@ -174,3 +177,17 @@ INSERT INTO `profession` (name, parent_id) SELECT '수의사', id FROM professio
 INSERT INTO `profession` (name, parent_id) SELECT '한약사', id FROM profession WHERE name = '의료';
 INSERT INTO `profession` (name, parent_id) SELECT '한의사', id FROM profession WHERE name = '의료';
 INSERT INTO `profession` (name, parent_id) SELECT '원무', id FROM profession WHERE name = '의료';
+
+/**
+  STUDY FIELD
+ */
+INSERT INTO study_field (name) VALUES ('어학');
+INSERT INTO study_field (name) VALUES ('취업');
+INSERT INTO study_field (name) VALUES ('자격증');
+INSERT INTO study_field (name) VALUES ('고시/공무원');
+INSERT INTO study_field (name) VALUES ('취미/교양');
+INSERT INTO study_field (name) VALUES ('프로그래밍');
+INSERT INTO study_field (name) VALUES ('재테크/경제');
+INSERT INTO study_field (name) VALUES ('수능');
+INSERT INTO study_field (name) VALUES ('독서');
+INSERT INTO study_field (name) VALUES ('자율');
