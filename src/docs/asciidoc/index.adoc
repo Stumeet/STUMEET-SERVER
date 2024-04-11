@@ -329,3 +329,32 @@ include::{snippets}/kick-study/fail/not-admin/response-fields.adoc[]
 ===== 응답 실패 (404)
 include::{snippets}/kick-study/fail/not-exist-study/response-body.adoc[]
 include::{snippets}/kick-study/fail/not-exist-study/response-fields.adoc[]
+
+=== 스터디 가입
+
+멤버가 스터디에 가입할 때 사용하는 API 입니다.
+
+==== POST /v1/api/studies/{studyId}/members
+
+===== 요청
+include::{snippets}/study-member-join/success/http-request.adoc[]
+include::{snippets}/study-member-join/success/path-parameters.adoc[]
+include::{snippets}/study-member-join/success/request-headers.adoc[]
+
+===== 응답 성공 (201)
+include::{snippets}/study-member-join/success/response-body.adoc[]
+include::{snippets}/study-member-join/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.이미 스터디에 가입한 멤버인 경우
+include::{snippets}/study-member-join/fail/already-join-member/response-body.adoc[]
+include::{snippets}/study-member-join/fail/already-join-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디에 가입을 요청한 경우
+include::{snippets}/study-member-join/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/study-member-join/fail/not-exist-study/response-fields.adoc[]
+
+.존재하지 않는 멤버가 가입을 요청한 경우
+include::{snippets}/study-member-join/fail/not-exist-member/response-body.adoc[]
+include::{snippets}/study-member-join/fail/not-exist-member/response-fields.adoc[]
