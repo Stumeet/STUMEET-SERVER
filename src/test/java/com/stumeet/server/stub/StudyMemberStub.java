@@ -16,6 +16,14 @@ public class StudyMemberStub {
     public static StudyMemberJoinCommand getJoinCommand() {
         return StudyMemberJoinCommand.builder()
                 .studyId(1L)
+                .memberId(2L)
+                .isAdmin(true)
+                .build();
+    }
+
+    public static StudyMemberJoinCommand getAlreadyJoinCommand() {
+        return StudyMemberJoinCommand.builder()
+                .studyId(1L)
                 .memberId(1L)
                 .isAdmin(true)
                 .build();
