@@ -233,7 +233,15 @@ include::{snippets}/get-study-detail/fail/not-found/response-fields.adoc[]
 
 ===== 요청
 include::{snippets}/create-study/success/http-request.adoc[]
+
+===== 헤더
 include::{snippets}/create-study/success/request-headers.adoc[]
+
+===== 파트
+include::{snippets}/create-study/success/request-parts.adoc[]
+
+===== 매개변수
+include::{snippets}/create-study/success/query-parameters.adoc[]
 
 ===== 응답 성공 (200)
 
@@ -251,6 +259,42 @@ include::{snippets}/create-study/fail/study-field-not-found/response-fields.adoc
 
 include::{snippets}/create-study/fail/invalid-study-meeting-schedule/response-body.adoc[]
 include::{snippets}/create-study/fail/invalid-study-meeting-schedule/response-fields.adoc[]
+
+
+=== 스터디 수정
+
+스터디 정보를 수정하는 API 입니다.
+
+==== PATCH /api/v1/studies/{studyId}
+
+===== 요청
+include::{snippets}/update-study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/update-study/success/request-headers.adoc[]
+
+===== 파트
+include::{snippets}/update-study/success/request-parts.adoc[]
+
+===== 매개변수
+include::{snippets}/update-study/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+
+include::{snippets}/update-study/success/response-body.adoc[]
+include::{snippets}/update-study/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+
+.존재하지 않는 스터디 분야 ID를 요청한 경우
+
+include::{snippets}/update-study/fail/study-field-not-found/response-body.adoc[]
+include::{snippets}/update-study/fail/study-field-not-found/response-fields.adoc[]
+
+.일정 반복 유형 DAILY일 때를 제외하고 반복일을 null 값으로 요청한 경우
+
+include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-body.adoc[]
+include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-fields.adoc[]
 
 
 == 스터디 멤버 관리
