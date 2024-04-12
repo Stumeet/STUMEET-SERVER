@@ -29,7 +29,7 @@ public class StudyPersistenceMapper {
 						.startDate(entity.getStartDate())
 						.endDate(entity.getEndDate())
 						.build())
-				.image(entity.getImage())
+				.imageUrl(entity.getImage())
 				.meetingSchedule(StudyMeetingSchedule.builder()
 						.time(entity.getMeetingTime())
 						.repetition(meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition()))
@@ -50,7 +50,7 @@ public class StudyPersistenceMapper {
 				.rule(domain.getRule())
 				.startDate(domain.getStartDate())
 				.endDate(domain.getEndDate())
-				.image(domain.getImage())
+				.image(domain.getImageUrl())
 				.meetingTime(domain.getMeetingSchedule().getTime())
 				.meetingRepetition(
 						meetingRepetitionPersistenceMapper.toColumn(domain.getMeetingSchedule().getRepetition()))
