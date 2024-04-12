@@ -34,8 +34,6 @@ public class Study {
 
 	private StudyPeriod period;
 
-	private StudyHeadCount headcount;
-
 	private String image;
 
 	private boolean isFinished;
@@ -57,7 +55,6 @@ public class Study {
 				.endDate(command.endDate())
 				.build();
 
-		StudyHeadCount studyHeadCount = new StudyHeadCount(INITIAL_STUDY_HEAD_COUNT);
 
 		return Study.builder()
 				.studyDomain(studyDomain)
@@ -67,7 +64,6 @@ public class Study {
 				.region(command.region())
 				.period(studyPeriod)
 				.meetingSchedule(meetingSchedule)
-				.headcount(studyHeadCount)
 				.image(imageUrl)
 				.isFinished(false)
 				.isDeleted(false)
@@ -78,12 +74,8 @@ public class Study {
 		return studyDomain.getStudyFieldName();
 	}
 
-	public List<String> getStudyTagNames() {
-		return studyDomain.getStudyTagNames();
-	}
-
-	public int getHeadcountNumber() {
-		return headcount.getNumber();
+	public List<String> getStudyTags() {
+		return studyDomain.getStudyTags();
 	}
 
 	public LocalDate getStartDate() {

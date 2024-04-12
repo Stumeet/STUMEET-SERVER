@@ -6,7 +6,6 @@ import com.stumeet.server.common.annotation.PersistenceAdapter;
 import com.stumeet.server.study.adapter.out.persistance.entity.StudyTagJpaEntity;
 import com.stumeet.server.study.adapter.out.persistance.mapper.StudyTagPersistenceMapper;
 import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
-import com.stumeet.server.study.domain.StudyTag;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +17,9 @@ public class StudyTagPersistenceAdapter implements StudyTagCommandPort {
 	private final StudyTagPersistenceMapper studyTagPersistenceMapper;
 
 	@Override
-	public List<StudyTag> saveAll(List<StudyTag> studyTags, Long studyDomainId) {
+	public List<String> saveAll(List<String> studyTags, Long studyId) {
 		List<StudyTagJpaEntity> entities =
-				studyTagRepository.saveAll(studyTagPersistenceMapper.toEntities(studyTags, studyDomainId));
+				studyTagRepository.saveAll(studyTagPersistenceMapper.toEntities(studyTags, studyId));
 
 		return studyTagPersistenceMapper.toDomains(entities);
 	}
