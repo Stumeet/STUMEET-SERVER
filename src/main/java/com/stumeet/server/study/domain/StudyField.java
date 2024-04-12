@@ -1,5 +1,7 @@
 package com.stumeet.server.study.domain;
 
+import com.stumeet.server.study.domain.exception.StudyFieldNotExistsException;
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -20,5 +22,12 @@ public enum StudyField {
 
     StudyField(String name) {
         this.name = name;
+    }
+
+    public static StudyField getByName(String name) {
+        return Arrays.stream(StudyField.values())
+                .filter(field -> field.name.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new StudyFieldNotExistsException(name));
     }
 }
