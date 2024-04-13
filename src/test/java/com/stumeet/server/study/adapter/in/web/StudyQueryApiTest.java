@@ -21,7 +21,7 @@ import com.stumeet.server.template.ApiTest;
 class StudyQueryApiTest extends ApiTest {
 
 	@Nested
-	@DisplayName("스터디 상세 정보 가져오기")
+	@DisplayName("스터디 상세정보 조회 API")
 	class GetStudyDetail {
 
 		@Test

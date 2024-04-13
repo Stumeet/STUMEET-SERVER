@@ -25,7 +25,7 @@ import com.stumeet.server.template.ApiTest;
 class StudyCreateApiTest extends ApiTest {
 
 	@Nested
-	@DisplayName("스터디 생성하기")
+	@DisplayName("스터디 생성 API")
 	class CreateStudy {
 
 		private final String path = "/api/v1/studies";
@@ -117,7 +117,7 @@ class StudyCreateApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember
-		@DisplayName("[실패] 존재하지 않는 스터디 분야의 ID로 요청한 경우 스터디 생성을 실패한다.")
+		@DisplayName("[실패] 존재하지 않는 스터디 분야로 요청한 경우 스터디 생성을 실패한다.")
 		void failWithNotExistStudyFieldId() throws Exception {
 			StudyCreateCommand request = StudyStub.getInvalidFieldStudyCreateCommand();
 
@@ -153,7 +153,7 @@ class StudyCreateApiTest extends ApiTest {
 		@WithMockMember
 		@DisplayName("[실패] 유효하지 않은 반복 일정 값으로 요청한 경우 스터디 생성을 실패한다.")
 		void failWithInvalidStudyMeetingSchedule() throws Exception {
-			StudyCreateCommand request = StudyStub.getInvalidMeetingSchduleStudyCreateCommand();
+			StudyCreateCommand request = StudyStub.getInvalidMeetingScheduleStudyCreateCommand();
 
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
