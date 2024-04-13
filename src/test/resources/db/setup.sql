@@ -12,7 +12,7 @@ INSERT INTO study_tag (study_domain_id, name) VALUES (1, '객체지향프로그�
 
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (1, 'test1', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
-        '서울', 1, 'FIRST_LOGIN', 'OAUTH', 'SEED', 0.0, false, null);
+        '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);
 
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (2, 'test2', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
