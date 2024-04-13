@@ -17,10 +17,21 @@ public class StudyTagPersistenceAdapter implements StudyTagCommandPort {
 	private final StudyTagPersistenceMapper studyTagPersistenceMapper;
 
 	@Override
-	public List<String> saveAll(List<String> studyTags, Long studyId) {
+	public List<String> saveAllStudyTags(List<String> studyTags, Long studyId) {
 		List<StudyTagJpaEntity> entities =
 				studyTagRepository.saveAll(studyTagPersistenceMapper.toEntities(studyTags, studyId));
 
 		return studyTagPersistenceMapper.toDomains(entities);
+	}
+
+	@Override
+	public void clearStudyTags(Long studyId) {
+		studyTagRepository.deleteAllByStudyId(studyId);
+	}
+
+	@Override
+	public void replaceStudyTags(List<String> newStudyTags, Long studyId) {
+		clearStudyTags(studyId);
+		saveAllStudyTags(newStudyTags, studyId);
 	}
 }

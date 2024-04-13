@@ -1,6 +1,7 @@
 package com.stumeet.server.study.domain;
 
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
+import com.stumeet.server.study.application.port.in.command.StudyUpdateCommand;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -56,6 +57,29 @@ public class Study {
 			.isFinished(false)
 			.isDeleted(false)
 			.build();
+	}
+
+	public static Study update(StudyUpdateCommand command, Study existingStudy, String newImageUrl) {
+		return Study.builder()
+			.id(existingStudy.getId())
+			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
+			.name(command.name())
+			.intro(command.intro())
+			.rule(command.rule())
+			.region(command.region())
+			.period(StudyPeriod.of(command.startDate(), command.endDate()))
+			.meetingSchedule(
+				StudyMeetingSchedule.of(
+					command.meetingTime(),
+					Repetition.of(command.meetingRepetitionType(), command.meetingRepetitionDates())))
+			.imageUrl(newImageUrl != null ? newImageUrl : existingStudy.imageUrl)
+			.isFinished(existingStudy.isFinished)
+			.isDeleted(existingStudy.isDeleted)
+			.build();
+	}
+
+	public boolean isStudyTagsEquals(List<String> studyTags) {
+		return getStudyTags().equals(studyTags);
 	}
 
 	public String getStudyFieldName() {
