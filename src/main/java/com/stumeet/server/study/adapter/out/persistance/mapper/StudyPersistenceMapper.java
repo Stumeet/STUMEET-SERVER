@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.stumeet.server.study.adapter.out.persistance.entity.StudyJpaEntity;
 import com.stumeet.server.study.domain.Study;
-import com.stumeet.server.study.domain.StudyMeetingSchedule;
 import com.stumeet.server.study.domain.StudyPeriod;
 
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 public class StudyPersistenceMapper {
 
 	private final StudyDomainPersistenceMapper studyDomainPersistenceMapper;
-	private final MeetingRepetitionPersistenceMapper meetingRepetitionPersistenceMapper;
 	private final StudyTagPersistenceMapper studyTagPersistenceMapper;
+	private final StudyMeetingSchedulePersistenceMapper studyMeetingSchedulePersistenceMapper;
+	private final MeetingRepetitionPersistenceMapper meetingRepetitionPersistenceMapper;
 
 	public Study toDomain(StudyJpaEntity entity) {
 		return Study.builder()
@@ -25,15 +25,9 @@ public class StudyPersistenceMapper {
 				.region(entity.getRegion())
 				.intro(entity.getIntro())
 				.rule(entity.getRule())
-				.period(StudyPeriod.builder()
-						.startDate(entity.getStartDate())
-						.endDate(entity.getEndDate())
-						.build())
+				.period(StudyPeriod.of(entity.getStartDate(), entity.getEndDate()))
 				.imageUrl(entity.getImage())
-				.meetingSchedule(StudyMeetingSchedule.builder()
-						.time(entity.getMeetingTime())
-						.repetition(meetingRepetitionPersistenceMapper.toDomain(entity.getMeetingRepetition()))
-						.build())
+				.meetingSchedule(studyMeetingSchedulePersistenceMapper.toDomain(entity.getMeetingTime(), entity.getMeetingRepetition()))
 				.isFinished(entity.getIsFinished())
 				.isDeleted(entity.getIsDeleted())
 				.build();
@@ -52,8 +46,7 @@ public class StudyPersistenceMapper {
 				.endDate(domain.getEndDate())
 				.image(domain.getImageUrl())
 				.meetingTime(domain.getMeetingSchedule().getTime())
-				.meetingRepetition(
-						meetingRepetitionPersistenceMapper.toColumn(domain.getMeetingSchedule().getRepetition()))
+				.meetingRepetition(meetingRepetitionPersistenceMapper.toColumn(domain.getMeetingSchedule().getRepetition()))
 				.isFinished(domain.isFinished())
 				.isDeleted(domain.isDeleted())
 				.build();
