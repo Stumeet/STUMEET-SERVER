@@ -2,29 +2,20 @@ package com.stumeet.server.stub;
 
 import java.util.List;
 
+import com.stumeet.server.study.domain.Repetition;
 import com.stumeet.server.study.domain.RepetitionType;
-import com.stumeet.server.study.domain.StudyMeetingSchedule;
 
 public class RepetitionStub {
 
-	public static StudyMeetingSchedule.Repetition getDailyRepetition() {
-		return StudyMeetingSchedule.Repetition.builder()
-				.type(RepetitionType.DAILY)
-				.dates(null)
-				.build();
+	public static Repetition getDailyRepetition() {
+		return Repetition.of(RepetitionType.DAILY, null);
 	}
 
-	public static StudyMeetingSchedule.Repetition getWeeklyRepetition() {
-		return StudyMeetingSchedule.Repetition.builder()
-				.type(RepetitionType.WEEKLY)
-				.dates(List.of("수", "금"))
-				.build();
+	public static Repetition getWeeklyRepetition() {
+		return Repetition.of(RepetitionType.WEEKLY, List.of("수", "금"));
 	}
 
-	public static StudyMeetingSchedule.Repetition getMonthlyRepetition() {
-		return StudyMeetingSchedule.Repetition.builder()
-				.type(RepetitionType.MONTHLY)
-				.dates(List.of("10", "20", "30"))
-				.build();
+	public static Repetition getMonthlyRepetition() {
+		return Repetition.of(RepetitionType.MONTHLY, List.of("10", "20", "30"));
 	}
 }
