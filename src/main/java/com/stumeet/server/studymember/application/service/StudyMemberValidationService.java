@@ -19,21 +19,21 @@ public class StudyMemberValidationService implements StudyMemberValidationUseCas
     @Override
     public void checkStudyJoinMember(Long studyId, Long memberId) {
         if (studyMemberValidationPort.isNotStudyJoinMember(studyId, memberId)) {
-            throw new StudyMemberNotJoinedException("스터디에 가입된 멤버가 아닙니다. 전달받은 studyId=" + studyId + ", memberId=" + memberId);
+            throw new StudyMemberNotJoinedException(studyId, memberId);
         }
     }
 
     @Override
     public void checkAlreadyStudyJoinMember(Long studyId, Long memberId) {
         if (studyMemberValidationPort.isAlreadyStudyJoinMember(studyId, memberId)) {
-            throw new AlreadyStudyJoinMemberException("스터디에 이미 가입한 멤버입니다. 전달받은 studyId=" + studyId + ", memberId=" + memberId);
+            throw new AlreadyStudyJoinMemberException(studyId, memberId);
         }
     }
 
     @Override
     public void checkAdmin(Long studyId, Long adminId) {
         if (studyMemberValidationPort.isNotAdmin(studyId, adminId)) {
-            throw new NotStudyAdminException("스터디 관리자가 아닙니다. 전달받은 studyId=" + studyId + ", adminId=" + adminId);
+            throw new NotStudyAdminException(studyId, adminId);
         }
     }
 }
