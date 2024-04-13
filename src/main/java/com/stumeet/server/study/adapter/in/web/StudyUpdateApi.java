@@ -34,6 +34,6 @@ public class StudyUpdateApi {
 
 		return new ResponseEntity<>(
 			ApiResponse.success(SuccessCode.UPDATE_SUCCESS),
-			HttpStatus.CREATED);
+			HttpStatus.OK);
 	}
 }
