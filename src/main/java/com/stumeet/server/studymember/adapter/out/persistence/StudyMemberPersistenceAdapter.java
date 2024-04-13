@@ -34,6 +34,11 @@ public class StudyMemberPersistenceAdapter implements StudyMemberJoinPort, Study
     }
 
     @Override
+    public boolean isAlreadyStudyJoinMember(Long studyId, Long memberId) {
+        return jpaStudyMemberRepository.isStudyJoinMember(studyId, memberId);
+    }
+
+    @Override
     public boolean isNotAdmin(Long studyId, Long adminId) {
         return !jpaStudyMemberRepository.isAdmin(studyId, adminId);
     }

@@ -4,6 +4,7 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberJoinUseCase;
+import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoinCommand;
 import com.stumeet.server.studymember.application.port.in.mapper.StudyMemberUseCaseMapper;
 import com.stumeet.server.studymember.application.port.out.StudyMemberJoinPort;
@@ -20,12 +21,16 @@ public class StudyMemberJoinService implements StudyMemberJoinUseCase {
     private final StudyValidationUseCase studyValidationUseCase;
     private final StudyMemberUseCaseMapper studyMemberUseCaseMapper;
     private final StudyMemberJoinPort studyMemberJoinPort;
+    private final StudyMemberValidationUseCase studyMemberValidationUseCase;
 
     @Override
     public void join(StudyMemberJoinCommand command) {
         memberValidationUseCase.checkById(command.memberId());
         studyValidationUseCase.checkById(command.studyId());
+        studyMemberValidationUseCase.checkAlreadyStudyJoinMember(command.studyId(), command.memberId());
+
         StudyMember studyMember = studyMemberUseCaseMapper.toDomain(command);
+
         studyMemberJoinPort.join(studyMember);
     }
 }
