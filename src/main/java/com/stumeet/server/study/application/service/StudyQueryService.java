@@ -3,7 +3,7 @@ package com.stumeet.server.study.application.service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stumeet.server.common.annotation.UseCase;
-import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
+import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 import com.stumeet.server.study.application.port.out.StudyQueryPort;
 import com.stumeet.server.study.application.port.in.mapper.StudyUseCaseMapper;

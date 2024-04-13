@@ -1,10 +1,10 @@
 package com.stumeet.server.study.domain;
 
+import com.stumeet.server.file.application.port.out.FileUrl;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
-import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,56 +34,37 @@ public class Study {
 
 	private StudyPeriod period;
 
-	private StudyHeadCount headcount;
-
-	private String image;
+	private String imageUrl;
 
 	private boolean isFinished;
 
 	private boolean isDeleted;
 
-	public static Study create(StudyCreateCommand command, StudyDomain studyDomain, String imageUrl) {
-		StudyMeetingSchedule meetingSchedule =
-				StudyMeetingSchedule.builder()
-						.time(command.meetingTime())
-						.repetition(StudyMeetingSchedule.Repetition.builder()
-								.type(command.meetingRepetitionType())
-								.dates(command.meetingRepetitionDates())
-								.build())
-						.build();
-
-		StudyPeriod studyPeriod = StudyPeriod.builder()
-				.startDate(command.startDate())
-				.endDate(command.endDate())
-				.build();
-
-		StudyHeadCount studyHeadCount = new StudyHeadCount(INITIAL_STUDY_HEAD_COUNT);
-
+	public static Study create(StudyDomain studyDomain, String name, String intro, String rule,
+		String region, StudyPeriod studyPeriod, StudyMeetingSchedule meetingSchedule) {
 		return Study.builder()
-				.studyDomain(studyDomain)
-				.name(command.name())
-				.intro(command.intro())
-				.rule(command.rule())
-				.region(command.region())
-				.period(studyPeriod)
-				.meetingSchedule(meetingSchedule)
-				.headcount(studyHeadCount)
-				.image(imageUrl)
-				.isFinished(false)
-				.isDeleted(false)
-				.build();
+			.studyDomain(studyDomain)
+			.name(name)
+			.intro(intro)
+			.rule(rule)
+			.region(region)
+			.period(studyPeriod)
+			.meetingSchedule(meetingSchedule)
+			.isFinished(false)
+			.isDeleted(false)
+			.build();
+	}
+
+	public void setImageUrl(FileUrl fileUrl) {
+		imageUrl = fileUrl.url();
 	}
 
 	public String getStudyFieldName() {
 		return studyDomain.getStudyFieldName();
 	}
 
-	public List<String> getStudyTagNames() {
-		return studyDomain.getStudyTagNames();
-	}
-
-	public int getHeadcountNumber() {
-		return headcount.getNumber();
+	public List<String> getStudyTags() {
+		return studyDomain.getStudyTags();
 	}
 
 	public LocalDate getStartDate() {

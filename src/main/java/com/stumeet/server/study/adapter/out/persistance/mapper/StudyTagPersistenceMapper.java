@@ -5,29 +5,24 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.stumeet.server.study.adapter.out.persistance.entity.StudyTagJpaEntity;
-import com.stumeet.server.study.domain.StudyTag;
 
 @Component
 public class StudyTagPersistenceMapper {
 
-	public List<StudyTag> toDomains(List<StudyTagJpaEntity> entities) {
+	public List<String> toDomains(List<StudyTagJpaEntity> entities) {
 		return entities != null
 				? entities.stream()
-				.map(tagEntity -> StudyTag.builder()
-						.id(tagEntity.getId())
-						.name(tagEntity.getName())
-						.build())
+				.map(StudyTagJpaEntity::getName)
 				.toList()
 				: List.of();
 	}
 
-	public List<StudyTagJpaEntity> toEntities(List<StudyTag> domains, Long studyDomainId) {
-		return domains != null
+	public List<StudyTagJpaEntity> toEntities(List<String> domains, Long studyId) {
+		return !domains.isEmpty()
 				? domains.stream()
-				.map(tagDomain -> StudyTagJpaEntity.builder()
-						.id(tagDomain.getId())
-						.studyDomainId(studyDomainId)
-						.name(tagDomain.getName())
+				.map(tag -> StudyTagJpaEntity.builder()
+						.studyId(studyId)
+						.name(tag)
 						.build())
 				.toList()
 				: List.of();

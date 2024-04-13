@@ -12,23 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class StudyDomain {
 
-	private Long id;
-
 	private StudyField studyField;
 
-	private List<StudyTag> studyTags;
+	private List<String> studyTags;
 
 	public String getStudyFieldName() {
 		return studyField.getName();
-	}
-
-	public boolean isStudyTagNotEmpty() {
-		return !studyTags.isEmpty();
-	}
-
-	public List<String> getStudyTagNames() {
-		return studyTags.stream()
-				.map(StudyTag::getName)
-				.toList();
 	}
 }

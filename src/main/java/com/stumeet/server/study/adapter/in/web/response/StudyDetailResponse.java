@@ -1,4 +1,4 @@
-package com.stumeet.server.study.application.port.in.response;
+package com.stumeet.server.study.adapter.in.web.response;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

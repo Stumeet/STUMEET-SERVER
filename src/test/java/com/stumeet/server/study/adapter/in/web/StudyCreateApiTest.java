@@ -39,7 +39,7 @@ class StudyCreateApiTest extends ApiTest {
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
+							.queryParam("studyField", request.studyField())
 							.queryParam("name", request.name())
 							.queryParam("intro", request.intro())
 							.queryParam("region", request.region())
@@ -64,7 +64,7 @@ class StudyCreateApiTest extends ApiTest {
 									partWithName("image").description("스터디 메인 이미지 파일").optional()
 							),
 							queryParameters(
-									parameterWithName("studyFieldId").description("스터디 분야 ID")
+									parameterWithName("studyField").description("스터디 분야 ID")
 											.attributes(key("constraint").value("NotNull, 스터디 분야 ID를 입력해주세요.")),
 									parameterWithName("name").description("스터디 이름")
 											.attributes(key("constraint").value("NotBlank, 이름을 입력해주세요.")),
@@ -99,7 +99,7 @@ class StudyCreateApiTest extends ApiTest {
 
 			mockMvc.perform(multipart(path)
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
+							.queryParam("studyField", String.valueOf(request.studyField()))
 							.queryParam("name", request.name())
 							.queryParam("intro", request.intro())
 							.queryParam("region", request.region())
@@ -119,13 +119,12 @@ class StudyCreateApiTest extends ApiTest {
 		@WithMockMember
 		@DisplayName("[실패] 존재하지 않는 스터디 분야의 ID로 요청한 경우 스터디 생성을 실패한다.")
 		void failWithNotExistStudyFieldId() throws Exception {
-			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
-			int invalidStudyFieldId = 0;
+			StudyCreateCommand request = StudyStub.getInvalidFieldStudyCreateCommand();
 
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-							.queryParam("studyFieldId", String.valueOf(invalidStudyFieldId))
+							.queryParam("studyField", request.studyField())
 							.queryParam("name", request.name())
 							.queryParam("intro", request.intro())
 							.queryParam("region", request.region())
@@ -154,12 +153,12 @@ class StudyCreateApiTest extends ApiTest {
 		@WithMockMember
 		@DisplayName("[실패] 유효하지 않은 반복 일정 값으로 요청한 경우 스터디 생성을 실패한다.")
 		void failWithInvalidStudyMeetingSchedule() throws Exception {
-			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
+			StudyCreateCommand request = StudyStub.getInvalidMeetingSchduleStudyCreateCommand();
 
 			mockMvc.perform(multipart(path)
 							.file((MockMultipartFile) request.image())
 							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-							.queryParam("studyFieldId", String.valueOf(request.studyFieldId()))
+							.queryParam("studyField", request.studyField())
 							.queryParam("name", request.name())
 							.queryParam("intro", request.intro())
 							.queryParam("region", request.region())

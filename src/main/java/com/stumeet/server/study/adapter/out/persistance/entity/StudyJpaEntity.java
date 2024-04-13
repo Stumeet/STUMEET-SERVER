@@ -1,9 +1,14 @@
 package com.stumeet.server.study.adapter.out.persistance.entity;
 
+import com.stumeet.server.study.domain.StudyField;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
@@ -15,7 +20,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,10 +40,14 @@ public class StudyJpaEntity extends BaseTimeEntity {
 	@Comment("스터디 그룹 아이디")
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "study_domain_id")
-	@Comment("스터디 관련")
-	private StudyDomainJpaEntity studyDomain;
+	@OneToMany(orphanRemoval = true)
+	@JoinColumn(name = "study_id")
+	private List<StudyTagJpaEntity> studyTags;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "studyField", length = 20, nullable = false)
+	@Comment("분야명")
+	private StudyField studyField;
 
 	@Column(name = "name", length = 20, nullable = false)
 	@Comment("스터디명")

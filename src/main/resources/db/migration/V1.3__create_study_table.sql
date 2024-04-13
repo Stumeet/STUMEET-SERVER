@@ -1,27 +1,7 @@
-CREATE TABLE IF NOT EXISTS `study_field`
-(
-    `id`   BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 분야 ID',
-    `name` VARCHAR(50) NOT NULL COMMENT '분야명'
-) ENGINE = InnoDB
-      DEFAULT CHARSET = utf8mb4
-      COLLATE = utf8mb4_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `study_domain`
-(
-    `id`             BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 도메인 ID',
-    `study_field_id` BIGINT NULL COMMENT '스터디 분야 ID',
-
-    CONSTRAINT fk_study_domain_with_field FOREIGN KEY (study_field_id)
-        REFERENCES study_field (id)
-        ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB
-      DEFAULT CHARSET = utf8mb4
-      COLLATE = utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS `study`
 (
     `id`                 BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 ID',
-    `study_domain_id`    BIGINT       NOT NULL COMMENT '스터디 도메인 ID',
+    `study_field`        VARCHAR(20)  NOT NULL COMMENT '분야명',
     `name`               VARCHAR(255) NOT NULL COMMENT '스터디명',
     `region`             VARCHAR(50)  NOT NULL COMMENT '활동 지역',
     `intro`              VARCHAR(200) NOT NULL COMMENT '소개',
@@ -36,25 +16,21 @@ CREATE TABLE IF NOT EXISTS `study`
     `updated_at`         DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 시간',
     `is_finished`        TINYINT(1) NOT NULL DEFAULT FALSE COMMENT '스터디 완료 여부',
     `is_deleted`         TINYINT(1) NOT NULL DEFAULT FALSE COMMENT '스터디 삭제 여부',
-    `deleted_at`         DATETIME NULL COMMENT '스터디 삭제 일자',
-
-    CONSTRAINT fk_study_domain_with_study FOREIGN KEY (study_domain_id)
-        REFERENCES study_domain (id)
-        ON DELETE RESTRICT ON UPDATE CASCADE
+    `deleted_at`         DATETIME NULL COMMENT '스터디 삭제 일자'
 ) ENGINE = InnoDB
-      DEFAULT CHARSET = utf8mb4
-      COLLATE = utf8mb4_unicode_ci;
+    DEFAULT CHARSET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `study_tag`
 (
     `id`              BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '스터디 태그 ID',
-    `study_domain_id` BIGINT      NOT NULL COMMENT '스터디 관련 ID',
+    `study_id`        BIGINT      NOT NULL COMMENT '스터디 ID',
     `name`            VARCHAR(20) NOT NULL COMMENT '태그명',
 
-    CONSTRAINT fk_study_domain_with_tag FOREIGN KEY (study_domain_id)
-        REFERENCES study_domain (id)
+    CONSTRAINT fk_study_with_tag FOREIGN KEY (study_id)
+        REFERENCES study (id)
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
-      DEFAULT CHARSET = utf8mb4
-      COLLATE = utf8mb4_unicode_ci;
+    DEFAULT CHARSET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci;

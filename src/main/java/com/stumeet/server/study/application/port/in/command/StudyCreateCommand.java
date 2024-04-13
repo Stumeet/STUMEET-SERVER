@@ -17,8 +17,8 @@ public record StudyCreateCommand(
 
 		@NullOrImageFile(message = "이미지 파일을 첨부해주세요")
 		MultipartFile image,
-		@NotNull(message = "스터디 분야 ID를 입력해주세요.")
-		Long studyFieldId,
+		@NotBlank(message = "스터디 분야를 입력해주세요.")
+		String studyField,
 		@NotBlank(message = "이름을 입력해주세요.")
 		String name,
 		@NotBlank(message = "소개글을 입력해주세요.")
