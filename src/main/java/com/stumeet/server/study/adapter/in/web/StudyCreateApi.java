@@ -28,7 +28,7 @@ public class StudyCreateApi {
 			@AuthenticationPrincipal LoginMember member,
 			@Valid StudyCreateCommand request
 	) {
-		studyCreateUseCase.create(request, member.getMember());
+		studyCreateUseCase.create(request, member.getMember().getId());
 
 		return new ResponseEntity<>(
 				ApiResponse.success(SuccessCode.STUDY_CREATE_SUCCESS),

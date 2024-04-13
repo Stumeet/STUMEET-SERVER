@@ -1,6 +1,6 @@
 package com.stumeet.server.study.domain;
 
-import com.stumeet.server.file.application.port.out.FileUrl;
+import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,23 +40,22 @@ public class Study {
 
 	private boolean isDeleted;
 
-	public static Study create(StudyDomain studyDomain, String name, String intro, String rule,
-		String region, StudyPeriod studyPeriod, StudyMeetingSchedule meetingSchedule) {
+	public static Study create(StudyCreateCommand command, String imageUrl) {
 		return Study.builder()
-			.studyDomain(studyDomain)
-			.name(name)
-			.intro(intro)
-			.rule(rule)
-			.region(region)
-			.period(studyPeriod)
-			.meetingSchedule(meetingSchedule)
+			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
+			.name(command.name())
+			.intro(command.intro())
+			.rule(command.rule())
+			.region(command.region())
+			.period(StudyPeriod.of(command.startDate(), command.endDate()))
+			.meetingSchedule(
+				StudyMeetingSchedule.of(
+					command.meetingTime(),
+					Repetition.of(command.meetingRepetitionType(), command.meetingRepetitionDates())))
+			.imageUrl(imageUrl)
 			.isFinished(false)
 			.isDeleted(false)
 			.build();
-	}
-
-	public void setImageUrl(FileUrl fileUrl) {
-		imageUrl = fileUrl.url();
 	}
 
 	public String getStudyFieldName() {

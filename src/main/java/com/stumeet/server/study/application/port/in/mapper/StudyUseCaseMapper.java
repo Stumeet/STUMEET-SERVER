@@ -1,7 +1,7 @@
 package com.stumeet.server.study.application.port.in.mapper;
 
-import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Component;
 
 import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
@@ -11,21 +11,6 @@ import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoi
 @Component
 @RequiredArgsConstructor
 public class StudyUseCaseMapper {
-
-	private final StudyDomainUseCaseMapper studyDomainUseCaseMapper;
-	private final StudyPeriodUseCaseMapper studyPeriodUseCaseMapper;
-	private final StudyMeetingScheduleUseCaseMapper studyMeetingScheduleUseCaseMapper;
-
-	public Study toDomain(StudyCreateCommand command) {
-		return Study.create(
-				studyDomainUseCaseMapper.toDomain(command),
-				command.name(),
-				command.intro(),
-				command.rule(),
-				command.region(),
-				studyPeriodUseCaseMapper.toDomain(command),
-				studyMeetingScheduleUseCaseMapper.toDomain(command));
-	}
 
 	public StudyDetailResponse toStudyDetailResponse(Study study) {
 		return StudyDetailResponse.builder()
@@ -49,9 +34,9 @@ public class StudyUseCaseMapper {
 
 	public StudyMemberJoinCommand toAdminStudyMemberJoinCommand(Long memberId, Long studyId) {
 		return StudyMemberJoinCommand.builder()
-				.memberId(memberId)
-				.studyId(studyId)
-				.isAdmin(true)
-				.build();
+			.memberId(memberId)
+			.studyId(studyId)
+			.isAdmin(true)
+			.build();
 	}
 }
