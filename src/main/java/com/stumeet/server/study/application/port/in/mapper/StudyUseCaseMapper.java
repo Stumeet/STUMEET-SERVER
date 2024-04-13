@@ -4,7 +4,7 @@ import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
+import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.domain.Study;
 import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoinCommand;
 

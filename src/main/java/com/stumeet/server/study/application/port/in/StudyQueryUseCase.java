@@ -1,6 +1,6 @@
 package com.stumeet.server.study.application.port.in;
 
-import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
+import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 
 public interface StudyQueryUseCase {
 

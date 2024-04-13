@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
-import com.stumeet.server.study.application.port.in.response.StudyDetailResponse;
+import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 
 import lombok.RequiredArgsConstructor;
