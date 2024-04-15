@@ -8,7 +8,7 @@ import com.stumeet.server.study.domain.RepetitionType;
 public class RepetitionStub {
 
 	public static Repetition getDailyRepetition() {
-		return Repetition.of(RepetitionType.DAILY, null);
+		return Repetition.of(RepetitionType.DAILY, List.of());
 	}
 
 	public static Repetition getWeeklyRepetition() {

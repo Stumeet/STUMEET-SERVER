@@ -19,23 +19,24 @@ public class RepetitionTest extends UnitTest {
 	class create {
 
 		@Test
-		@DisplayName("[성공] 반복 유형이 DAILY일 때, 인수 dates에 null을 전달 받았을 경우 생성에 성공한다.")
+		@DisplayName("[성공] 반복 유형이 DAILY일 때, 인수 dates에 빈 리스트를 전달 받았을 경우 생성에 성공한다.")
 		void weeklyTypeNullDatesSuccessTest() {
-			assertThatCode(() -> Repetition.of(RepetitionType.DAILY, null))
+			assertThatCode(() -> Repetition.of(RepetitionType.DAILY, List.of()))
 					.doesNotThrowAnyException();
 
-			assertThat(Repetition.of(RepetitionType.DAILY, null))
+			assertThat(Repetition.of(RepetitionType.DAILY, List.of()))
 					.usingRecursiveComparison()
 					.isEqualTo(RepetitionStub.getDailyRepetition());
 		}
 
 		@Test
-		@DisplayName("[성공] 반복 유형이 DAILY일 때, 인수 dates에 null이 아닌 값을 전달 받았을 경우 생성에 성공한다.")
+		@DisplayName("[성공] 반복 유형이 DAILY일 때, 인수 dates에 빈 리스트가 아닌 값을 전달 받았을 경우 생성에 성공한다.")
 		void weeklyTypeInvalidDatesSuccessTest() {
 			assertThat(
 				Repetition.of(RepetitionType.DAILY, List.of("월", "화", "수", "목", "금", "토", "일"))
-					.getDates())
-				.isNull();
+					.getDates()
+					.isEmpty())
+				.isTrue();
 		}
 
 		@Test
@@ -51,12 +52,12 @@ public class RepetitionTest extends UnitTest {
 		}
 
 		@Test
-		@DisplayName("[실패] 반복 타입이 DAILY가 아닌 경우 반복일이 null이면 테스트에 실패한다.")
+		@DisplayName("[실패] 반복 타입이 DAILY가 아닌 경우 반복일이 빈 리스트인 경우 테스트에 실패한다.")
 		void invalidDatesFailTest() {
-			assertThatThrownBy(() -> Repetition.of(RepetitionType.WEEKLY, null))
+			assertThatThrownBy(() -> Repetition.of(RepetitionType.WEEKLY, List.of()))
 					.isInstanceOf(InvalidRepetitionDatesException.class);
 
-			assertThatThrownBy(() -> Repetition.of(RepetitionType.MONTHLY, null))
+			assertThatThrownBy(() -> Repetition.of(RepetitionType.MONTHLY, List.of()))
 					.isInstanceOf(InvalidRepetitionDatesException.class);
 		}
 	}
