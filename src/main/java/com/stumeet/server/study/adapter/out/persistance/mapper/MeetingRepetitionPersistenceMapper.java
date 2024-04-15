@@ -21,9 +21,9 @@ public class MeetingRepetitionPersistenceMapper {
 	}
 
 	public String toColumn(Repetition repetition) {
-		String dates = repetition.getDates() != null
+		String dates = !repetition.getDates().isEmpty()
 				? String.join(REPEAT_DELIMITER, repetition.getDates())
-				: null;
+				: "";
 
 		return repetition.getType().toString()
 				+ REPEAT_DELIMITER

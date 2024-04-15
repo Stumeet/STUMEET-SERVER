@@ -15,11 +15,11 @@ public class Repetition {
 	private Repetition(RepetitionType type, List<String> dates) {
 		validateRepetition(type, dates);
 		this.type = type;
-		this.dates = type.equals(RepetitionType.DAILY) ? null : dates;
+		this.dates = type.equals(RepetitionType.DAILY) ? List.of() : dates;
 	}
 
 	private void validateRepetition(RepetitionType type, List<String> dates) {
-		if(!RepetitionType.DAILY.equals(type) && dates == null) {
+		if (!RepetitionType.DAILY.equals(type) && dates.isEmpty()) {
 			throw new InvalidRepetitionDatesException(type.toString());
 		}
 	}
