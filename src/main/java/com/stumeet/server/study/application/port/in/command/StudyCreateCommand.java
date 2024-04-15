@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.stumeet.server.common.annotation.validator.NullOrImageFile;
 import com.stumeet.server.common.annotation.validator.NullOrNotBlank;
 import com.stumeet.server.study.domain.RepetitionType;
 
@@ -15,8 +12,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record StudyCreateCommand(
 
-		@NullOrImageFile(message = "이미지 파일을 첨부해주세요")
-		MultipartFile image,
 		@NotBlank(message = "스터디 분야를 입력해주세요.")
 		String studyField,
 		@NotBlank(message = "이름을 입력해주세요.")
@@ -35,7 +30,9 @@ public record StudyCreateCommand(
 		LocalTime meetingTime,
 		@NotNull(message = "정기모임 반복 유형을 입력해주세요.")
 		RepetitionType meetingRepetitionType,
+		@NotNull(message = "정기모임 반복 일정을 입력해주세요.")
 		List<String> meetingRepetitionDates,
+		@NotNull(message = "스터디 태그를 입력해주세요.")
 		List<String> studyTags
 ) {
 }

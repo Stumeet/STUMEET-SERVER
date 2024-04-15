@@ -5,6 +5,7 @@ import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.file.application.port.in.FileUploadUseCase;
@@ -32,10 +33,10 @@ public class StudyCreateService implements StudyCreateUseCase {
 	private final StudyUseCaseMapper studyUseCaseMapper;
 
 	@Override
-	public Long create(StudyCreateCommand command, Long memberId) {
+	public Long create(Long memberId, StudyCreateCommand command, MultipartFile mainImageFile) {
 		memberValidationUseCase.checkById(memberId);
 
-		FileUrl mainImageUrl = fileUploadUseCase.uploadStudyMainImage(command.image());
+		FileUrl mainImageUrl = fileUploadUseCase.uploadStudyMainImage(mainImageFile);
 		Study study = Study.create(command, mainImageUrl.url());
 
 		Long studyCreatedId = studyCommandPort.save(study).getId();

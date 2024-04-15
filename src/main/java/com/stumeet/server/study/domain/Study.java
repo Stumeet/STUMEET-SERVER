@@ -59,7 +59,7 @@ public class Study {
 			.build();
 	}
 
-	public static Study update(StudyUpdateCommand command, Study existingStudy, String newImageUrl) {
+	public static Study update(StudyUpdateCommand command, Study existingStudy, String mainImageUrl) {
 		return Study.builder()
 			.id(existingStudy.getId())
 			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
@@ -72,7 +72,7 @@ public class Study {
 				StudyMeetingSchedule.of(
 					command.meetingTime(),
 					Repetition.of(command.meetingRepetitionType(), command.meetingRepetitionDates())))
-			.imageUrl(newImageUrl != null ? newImageUrl : existingStudy.imageUrl)
+			.imageUrl(mainImageUrl)
 			.isFinished(existingStudy.isFinished)
 			.isDeleted(existingStudy.isDeleted)
 			.build();

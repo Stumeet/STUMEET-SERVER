@@ -6,8 +6,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stumeet.server.common.annotation.WebAdapter;
+import com.stumeet.server.common.annotation.validator.NullOrImageFile;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
@@ -28,9 +31,10 @@ public class StudyUpdateApi {
 	public ResponseEntity<ApiResponse<Void>> update(
 		@AuthenticationPrincipal LoginMember member,
 		@PathVariable Long studyId,
-		@Valid StudyUpdateCommand request
+		@RequestPart @Valid StudyUpdateCommand request,
+		@RequestPart(required = false) @Valid @NullOrImageFile MultipartFile mainImageFile
 	) {
-		studyUpdateUseCase.update(studyId, member.getMember().getId(), request);
+		studyUpdateUseCase.update(studyId, member.getMember().getId(), request, mainImageFile);
 
 		return new ResponseEntity<>(
 			ApiResponse.success(SuccessCode.UPDATE_SUCCESS),
