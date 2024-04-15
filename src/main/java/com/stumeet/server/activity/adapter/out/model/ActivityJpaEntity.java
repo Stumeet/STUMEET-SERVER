@@ -55,4 +55,7 @@ public class ActivityJpaEntity extends BaseTimeEntity {
     @Comment("활동 종료 날짜")
     private LocalDateTime endDate;
 
+    @Column(name = "location", nullable = false)
+    @Comment("활동 장소")
+    private String location;
 }
