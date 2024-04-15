@@ -10,11 +10,9 @@ import com.stumeet.server.study.adapter.out.persistance.entity.StudyTagJpaEntity
 public class StudyTagPersistenceMapper {
 
 	public List<String> toDomains(List<StudyTagJpaEntity> entities) {
-		return entities != null
-			? entities.stream()
+		return entities.stream()
 			.map(StudyTagJpaEntity::getName)
-			.toList()
-			: List.of();
+			.toList();
 	}
 
 	public List<StudyTagJpaEntity> toEntities(List<String> domains, Long studyId) {

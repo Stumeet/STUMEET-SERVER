@@ -19,7 +19,7 @@ public class Repetition {
 	}
 
 	private void validateRepetition(RepetitionType type, List<String> dates) {
-		if(!type.equals(RepetitionType.DAILY) && dates == null) {
+		if(!RepetitionType.DAILY.equals(type) && dates == null) {
 			throw new InvalidRepetitionDatesException(type.toString());
 		}
 	}
