@@ -4,5 +4,9 @@ import java.util.List;
 
 public interface StudyTagCommandPort {
 
-	List<String> saveAll(List<String> studyTags, Long studyId);
+	List<String> saveAllStudyTags(List<String> studyTags, Long studyId);
+
+	void clearStudyTags(Long studyId);
+
+	void replaceStudyTags(List<String> newStudyTags, Long studyId);
 }

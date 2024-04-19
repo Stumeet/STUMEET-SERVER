@@ -10,8 +10,7 @@ import com.stumeet.server.study.domain.RepetitionType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record StudyCreateCommand(
-
+public record StudyUpdateCommand(
 		@NotBlank(message = "스터디 분야를 입력해주세요.")
 		String studyField,
 		@NotBlank(message = "이름을 입력해주세요.")

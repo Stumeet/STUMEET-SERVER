@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class StudyTagJpaEntity {
 	@Comment("스터디 태그 id")
 	private Long id;
 
-	@Column(name = "study_id", nullable = false)
+	@JoinColumn(name = "study_id", nullable = false)
 	@Comment("스터디 id")
 	private Long studyId;
 

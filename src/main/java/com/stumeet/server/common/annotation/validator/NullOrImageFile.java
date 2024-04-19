@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = NullOrImageFileValidator.class)
-@Target({ElementType.FIELD })
+@Target({ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NullOrImageFile {
     String message() default "값이 전달되지 않거나 이미지 파일이어야 합니다.";

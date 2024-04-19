@@ -13,38 +13,44 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.factory.MockMultipartFactory;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
-import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
+import com.stumeet.server.study.application.port.in.command.StudyUpdateCommand;
 import com.stumeet.server.template.ApiTest;
 
-class StudyCreateApiTest extends ApiTest {
+class StudyUpdateApiTest extends ApiTest {
 
 	@Nested
-	@DisplayName("스터디 생성 API")
+	@DisplayName("스터디 정보 수정 API")
 	class CreateStudy {
 
-		private final String path = "/api/v1/studies";
+		private final String path = "/api/v1/studies/" + StudyStub.getStudyId();
 		private final MockMultipartFile studyMainImage = MockMultipartFactory.createJpegFile("mainImageFile");
 
 		@Test
 		@WithMockMember
-		@DisplayName("[성공] 스터디 생성에 성공한다.")
-		void successTest() throws Exception {
-			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
+		@DisplayName("[성공] 스터디 정보 수정에 성공한다.")
+		void successUpdateTest() throws Exception {
+			StudyUpdateCommand request = StudyStub.getStudyUpdateCommand();
+
+			RequestPostProcessor patchMethod = http -> {
+				http.setMethod("PATCH");
+				return http;
+			};
 
 			mockMvc.perform(multipart(path)
 					.file(studyMainImage)
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
+					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isCreated())
-				.andDo(document("create-study/success",
+				.andExpect(status().isOk())
+				.andDo(document("update-study/success",
 					preprocessRequest(prettyPrint()),
 					preprocessResponse(prettyPrint()),
 					requestHeaders(
@@ -76,43 +82,62 @@ class StudyCreateApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember
-		@DisplayName("[성공] 이미지 파일이 없는 경우에도 요청에 성공한다.")
-		void successWithoutImageFile() throws Exception {
-			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
+		@DisplayName("[성공] 이미지이 없는 요청으로 스터디 정보 수정에 성공한다.")
+		void successUpdateWithoutImageTest() throws Exception {
+			StudyUpdateCommand request = StudyStub.getStudyUpdateCommand();
+
+			RequestPostProcessor patchMethod = http -> {
+				http.setMethod("PATCH");
+				return http;
+			};
 
 			mockMvc.perform(multipart(path)
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
+					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isCreated());
+				.andExpect(status().isOk());
 		}
 
 		@Test
 		@WithMockMember
-		@DisplayName("[성공] 스터디 태그가 빈 배열인 경우 요청에 성공한다.")
-		void successWithoutStudyTags() throws Exception {
-			StudyCreateCommand request = StudyStub.getStudyCreateCommandWithoutTags();
+		@DisplayName("[성공] 태그가 없는 요청으로 스터디 정보 수정에 성공한다.")
+		void successUpdateWithoutTagsTest() throws Exception {
+			StudyUpdateCommand request = StudyStub.getStudyUpdateCommandWithoutTags();
 
-			mockMvc.perform(multipart(path)
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
-					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-					.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isCreated());
-		}
-
-		@Test
-		@WithMockMember
-		@DisplayName("[실패] 존재하지 않는 스터디 분야로 요청한 경우 스터디 생성을 실패한다.")
-		void failWithNotExistStudyFieldId() throws Exception {
-			StudyCreateCommand request = StudyStub.getInvalidFieldStudyCreateCommand();
+			RequestPostProcessor patchMethod = http -> {
+				http.setMethod("PATCH");
+				return http;
+			};
 
 			mockMvc.perform(multipart(path)
 					.file(studyMainImage)
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
+					.with(patchMethod)
+					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+					.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+		}
+
+		@Test
+		@WithMockMember
+		@DisplayName("[실패] 존재하지 않는 스터디 분야로 요청한 경우 스터디 정보 수정을 실패한다.")
+		void failWithNotExistStudyFieldId() throws Exception {
+			StudyUpdateCommand request = StudyStub.getInvalidFieldStudyUpdateCommand();
+
+			RequestPostProcessor patchMethod = http -> {
+				http.setMethod("PATCH");
+				return http;
+			};
+
+			mockMvc.perform(multipart(path)
+					.file(studyMainImage)
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
+					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound())
-				.andDo(document("create-study/fail/study-field-not-found",
+				.andDo(document("update-study/fail/study-field-not-found",
 					preprocessRequest(prettyPrint()),
 					preprocessResponse(prettyPrint()),
 					requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
@@ -127,15 +152,21 @@ class StudyCreateApiTest extends ApiTest {
 		@WithMockMember
 		@DisplayName("[실패] 유효하지 않은 반복 일정 값으로 요청한 경우 스터디 생성을 실패한다.")
 		void failWithInvalidStudyMeetingSchedule() throws Exception {
-			StudyCreateCommand request = StudyStub.getInvalidMeetingScheduleStudyCreateCommand();
+			StudyUpdateCommand request = StudyStub.getInvalidMeetingScheduleStudyUpdateCommand();
+
+			RequestPostProcessor patchMethod = http -> {
+				http.setMethod("PATCH");
+				return http;
+			};
 
 			mockMvc.perform(multipart(path)
 					.file(studyMainImage)
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
+					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
-				.andDo(document("create-study/fail/invalid-study-meeting-schedule",
+				.andDo(document("update-study/fail/invalid-study-meeting-schedule",
 					preprocessRequest(prettyPrint()),
 					preprocessResponse(prettyPrint()),
 					requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
