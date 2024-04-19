@@ -1,8 +1,10 @@
-package com.stumeet.server.stub;
+package com.stumeet.server.factory;
 
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockPart;
 
-public class MockMultipartStub {
+public class MockMultipartFactory {
 
 	public static MockMultipartFile createJpegFile(String parameterName) {
 		return new MockMultipartFile(
@@ -26,5 +28,9 @@ public class MockMultipartStub {
 			"file.png",
 			"image/png",
 			"test".getBytes());
+	}
+
+	public static MockPart createMockPart(byte[] request) {
+		return new MockPart("request", "", request, MediaType.APPLICATION_JSON);
 	}
 }

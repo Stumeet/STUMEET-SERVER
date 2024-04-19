@@ -12,10 +12,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
+import com.stumeet.server.factory.MockMultipartFactory;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
@@ -28,6 +30,7 @@ class StudyCreateApiTest extends ApiTest {
 	class CreateStudy {
 
 		private final String path = "/api/v1/studies";
+		private final MockMultipartFile studyMainImage = MockMultipartFactory.createJpegFile("mainImageFile");
 
 		@Test
 		@WithMockMember
@@ -36,7 +39,7 @@ class StudyCreateApiTest extends ApiTest {
 			StudyCreateCommand request = StudyStub.getStudyCreateCommand();
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
+					.file(studyMainImage)
 					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
@@ -104,7 +107,7 @@ class StudyCreateApiTest extends ApiTest {
 			StudyCreateCommand request = StudyStub.getInvalidFieldStudyCreateCommand();
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
+					.file(studyMainImage)
 					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
@@ -127,7 +130,7 @@ class StudyCreateApiTest extends ApiTest {
 			StudyCreateCommand request = StudyStub.getInvalidMeetingScheduleStudyCreateCommand();
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
+					.file(studyMainImage)
 					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))

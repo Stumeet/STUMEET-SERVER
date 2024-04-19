@@ -12,11 +12,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockPart;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
+import com.stumeet.server.factory.MockMultipartFactory;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.study.application.port.in.command.StudyUpdateCommand;
@@ -29,6 +30,7 @@ class StudyUpdateApiTest extends ApiTest {
 	class CreateStudy {
 
 		private final String path = "/api/v1/studies/" + StudyStub.getStudyId();
+		private final MockMultipartFile studyMainImage = MockMultipartFactory.createJpegFile("mainImageFile");
 
 		@Test
 		@WithMockMember
@@ -42,8 +44,8 @@ class StudyUpdateApiTest extends ApiTest {
 			};
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.file(studyMainImage)
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
 					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
@@ -90,7 +92,7 @@ class StudyUpdateApiTest extends ApiTest {
 			};
 
 			mockMvc.perform(multipart(path)
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
 					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
@@ -109,8 +111,8 @@ class StudyUpdateApiTest extends ApiTest {
 			};
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.file(studyMainImage)
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
 					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
@@ -129,8 +131,8 @@ class StudyUpdateApiTest extends ApiTest {
 			};
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.file(studyMainImage)
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
 					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))
@@ -158,8 +160,8 @@ class StudyUpdateApiTest extends ApiTest {
 			};
 
 			mockMvc.perform(multipart(path)
-					.file(StudyStub.getStudyMainImageFile())
-					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.file(studyMainImage)
+					.part(MockMultipartFactory.createMockPart(objectMapper.writeValueAsBytes(request)))
 					.with(patchMethod)
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
 					.accept(MediaType.APPLICATION_JSON))

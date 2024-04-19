@@ -12,16 +12,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.mock.web.MockMultipartFile;
 
 import com.stumeet.server.file.domain.exception.InvalidFileException;
-import com.stumeet.server.stub.MockMultipartStub;
+import com.stumeet.server.factory.MockMultipartFactory;
 import com.stumeet.server.template.UnitTest;
 
 @DisplayName("File Validator 테스트")
 class FileValidatorTest extends UnitTest {
 
 	private final String PARAMETER_NAME = "file";
-	private final MockMultipartFile jpegFile = MockMultipartStub.createJpegFile(PARAMETER_NAME);
-	private final MockMultipartFile jpgFile = MockMultipartStub.createJpgFile(PARAMETER_NAME);
-	private final MockMultipartFile pngFile = MockMultipartStub.createPngFile(PARAMETER_NAME);
+	private final MockMultipartFile jpegFile = MockMultipartFactory.createJpegFile(PARAMETER_NAME);
+	private final MockMultipartFile jpgFile = MockMultipartFactory.createJpgFile(PARAMETER_NAME);
+	private final MockMultipartFile pngFile = MockMultipartFactory.createPngFile(PARAMETER_NAME);
 
 	@Nested
 	@DisplayName("이미지 파일 검증")
