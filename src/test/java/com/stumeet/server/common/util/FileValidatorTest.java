@@ -9,13 +9,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.mock.web.MockMultipartFile;
 
 import com.stumeet.server.file.domain.exception.InvalidFileException;
-import com.stumeet.server.stub.MockMultipartFileStub;
+import com.stumeet.server.stub.MockMultipartStub;
 import com.stumeet.server.template.UnitTest;
 
 @DisplayName("File Validator 테스트")
 class FileValidatorTest extends UnitTest {
+
+	private final String PARAMETER_NAME = "file";
+	private final MockMultipartFile jpegFile = MockMultipartStub.createJpegFile(PARAMETER_NAME);
+	private final MockMultipartFile jpgFile = MockMultipartStub.createJpgFile(PARAMETER_NAME);
+	private final MockMultipartFile pngFile = MockMultipartStub.createPngFile(PARAMETER_NAME);
 
 	@Nested
 	@DisplayName("이미지 파일 검증")
@@ -24,13 +30,13 @@ class FileValidatorTest extends UnitTest {
 		@Test
 		@DisplayName("[성공] 유효한 파일이 주어졌을 때 파일 검증을 성공한다.")
 		void validImageFile_validateImageFile_success() {
-			assertThatCode(() -> FileValidator.validateImageFile(MockMultipartFileStub.getJpegFile()))
+			assertThatCode(() -> FileValidator.validateImageFile(jpegFile))
 					.doesNotThrowAnyException();
 
-			assertThatCode(() -> FileValidator.validateImageFile(MockMultipartFileStub.getJpgFile()))
+			assertThatCode(() -> FileValidator.validateImageFile(jpgFile))
 					.doesNotThrowAnyException();
 
-			assertThatCode(() -> FileValidator.validateImageFile(MockMultipartFileStub.getPngFile()))
+			assertThatCode(() -> FileValidator.validateImageFile(pngFile))
 					.doesNotThrowAnyException();
 		}
 	}
@@ -42,7 +48,7 @@ class FileValidatorTest extends UnitTest {
 		@Test
 		@DisplayName("[성공] 유효한 파일 이름이 주어졌을 때 파일 검증을 성공한다.")
 		void validFileName_validateFileName_success() {
-			assertThatCode(() -> FileValidator.validateFileName(MockMultipartFileStub.getJpegFile().getOriginalFilename()))
+			assertThatCode(() -> FileValidator.validateFileName(jpegFile.getOriginalFilename()))
 					.doesNotThrowAnyException();
 		}
 
@@ -91,13 +97,13 @@ class FileValidatorTest extends UnitTest {
 		@Test
 		@DisplayName("[성공] 유효한 파일이 주어졌을 때 true를 반환한다.")
 		void validImageFile_isValidImageFile_success() {
-			assertThat(FileValidator.isValidImageFile(MockMultipartFileStub.getJpegFile()))
+			assertThat(FileValidator.isValidImageFile(jpegFile))
 					.isTrue();
 
-			assertThat(FileValidator.isValidImageFile(MockMultipartFileStub.getJpgFile()))
+			assertThat(FileValidator.isValidImageFile(jpgFile))
 					.isTrue();
 
-			assertThat(FileValidator.isValidImageFile(MockMultipartFileStub.getPngFile()))
+			assertThat(FileValidator.isValidImageFile(pngFile))
 					.isTrue();
 		}
 	}

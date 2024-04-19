@@ -5,16 +5,11 @@ import java.time.LocalTime;
 
 import java.util.List;
 
-import org.springframework.mock.web.MockMultipartFile;
-
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 import com.stumeet.server.study.application.port.in.command.StudyUpdateCommand;
 import com.stumeet.server.study.domain.RepetitionType;
 
 public class StudyStub {
-
-	private static final MockMultipartFile image =
-		new MockMultipartFile("mainImageFile", "test.jpg", "image/jpeg", "test".getBytes());
 
 	private StudyStub() {
 
@@ -26,10 +21,6 @@ public class StudyStub {
 
 	public static Long getInvalidStudyId() {
 		return 0L;
-	}
-
-	public static MockMultipartFile getStudyMainImageFile() {
-		return image;
 	}
 
 	public static StudyCreateCommand getStudyCreateCommand() {

@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.stumeet.server.stub.MemberStub;
-import com.stumeet.server.stub.MockMultipartFileStub;
+import com.stumeet.server.stub.MockMultipartStub;
 import com.stumeet.server.template.IntegrationTest;
 
 class FileUploadServiceTest extends IntegrationTest {
+
+	private final String PARAMETER_NAME = "file";
 
 	@Autowired
 	private FileUploadService fileUploadService;
@@ -24,13 +26,13 @@ class FileUploadServiceTest extends IntegrationTest {
 		@Test
 		@DisplayName("[성공] 유효한 파일이 주어졌을 때 파일 업로드에 성공한다.")
 		void uploadUserProfileImage_success() {
-			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartFileStub.getJpegFile()))
+			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartStub.createJpegFile(PARAMETER_NAME)))
 					.doesNotThrowAnyException();
 
-			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartFileStub.getJpgFile()))
+			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartStub.createJpgFile(PARAMETER_NAME)))
 					.doesNotThrowAnyException();
 
-			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartFileStub.getPngFile()))
+			assertThatCode(() -> fileUploadService.uploadUserProfileImage(MemberStub.getMemberId(), MockMultipartStub.createPngFile(PARAMETER_NAME)))
 					.doesNotThrowAnyException();
 		}
 	}
