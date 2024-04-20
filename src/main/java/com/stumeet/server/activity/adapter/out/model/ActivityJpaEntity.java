@@ -27,8 +27,8 @@ public class ActivityJpaEntity extends BaseTimeEntity {
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    @Comment("연관된 멤버")
-    private ActivityMemberJpaEntity member;
+    @Comment("활동을 생성한 멤버")
+    private ActivityMemberJpaEntity author;
 
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
