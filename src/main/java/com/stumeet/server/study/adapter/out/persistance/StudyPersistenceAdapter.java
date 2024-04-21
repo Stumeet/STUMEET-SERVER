@@ -37,4 +37,9 @@ public class StudyPersistenceAdapter implements StudyQueryPort, StudyValidationP
 
 		return studyPersistenceMapper.toDomain(entity);
 	}
+
+	@Override
+	public void delete(Long studyId) {
+		studyRepository.deleteById(studyId);
+	}
 }
