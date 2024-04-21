@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum AssignmentStatus implements ActivityStatus {
     ASSIGNMENT_NOT_STARTED("시작 전"),
-    UN_SUBMITTED("미제출"),
+    UNSUBMITTED("미제출"),
     PERFORMED("수행"),
-    UN_PERFORMED("미수행");
+    UNPERFORMED("미수행");
 
     private final String status;
 
