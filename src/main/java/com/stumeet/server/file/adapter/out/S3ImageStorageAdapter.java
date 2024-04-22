@@ -13,12 +13,15 @@ import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.util.FileUtil;
 import com.stumeet.server.common.util.FileValidator;
 import com.stumeet.server.file.application.port.out.FileCommandPort;
-import com.stumeet.server.file.application.port.out.FileUrl;
+import com.stumeet.server.file.application.port.dto.FileUrl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @StorageAdapter
@@ -48,13 +51,18 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 		try {
 			s3Client.putObject(
 				objectRequest,
-				RequestBody
-					.fromInputStream(file.getInputStream(), file.getSize()));
+				RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+			return getS3FileUrl(key);
 		} catch (IOException e) {
+			throw new BusinessException(e, ErrorCode.FILE_IO_ERROR);
+		} catch (Exception e) {
 			throw new BusinessException(e, ErrorCode.UPLOAD_FILE_FAIL_ERROR);
 		}
+	}
 
-		return getS3FileUrl(key);
+	private FileUrl getS3FileUrl(String key) {
+		return new FileUrl(String.format("%s/%s", endpoint, key));
 	}
 
 	@Override
@@ -62,7 +70,30 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 		throw new NotImplementedException();
 	}
 
-	private FileUrl getS3FileUrl(String key) {
-		return new FileUrl(String.format("%s/%s", endpoint, key));
+	@Override
+	public void deleteFolder(String folder) {
+		List<ObjectIdentifier> objectIdentifiers = getObjectIdentifiers(folder);
+
+		if (!objectIdentifiers.isEmpty()) {
+			DeleteObjectsRequest deleteObjectsRequest = DeleteObjectsRequest.builder()
+				.bucket(bucket)
+				.delete(builder -> builder.objects(objectIdentifiers))
+				.build();
+
+			s3Client.deleteObjects(deleteObjectsRequest);
+		}
+	}
+
+	private List<ObjectIdentifier> getObjectIdentifiers(String prefix) {
+		ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder()
+			.bucket(bucket)
+			.prefix(prefix)
+			.build();
+
+		return s3Client.listObjectsV2(listObjectsRequest).contents().stream()
+			.map(object -> ObjectIdentifier.builder()
+				.key(object.key())
+				.build())
+			.toList();
 	}
 }
