@@ -6,6 +6,9 @@ spring:
     activate:
       on-profile: prod
     import: application-secret.properties
+  servlet:
+    multipart:
+      max-file-size: 5MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
