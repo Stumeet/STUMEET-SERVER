@@ -1,5 +1,6 @@
 package com.stumeet.server.activity.adapter.out.model;
 
+import com.stumeet.server.common.model.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -10,7 +11,7 @@ import org.hibernate.annotations.Comment;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
-public class ActivityImageJpaEntity {
+public class ActivityImageJpaEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
