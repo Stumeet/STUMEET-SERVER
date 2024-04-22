@@ -1,14 +1,13 @@
 package com.stumeet.server.study.application.service;
 
-import com.stumeet.server.file.application.port.out.FileUrl;
 import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
+import com.stumeet.server.study.application.port.in.StudyImageUpdateUseCase;
 import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.stumeet.server.common.annotation.UseCase;
-import com.stumeet.server.file.application.port.in.FileUploadUseCase;
 import com.stumeet.server.study.application.port.in.StudyCreateUseCase;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 import com.stumeet.server.study.application.port.in.mapper.StudyUseCaseMapper;
@@ -23,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class StudyCreateService implements StudyCreateUseCase {
 
-	private final FileUploadUseCase fileUploadUseCase;
 	private final StudyMemberJoinUseCase memberJoinUseCase;
 	private final MemberValidationUseCase memberValidationUseCase;
+	private final StudyImageUpdateUseCase studyImageUpdateUseCase;
 
 	private final StudyCommandPort studyCommandPort;
 	private final StudyTagCommandPort studyTagCommandPort;
@@ -36,13 +35,13 @@ public class StudyCreateService implements StudyCreateUseCase {
 	public Long create(Long memberId, StudyCreateCommand command, MultipartFile mainImageFile) {
 		memberValidationUseCase.checkById(memberId);
 
-		FileUrl mainImageUrl = fileUploadUseCase.uploadStudyMainImage(mainImageFile);
-		Study study = Study.create(command, mainImageUrl.url());
+		Study study = Study.create(command);
+		long studyCreatedId = studyCommandPort.save(study).getId();
+		studyImageUpdateUseCase.updateMainImage(studyCreatedId, mainImageFile);
 
-		Long studyCreatedId = studyCommandPort.save(study).getId();
 		studyTagCommandPort.saveAllStudyTags(study.getStudyTags(), studyCreatedId);
-
 		memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
+
 		return studyCreatedId;
 	}
 }

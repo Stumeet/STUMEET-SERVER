@@ -1,6 +1,6 @@
 package com.stumeet.server.stub;
 
-import com.stumeet.server.file.application.port.out.FileUrl;
+import com.stumeet.server.file.application.port.dto.FileUrl;
 
 public class FileStub {
     private FileStub() {

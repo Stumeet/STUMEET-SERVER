@@ -82,7 +82,7 @@ class StudyUpdateApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember
-		@DisplayName("[성공] 이미지이 없는 요청으로 스터디 정보 수정에 성공한다.")
+		@DisplayName("[성공] 이미지가 없는 요청으로 스터디 정보 수정에 성공한다.")
 		void successUpdateWithoutImageTest() throws Exception {
 			StudyUpdateCommand request = StudyStub.getStudyUpdateCommand();
 

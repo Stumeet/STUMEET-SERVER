@@ -41,7 +41,7 @@ public class Study {
 
 	private boolean isDeleted;
 
-	public static Study create(StudyCreateCommand command, String imageUrl) {
+	public static Study create(StudyCreateCommand command) {
 		return Study.builder()
 			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
 			.name(command.name())
@@ -53,13 +53,12 @@ public class Study {
 				StudyMeetingSchedule.of(
 					command.meetingTime(),
 					Repetition.of(command.meetingRepetitionType(), command.meetingRepetitionDates())))
-			.imageUrl(imageUrl)
 			.isFinished(false)
 			.isDeleted(false)
 			.build();
 	}
 
-	public static Study update(StudyUpdateCommand command, Study existingStudy, String mainImageUrl) {
+	public static Study update(StudyUpdateCommand command, Study existingStudy) {
 		return Study.builder()
 			.id(existingStudy.getId())
 			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
@@ -72,14 +71,17 @@ public class Study {
 				StudyMeetingSchedule.of(
 					command.meetingTime(),
 					Repetition.of(command.meetingRepetitionType(), command.meetingRepetitionDates())))
-			.imageUrl(mainImageUrl)
 			.isFinished(existingStudy.isFinished)
 			.isDeleted(existingStudy.isDeleted)
 			.build();
 	}
 
-	public boolean isStudyTagsEquals(List<String> studyTags) {
-		return getStudyTags().equals(studyTags);
+	public void updateMainImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public boolean isStudyTagChanged(List<String> studyTags) {
+		return !getStudyTags().equals(studyTags);
 	}
 
 	public String getStudyFieldName() {
