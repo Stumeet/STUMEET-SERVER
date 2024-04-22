@@ -1,6 +1,7 @@
 package com.stumeet.server.study.adapter.out.persistance.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,6 @@ public class StudyTagPersistenceMapper {
 				.studyId(studyId)
 				.name(domain)
 				.build())
-			.toList();
+			.collect(Collectors.toList());
 	}
 }
