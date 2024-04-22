@@ -35,7 +35,7 @@ public class ActivityJpaEntity extends BaseTimeEntity {
     @Comment("활동 카테고리")
     private ActivityCategory category;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 100)
     @Comment("활동 제목")
     private String title;
 
@@ -48,11 +48,11 @@ public class ActivityJpaEntity extends BaseTimeEntity {
     private boolean isNotice;
 
     @Column(name = "start_date", nullable = false)
-    @Comment("활동 시작 날짜")
+    @Comment("활동 시작일")
     private LocalDateTime startDate;
 
     @Column(name = "end_date", nullable = false)
-    @Comment("활동 종료 날짜")
+    @Comment("활동 종료일")
     private LocalDateTime endDate;
 
     @Column(name = "location", nullable = false)
