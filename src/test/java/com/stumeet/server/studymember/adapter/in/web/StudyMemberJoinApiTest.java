@@ -3,6 +3,7 @@ package com.stumeet.server.studymember.adapter.in.web;
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.helper.WithMockMember;
+import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
@@ -31,7 +32,7 @@ class StudyMemberJoinApiTest extends ApiTest {
         private static final String PATH = "/api/v1/studies/{studyId}/members";
 
         @Test
-        @WithMockMember(id = 2L)
+        @WithMockMember(id = 3L)
         @DisplayName("[성공] 스터디 가입에 성공한다.")
         void successTest() throws Exception {
             Long studyId = StudyStub.getStudyId();

@@ -46,7 +46,7 @@ class StudyDeleteApiTest extends ApiTest {
 		}
 
 		@Test
-		@WithMockMember(id = 3)
+		@WithMockMember(id = 3L)
 		@DisplayName("[실패] 삭제를 시도하는 멤버가 스터디 멤버가 아닌 경우 스터디 삭제에 실패한다.")
 		void fail_to_delete_when_member_not_joined_study() throws Exception {
 			mockMvc.perform(delete("/api/v1/studies/{id}", StudyStub.getStudyId())
@@ -67,7 +67,7 @@ class StudyDeleteApiTest extends ApiTest {
 		}
 
 		@Test
-		@WithMockMember(id = 2)
+		@WithMockMember(id = 2L)
 		@DisplayName("[실패] 삭제를 시도하는 멤버가 관리자가 아닌 경우 스터디 삭제에 실패한다.")
 		void fail_to_delete_when_study_member_is_not_admin() throws Exception {
 			mockMvc.perform(delete("/api/v1/studies/{id}", StudyStub.getStudyId())

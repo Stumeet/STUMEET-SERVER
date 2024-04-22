@@ -13,6 +13,18 @@ public class MemberStub {
 
     }
 
+    public static Long getStudyAdminMemberId() {
+        return 1L;
+    }
+
+    public static Long getStudyMemberId() {
+        return 2L;
+    }
+
+    public static Long getNotStudyMemberId() {
+        return 3L;
+    }
+
     public static String getKakaoAccessTokenInfo() {
         return "{\"expiresInMillis\":20978166,\"id\":1,\"expires_in\":20978,\"app_id\":1,\"appId\":1}";
     }
