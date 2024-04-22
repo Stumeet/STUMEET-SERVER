@@ -27,7 +27,7 @@ class StudyDeleteApiTest extends ApiTest {
 		@Test
 		@WithMockMember
 		@DisplayName("[성공] 스터디 삭제를 성공한다.")
-		void successDeleteStudy() throws Exception {
+		void success_delete_study() throws Exception {
 			mockMvc.perform(delete("/api/v1/studies/{id}", StudyStub.getStudyId())
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
 				.andExpect(status().isOk())
