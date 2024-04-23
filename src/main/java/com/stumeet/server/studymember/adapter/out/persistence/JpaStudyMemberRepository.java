@@ -7,5 +7,5 @@ public interface JpaStudyMemberRepository extends JpaRepository<StudyMemberJpaEn
 
     void deleteByStudyIdAndMemberId(Long studyId, Long memberId);
 
-    void deleteAllByStudy_Id(Long studyId);
+    void deleteAllByStudyId(Long studyId);
 }
