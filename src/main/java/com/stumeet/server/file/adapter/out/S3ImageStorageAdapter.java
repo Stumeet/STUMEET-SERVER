@@ -74,14 +74,16 @@ public class S3ImageStorageAdapter implements FileCommandPort {
 	public void deleteFolder(String folder) {
 		List<ObjectIdentifier> objectIdentifiers = getObjectIdentifiers(folder);
 
-		if (!objectIdentifiers.isEmpty()) {
-			DeleteObjectsRequest deleteObjectsRequest = DeleteObjectsRequest.builder()
-				.bucket(bucket)
-				.delete(builder -> builder.objects(objectIdentifiers))
-				.build();
-
-			s3Client.deleteObjects(deleteObjectsRequest);
+		if (objectIdentifiers.isEmpty()) {
+			return;
 		}
+
+		DeleteObjectsRequest deleteObjectsRequest = DeleteObjectsRequest.builder()
+			.bucket(bucket)
+			.delete(builder -> builder.objects(objectIdentifiers))
+			.build();
+
+		s3Client.deleteObjects(deleteObjectsRequest);
 	}
 
 	private List<ObjectIdentifier> getObjectIdentifiers(String prefix) {
