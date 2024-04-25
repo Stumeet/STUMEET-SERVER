@@ -13,4 +13,9 @@ public class StudyMemberLeavePersistenceAdapter implements StudyMemberLeavePort 
     public void leave(Long studyId, Long memberId) {
         jpaStudyMemberRepository.deleteByStudyIdAndMemberId(studyId, memberId);
     }
+
+    @Override
+    public void removeAllStudyMember(Long studyId) {
+        jpaStudyMemberRepository.deleteAllByStudyId(studyId);
+    }
 }

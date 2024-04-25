@@ -14,6 +14,7 @@ public enum SuccessCode {
      */
     GET_SUCCESS(HttpStatus.OK, "조회에 성공했습니다."),
     UPDATE_SUCCESS(HttpStatus.OK, "수정에 성공했습니다."),
+    DELETE_SUCCESS(HttpStatus.OK, "삭제에 성공했습니다."),
     STUDY_LEAVE_SUCCESS(HttpStatus.OK, "스터디 탈퇴에 성공했습니다."),
     STUDY_KICK_SUCCESS(HttpStatus.OK, "스터디원 강퇴에 성공했습니다."),
 

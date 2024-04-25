@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLDelete;
 
 import com.stumeet.server.common.model.BaseTimeEntity;
 
@@ -32,10 +33,11 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "study")
-@Getter
+@SQLDelete(sql = "UPDATE study SET is_deleted = true WHERE id = ? AND is_deleted = false")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class StudyJpaEntity extends BaseTimeEntity {
 
 	@Id

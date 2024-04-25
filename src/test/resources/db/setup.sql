@@ -11,13 +11,23 @@ VALUES (1, 'java');
 INSERT INTO study_tag (study_id, name)
 VALUES (1, '객체지향프로그래밍');
 
+-- member id 1: study id 1의 멤버이자 관리자
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (1, 'test1', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
         '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);
 
+INSERT INTO study_member(member_id, study_id, is_admin, is_sent_grape)
+VALUES (1, 1, true, false);
+
+-- member id 2: study id 1의 멤버
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (2, 'test2', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
         '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);
 
 INSERT INTO study_member(member_id, study_id, is_admin, is_sent_grape)
-VALUES (1, 1, true, false);
+VALUES (2, 1, false, false);
+
+-- member id 3: study id 1의 외부자
+INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
+VALUES (3, 'test3', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
+        '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);

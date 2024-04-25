@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @Slf4j
 @RestControllerAdvice
@@ -75,6 +76,16 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest()
                 .body(response);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    protected ResponseEntity<ApiResponse> handleMaxUploadSizeExceededException(final MaxUploadSizeExceededException e) {
+        log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+
+        ApiResponse response = ApiResponse.fail(ErrorCode.FILE_SIZE_LIMIT_EXCEEDED_EXCEPTION);
+
+        return ResponseEntity.badRequest()
+            .body(response);
     }
 
     @ExceptionHandler(BadRequestException.class)

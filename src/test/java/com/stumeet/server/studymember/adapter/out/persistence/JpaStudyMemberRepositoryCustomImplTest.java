@@ -26,7 +26,7 @@ class JpaStudyMemberRepositoryCustomImplTest extends IntegrationTest {
         @Test
         @DisplayName("[성공] 스터디 멤버를 조회한다.")
         void successTest() {
-            int want = 1;
+            int want = 2;
 
             List<SimpleStudyMemberResponse> got = studyMemberRepositoryCustom.findStudyMembersByStudyId(StudyStub.getStudyId());
 
