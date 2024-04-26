@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
-import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Getter
 public enum ActivityCategory {
-    DEFAULT(command ->
-            Default.builder()
+    DEFAULT {
+        @Override
+        public Activity create(ActivityConstructCommand command) {
+            return Default.builder()
                     .id(command.id())
                     .study(ActivityLinkedStudy.builder().id(command.studyId()).build())
                     .author(ActivityMember.builder()
@@ -28,11 +29,14 @@ public enum ActivityCategory {
                     .startDate(command.startDate())
                     .endDate(command.endDate())
                     .createdAt(command.createdAt())
-                    .build()
-    ),
+                    .build();
+        }
+    },
 
-    MEET(command ->
-            Meet.builder()
+    MEET {
+        @Override
+        public Activity create(ActivityConstructCommand command) {
+            return Meet.builder()
                     .id(command.id())
                     .study(ActivityLinkedStudy.builder().id(command.studyId()).build())
                     .author(ActivityMember.builder()
@@ -49,10 +53,13 @@ public enum ActivityCategory {
                     .endDate(command.endDate())
                     .createdAt(command.createdAt())
                     .location(command.location())
-                    .build()
-    ),
-    ASSIGNMENT(command ->
-            Assignment.builder()
+                    .build();
+        }
+    },
+    ASSIGNMENT {
+        @Override
+        public Activity create(ActivityConstructCommand command) {
+            return Assignment.builder()
                     .id(command.id())
                     .study(ActivityLinkedStudy.builder().id(command.studyId()).build())
                     .author(ActivityMember.builder()
@@ -68,16 +75,10 @@ public enum ActivityCategory {
                     .startDate(command.startDate())
                     .endDate(command.endDate())
                     .createdAt(command.createdAt())
-                    .build()
-    );
+                    .build();
+        }
+    };
 
-    private final Function<ActivityConstructCommand, Activity> factory;
+    public abstract Activity create(ActivityConstructCommand command);
 
-    public static Activity createByCategory(ActivityCategory category, ActivityConstructCommand command) {
-        return Arrays.stream(values())
-                .filter(c -> c.equals(category))
-                .findFirst()
-                .map(c -> c.factory.apply(command))
-                .orElseThrow(() -> new NotExistsActivityStatusException(category.name()));
-    }
 }

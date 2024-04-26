@@ -31,7 +31,7 @@ public class ActivityPersistenceMapper {
                 .location(entity.getLocation())
                 .build();
 
-        return ActivityCategory.createByCategory(entity.getCategory(), request);
+        return entity.getCategory().create(request);
     }
 
     public ActivityJpaEntity toEntity(Activity domain) {
