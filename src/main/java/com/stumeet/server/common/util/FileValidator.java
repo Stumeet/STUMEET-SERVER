@@ -20,6 +20,12 @@ public class FileValidator {
 		return isValidFileName(fileName) && isValidFileContentType(contentType, extension);
 	}
 
+	public static boolean isValidImageFile(String fileName) {
+		String extension = FileUtil.extractExtension(fileName);
+
+		return isValidFileName(fileName) && ImageContentType.exists(extension);
+	}
+
 	public static void validateImageFile(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
 		String contentType = file.getContentType();
