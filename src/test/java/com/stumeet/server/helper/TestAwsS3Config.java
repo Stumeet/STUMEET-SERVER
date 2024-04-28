@@ -11,10 +11,11 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 @TestConfiguration
 @Testcontainers
-public class TestAwsS3Config implements AfterAllCallback {
+public class TestAwsS3Config {
     protected static final DockerImageName LOCALSTACK_CONTAINER_VERSION = DockerImageName.parse("localstack/localstack:3.2");
 
     private static final LocalStackContainer LOCALSTACK_CONTAINER = new LocalStackContainer(LOCALSTACK_CONTAINER_VERSION)
@@ -35,9 +36,14 @@ public class TestAwsS3Config implements AfterAllCallback {
         return s3Client;
     }
 
-    @Override
-    public void afterAll(ExtensionContext context) throws Exception {
-//        LOCALSTACK_CONTAINER.stop();
+    @Bean
+    public S3Presigner s3Presigner() {
+        return S3Presigner.builder()
+                .endpointOverride(LOCALSTACK_CONTAINER.getEndpoint())
+                .region(Region.of(LOCALSTACK_CONTAINER.getRegion()))
+                .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(LOCALSTACK_CONTAINER.getAccessKey(), LOCALSTACK_CONTAINER.getSecretKey())))
+                .build();
     }
+
 
 }
