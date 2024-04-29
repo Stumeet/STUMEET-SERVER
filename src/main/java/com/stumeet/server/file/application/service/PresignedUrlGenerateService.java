@@ -18,7 +18,7 @@ public class PresignedUrlGenerateService implements PresignedUrlGenerateUseCase 
 
     @Override
     public PresignedUrlResponse generatePresignedUrl(PresignedUrlCommand command) {
-        FileValidator.isValidImageFile(command.fileName());
+        FileValidator.validateImageFile(command.fileName());
 
         FileUrl fileUrl = presignedUrlGeneratePort.generatePresignedUrl(command.path(), command.fileName());
 
