@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum FileManagementPath {
-    ACTIVITY("activity");
+    USER_PROFILE("user/%d/profile"),
+    STUDY("study/%d/main"),
+    STUDY_ACTIVITY("study/%d/activity")
+    ;
 
     private final String path;
 }

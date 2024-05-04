@@ -26,7 +26,7 @@ public class FileStub {
 
     public static PresignedUrlCommand getPresignedUrlCommand() {
         return PresignedUrlCommand.builder()
-                .path(FileManagementPath.ACTIVITY)
+                .path(FileManagementPath.STUDY_ACTIVITY)
                 .fileName("test.jpg")
                 .build();
     }
@@ -36,7 +36,7 @@ public class FileStub {
                 Arguments.of(
                         "presigned-url-generate/fail/invalid-file-name",
                         PresignedUrlCommand.builder()
-                                .path(FileManagementPath.ACTIVITY)
+                                .path(FileManagementPath.STUDY_ACTIVITY)
                                 .fileName("test")
                                 .build(),
                         new InvalidFileException(ErrorCode.INVALID_FILE_NAME_EXCEPTION)
@@ -44,7 +44,7 @@ public class FileStub {
                 Arguments.of(
                         "presigned-url-generate/fail/invalid-file-extension",
                         PresignedUrlCommand.builder()
-                                .path(FileManagementPath.ACTIVITY)
+                                .path(FileManagementPath.STUDY_ACTIVITY)
                                 .fileName("test.pxp")
                                 .build(),
                         new InvalidFileException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION)
