@@ -38,6 +38,8 @@ public class S3ImageStorageAdapter implements FileCommandPort, PresignedUrlGener
     private String bucket;
     @Value("${spring.cloud.config.server.awss3.endpoint}")
     private String endpoint;
+    @Value("${presigned.url.expired-time}")
+    private int expiredTime;
 
     @Override
     public FileUrl uploadImageFile(MultipartFile file, String directoryPath) {
@@ -106,7 +108,7 @@ public class S3ImageStorageAdapter implements FileCommandPort, PresignedUrlGener
         String key = FileUtil.generateKey(path.getPath(), fileName);
 
         PresignedPutObjectRequest request = s3Presigner.presignPutObject(p ->
-                p.signatureDuration(Duration.ofMinutes(60))
+                p.signatureDuration(Duration.ofSeconds(expiredTime))
                         .putObjectRequest(pr -> pr.bucket(bucket).key(key))
         );
 
