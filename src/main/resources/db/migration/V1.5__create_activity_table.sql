@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `activity`
 
     `start_date` DATETIME     NOT NULL COMMENT '활동 시작일',
     `end_date`   DATETIME     NOT NULL COMMENT '활동 종료일',
-    `location`   VARCHAR(255) NOT NULL COMMENT '활동 장소',
+    `location`   VARCHAR(255) COMMENT '활동 장소',
 
     `created_at` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',
     `updated_at` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 시간',
