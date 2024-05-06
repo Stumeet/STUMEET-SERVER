@@ -28,6 +28,11 @@ public enum ImageContentType {
 			.anyMatch(type -> type.fieldsMatches(contentType, extension));
 	}
 
+	public static boolean exists(String extension) {
+		return Arrays.stream(ImageContentType.values())
+				.anyMatch(type -> type.getExtension().equalsIgnoreCase(extension));
+	}
+
 	private boolean fieldsMatches(String contentType, String extension) {
 		return getExtension().equalsIgnoreCase(extension) && getContentType().equalsIgnoreCase(contentType);
 	}

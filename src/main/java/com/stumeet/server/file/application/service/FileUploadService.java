@@ -2,6 +2,7 @@ package com.stumeet.server.file.application.service;
 
 import java.util.List;
 
+import com.stumeet.server.file.domain.FileManagementPath;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.stumeet.server.common.annotation.UseCase;
@@ -15,9 +16,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FileUploadService implements FileUploadUseCase {
 
-	private static final String USER_PROFILE_IMAGE_DIRECTORY_PATH = "user/%d/profile";
-	private static final String STUDY_MAIN_IMAGE_DIRECTORY_PATH = "study/%d/main";
-	private static final String STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH = "study/%d/activity";
 	private static final String EMPTY_URL = "";
 
 	private final FileCommandPort fileCommandPort;
@@ -28,7 +26,7 @@ public class FileUploadService implements FileUploadUseCase {
 			return new FileUrl(EMPTY_URL);
 		}
 
-		String path = String.format(USER_PROFILE_IMAGE_DIRECTORY_PATH, userId);
+		String path = String.format(FileManagementPath.USER_PROFILE.getPath(), userId);
 		return fileCommandPort.uploadImageFile(multipartFile, path);
 	}
 
@@ -38,13 +36,13 @@ public class FileUploadService implements FileUploadUseCase {
 			return new FileUrl(EMPTY_URL);
 		}
 
-		String path = String.format(STUDY_MAIN_IMAGE_DIRECTORY_PATH, studyId);
+		String path = String.format(FileManagementPath.STUDY.getPath(), studyId);
 		return fileCommandPort.uploadImageFile(multipartFile, path);
 	}
 
 	@Override
 	public List<FileUrl> uploadStudyActivityImage(Long studyId, List<MultipartFile> multipartFiles) {
-		String path = String.format(STUDY_ACTIVITY_IMAGE_DIRECTORY_PATH, studyId);
+		String path = String.format(FileManagementPath.STUDY_ACTIVITY.getPath(), studyId);
 		return fileCommandPort.uploadImageFiles(multipartFiles, path);
 	}
 }

@@ -391,3 +391,34 @@ include::{snippets}/study-member-join/fail/not-exist-study/response-fields.adoc[
 .존재하지 않는 멤버가 가입을 요청한 경우
 include::{snippets}/study-member-join/fail/not-exist-member/response-body.adoc[]
 include::{snippets}/study-member-join/fail/not-exist-member/response-fields.adoc[]
+
+== 파일 관리
+
+=== Presigned URL 발급
+
+파일 업로드를 위한 Presigned URL을 발급하는 API입니다.
+
+해당 API는 1시간동안 유효합니다.
+
+==== POST /api/v1/presigned-url
+
+===== 요청
+
+include::{snippets}/presigned-url-generate/success/http-request.adoc[]
+include::{snippets}/presigned-url-generate/success/request-headers.adoc[]
+include::{snippets}/presigned-url-generate/success/request-fields.adoc[]
+
+include::file-management-path.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/presigned-url-generate/success/response-body.adoc[]
+include::{snippets}/presigned-url-generate/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.파일이름이 유효하지 않은 경우
+include::{snippets}/presigned-url-generate/fail/invalid-file-name/response-body.adoc[]
+include::{snippets}/presigned-url-generate/fail/invalid-file-name/response-fields.adoc[]
+
+.파일의 확장자가 유효하지 않은 경우
+include::{snippets}/presigned-url-generate/fail/invalid-file-extension/response-body.adoc[]
+include::{snippets}/presigned-url-generate/fail/invalid-file-extension/response-fields.adoc[]

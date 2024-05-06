@@ -48,3 +48,7 @@ oauth:
       url: https://appleid.apple.com
     kakao:
       url: https://kapi.kakao.com
+
+presigned:
+  url:
+    expired-time: 3600
