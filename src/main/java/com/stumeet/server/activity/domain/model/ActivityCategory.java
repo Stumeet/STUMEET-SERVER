@@ -1,16 +1,13 @@
 package com.stumeet.server.activity.domain.model;
 
 import com.stumeet.server.activity.application.port.in.command.ActivityConstructCommand;
-import com.stumeet.server.activity.domain.exception.NotExistsActivityStatusException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Getter
 public enum ActivityCategory {
-    DEFAULT {
+    DEFAULT(DefaultStatus.NONE) {
         @Override
         public Activity create(ActivityConstructCommand command) {
             return Default.builder()
@@ -33,7 +30,7 @@ public enum ActivityCategory {
         }
     },
 
-    MEET {
+    MEET(MeetStatus.MEET_NOT_STARTED) {
         @Override
         public Activity create(ActivityConstructCommand command) {
             return Meet.builder()
@@ -56,7 +53,7 @@ public enum ActivityCategory {
                     .build();
         }
     },
-    ASSIGNMENT {
+    ASSIGNMENT(AssignmentStatus.ASSIGNMENT_NOT_STARTED) {
         @Override
         public Activity create(ActivityConstructCommand command) {
             return Assignment.builder()
@@ -78,6 +75,8 @@ public enum ActivityCategory {
                     .build();
         }
     };
+
+    private final ActivityStatus defaultStatus;
 
     public abstract Activity create(ActivityConstructCommand command);
 

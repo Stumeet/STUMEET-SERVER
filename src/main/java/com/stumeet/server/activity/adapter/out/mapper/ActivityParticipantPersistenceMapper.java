@@ -7,6 +7,8 @@ import com.stumeet.server.activity.domain.model.ActivityParticipant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ActivityParticipantPersistenceMapper {
@@ -36,5 +38,11 @@ public class ActivityParticipantPersistenceMapper {
                         .build())
                 .status(domain.getStatus())
                 .build();
+    }
+
+    public List<ActivityParticipantJpaEntity> toEntities(List<ActivityParticipant> participants) {
+        return participants.stream()
+                .map(this::toEntity)
+                .toList();
     }
 }

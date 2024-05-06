@@ -5,6 +5,8 @@ import com.stumeet.server.activity.domain.model.ActivityImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ActivityImagePersistenceMapper {
@@ -15,7 +17,7 @@ public class ActivityImagePersistenceMapper {
         return ActivityImage.builder()
                 .id(entity.getId())
                 .activity(activityPersistenceMapper.toDomain(entity.getActivity()))
-                .url(entity.getImage())
+                .url(entity.getUrl())
                 .build();
     }
 
@@ -23,7 +25,13 @@ public class ActivityImagePersistenceMapper {
         return ActivityImageJpaEntity.builder()
                 .id(domain.getId())
                 .activity(activityPersistenceMapper.toEntity(domain.getActivity()))
-                .image(domain.getUrl())
+                .url(domain.getUrl())
                 .build();
+    }
+
+    public List<ActivityImageJpaEntity> toEntities(List<ActivityImage> images) {
+        return images.stream()
+                .map(this::toEntity)
+                .toList();
     }
 }
