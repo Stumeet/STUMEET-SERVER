@@ -145,5 +145,28 @@ class StudyCreateApiTest extends ApiTest {
 						fieldWithPath("message").description("응답 메시지")
 					)));
 		}
+
+		@Test
+		@WithMockMember
+		@DisplayName("[실패] 유효하지 않은 스터디 기간으로 요청한 경우 스터디 생성을 실패한다.")
+		void fail_create_study_when_study_period_invalid() throws Exception {
+			StudyCreateCommand request = StudyStub.getInvalidStudyPeriodStudyCreateCommand();
+
+			mockMvc.perform(multipart(path)
+					.file(studyMainImage)
+					.part(new MockPart("request", "", objectMapper.writeValueAsBytes(request), MediaType.APPLICATION_JSON))
+					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+					.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andDo(document("create-study/fail/invalid-study-period",
+					preprocessRequest(prettyPrint()),
+					preprocessResponse(prettyPrint()),
+					requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+						"서버로부터 전달받은 액세스 토큰")),
+					responseFields(
+						fieldWithPath("code").description("응답 상태"),
+						fieldWithPath("message").description("응답 메시지")
+					)));
+		}
 	}
 }
