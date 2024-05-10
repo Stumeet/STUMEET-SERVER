@@ -61,6 +61,10 @@ class ActivityCreateApiTest extends ApiTest {
                                     fieldWithPath("endDate").description("활동 종료 일시"),
                                     fieldWithPath("location").description("활동 장소").optional(),
                                     fieldWithPath("participants").description("참여자 ID 리스트")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
                             )
                     ));
         }

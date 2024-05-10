@@ -4,6 +4,8 @@ import com.stumeet.server.activity.application.port.in.ActivityCreateUseCase;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
+import com.stumeet.server.common.model.ApiResponse;
+import com.stumeet.server.common.response.SuccessCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,7 @@ public class ActivityCreateApi {
     private final ActivityCreateUseCase activityCreateUseCase;
 
     @PostMapping("/studies/{studyId}/activities")
-    public ResponseEntity<Void> create(
+    public ResponseEntity<ApiResponse<Void>> create(
             @PathVariable Long studyId,
             @AuthenticationPrincipal LoginMember loginMember,
             @RequestBody @Valid ActivityCreateCommand command
@@ -30,6 +32,6 @@ public class ActivityCreateApi {
         activityCreateUseCase.create(studyId, command, loginMember.getMember().getId());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
+                .body(ApiResponse.success(SuccessCode.ACTIVITY_CREATE_SUCCESS));
     }
 }
