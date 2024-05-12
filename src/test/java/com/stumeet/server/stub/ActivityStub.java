@@ -1,6 +1,6 @@
 package com.stumeet.server.stub;
 
-import com.stumeet.server.activity.application.port.in.command.ActivityConstructCommand;
+import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.domain.model.*;
 
@@ -26,11 +26,11 @@ public class ActivityStub {
                 .build();
     }
 
-    public static ActivityConstructCommand getDefaultConstructCommand() {
-        return ActivityConstructCommand.builder()
+    public static ActivityCreateSource getDefaultConstructCommand() {
+        return ActivityCreateSource.builder()
                 .id(null)
                 .studyId(StudyStub.getStudyId())
-                .author(ActivityConstructCommand.ActivityMemberConstructCommand.builder()
+                .author(ActivityCreateSource.ActivityMemberCreateSource.builder()
                         .id(MemberStub.getMemberId())
                         .build())
                 .category(ActivityCategory.DEFAULT)

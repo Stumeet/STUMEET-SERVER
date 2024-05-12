@@ -1,7 +1,7 @@
 package com.stumeet.server.activity.application.service;
 
 import com.stumeet.server.activity.application.port.in.ActivityCreateUseCase;
-import com.stumeet.server.activity.application.port.in.command.ActivityConstructCommand;
+import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityImageUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityParticipantUseCaseMapper;
@@ -38,7 +38,7 @@ public class ActivityCreateService implements ActivityCreateUseCase {
     public void create(Long studyId, ActivityCreateCommand command, Long memberId) {
         studyMemberValidationUseCase.checkAdmin(studyId, memberId);
 
-        ActivityConstructCommand constructCommand = activityUseCaseMapper.toConstructCommand(studyId, command, memberId);
+        ActivityCreateSource constructCommand = activityUseCaseMapper.toConstructCommand(studyId, command, memberId);
         Activity activity = command.category().create(constructCommand);
         Activity createdActivity = activityCreatePort.create(activity);
 

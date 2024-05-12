@@ -1,6 +1,6 @@
 package com.stumeet.server.activity.domain.model;
 
-import com.stumeet.server.activity.application.port.in.command.ActivityConstructCommand;
+import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum ActivityCategory {
     DEFAULT(DefaultStatus.NONE) {
         @Override
-        public Activity create(ActivityConstructCommand command) {
+        public Activity create(ActivityCreateSource command) {
             return Default.builder()
                     .id(command.id())
                     .study(ActivityLinkedStudy.builder().id(command.studyId()).build())
@@ -32,7 +32,7 @@ public enum ActivityCategory {
 
     MEET(MeetStatus.MEET_NOT_STARTED) {
         @Override
-        public Activity create(ActivityConstructCommand command) {
+        public Activity create(ActivityCreateSource command) {
             return Meet.builder()
                     .id(command.id())
                     .study(ActivityLinkedStudy.builder().id(command.studyId()).build())
@@ -55,7 +55,7 @@ public enum ActivityCategory {
     },
     ASSIGNMENT(AssignmentStatus.ASSIGNMENT_NOT_STARTED) {
         @Override
-        public Activity create(ActivityConstructCommand command) {
+        public Activity create(ActivityCreateSource command) {
             return Assignment.builder()
                     .id(command.id())
                     .study(ActivityLinkedStudy.builder().id(command.studyId()).build())
@@ -78,6 +78,6 @@ public enum ActivityCategory {
 
     private final ActivityStatus defaultStatus;
 
-    public abstract Activity create(ActivityConstructCommand command);
+    public abstract Activity create(ActivityCreateSource command);
 
 }

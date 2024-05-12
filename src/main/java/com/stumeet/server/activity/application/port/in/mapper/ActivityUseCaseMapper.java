@@ -1,7 +1,7 @@
 package com.stumeet.server.activity.application.port.in.mapper;
 
 
-import com.stumeet.server.activity.application.port.in.command.ActivityConstructCommand;
+import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 @Component
 public class ActivityUseCaseMapper {
 
-    public ActivityConstructCommand toConstructCommand(Long studyId, ActivityCreateCommand command, Long id) {
-        return ActivityConstructCommand.builder()
+    public ActivityCreateSource toConstructCommand(Long studyId, ActivityCreateCommand command, Long id) {
+        return ActivityCreateSource.builder()
                 .id(null)
                 .studyId(studyId)
-                .author(ActivityConstructCommand.ActivityMemberConstructCommand.builder()
+                .author(ActivityCreateSource.ActivityMemberCreateSource.builder()
                         .id(id)
                         .build())
                 .category(command.category())
