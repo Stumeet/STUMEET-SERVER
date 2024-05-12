@@ -11,6 +11,8 @@ import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.stub.ActivityStub;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyStub;
+import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
+import com.stumeet.server.study.domain.exception.StudyNotExistsException;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import com.stumeet.server.studymember.domain.exception.NotStudyAdminException;
 import com.stumeet.server.template.UnitTest;
@@ -19,6 +21,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.text.MessageFormat;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,6 +55,9 @@ class ActivityCreateServiceTest extends UnitTest {
     @Mock
     private ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper;
 
+    @Mock
+    private StudyValidationUseCase studyValidationUseCase;
+
     @Nested
     @DisplayName("활동 생성")
     class Create {
@@ -80,6 +87,21 @@ class ActivityCreateServiceTest extends UnitTest {
         }
 
         @Test
+        @DisplayName("[실패] 존재하지 않는 스터디로 활동 생성 요청 시 예외가 발생한다.")
+        void notExistsStudyTest() {
+            Long studyId = StudyStub.getStudyId();
+            Long memberId = MemberStub.getInvalidMemberId();
+            ActivityCreateCommand request = ActivityStub.getDefaultActivityCreateCommand();
+
+            willThrow(new StudyNotExistsException(studyId))
+                    .given(studyValidationUseCase).checkById(studyId);
+
+            assertThatCode(() -> activityCreateService.create(studyId, request, memberId))
+                    .isInstanceOf(StudyNotExistsException.class)
+                    .hasMessage(MessageFormat.format(StudyNotExistsException.MESSAGE, studyId));
+        }
+
+        @Test
         @DisplayName("[실패] 생성 요청을 한 사용자가 스터디의 관리자가 아닌 경우 예외가 발생한다.")
         void notAdminTest() {
             Long studyId = StudyStub.getStudyId();
@@ -91,7 +113,7 @@ class ActivityCreateServiceTest extends UnitTest {
 
             assertThatCode(() -> activityCreateService.create(studyId, request, memberId))
                     .isInstanceOf(NotStudyAdminException.class)
-                    .hasMessage("스터디 관리자가 아닙니다. 전달받은 studyId=" + studyId + ", memberId=" + memberId);
+                    .hasMessage(MessageFormat.format(NotStudyAdminException.MESSAGE, studyId, memberId));
 
         }
 

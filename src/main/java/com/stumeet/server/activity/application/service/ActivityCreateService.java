@@ -13,6 +13,7 @@ import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityImage;
 import com.stumeet.server.activity.domain.model.ActivityParticipant;
 import com.stumeet.server.common.annotation.UseCase;
+import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class ActivityCreateService implements ActivityCreateUseCase {
     private final ActivityParticipantCreatePort activityParticipantPort;
 
     private final StudyMemberValidationUseCase studyMemberValidationUseCase;
+    private final StudyValidationUseCase studyValidationUseCase;
 
     private final ActivityUseCaseMapper activityUseCaseMapper;
     private final ActivityImageUseCaseMapper activityImageUseCaseMapper;
@@ -36,6 +38,7 @@ public class ActivityCreateService implements ActivityCreateUseCase {
 
     @Override
     public void create(Long studyId, ActivityCreateCommand command, Long memberId) {
+        studyValidationUseCase.checkById(studyId);
         studyMemberValidationUseCase.checkAdmin(studyId, memberId);
 
         ActivityCreateSource constructCommand = activityUseCaseMapper.toConstructCommand(studyId, command, memberId);
