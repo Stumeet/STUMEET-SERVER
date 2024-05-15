@@ -1,6 +1,5 @@
 package com.stumeet.server.activity.application.port.in.command;
 
-import com.stumeet.server.activity.domain.model.ActivityCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,7 +11,8 @@ import java.util.List;
 
 @Builder
 public record ActivityCreateCommand(
-        ActivityCategory category,
+        @NotBlank(message = "활동 카테고리를 입력해주세요")
+        String category,
 
         @NotBlank(message = "활동 제목을 입력해주세요")
         @Size(max = 100, message = "활동 제목은 100자 이하여야 합니다")

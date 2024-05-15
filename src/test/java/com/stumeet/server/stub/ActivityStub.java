@@ -10,12 +10,35 @@ import java.util.List;
 public class ActivityStub {
     private ActivityStub() {}
 
-    public static String getInvalidCreateActivityJson() {
-        return "{\"category\":\"DEFAULT\",\"title\":\"\",\"content\":\"\",\"images\":[\"https://example.com/image1.png\", \"https://example.com/image2.png\", \"https://example.com/image3.png\", \"https://example.com/image4.png\", \"https://example.com/image5.png\", \"https://example.com/image6.png\"],\"isNotice\":false,\"startDate\":\"2024-04-01T00:00:00\",\"endDate\":\"2050-05-01T00:00:00\",\"location\":null,\"participants\":[]}";
+    public static ActivityCreateCommand getInvalidCreateActivity() {
+        return ActivityCreateCommand.builder()
+                .category("DEFAULT")
+                .title("")
+                .content("")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
+                .isNotice(false)
+                .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
+                .participants(List.of())
+                .build();
     }
+
+    public static ActivityCreateCommand getInvalidCategoryCreateActivity() {
+        return ActivityCreateCommand.builder()
+                .category("INVALID")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
+                .isNotice(false)
+                .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
     public static ActivityCreateCommand getDefaultActivityCreateCommand() {
         return ActivityCreateCommand.builder()
-                .category(ActivityCategory.DEFAULT)
+                .category("DEFAULT")
                 .title("title")
                 .content("content")
                 .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))

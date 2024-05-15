@@ -1,8 +1,11 @@
 package com.stumeet.server.activity.domain.model;
 
 import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
+import com.stumeet.server.activity.domain.exception.NotExistsActivityCategoryException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Getter
@@ -77,7 +80,12 @@ public enum ActivityCategory {
     };
 
     private final ActivityStatus defaultStatus;
-
+    public static ActivityCategory getByName(String category) {
+        return Arrays.stream(ActivityCategory.values())
+                .filter(c -> c.name().equalsIgnoreCase(category))
+                .findAny()
+                .orElseThrow(() -> new NotExistsActivityCategoryException(category));
+    }
     public abstract Activity create(ActivityCreateSource command);
 
 }

@@ -7,6 +7,7 @@ import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMap
 import com.stumeet.server.activity.application.port.out.ActivityCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityImageCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCreatePort;
+import com.stumeet.server.activity.domain.exception.NotExistsActivityCategoryException;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.stub.ActivityStub;
 import com.stumeet.server.stub.MemberStub;
@@ -70,7 +71,7 @@ class ActivityCreateServiceTest extends UnitTest {
             ActivityCreateCommand request = ActivityStub.getDefaultActivityCreateCommand();
             Activity activity = ActivityStub.getDefaultActivity();
 
-            given(activityUseCaseMapper.toConstructCommand(any(), any(), any()))
+            given(activityUseCaseMapper.toSource(any(), any(), any()))
                     .willReturn(ActivityStub.getDefaultConstructCommand());
             given(activityCreatePort.create(any()))
                     .willReturn(ActivityStub.getDefaultActivity());
@@ -100,7 +101,6 @@ class ActivityCreateServiceTest extends UnitTest {
                     .isInstanceOf(StudyNotExistsException.class)
                     .hasMessage(MessageFormat.format(StudyNotExistsException.MESSAGE, studyId));
         }
-
         @Test
         @DisplayName("[실패] 생성 요청을 한 사용자가 스터디의 관리자가 아닌 경우 예외가 발생한다.")
         void notAdminTest() {

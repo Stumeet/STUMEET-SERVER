@@ -28,6 +28,7 @@ public enum ErrorCode {
     INVALID_FILE_NAME_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 이름입니다."),
     INVALID_FILE_CONTENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 컨텐트 타입 입니다."),
     INVALID_FILE_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 확장자입니다."),
+    INVALID_ACTIVITY_CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 활동 카테고리입니다."),
     /*
         401 - UNAUTHORIZED
     */

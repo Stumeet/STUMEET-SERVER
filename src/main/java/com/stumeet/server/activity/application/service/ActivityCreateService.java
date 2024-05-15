@@ -41,8 +41,8 @@ public class ActivityCreateService implements ActivityCreateUseCase {
         studyValidationUseCase.checkById(studyId);
         studyMemberValidationUseCase.checkAdmin(studyId, memberId);
 
-        ActivityCreateSource constructCommand = activityUseCaseMapper.toConstructCommand(studyId, command, memberId);
-        Activity activity = command.category().create(constructCommand);
+        ActivityCreateSource activitySource = activityUseCaseMapper.toSource(studyId, command, memberId);
+        Activity activity = activitySource.category().create(activitySource);
         Activity createdActivity = activityCreatePort.create(activity);
 
         List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), createdActivity);
