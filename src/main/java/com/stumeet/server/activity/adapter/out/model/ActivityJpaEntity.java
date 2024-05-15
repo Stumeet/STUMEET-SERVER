@@ -26,7 +26,7 @@ public class ActivityJpaEntity extends BaseTimeEntity {
     private ActivityLinkedStudyJpaEntity study;
 
     @OneToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "author_id")
     @Comment("활동을 생성한 멤버")
     private ActivityMemberJpaEntity author;
 

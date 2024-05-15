@@ -3,9 +3,8 @@ package com.stumeet.server.activity.adapter.out.mapper;
 import com.stumeet.server.activity.adapter.out.model.ActivityJpaEntity;
 import com.stumeet.server.activity.adapter.out.model.ActivityLinkedStudyJpaEntity;
 import com.stumeet.server.activity.adapter.out.model.ActivityMemberJpaEntity;
-import com.stumeet.server.activity.application.port.in.command.ActivityConstructCommand;
+import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.domain.model.Activity;
-import com.stumeet.server.activity.domain.model.ActivityCategory;
 import com.stumeet.server.activity.domain.model.Meet;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +12,9 @@ import org.springframework.stereotype.Component;
 public class ActivityPersistenceMapper {
 
     public Activity toDomain(ActivityJpaEntity entity) {
-        ActivityConstructCommand request = ActivityConstructCommand.builder()
+        ActivityCreateSource request = ActivityCreateSource.builder()
                 .id(entity.getId())
-                .author(ActivityConstructCommand.ActivityMemberConstructCommand.builder()
+                .author(ActivityCreateSource.ActivityMemberCreateSource.builder()
                         .id(entity.getAuthor().getId())
                         .name(entity.getAuthor().getName())
                         .image(entity.getAuthor().getImage())

@@ -23,7 +23,7 @@ public class ActivityImageJpaEntity extends BaseTimeEntity {
     @Comment("활동")
     private ActivityJpaEntity activity;
 
-    @Column(name = "url", nullable = false, length = 500)
+    @Column(name = "image", nullable = false, length = 500)
     @Comment("이미지 url")
-    private String image;
+    private String url;
 }

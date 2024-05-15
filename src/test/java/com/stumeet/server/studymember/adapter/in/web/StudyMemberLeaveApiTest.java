@@ -155,7 +155,7 @@ class StudyMemberLeaveApiTest extends ApiTest {
         @DisplayName("[실패] 스터디에 가입된 멤버가 아닌 경우 스터디 멤버 강퇴에 실패한다.")
         void notJoinedStudyMemberTest() throws Exception {
             Long studyId = StudyStub.getStudyId();
-            Long invalidMemberId = MemberStub.getInvalidStudyId();
+            Long invalidMemberId = MemberStub.getInvalidMemberId();
 
             mockMvc.perform(delete(path, studyId, invalidMemberId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))

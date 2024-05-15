@@ -1,4 +1,4 @@
-package com.stumeet.server.activity.application.port.in.command;
+package com.stumeet.server.activity.application.service.model;
 
 import com.stumeet.server.activity.domain.model.ActivityCategory;
 import lombok.Builder;
@@ -6,10 +6,10 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record ActivityConstructCommand(
+public record ActivityCreateSource(
         Long id,
         Long studyId,
-        ActivityMemberConstructCommand author,
+        ActivityMemberCreateSource author,
         ActivityCategory category,
         String title,
         String content,
@@ -20,7 +20,7 @@ public record ActivityConstructCommand(
         String location
 ) {
     @Builder
-    public record ActivityMemberConstructCommand(
+    public record ActivityMemberCreateSource(
         Long id,
         String name,
         String image

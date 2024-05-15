@@ -422,3 +422,39 @@ include::{snippets}/presigned-url-generate/fail/invalid-file-name/response-field
 .파일의 확장자가 유효하지 않은 경우
 include::{snippets}/presigned-url-generate/fail/invalid-file-extension/response-body.adoc[]
 include::{snippets}/presigned-url-generate/fail/invalid-file-extension/response-fields.adoc[]
+
+== 스터디 활동 관리
+
+=== 스터디 활동 생성
+
+스터디 활동을 생성하는 API입니다.
+
+==== POST /api/v1/studies/{studyId}/activities
+
+===== 요청
+include::{snippets}/create-activity/success/http-request.adoc[]
+include::{snippets}/create-activity/success/path-parameters.adoc[]
+include::{snippets}/create-activity/success/request-headers.adoc[]
+include::{snippets}/create-activity/success/request-fields.adoc[]
+
+===== 응답 성공 (201)
+.응답 없음
+include::{snippets}/create-activity/success/response-body.adoc[]
+
+===== 응답 실패 (400)
+.활동 생성 요청 값이 유효하지 않은 경우
+include::{snippets}/create-activity/fail/invalid-request/response-body.adoc[]
+include::{snippets}/create-activity/fail/invalid-request/response-fields.adoc[]
+
+.존재하지 않는 활동 카테고리로 요청한 경우
+include::{snippets}/create-activity/fail/not-exists-category/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-exists-category/response-fields.adoc[]
+===== 응답 실패 (403)
+.스터디의 관리자가 아닌 경우
+include::{snippets}/create-activity/fail/not-admin/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-admin/response-fields.adoc[]
+
+====== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/create-activity/fail/not-exists-study/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-exists-study/response-fields.adoc[]
