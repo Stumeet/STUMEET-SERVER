@@ -7,7 +7,6 @@ import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMap
 import com.stumeet.server.activity.application.port.out.ActivityCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityImageCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCreatePort;
-import com.stumeet.server.activity.domain.exception.NotExistsActivityCategoryException;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.stub.ActivityStub;
 import com.stumeet.server.stub.MemberStub;
@@ -72,7 +71,7 @@ class ActivityCreateServiceTest extends UnitTest {
             Activity activity = ActivityStub.getDefaultActivity();
 
             given(activityUseCaseMapper.toSource(any(), any(), any()))
-                    .willReturn(ActivityStub.getDefaultConstructCommand());
+                    .willReturn(ActivityStub.getDefaultCreateSource());
             given(activityCreatePort.create(any()))
                     .willReturn(ActivityStub.getDefaultActivity());
             given(activityImageUseCaseMapper.toDomains(any(), any()))
