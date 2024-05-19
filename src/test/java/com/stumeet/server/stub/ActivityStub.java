@@ -93,4 +93,11 @@ public class ActivityStub {
         );
     }
 
+    public static Long getActivityId() {
+        return 1L;
+    }
+
+    public static Long getInvalidActivityId() {
+        return 0L;
+    }
 }

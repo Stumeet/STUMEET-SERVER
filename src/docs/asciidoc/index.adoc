@@ -458,3 +458,34 @@ include::{snippets}/create-activity/fail/not-admin/response-fields.adoc[]
 .존재하지 않는 스터디 ID를 요청한 경우
 include::{snippets}/create-activity/fail/not-exists-study/response-body.adoc[]
 include::{snippets}/create-activity/fail/not-exists-study/response-fields.adoc[]
+
+=== 스터디 활동 단일 조회
+
+스터디 활동을 단일 조회하는 API입니다.
+
+==== GET /api/v1/studies/{studyId}/activities/{activityId}
+
+===== 요청
+include::{snippets}/get-activity-by-id/success/http-request.adoc[]
+include::{snippets}/get-activity-by-id/success/path-parameters.adoc[]
+include::{snippets}/get-activity-by-id/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-by-id/success/response-body.adoc[]
+include::{snippets}/get-activity-by-id/success/response-fields.adoc[]
+
+===== 응답 실패(403)
+.스터디의 멤버가 아닌 경우
+include::{snippets}/get-activity-by-id/fail/not-joined-study/response-body.adoc[]
+include::{snippets}/get-activity-by-id/fail/not-joined-study/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디를 전달한 경우
+include::{snippets}/get-activity-by-id/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-activity-by-id/fail/study-not-found/response-fields.adoc[]
+
+.존재하지 않는 활동을 전달한 경우
+include::{snippets}/get-activity-by-id/fail/activity-not-found/response-body.adoc[]
+include::{snippets}/get-activity-by-id/fail/activity-not-found/response-fields.adoc[]
+
+
