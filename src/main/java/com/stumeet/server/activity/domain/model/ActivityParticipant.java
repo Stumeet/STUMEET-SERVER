@@ -18,8 +18,9 @@ public class ActivityParticipant {
 
     private ActivityStatus status;
 
-    public static ActivityParticipant makeAnonymous() {
+    public static ActivityParticipant makeNotJoinedMember() {
         return ActivityParticipant.builder()
+                .status(NotJoinedStatus.NOT_JOINED)
                 .build();
     }
 }

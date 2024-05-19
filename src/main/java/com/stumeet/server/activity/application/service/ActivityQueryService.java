@@ -48,7 +48,7 @@ public class ActivityQueryService implements ActivityQueryUseCase {
         ActivityParticipant me = participants.stream()
                 .filter(participant -> participant.getMember().getId().equals(memberId))
                 .findAny()
-                .orElseGet(ActivityParticipant::makeAnonymous);
+                .orElseGet(ActivityParticipant::makeNotJoinedMember);
 
         return activityUseCaseMapper.toDetailResponse(
                 activity,
