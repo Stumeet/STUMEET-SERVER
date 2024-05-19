@@ -3,7 +3,7 @@ package com.stumeet.server.activity.application.port.in.mapper;
 
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
 import com.stumeet.server.activity.adapter.in.response.ActivityImageResponse;
-import com.stumeet.server.activity.adapter.in.response.ActivityParticipantResponse;
+import com.stumeet.server.activity.adapter.in.response.ActivityParticipantSimpleResponse;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.domain.model.Activity;
@@ -39,8 +39,8 @@ public class ActivityUseCaseMapper {
     public ActivityDetailResponse toDetailResponse(
             Activity activity,
             List<ActivityImageResponse> activityImages,
-            ActivityParticipantResponse author,
-            List<ActivityParticipantResponse> participants,
+            ActivityParticipantSimpleResponse author,
+            List<ActivityParticipantSimpleResponse> participants,
             String status
     ) {
         return ActivityDetailResponse.builder()

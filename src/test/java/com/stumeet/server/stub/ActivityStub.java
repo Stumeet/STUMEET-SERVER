@@ -2,7 +2,7 @@ package com.stumeet.server.stub;
 
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
 import com.stumeet.server.activity.adapter.in.response.ActivityImageResponse;
-import com.stumeet.server.activity.adapter.in.response.ActivityParticipantResponse;
+import com.stumeet.server.activity.adapter.in.response.ActivityParticipantSimpleResponse;
 import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.domain.model.*;
@@ -141,21 +141,21 @@ public class ActivityStub {
                 .build();
     }
 
-    public static ActivityParticipantResponse getAuthorResponse() {
+    public static ActivityParticipantSimpleResponse getAuthorResponse() {
         ActivityMember author = getAuthor();
 
-        return ActivityParticipantResponse.builder()
-                .id(author.getId())
+        return ActivityParticipantSimpleResponse.builder()
+                .memberId(author.getId())
                 .name(author.getName())
                 .profileImageUrl(author.getImage())
                 .build();
     }
 
-    public static ActivityParticipantResponse getParticipantResponse() {
+    public static ActivityParticipantSimpleResponse getParticipantResponse() {
         ActivityMember participant = getParticipant();
 
-        return ActivityParticipantResponse.builder()
-                .id(participant.getId())
+        return ActivityParticipantSimpleResponse.builder()
+                .memberId(participant.getId())
                 .name(participant.getName())
                 .profileImageUrl(participant.getImage())
                 .build();

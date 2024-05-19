@@ -1,6 +1,6 @@
 package com.stumeet.server.activity.application.port.in.mapper;
 
-import com.stumeet.server.activity.adapter.in.response.ActivityParticipantResponse;
+import com.stumeet.server.activity.adapter.in.response.ActivityParticipantSimpleResponse;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityMember;
 import com.stumeet.server.activity.domain.model.ActivityParticipant;
@@ -28,15 +28,15 @@ public class ActivityParticipantUseCaseMapper {
                 .toList();
     }
 
-    public ActivityParticipantResponse toResponse(ActivityMember member) {
-        return ActivityParticipantResponse.builder()
-                .id(member.getId())
+    public ActivityParticipantSimpleResponse toResponse(ActivityMember member) {
+        return ActivityParticipantSimpleResponse.builder()
+                .memberId(member.getId())
                 .name(member.getName())
                 .profileImageUrl(member.getImage())
                 .build();
     }
 
-    public List<ActivityParticipantResponse> toResponses(List<ActivityParticipant> participants) {
+    public List<ActivityParticipantSimpleResponse> toResponses(List<ActivityParticipant> participants) {
         return participants.stream()
                 .map(participant -> toResponse(participant.getMember()))
                 .toList();
