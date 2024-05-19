@@ -11,10 +11,15 @@ public enum AssignmentStatus implements ActivityStatus {
     PERFORMED("수행"),
     UNPERFORMED("미수행");
 
-    private final String status;
+    private final String description;
 
     @Override
     public String getStatus() {
         return this.name();
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }

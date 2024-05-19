@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 public interface ActivityStatus {
     String getStatus();
 
+    String getDescription();
+
     static ActivityStatus findByStatus(String status) {
         return Stream.of(MeetStatus.values(), DefaultStatus.values(), AssignmentStatus.values())
                 .flatMap(Stream::of)

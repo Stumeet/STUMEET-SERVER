@@ -55,7 +55,7 @@ public class ActivityQueryService implements ActivityQueryUseCase {
                 activityImageUseCaseMapper.toResponses(activityImages),
                 activityParticipantUseCaseMapper.toResponse(activity.getAuthor()),
                 activityParticipantUseCaseMapper.toResponses(participants),
-                me.getStatus().getStatus()
+                me.getStatus().getDescription()
         );
     }
 }

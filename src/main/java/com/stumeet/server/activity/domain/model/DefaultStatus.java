@@ -6,10 +6,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum DefaultStatus implements ActivityStatus {
-    NONE;
+    NONE("없음");
+
+    private final String description;
 
     @Override
     public String getStatus() {
         return this.name();
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }
