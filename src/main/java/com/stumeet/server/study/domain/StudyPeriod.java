@@ -39,7 +39,7 @@ public class StudyPeriod {
 		return date.isBefore(startDate);
 	}
 
-	protected void determineEndDate(LocalDate date) {
+	void determineEndDate(LocalDate date) {
 		this.endDate = date;
 	}
 }
