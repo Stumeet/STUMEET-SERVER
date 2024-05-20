@@ -31,6 +31,6 @@ public class StudyFinishService implements StudyFinishUseCase {
 
 		study.finish(timeProvider.getCurrentDate());
 
-		studyCommandPort.save(study);
+		studyCommandPort.update(study);
 	}
 }
