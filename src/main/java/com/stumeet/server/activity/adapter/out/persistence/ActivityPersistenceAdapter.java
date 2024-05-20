@@ -24,7 +24,7 @@ public class ActivityPersistenceAdapter implements ActivityCreatePort, ActivityQ
     }
 
     @Override
-    public Activity getById(Long memberId, Long activityId) {
+    public Activity getById(Long activityId) {
         ActivityJpaEntity activityJpaEntity = jpaActivityRepository.findById(activityId)
                 .orElseThrow(() -> new NotExistsActivityException(activityId));
 

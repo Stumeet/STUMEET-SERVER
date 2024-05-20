@@ -3,10 +3,10 @@ package com.stumeet.server.activity.application.service;
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
 import com.stumeet.server.activity.application.port.in.ActivityImageQuery;
 import com.stumeet.server.activity.application.port.in.ActivityParticipantQuery;
+import com.stumeet.server.activity.application.port.in.ActivityQuery;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityImageUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityParticipantUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMapper;
-import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.stub.ActivityStub;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyStub;
@@ -30,13 +30,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 
-class ActivityQueryServiceTest extends UnitTest {
+class ActivityQueryFacadeTest extends UnitTest {
 
     @InjectMocks
-    private ActivityQueryService activityQueryService;
+    private ActivityQueryFacade activityQueryFacade;
 
     @Mock
-    private ActivityQueryPort activityQueryPort;
+    private ActivityQuery activityQuery;
 
     @Mock
     private StudyValidationUseCase studyValidationUseCase;
@@ -71,14 +71,14 @@ class ActivityQueryServiceTest extends UnitTest {
             Long memberId = MemberStub.getMemberId();
             ActivityDetailResponse want = ActivityStub.getActivityDetailResponse();
 
-            given(activityQueryPort.getById(any(), any()))
+            given(activityQuery.getById(any()))
                     .willReturn(ActivityStub.getDefaultActivity());
             given(activityImageQuery.findAllByActivityId(any()))
                     .willReturn(ActivityStub.getActivityImages(ActivityStub.getDefaultActivity()));
             given(activityParticipantQuery.findAllByActivityId(any()))
                     .willReturn(ActivityStub.getActivityParticipants(ActivityStub.getDefaultActivity()));
 
-            ActivityDetailResponse got = activityQueryService.getById(studyId, activityId, memberId);
+            ActivityDetailResponse got = activityQueryFacade.getById(studyId, activityId, memberId);
 
             assertThat(got).usingRecursiveComparison()
                     .ignoringFields("createdAt")
@@ -93,14 +93,14 @@ class ActivityQueryServiceTest extends UnitTest {
             Long memberId = MemberStub.getNotJoinActivityMemberId();
             ActivityDetailResponse want = ActivityStub.getActivityDetailResponseForNotJoinedUser();
 
-            given(activityQueryPort.getById(any(), any()))
+            given(activityQuery.getById(any()))
                     .willReturn(ActivityStub.getDefaultActivity());
             given(activityImageQuery.findAllByActivityId(any()))
                     .willReturn(ActivityStub.getActivityImages(ActivityStub.getDefaultActivity()));
             given(activityParticipantQuery.findAllByActivityId(any()))
                     .willReturn(ActivityStub.getActivityParticipants(ActivityStub.getDefaultActivity()));
 
-            ActivityDetailResponse got = activityQueryService.getById(studyId, activityId, memberId);
+            ActivityDetailResponse got = activityQueryFacade.getById(studyId, activityId, memberId);
 
             assertThat(got).usingRecursiveComparison()
                     .ignoringFields("createdAt")
@@ -117,7 +117,7 @@ class ActivityQueryServiceTest extends UnitTest {
             willThrow(new StudyNotExistsException(studyId))
                     .given(studyValidationUseCase).checkById(studyId);
 
-            assertThatCode(() -> activityQueryService.getById(studyId, activityId, memberId))
+            assertThatCode(() -> activityQueryFacade.getById(studyId, activityId, memberId))
                     .isInstanceOf(StudyNotExistsException.class)
                     .hasMessage(MessageFormat.format(StudyNotExistsException.MESSAGE, studyId));
         }
@@ -132,7 +132,7 @@ class ActivityQueryServiceTest extends UnitTest {
             willThrow(new StudyMemberNotJoinedException(studyId, memberId))
                     .given(studyMemberValidationUseCase).checkStudyJoinMember(studyId, memberId);
 
-            assertThatCode(() -> activityQueryService.getById(studyId, activityId, memberId))
+            assertThatCode(() -> activityQueryFacade.getById(studyId, activityId, memberId))
                     .isInstanceOf(StudyMemberNotJoinedException.class)
                     .hasMessage(MessageFormat.format(StudyMemberNotJoinedException.MESSAGE, studyId, memberId));
         }
