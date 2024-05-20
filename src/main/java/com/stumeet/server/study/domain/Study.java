@@ -86,8 +86,7 @@ public class Study {
 		return !getStudyTags().equals(studyTags);
 	}
 
-	public void finish() {
-		LocalDate today = LocalDate.now();
+	public void finish(LocalDate today) {
 		validateFinishPossible(today);
 
 		period.determineEndDate(today);

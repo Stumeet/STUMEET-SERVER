@@ -3,6 +3,7 @@ package com.stumeet.server.study.application.service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stumeet.server.common.annotation.UseCase;
+import com.stumeet.server.common.util.TimeProvider;
 import com.stumeet.server.study.application.port.in.StudyFinishUseCase;
 import com.stumeet.server.study.application.port.out.StudyCommandPort;
 import com.stumeet.server.study.application.port.out.StudyQueryPort;
@@ -16,9 +17,11 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class StudyFinishService implements StudyFinishUseCase {
 
+	private final StudyMemberValidationUseCase studyMemberValidationUseCase;
+	private final TimeProvider timeProvider;
+
 	private final StudyQueryPort studyQueryPort;
 	private final StudyCommandPort studyCommandPort;
-	private final StudyMemberValidationUseCase studyMemberValidationUseCase;
 
 	@Override
 	public void finish(Long studyId, Long memberId) {
@@ -26,7 +29,7 @@ public class StudyFinishService implements StudyFinishUseCase {
 		studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
 		studyMemberValidationUseCase.checkAdmin(studyId, memberId);
 
-		study.finish();
+		study.finish(timeProvider.getCurrentDate());
 
 		studyCommandPort.save(study);
 	}
