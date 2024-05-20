@@ -93,8 +93,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
         BadRequestException.class,
-        NotExistsException.class,
-        InvalidStateException.class
+        // NotExistsException.class,
+        // InvalidStateException.class
     })
     protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BusinessException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
