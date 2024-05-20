@@ -8,5 +8,5 @@ public interface StudyQueryPort {
 
 	Study getById(Long id);
 
-	List<Study> getMemberRecentStudies(Long memberId);
+	List<Study> getMemberRecentActiveStudies(Long memberId);
 }

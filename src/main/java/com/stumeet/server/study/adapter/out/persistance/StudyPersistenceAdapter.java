@@ -29,8 +29,8 @@ public class StudyPersistenceAdapter implements StudyQueryPort, StudyValidationP
 	}
 
 	@Override
-	public List<Study> getMemberRecentStudies(Long memberId) {
-		List<StudyJpaEntity> involvedStudies = studyRepository.findAllByMemberIdOrderByJoinedDate(memberId);
+	public List<Study> getMemberRecentActiveStudies(Long memberId) {
+		List<StudyJpaEntity> involvedStudies = studyRepository.findActivesByMemberIdOrderByJoinedDate(memberId);
 
 		return studyPersistenceMapper.toDomains(involvedStudies);
 	}

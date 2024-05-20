@@ -24,7 +24,7 @@ public enum StudyField {
         this.name = name;
     }
 
-    public static StudyField getByName(String name) {
+    public static StudyField fromName(String name) {
         return Arrays.stream(StudyField.values())
                 .filter(field -> field.name.equals(name))
                 .findFirst()

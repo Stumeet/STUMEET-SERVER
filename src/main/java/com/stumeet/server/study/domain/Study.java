@@ -47,7 +47,7 @@ public class Study {
 
 	public static Study create(StudyCreateCommand command) {
 		return Study.builder()
-			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
+			.studyDomain(StudyDomain.of(StudyField.fromName(command.studyField()), command.studyTags()))
 			.name(command.name())
 			.intro(command.intro())
 			.rule(command.rule())
@@ -66,7 +66,7 @@ public class Study {
 	public static Study updateInfo(StudyUpdateCommand command, Study existingStudy) {
 		return Study.builder()
 			.id(existingStudy.getId())
-			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
+			.studyDomain(StudyDomain.of(StudyField.fromName(command.studyField()), command.studyTags()))
 			.name(command.name())
 			.intro(command.intro())
 			.rule(command.rule())

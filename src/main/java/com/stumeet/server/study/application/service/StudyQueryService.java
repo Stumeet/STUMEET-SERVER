@@ -8,9 +8,12 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.adapter.in.web.response.JoinedStudiesResponse;
 import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
+import com.stumeet.server.study.application.port.in.command.GetJoinedStudyCommand;
 import com.stumeet.server.study.application.port.out.StudyQueryPort;
 import com.stumeet.server.study.application.port.in.mapper.StudyUseCaseMapper;
 import com.stumeet.server.study.domain.Study;
+import com.stumeet.server.study.domain.StudyStatus;
+import com.stumeet.server.study.domain.exception.StudyStatusNotExistsException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,8 +32,20 @@ public class StudyQueryService implements StudyQueryUseCase {
 	}
 
 	@Override
-	public JoinedStudiesResponse getJoinedStudies(Long memberId) {
-		List<Study> involvedStudies = studyQueryPort.getMemberRecentStudies(memberId);
-		return studyUseCaseMapper.toMyStudiesResponse(involvedStudies);
+	public JoinedStudiesResponse getJoinedStudiesByStatus(GetJoinedStudyCommand command) {
+		StudyStatus status = command.studyStatus();
+
+		switch (status) {
+			case ACTIVE -> {
+				List<Study> activeJoinedStudies = studyQueryPort.getMemberRecentActiveStudies(command.memberId());
+				return studyUseCaseMapper.toMyStudiesResponse(activeJoinedStudies);
+			}
+
+			// case FINISHED -> {
+			//
+			// }
+
+			default -> throw new StudyStatusNotExistsException(status.name());
+		}
 	}
 }

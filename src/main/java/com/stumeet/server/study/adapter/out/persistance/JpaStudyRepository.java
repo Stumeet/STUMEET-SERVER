@@ -13,6 +13,8 @@ public interface JpaStudyRepository extends JpaRepository<StudyJpaEntity, Long> 
 	@Query("SELECT s "
 		+ "FROM StudyJpaEntity s "
 		+ "WHERE s.id "
-		+ "IN (SELECT sm.study.id FROM StudyMemberJpaEntity sm WHERE sm.member.id = :memberId ORDER BY sm.createdAt desc)")
-	List<StudyJpaEntity> findAllByMemberIdOrderByJoinedDate(@Param("memberId") Long memberId);
+		+ "IN (SELECT sm.study.id FROM StudyMemberJpaEntity sm WHERE sm.member.id = :memberId ORDER BY sm.createdAt desc) "
+		+ "AND s.isFinished = false "
+		+ "AND s.isDeleted = false")
+	List<StudyJpaEntity> findActivesByMemberIdOrderByJoinedDate(@Param("memberId") Long memberId);
 }
