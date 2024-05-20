@@ -10,21 +10,25 @@ import lombok.Getter;
 @Getter
 public class StudyPeriod {
 
-	private LocalDate startDate;
+	private final LocalDate startDate;
 
 	private LocalDate endDate;
 
 	private StudyPeriod(LocalDate startDate, LocalDate endDate) {
-		validate(startDate, endDate);
+		validateDateRange(startDate, endDate);
 
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
 
-	private void validate(LocalDate startDate, LocalDate endDate) {
-		if (startDate.isAfter(endDate) || startDate.isEqual(endDate)) {
+	private void validateDateRange(LocalDate startDate, LocalDate endDate) {
+		if (isInvalidDateRange(startDate, endDate)) {
 			throw new BadRequestException(ErrorCode.INVALID_STUDY_PERIOD_EXCEPTION);
 		}
+	}
+
+	private boolean isInvalidDateRange(LocalDate startDate, LocalDate endDate) {
+		return startDate.isEqual(endDate) || startDate.isAfter(endDate);
 	}
 
 	public static StudyPeriod of(LocalDate startDate, LocalDate endDate) {
