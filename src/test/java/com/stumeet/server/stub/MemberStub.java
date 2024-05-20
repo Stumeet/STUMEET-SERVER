@@ -104,7 +104,7 @@ public class MemberStub {
         return 1L;
     }
 
-    public static Long getInvalidStudyId() {
+    public static Long getInvalidMemberId() {
         return 0L;
     }
 }

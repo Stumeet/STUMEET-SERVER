@@ -1,7 +1,13 @@
 package com.stumeet.server.activity.domain.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public abstract class Activity {
 
     private Long id;

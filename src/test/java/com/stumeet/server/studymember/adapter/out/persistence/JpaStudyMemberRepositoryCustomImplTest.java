@@ -56,7 +56,7 @@ class JpaStudyMemberRepositoryCustomImplTest extends IntegrationTest {
         void notStudyJoinMemberTest() {
             boolean want = false;
             Long studyId = StudyStub.getStudyId();
-            Long memberId = MemberStub.getInvalidStudyId();
+            Long memberId = MemberStub.getInvalidMemberId();
 
             boolean got = studyMemberRepositoryCustom.isStudyJoinMember(studyId, memberId);
 

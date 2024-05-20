@@ -41,3 +41,7 @@ oauth:
       url: http://localhost:8089
     kakao:
       url: http://localhost:8089
+
+presigned:
+  url:
+    expired-time: 3600

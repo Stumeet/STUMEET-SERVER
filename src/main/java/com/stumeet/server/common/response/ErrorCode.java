@@ -28,7 +28,8 @@ public enum ErrorCode {
     INVALID_FILE_NAME_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 이름입니다."),
     INVALID_FILE_CONTENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 컨텐트 타입 입니다."),
     INVALID_FILE_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 파일 확장자입니다."),
-
+  
+    INVALID_ACTIVITY_CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 활동 카테고리입니다."),
     INVALID_STUDY_PERIOD_EXCEPTION(HttpStatus.BAD_REQUEST, "종료일이 시작일보다 빠릅니다."),
     START_DATE_NOT_YET_EXCEPTION(HttpStatus.BAD_REQUEST, "시작일 전에 스터디를 완료할 수 없습니다."),
 
