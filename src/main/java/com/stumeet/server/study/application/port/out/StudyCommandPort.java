@@ -6,5 +6,7 @@ public interface StudyCommandPort {
 
 	Study save(Study study);
 
+	void update(Study study);
+
 	void delete(Long studyId);
 }
