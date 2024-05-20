@@ -21,6 +21,7 @@ public class StudyUseCaseMapper {
 			.region(study.getRegion())
 			.intro(study.getIntro())
 			.rule(study.getRule())
+			.headcount(study.getHeadcount())
 			.startDate(study.getStartDate())
 			.endDate(study.getEndDate())
 			.image(study.getImageUrl())
