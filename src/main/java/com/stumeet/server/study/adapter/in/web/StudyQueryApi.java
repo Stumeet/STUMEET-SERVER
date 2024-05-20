@@ -32,7 +32,7 @@ public class StudyQueryApi {
 		return ResponseEntity.ok(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
 	}
 
-	@GetMapping("/involved")
+	@GetMapping("/joined")
 	public ResponseEntity<ApiResponse<JoinedStudiesResponse>> getStudiesInvolved(
 		@AuthenticationPrincipal LoginMember member
 	) {
