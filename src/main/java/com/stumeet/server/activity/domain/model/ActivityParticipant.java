@@ -1,6 +1,9 @@
 package com.stumeet.server.activity.domain.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
@@ -14,4 +17,10 @@ public class ActivityParticipant {
     private ActivityMember member;
 
     private ActivityStatus status;
+
+    public static ActivityParticipant makeNotJoinedMember() {
+        return ActivityParticipant.builder()
+                .status(NotJoinedStatus.NOT_JOINED)
+                .build();
+    }
 }
