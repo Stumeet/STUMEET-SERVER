@@ -1,5 +1,7 @@
 package com.stumeet.server.study.domain;
 
+import com.stumeet.server.common.exception.model.InvalidStateException;
+import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.study.application.port.in.command.StudyCreateCommand;
 import com.stumeet.server.study.application.port.in.command.StudyUpdateCommand;
 
@@ -82,6 +84,19 @@ public class Study {
 
 	public boolean isStudyTagChanged(List<String> studyTags) {
 		return !getStudyTags().equals(studyTags);
+	}
+
+	public void finish(LocalDate today) {
+		validateFinishPossible(today);
+
+		period.determineEndDate(today);
+		this.isFinished = true;
+	}
+
+	private void validateFinishPossible(LocalDate today) {
+		if (period.isBeforeStartDate(today)) {
+			throw new InvalidStateException(ErrorCode.START_DATE_NOT_YET_EXCEPTION);
+		}
 	}
 
 	public String getStudyFieldName() {
