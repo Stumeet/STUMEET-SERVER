@@ -1,5 +1,7 @@
 package com.stumeet.server.study.adapter.out.persistance;
 
+import java.util.List;
+
 import com.stumeet.server.common.annotation.PersistenceAdapter;
 import com.stumeet.server.study.adapter.out.persistance.entity.StudyJpaEntity;
 import com.stumeet.server.study.adapter.out.persistance.mapper.StudyPersistenceMapper;
@@ -24,6 +26,13 @@ public class StudyPersistenceAdapter implements StudyQueryPort, StudyValidationP
 				.orElseThrow(() -> new StudyNotExistsException(id));
 
 		return studyPersistenceMapper.toDomain(entity);
+	}
+
+	@Override
+	public List<Study> getMemberRecentStudies(Long memberId) {
+		List<StudyJpaEntity> involvedStudies = studyRepository.findAllByMemberIdOrderByJoinedDate(memberId);
+
+		return studyPersistenceMapper.toDomains(involvedStudies);
 	}
 
 	@Override

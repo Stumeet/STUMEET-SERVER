@@ -31,6 +31,7 @@ public class StudyMemberJoinService implements StudyMemberJoinUseCase {
 
         StudyMember studyMember = studyMemberUseCaseMapper.toDomain(command);
 
+        // todo: headcount 검사 및 인원 수 증가 로직 추가 필요
         studyMemberJoinPort.join(studyMember);
     }
 }
