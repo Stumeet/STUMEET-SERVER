@@ -2,7 +2,6 @@ package com.stumeet.server.activity.adapter.in;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.common.response.ErrorCode;
-import com.stumeet.server.common.response.SuccessCode;
 import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.stub.ActivityStub;
 import com.stumeet.server.stub.StudyStub;
@@ -17,7 +16,6 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.requestHe
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -25,18 +23,17 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class ActivityQueryApiTest extends ApiTest {
+class ActivityParticipantQueryApiTest extends ApiTest {
 
     @Nested
-    @DisplayName("활동 단일 조회")
-    class GetById {
+    @DisplayName("활동 참여자 리스트 조회")
+    class FindAllByActivityId {
 
-        private static final String PATH = "/api/v1/studies/{studyId}/activities/{activityId}";
-
+        private static final String PATH = "/api/v1/studies/{studyId}/activities/{activityId}/members";
 
         @Test
         @WithMockMember
-        @DisplayName("[성공] 스터디 활동 단일 조회에 성공합니다.")
+        @DisplayName("[성공] 활동 참여자 리스트를 조회한다.")
         void successTest() throws Exception {
             Long studyId = StudyStub.getStudyId();
             Long activityId = ActivityStub.getActivityId();
@@ -44,8 +41,7 @@ class ActivityQueryApiTest extends ApiTest {
             mockMvc.perform(get(PATH, studyId, activityId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.message").value(SuccessCode.GET_SUCCESS.getMessage()))
-                    .andDo(document("get-activity-by-id/success",
+                    .andDo(document("get-activity-participants/success",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
@@ -58,37 +54,26 @@ class ActivityQueryApiTest extends ApiTest {
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
                                     fieldWithPath("message").description("응답 메시지"),
-                                    fieldWithPath("data.id").description("활동 ID"),
-                                    fieldWithPath("data.title").description("활동 제목"),
-                                    fieldWithPath("data.content").description("활동 내용"),
-                                    fieldWithPath("data.imageUrl[].id").description("활동 이미지의 아이디"),
-                                    fieldWithPath("data.imageUrl[].imageUrl").description("활동 이미지의 URL"),
-                                    fieldWithPath("data.author.memberId").description("활동 작성자 ID"),
-                                    fieldWithPath("data.author.name").description("활동 작성자 이름"),
-                                    fieldWithPath("data.author.profileImageUrl").description("활동 작성자 프로필 이미지 URL"),
-                                    fieldWithPath("data.participants[].memberId").description("참여자 ID"),
+                                    fieldWithPath("data.participants[].id").description("참여자 ID"),
                                     fieldWithPath("data.participants[].name").description("참여자 이름"),
                                     fieldWithPath("data.participants[].profileImageUrl").description("참여자 프로필 이미지 URL"),
-                                    fieldWithPath("data.status").description("나의 활동 상태"),
-                                    fieldWithPath("data.startDate").description("활동 시작일"),
-                                    fieldWithPath("data.endDate").description("활동 종료일"),
-                                    fieldWithPath("data.createdAt").description("활동 생성일")
-                            )
-                    ));
+                                    fieldWithPath("data.participants[].status").description("참여자 상태")
+                            )));
+
         }
 
         @Test
         @WithMockMember
         @DisplayName("[실패] 스터디가 존재하지 않는 경우 예외가 발생합니다.")
-        void studyNotFoundTest() throws Exception {
-            Long studyId = StudyStub.getInvalidStudyId();
+        void notFoundStudyTest() throws Exception {
+            Long invalidStudyId = StudyStub.getInvalidStudyId();
             Long activityId = ActivityStub.getActivityId();
 
-            mockMvc.perform(get(PATH, studyId, activityId)
+            mockMvc.perform(get(PATH, invalidStudyId, activityId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.message").value(ErrorCode.STUDY_NOT_FOUND.getMessage()))
-                    .andDo(document("get-activity-by-id/fail/study-not-found",
+                    .andDo(document("get-activity-participants/fail/not-found-study",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
@@ -101,36 +86,7 @@ class ActivityQueryApiTest extends ApiTest {
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
                                     fieldWithPath("message").description("응답 메시지")
-                            )
-                    ));
-        }
-
-        @Test
-        @WithMockMember(id = 3L)
-        @DisplayName("[실패] 스터디에 가입하지 않은 사용자인 경우 예외가 발생합니다.")
-        void notJoinedStudyTest() throws Exception {
-            Long studyId = StudyStub.getStudyId();
-            Long activityId = ActivityStub.getActivityId();
-
-            mockMvc.perform(get(PATH, studyId, activityId)
-                    .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
-                    .andExpect(status().isForbidden())
-                    .andExpect(jsonPath("$.message").value(ErrorCode.STUDY_MEMBER_NOT_JOINED_EXCEPTION.getMessage()))
-                    .andDo(document("get-activity-by-id/fail/not-joined-study",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
-                            ),
-                            pathParameters(
-                                    parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("activityId").description("활동 ID")
-                            ),
-                            responseFields(
-                                    fieldWithPath("code").description("응답 코드"),
-                                    fieldWithPath("message").description("응답 메시지")
-                            )
-                    ));
+                            )));
         }
 
         @Test
@@ -138,13 +94,13 @@ class ActivityQueryApiTest extends ApiTest {
         @DisplayName("[실패] 활동이 존재하지 않는 경우 예외가 발생합니다.")
         void notFoundActivityTest() throws Exception {
             Long studyId = StudyStub.getStudyId();
-            Long activityId = ActivityStub.getInvalidActivityId();
+            Long invalidActivityId = ActivityStub.getInvalidActivityId();
 
-            mockMvc.perform(get(PATH, studyId, activityId)
-                    .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
+            mockMvc.perform(get(PATH, studyId, invalidActivityId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.message").value(ErrorCode.ACTIVITY_NOT_FOUND.getMessage()))
-                    .andDo(document("get-activity-by-id/fail/activity-not-found",
+                    .andDo(document("get-activity-participants/fail/not-found-activity",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
@@ -157,8 +113,8 @@ class ActivityQueryApiTest extends ApiTest {
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
                                     fieldWithPath("message").description("응답 메시지")
-                            )
-                    ));
+                            )));
         }
+
     }
 }

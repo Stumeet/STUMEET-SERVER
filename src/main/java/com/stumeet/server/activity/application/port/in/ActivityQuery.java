@@ -1,7 +1,7 @@
-package com.stumeet.server.activity.application.port.out;
+package com.stumeet.server.activity.application.port.in;
 
 import com.stumeet.server.activity.domain.model.Activity;
 
-public interface ActivityQueryPort {
+public interface ActivityQuery {
     Activity getById(Long activityId);
 }

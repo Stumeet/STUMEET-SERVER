@@ -1,8 +1,6 @@
 package com.stumeet.server.stub;
 
-import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
-import com.stumeet.server.activity.adapter.in.response.ActivityImageResponse;
-import com.stumeet.server.activity.adapter.in.response.ActivityParticipantSimpleResponse;
+import com.stumeet.server.activity.adapter.in.response.*;
 import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.domain.model.*;
@@ -123,10 +121,29 @@ public class ActivityStub {
         );
     }
 
+    public static ActivityParticipantStatusResponses getActivityParticipantStatusResponses() {
+        return ActivityParticipantStatusResponses.builder()
+                .participants(List.of(
+                        ActivityParticipantStatusResponse.builder()
+                                .id(getAuthor().getId())
+                                .name(getAuthor().getName())
+                                .profileImageUrl(getAuthor().getImage())
+                                .status(DefaultStatus.NONE.getDescription())
+                                .build(),
+                        ActivityParticipantStatusResponse.builder()
+                                .id(getParticipant().getId())
+                                .name(getParticipant().getName())
+                                .profileImageUrl(getParticipant().getImage())
+                                .status(DefaultStatus.NONE.getDescription())
+                                .build()
+                ))
+                .build();
+    }
+
     public static ActivityMember getParticipant() {
         Member member = MemberStub.getStudyJoinMember();
         return ActivityMember.builder()
-                .id(MemberStub.getMemberId())
+                .id(MemberStub.getStudyMemberId())
                 .name(member.getName())
                 .image(member.getImage())
                 .build();

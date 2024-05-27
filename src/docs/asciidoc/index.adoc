@@ -488,4 +488,26 @@ include::{snippets}/get-activity-by-id/fail/study-not-found/response-fields.adoc
 include::{snippets}/get-activity-by-id/fail/activity-not-found/response-body.adoc[]
 include::{snippets}/get-activity-by-id/fail/activity-not-found/response-fields.adoc[]
 
+=== 스터디 활동에 참여중인 멤버 조회
 
+스터디 활동에 참여중인 멤버를 조회하는 API입니다.
+
+==== GET /api/v1/studies/{studyId}/activities/{activityId}/members
+
+===== 요청
+include::{snippets}/get-activity-participants/success/http-request.adoc[]
+include::{snippets}/get-activity-participants/success/path-parameters.adoc[]
+include::{snippets}/get-activity-participants/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-participants/success/response-body.adoc[]
+include::{snippets}/get-activity-participants/success/response-fields.adoc[]
+
+===== 응답 실패(404)
+.존재하지 않는 스터디를 전달한 경우
+include::{snippets}/get-activity-participants/fail/not-found-study/response-body.adoc[]
+include::{snippets}/get-activity-participants/fail/not-found-study/response-fields.adoc[]
+
+.존재하지 않는 활동을 전달한 경우
+include::{snippets}/get-activity-participants/fail/not-found-activity/response-body.adoc[]
+include::{snippets}/get-activity-participants/fail/not-found-activity/response-fields.adoc[]
