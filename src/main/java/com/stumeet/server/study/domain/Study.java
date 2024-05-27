@@ -19,7 +19,7 @@ import lombok.Getter;
 @Getter
 public class Study {
 
-	private static final int INITIAL_STUDY_HEAD_COUNT = 1;
+	private static final int INITIAL_STUDY_HEAD_COUNT = 0;
 
 	private Long id;
 
@@ -35,6 +35,8 @@ public class Study {
 
 	private String rule;
 
+	private Integer headcount;
+
 	private StudyPeriod period;
 
 	private String imageUrl;
@@ -45,11 +47,12 @@ public class Study {
 
 	public static Study create(StudyCreateCommand command) {
 		return Study.builder()
-			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
+			.studyDomain(StudyDomain.of(StudyField.fromName(command.studyField()), command.studyTags()))
 			.name(command.name())
 			.intro(command.intro())
 			.rule(command.rule())
 			.region(command.region())
+			.headcount(INITIAL_STUDY_HEAD_COUNT)
 			.period(StudyPeriod.of(command.startDate(), command.endDate()))
 			.meetingSchedule(
 				StudyMeetingSchedule.of(
@@ -60,14 +63,15 @@ public class Study {
 			.build();
 	}
 
-	public static Study update(StudyUpdateCommand command, Study existingStudy) {
+	public static Study updateInfo(StudyUpdateCommand command, Study existingStudy) {
 		return Study.builder()
 			.id(existingStudy.getId())
-			.studyDomain(StudyDomain.of(StudyField.getByName(command.studyField()), command.studyTags()))
+			.studyDomain(StudyDomain.of(StudyField.fromName(command.studyField()), command.studyTags()))
 			.name(command.name())
 			.intro(command.intro())
 			.rule(command.rule())
 			.region(command.region())
+			.headcount(existingStudy.headcount)
 			.period(StudyPeriod.of(command.startDate(), command.endDate()))
 			.meetingSchedule(
 				StudyMeetingSchedule.of(

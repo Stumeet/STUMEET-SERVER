@@ -34,7 +34,7 @@ public class StudyUpdateService implements StudyUpdateUseCase {
 		validateMemberCanUpdate(studyId, memberId);
 
 		Study existingStudy = studyQueryPort.getById(studyId);
-		Study updatedStudy = Study.update(command, existingStudy);
+		Study updatedStudy = Study.updateInfo(command, existingStudy);
 		studyCommandPort.save(updatedStudy);
 		studyImageUpdateUseCase.updateMainImage(studyId, mainImageFile);
 

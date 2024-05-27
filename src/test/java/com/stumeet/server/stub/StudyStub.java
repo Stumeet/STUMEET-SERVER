@@ -170,4 +170,8 @@ public class StudyStub {
 			List.of("영어", "회화", "언어 교환", "어학")
 		);
 	}
+
+	public static String getInvalidStudyStatus() {
+		return "INVALID_STUDY_STATUS";
+	}
 }
