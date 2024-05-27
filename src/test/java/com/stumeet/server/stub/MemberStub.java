@@ -21,8 +21,12 @@ public class MemberStub {
         return 2L;
     }
 
-    public static Long getNotStudyMemberId() {
+    public static Long getNotJoinStudyMemberId() {
         return 3L;
+    }
+
+    public static Long getNotJoinActivityMemberId() {
+        return 4L;
     }
 
     public static String getKakaoAccessTokenInfo() {
@@ -106,5 +110,22 @@ public class MemberStub {
 
     public static Long getInvalidMemberId() {
         return 0L;
+    }
+
+    public static Member getStudyJoinMember() {
+        MemberLevel level = MemberLevel.builder()
+                .tier(MemberTier.SEED)
+                .experience(0.0)
+                .build();
+        return Member.builder()
+                .id(2L)
+                .name("test2")
+                .role(UserRole.MEMBER)
+                .authType(AuthType.OAUTH)
+                .level(level)
+                .profession(ProfessionStub.getProfession())
+                .region("서울")
+                .image(FileStub.getFileUrl().url())
+                .build();
     }
 }

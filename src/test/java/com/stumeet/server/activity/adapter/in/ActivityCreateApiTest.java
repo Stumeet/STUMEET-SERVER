@@ -1,7 +1,6 @@
 package com.stumeet.server.activity.adapter.in;
 
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
-import com.stumeet.server.activity.domain.exception.NotExistsActivityCategoryException;
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.helper.WithMockMember;

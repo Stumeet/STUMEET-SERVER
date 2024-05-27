@@ -57,6 +57,7 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 멤버 입니다."),
     STUDY_FIELD_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 분야 입니다."),
     STUDY_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 상태 입니다."),
+    ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 입니다."),
 
     /*
         500 - INTERNAL SERVER ERROR

@@ -13,10 +13,15 @@ public enum MeetStatus implements ActivityStatus {
     TARDINESS("지각")
     ;
 
-    private final String status;
+    private final String description;
 
     @Override
     public String getStatus() {
         return this.name();
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }
