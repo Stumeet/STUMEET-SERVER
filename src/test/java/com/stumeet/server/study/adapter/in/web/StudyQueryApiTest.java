@@ -101,8 +101,12 @@ class StudyQueryApiTest extends ApiTest {
 				.andDo(document("get-joined-studies/success",
 					preprocessRequest(prettyPrint()),
 					preprocessResponse(prettyPrint()),
-					requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
-						"서버로부터 전달받은 액세스 토큰")),
+					requestHeaders(
+						headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+					),
+					queryParameters(
+						parameterWithName("status").description("스터디 상태")
+					),
 					responseFields(
 						fieldWithPath("code").description("응답 상태"),
 						fieldWithPath("message").description("응답 메시지"),
@@ -129,8 +133,12 @@ class StudyQueryApiTest extends ApiTest {
 				.andDo(document("get-joined-studies/fail/study-status-not-found",
 					preprocessRequest(prettyPrint()),
 					preprocessResponse(prettyPrint()),
-					requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
-						"서버로부터 전달받은 액세스 토큰")),
+					requestHeaders(
+						headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+					),
+					queryParameters(
+						parameterWithName("status").description("스터디 상태 (`ACTIVE` / `FINISHED`)")
+					),
 					responseFields(
 						fieldWithPath("code").description("응답 상태"),
 						fieldWithPath("message").description("응답 메시지")
