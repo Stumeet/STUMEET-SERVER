@@ -222,6 +222,27 @@ include::{snippets}/get-study-detail/fail/not-found/response-body.adoc[]
 include::{snippets}/get-study-detail/fail/not-found/response-fields.adoc[]
 
 
+=== 가입 스터디 리스트 조회
+
+사용자가 가입된 스터디 리스트를 조회하는 API입니다.
+
+==== GET /api/v1/studies
+
+===== 요청
+include::{snippets}/get-joined-studies/success/http-request.adoc[]
+include::{snippets}/get-joined-studies/success/request-headers.adoc[]
+include::{snippets}/get-joined-studies/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-joined-studies/success/response-body.adoc[]
+include::{snippets}/get-joined-studies/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 상태로 요청한 경우
+include::{snippets}/get-joined-studies/fail/study-status-not-found/response-body.adoc[]
+include::{snippets}/get-joined-studies/fail/study-status-not-found/response-fields.adoc[]
+
+
 === 스터디 생성
 
 스터디를 생성하는 API 입니다.
