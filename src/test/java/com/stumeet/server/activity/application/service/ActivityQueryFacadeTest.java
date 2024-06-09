@@ -51,13 +51,13 @@ class ActivityQueryFacadeTest extends UnitTest {
     private ActivityParticipantQuery activityParticipantQuery;
 
     @Spy
-    private ActivityUseCaseMapper activityUseCaseMapper = new ActivityUseCaseMapper();
-
-    @Spy
     private ActivityImageUseCaseMapper activityImageUseCaseMapper = new ActivityImageUseCaseMapper();
 
     @Spy
     private ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper = new ActivityParticipantUseCaseMapper();
+
+    @Spy
+    private ActivityUseCaseMapper activityUseCaseMapper = new ActivityUseCaseMapper(activityParticipantUseCaseMapper);
 
     @Nested
     @DisplayName("활동 단일 조회")

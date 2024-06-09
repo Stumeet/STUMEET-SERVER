@@ -72,6 +72,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     fieldWithPath("data.status").description("나의 활동 상태"),
                                     fieldWithPath("data.startDate").description("활동 시작일"),
                                     fieldWithPath("data.endDate").description("활동 종료일"),
+                                    fieldWithPath("data.location").description("장소"),
                                     fieldWithPath("data.createdAt").description("활동 생성일")
                             )
                     ));
