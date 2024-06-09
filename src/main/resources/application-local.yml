@@ -52,3 +52,7 @@ oauth:
 presigned:
   url:
     expired-time: 3600
+
+#logging:
+#  level:
+#    root: debug
