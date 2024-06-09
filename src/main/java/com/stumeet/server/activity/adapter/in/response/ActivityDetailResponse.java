@@ -16,6 +16,7 @@ public record ActivityDetailResponse(
         String status,
         LocalDateTime startDate,
         LocalDateTime endDate,
+        String location,
         LocalDateTime createdAt
 
 ) {

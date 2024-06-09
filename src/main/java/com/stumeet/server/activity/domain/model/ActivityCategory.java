@@ -51,8 +51,8 @@ public enum ActivityCategory {
                     .isNotice(command.isNotice())
                     .startDate(command.startDate())
                     .endDate(command.endDate())
-                    .createdAt(command.createdAt())
                     .location(command.location())
+                    .createdAt(command.createdAt())
                     .build();
         }
     },

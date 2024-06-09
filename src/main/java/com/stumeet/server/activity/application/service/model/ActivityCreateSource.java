@@ -16,8 +16,8 @@ public record ActivityCreateSource(
         boolean isNotice,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        LocalDateTime createdAt,
-        String location
+        String location,
+        LocalDateTime createdAt
 ) {
     @Builder
     public record ActivityMemberCreateSource(

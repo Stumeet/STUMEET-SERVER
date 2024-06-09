@@ -28,6 +28,8 @@ public abstract class Activity {
 
     private LocalDateTime endDate;
 
+    private String location;
+
     private LocalDateTime createdAt;
 
 }

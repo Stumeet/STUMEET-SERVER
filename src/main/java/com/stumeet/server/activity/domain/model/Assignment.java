@@ -8,6 +8,6 @@ public class Assignment extends Activity {
 
     @Builder
     protected Assignment(Long id, ActivityLinkedStudy study, ActivityMember author, ActivityCategory category, String title, String content, boolean isNotice, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt) {
-        super(id, study, author, category, title, content, isNotice, startDate, endDate, createdAt);
+        super(id, study, author, category, title, content, isNotice, startDate, endDate, null, createdAt);
     }
 }
