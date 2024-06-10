@@ -105,7 +105,7 @@ class StudyQueryApiTest extends ApiTest {
 						headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
 					),
 					queryParameters(
-						parameterWithName("status").description("스터디 상태")
+						parameterWithName("status").description("스터디 상태 (ACTIVE/FINISHED)")
 					),
 					responseFields(
 						fieldWithPath("code").description("응답 상태"),
@@ -137,7 +137,7 @@ class StudyQueryApiTest extends ApiTest {
 						headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
 					),
 					queryParameters(
-						parameterWithName("status").description("스터디 상태: ACTIVE, FINISHED")
+						parameterWithName("status").description("스터디 상태 (ACTIVE/FINISHED)")
 					),
 					responseFields(
 						fieldWithPath("code").description("응답 상태"),
