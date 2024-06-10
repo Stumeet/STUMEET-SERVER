@@ -68,6 +68,10 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
 
 	@Override
 	public ActivityListDetailedPageResponses getDetails(ActivityListDetailedQuery query) {
+		if (query.studyId() != null) {
+			studyValidationUseCase.checkById(query.studyId());
+		}
+
 		Page<Activity> activities = activityQuery.getDetailsByCondition(
 				PageRequest.of(query.page(), query.size()),
 				query.isNotice(),
