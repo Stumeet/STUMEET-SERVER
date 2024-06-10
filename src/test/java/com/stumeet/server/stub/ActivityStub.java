@@ -190,6 +190,7 @@ public class ActivityStub {
     public static ActivityDetailResponse getActivityDetailResponse() {
         return ActivityDetailResponse.builder()
                 .id(1L)
+                .category("DEFAULT")
                 .title("title")
                 .content("content")
                 .author(getAuthorResponse())
@@ -204,6 +205,7 @@ public class ActivityStub {
     public static ActivityDetailResponse getActivityDetailResponseForNotJoinedUser() {
         return ActivityDetailResponse.builder()
                 .id(1L)
+                .category("DEFAULT")
                 .title("title")
                 .content("content")
                 .author(getAuthorResponse())
@@ -214,5 +216,9 @@ public class ActivityStub {
                 .location(null)
                 .status(NotJoinedStatus.NOT_JOINED.getDescription())
                 .build();
+    }
+
+    public static String getInvalidActivityCategoryName() {
+        return "INVALID";
     }
 }
