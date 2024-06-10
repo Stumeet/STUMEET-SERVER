@@ -59,6 +59,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     fieldWithPath("code").description("응답 코드"),
                                     fieldWithPath("message").description("응답 메시지"),
                                     fieldWithPath("data.id").description("활동 ID"),
+                                    fieldWithPath("data.category").description("활동 유형"),
                                     fieldWithPath("data.title").description("활동 제목"),
                                     fieldWithPath("data.content").description("활동 내용"),
                                     fieldWithPath("data.imageUrl[].id").description("활동 이미지의 아이디"),

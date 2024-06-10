@@ -52,6 +52,7 @@ public class ActivityUseCaseMapper {
 	) {
 		return ActivityDetailResponse.builder()
 				.id(activity.getId())
+				.category(activity.getCategory().name())
 				.title(activity.getTitle())
 				.content(activity.getContent())
 				.imageUrl(activityImages)
@@ -68,7 +69,7 @@ public class ActivityUseCaseMapper {
 	public ActivityListDetailedPageResponse toListDetailResponse(Activity activity) {
 		return ActivityListDetailedPageResponse.builder()
 				.id(activity.getId())
-				.category(activity.getCategory())
+				.category(activity.getCategory().name())
 				.title(activity.getTitle())
 				.content(activity.getContent())
 				.startDate(activity.getStartDate())

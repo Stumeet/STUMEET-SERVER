@@ -8,6 +8,7 @@ import java.util.List;
 
 public record ActivityDetailResponse(
         Long id,
+        String category,
         String title,
         String content,
         List<ActivityImageResponse> imageUrl,
