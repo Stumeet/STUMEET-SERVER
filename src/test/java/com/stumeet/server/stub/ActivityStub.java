@@ -67,6 +67,7 @@ public class ActivityStub {
                 .isNotice(true)
                 .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
+                .location(null)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -189,6 +190,7 @@ public class ActivityStub {
     public static ActivityDetailResponse getActivityDetailResponse() {
         return ActivityDetailResponse.builder()
                 .id(1L)
+                .category("DEFAULT")
                 .title("title")
                 .content("content")
                 .author(getAuthorResponse())
@@ -196,12 +198,14 @@ public class ActivityStub {
                 .participants(List.of(getAuthorResponse(), getParticipantResponse()))
                 .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
+                .location(null)
                 .status(DefaultStatus.NONE.getDescription())
                 .build();
     }
     public static ActivityDetailResponse getActivityDetailResponseForNotJoinedUser() {
         return ActivityDetailResponse.builder()
                 .id(1L)
+                .category("DEFAULT")
                 .title("title")
                 .content("content")
                 .author(getAuthorResponse())
@@ -209,7 +213,12 @@ public class ActivityStub {
                 .participants(List.of(getAuthorResponse(), getParticipantResponse()))
                 .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
+                .location(null)
                 .status(NotJoinedStatus.NOT_JOINED.getDescription())
                 .build();
+    }
+
+    public static String getInvalidActivityCategoryName() {
+        return "INVALID";
     }
 }

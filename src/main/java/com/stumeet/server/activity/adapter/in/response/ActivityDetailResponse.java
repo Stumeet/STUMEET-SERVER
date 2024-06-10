@@ -8,6 +8,7 @@ import java.util.List;
 
 public record ActivityDetailResponse(
         Long id,
+        String category,
         String title,
         String content,
         List<ActivityImageResponse> imageUrl,
@@ -16,6 +17,7 @@ public record ActivityDetailResponse(
         String status,
         LocalDateTime startDate,
         LocalDateTime endDate,
+        String location,
         LocalDateTime createdAt
 
 ) {

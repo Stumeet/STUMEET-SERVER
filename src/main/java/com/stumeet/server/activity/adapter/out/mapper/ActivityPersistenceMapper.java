@@ -1,11 +1,16 @@
 package com.stumeet.server.activity.adapter.out.mapper;
 
+import java.util.List;
+
 import com.stumeet.server.activity.adapter.out.model.ActivityJpaEntity;
 import com.stumeet.server.activity.adapter.out.model.ActivityLinkedStudyJpaEntity;
 import com.stumeet.server.activity.adapter.out.model.ActivityMemberJpaEntity;
 import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.Meet;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,11 +31,20 @@ public class ActivityPersistenceMapper {
                 .isNotice(entity.isNotice())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
+                .location(entity.getLocation())
                 .createdAt(entity.getCreatedAt())
                 .location(entity.getLocation())
                 .build();
 
         return entity.getCategory().create(request);
+    }
+
+    public Page<Activity> toDomainPages(Page<ActivityJpaEntity> entities) {
+        List<Activity> domains = entities.stream()
+                .map(this::toDomain)
+                .toList();
+
+        return new PageImpl<>(domains, entities.getPageable(), entities.getTotalElements());
     }
 
     public ActivityJpaEntity toEntity(Activity domain) {

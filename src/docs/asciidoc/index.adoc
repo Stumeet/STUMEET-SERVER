@@ -470,6 +470,7 @@ include::{snippets}/create-activity/fail/invalid-request/response-fields.adoc[]
 .존재하지 않는 활동 카테고리로 요청한 경우
 include::{snippets}/create-activity/fail/not-exists-category/response-body.adoc[]
 include::{snippets}/create-activity/fail/not-exists-category/response-fields.adoc[]
+
 ===== 응답 실패 (403)
 .스터디의 관리자가 아닌 경우
 include::{snippets}/create-activity/fail/not-admin/response-body.adoc[]
@@ -479,6 +480,32 @@ include::{snippets}/create-activity/fail/not-admin/response-fields.adoc[]
 .존재하지 않는 스터디 ID를 요청한 경우
 include::{snippets}/create-activity/fail/not-exists-study/response-body.adoc[]
 include::{snippets}/create-activity/fail/not-exists-study/response-fields.adoc[]
+
+
+=== 스터디 활동 상세 목록 조회
+
+스터디 활동 상세 목록을 조회하는 API입니다.
+
+==== GET /api/v1/studies/activities/detail
+===== 요청
+include::{snippets}/get-activity-details-by-condition/success/http-request.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/request-headers.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-details-by-condition/success/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.유효하지 않은 활동 유형을 요청한 경우
+include::{snippets}/get-activity-details-by-condition/fail/activity-category-invalid/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/fail/activity-category-invalid/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/get-activity-details-by-condition/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/fail/study-not-found/response-fields.adoc[]
+
 
 === 스터디 활동 단일 조회
 
