@@ -1,8 +1,12 @@
 package com.stumeet.server.activity.adapter.in;
 
+import java.time.LocalDateTime;
+
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
+import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponses;
 import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageResponses;
 import com.stumeet.server.activity.application.port.in.ActivityQueryUseCase;
+import com.stumeet.server.activity.application.port.in.query.ActivityListBriefQuery;
 import com.stumeet.server.activity.application.port.in.query.ActivityListDetailedQuery;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
@@ -55,6 +59,33 @@ public class ActivityQueryApi {
 			.categoryName(category)
 			.build();
 		ActivityListDetailedPageResponses response = activityQueryUseCase.getDetails(query);
+
+		return ResponseEntity.status(HttpStatus.OK)
+			.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
+	}
+
+	@GetMapping("/studies/activities/brief")
+	public ResponseEntity<ApiResponse<ActivityListBriefResponses>> getBriefsByCondition(
+		@AuthenticationPrincipal LoginMember member,
+		@RequestParam(required = false) Integer size,
+		@RequestParam(required = false) Integer page,
+		@RequestParam(required = false) Boolean isNotice,
+		@RequestParam(required = false) Long studyId,
+		@RequestParam(required = false) String category,
+		@RequestParam(required = false) LocalDateTime fromDate,
+		@RequestParam(required = false) LocalDateTime toDate
+	) {
+		ActivityListBriefQuery query = ActivityListBriefQuery.builder()
+			.size(size)
+			.page(page)
+			.isNotice(isNotice)
+			.studyId(studyId)
+			.memberId(member.getId())
+			.categoryName(category)
+			.startDate(fromDate)
+			.endDate(toDate)
+			.build();
+		ActivityListBriefResponses response = activityQueryUseCase.getBriefs(query);
 
 		return ResponseEntity.status(HttpStatus.OK)
 			.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
