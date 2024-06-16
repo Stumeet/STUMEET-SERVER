@@ -19,6 +19,7 @@ public enum ErrorCode {
     INVALID_FORMAT_EXCEPTION(HttpStatus.BAD_REQUEST, "요청 값이 유효하지 않은 데이터입니다."),
     NOT_EXIST_EXCEPTION(HttpStatus.BAD_REQUEST, "요청으로 전달한 값이 존재하지 않습니다."),
     FILE_SIZE_LIMIT_EXCEEDED_EXCEPTION(HttpStatus.BAD_REQUEST, "첨부파일은 최대 5MB 까지 가능합니다."),
+    INVALID_PAGINATION_PARAMETERS_EXCEPTION(HttpStatus.BAD_REQUEST, "제공된 페이지네이션 매개변수가 유효하지 않습니다. 'page'와 'size' 매개변수를 함께 포함하거나 함께 생략해야 합니다."),
 
     DUPLICATE_NICKNAME_EXCEPTION(HttpStatus.BAD_REQUEST, "닉네임이 중복되었습니다."),
     NOT_MATCHED_TOKEN_EXCEPTION(HttpStatus.BAD_REQUEST, "요청으로 전달한 토큰과 매칭되는 토큰이 없습니다."),

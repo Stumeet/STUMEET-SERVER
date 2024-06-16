@@ -66,7 +66,7 @@ public class ActivityUseCaseMapper {
 				.build();
 	}
 
-	public ActivityListDetailedPageResponse toListDetailResponse(Activity activity) {
+	private ActivityListDetailedPageResponse toListDetailedPageResponse(Activity activity) {
 		return ActivityListDetailedPageResponse.builder()
 				.id(activity.getId())
 				.category(activity.getCategory().name())
@@ -86,7 +86,7 @@ public class ActivityUseCaseMapper {
 	) {
 		return ActivityListDetailedPageResponses.builder()
 				.items(activities.stream()
-						.map(this::toListDetailResponse)
+						.map(this::toListDetailedPageResponse)
 						.toList())
 				.pageInfo(pageInfoResponse)
 				.build();

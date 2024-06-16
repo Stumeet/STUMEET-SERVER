@@ -1,5 +1,9 @@
 package com.stumeet.server.activity.application.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponse;
 import com.stumeet.server.activity.application.port.in.ActivityQuery;
 import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.activity.domain.model.Activity;
@@ -31,5 +35,28 @@ public class ActivityQueryService implements ActivityQuery {
 			Long studyId,
 			ActivityCategory category) {
 		return activityQueryPort.getDetailPagesByCondition(pageable, isNotice, studyId, category);
+	}
+
+	@Override
+	public Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(
+		Pageable pageable,
+		Boolean isNotice,
+		Long memberId,
+		Long studyId,
+		ActivityCategory category,
+		LocalDateTime startDate,
+		LocalDateTime endDate) {
+		return activityQueryPort.getPaginatedBriefsByCondition(pageable, isNotice, memberId, studyId, category, startDate, endDate);
+	}
+
+	@Override
+	public List<ActivityListBriefResponse> getBriefsByCondition(
+			Boolean isNotice,
+			Long memberId,
+			Long studyId,
+			ActivityCategory category,
+			LocalDateTime startDate,
+			LocalDateTime endDate) {
+		return activityQueryPort.getBriefsByCondition(isNotice, memberId, studyId, category, startDate, endDate);
 	}
 }
