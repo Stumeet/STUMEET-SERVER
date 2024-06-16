@@ -3,8 +3,6 @@ package com.stumeet.server.common.exception.handler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.exception.model.BusinessException;
-import com.stumeet.server.common.exception.model.InvalidStateException;
-import com.stumeet.server.common.exception.model.NotExistsException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -91,12 +89,8 @@ public class GlobalExceptionHandler {
             .body(response);
     }
 
-    @ExceptionHandler({
-        BadRequestException.class,
-        // NotExistsException.class,
-        // InvalidStateException.class
-    })
-    protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BusinessException e) {
+    @ExceptionHandler(BadRequestException.class)
+    protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BadRequestException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         String message = String.format("%s %s", e.getErrorCode().getMessage(), e.getMessage());
