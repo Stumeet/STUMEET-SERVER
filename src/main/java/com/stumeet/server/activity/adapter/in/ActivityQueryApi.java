@@ -46,8 +46,14 @@ public class ActivityQueryApi {
 		@RequestParam(required = false) Long studyId,
 		@RequestParam(required = false) String category
 	) {
-		ActivityListDetailedQuery query =
-				ActivityListDetailedQuery.of(size, page, isNotice, member.getId(), studyId, category);
+		ActivityListDetailedQuery query = ActivityListDetailedQuery.builder()
+			.size(size)
+			.page(page)
+			.isNotice(isNotice)
+			.studyId(studyId)
+			.memberId(member.getId())
+			.categoryName(category)
+			.build();
 		ActivityListDetailedPageResponses response = activityQueryUseCase.getDetails(query);
 
 		return ResponseEntity.status(HttpStatus.OK)
