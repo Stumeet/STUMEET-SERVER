@@ -85,6 +85,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
 				.orderBy(orderByCategory(category))
+				.orderBy(activityJpaEntity.createdAt.desc())
 				.fetch();
 
 		JPAQuery<Long> countQuery = query
@@ -134,6 +135,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
 						dateBetweenByCategory(category, fromDate, toDate)
 				)
 				.orderBy(orderByCategory(category))
+				.orderBy(activityJpaEntity.createdAt.desc())
 				.fetch();
 	}
 
