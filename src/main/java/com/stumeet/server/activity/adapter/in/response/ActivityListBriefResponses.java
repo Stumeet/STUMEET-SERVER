@@ -5,8 +5,8 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record ActivityListDetailedPageResponses(
-        List<ActivityListDetailedPageResponse> items,
+public record ActivityListBriefResponses(
+        List<ActivityListBriefResponse> items,
         PageInfoResponse pageInfo
 ) {
 }

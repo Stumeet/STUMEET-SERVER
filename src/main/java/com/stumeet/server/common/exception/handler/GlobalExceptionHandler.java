@@ -1,14 +1,18 @@
 package com.stumeet.server.common.exception.handler;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.exception.model.BusinessException;
-import com.stumeet.server.common.exception.model.InvalidStateException;
-import com.stumeet.server.common.exception.model.NotExistsException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
+
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -61,6 +65,20 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<ApiResponse> handleConstraintViolationException(final ConstraintViolationException e) {
+        log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+
+        List<String> errors = e.getConstraintViolations().stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .collect(Collectors.toList());
+
+        ApiResponse response = ApiResponse.fail(HttpStatus.BAD_REQUEST.value(), String.join(", ", errors));
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
@@ -91,12 +109,8 @@ public class GlobalExceptionHandler {
             .body(response);
     }
 
-    @ExceptionHandler({
-        BadRequestException.class,
-        // NotExistsException.class,
-        // InvalidStateException.class
-    })
-    protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BusinessException e) {
+    @ExceptionHandler(BadRequestException.class)
+    protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BadRequestException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         String message = String.format("%s %s", e.getErrorCode().getMessage(), e.getMessage());

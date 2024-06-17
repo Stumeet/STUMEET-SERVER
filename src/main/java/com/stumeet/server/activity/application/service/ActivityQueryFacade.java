@@ -1,6 +1,8 @@
 package com.stumeet.server.activity.application.service;
 
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
+import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponse;
+import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponses;
 import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageResponses;
 import com.stumeet.server.activity.application.port.in.ActivityImageQuery;
 import com.stumeet.server.activity.application.port.in.ActivityParticipantQuery;
@@ -10,6 +12,7 @@ import com.stumeet.server.activity.application.port.in.mapper.ActivityImageUseCa
 import com.stumeet.server.activity.application.port.in.mapper.ActivityParticipantUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.PageInfoUseCaseMapper;
+import com.stumeet.server.activity.application.port.in.query.ActivityListBriefQuery;
 import com.stumeet.server.activity.application.port.in.query.ActivityListDetailedQuery;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityImage;
@@ -68,17 +71,53 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
 
 	@Override
 	public ActivityListDetailedPageResponses getDetails(ActivityListDetailedQuery query) {
-		if (query.studyId() != null) {
-			studyValidationUseCase.checkById(query.studyId());
+		if (query.getStudyId() != null) {
+			studyValidationUseCase.checkById(query.getStudyId());
 		}
 
 		Page<Activity> activities = activityQuery.getDetailsByCondition(
-				PageRequest.of(query.page(), query.size()),
-				query.isNotice(),
-				query.studyId(),
-				query.category());
+				PageRequest.of(query.getPage(), query.getSize()),
+				query.getIsNotice(),
+				query.getStudyId(),
+				query.getCategory());
 
 		return activityUseCaseMapper
 				.toListDetailedPageResponses(activities, pageInfoUseCaseMapper.toPageInfoResponse(activities));
+	}
+
+	@Override
+	public ActivityListBriefResponses getBriefs(ActivityListBriefQuery query) {
+		if (query.getStudyId() != null) {
+			studyValidationUseCase.checkById(query.getStudyId());
+		}
+
+		if (query.isPaginationRequest()) {
+			Page<ActivityListBriefResponse> activities = activityQuery.getPaginatedBriefsByCondition(
+					PageRequest.of(query.getPage(), query.getSize()),
+					query.getIsNotice(),
+					query.getMemberId(),
+					query.getStudyId(),
+					query.getCategory(),
+					query.getFromDate(),
+					query.getToDate());
+
+			return ActivityListBriefResponses.builder()
+					.items(activities.toList())
+					.pageInfo(pageInfoUseCaseMapper.toPageInfoResponse(activities))
+					.build();
+		} else {
+			List<ActivityListBriefResponse> activities = activityQuery.getBriefsByCondition(
+					query.getIsNotice(),
+					query.getMemberId(),
+					query.getStudyId(),
+					query.getCategory(),
+					query.getFromDate(),
+					query.getToDate());
+
+			return ActivityListBriefResponses.builder()
+					.items(activities)
+					.pageInfo(null)
+					.build();
+		}
 	}
 }

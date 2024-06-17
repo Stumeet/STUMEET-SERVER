@@ -23,7 +23,7 @@ public class StudyPeriod {
 
 	private void validateDateRange(LocalDate startDate, LocalDate endDate) {
 		if (isInvalidDateRange(startDate, endDate)) {
-			throw new BadRequestException(ErrorCode.INVALID_STUDY_PERIOD_EXCEPTION);
+			throw new BadRequestException(ErrorCode.INVALID_PERIOD_EXCEPTION);
 		}
 	}
 
