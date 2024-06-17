@@ -61,11 +61,33 @@ class ActivityDeleteApiTest extends ApiTest {
         @Test
         @WithMockMember(id = 2L)
         @DisplayName("[실패] 삭제를 시도하는 멤버가 일반 멤버인 경우 활동 삭제에 실패한다.")
-        void fail_to_delete_when_member_not_joined_study() throws Exception {
+        void fail_to_delete_when_member_not_has_authority() throws Exception {
             mockMvc.perform(delete(PATH, StudyStub.getStudyId(), ActivityStub.getActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isForbidden())
                     .andDo(document("delete-activity/fail/forbidden",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
+                                    .description("서버로부터 전달받은 액세스 토큰")),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("activityId").description("활동 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 상태"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )));
+        }
+
+        @Test
+        @WithMockMember(id = 3L)
+        @DisplayName("[실패] 스터디의 멤버가 아닌 경우 활동 삭제에 실패한다.")
+        void fail_to_delete_when_member_not_joined_study() throws Exception {
+            mockMvc.perform(delete(PATH, StudyStub.getStudyId(), ActivityStub.getActivityId())
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
+                    .andExpect(status().isForbidden())
+                    .andDo(document("delete-activity/fail/not-joined-member",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
