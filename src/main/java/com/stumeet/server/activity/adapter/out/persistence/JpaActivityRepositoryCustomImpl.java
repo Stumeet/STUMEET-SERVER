@@ -149,18 +149,6 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
 		return category != null ? activityJpaEntity.category.eq(category) : null;
 	}
 
-	private BooleanExpression dateBetweenByCategory(ActivityCategory category, LocalDateTime fromDate,
-			LocalDateTime toDate) {
-		if (category == null) {
-			return startDateBetween(fromDate, toDate);
-		}
-
-		return switch (category) {
-			case MEET, DEFAULT -> startDateBetween(fromDate, toDate);
-			case ASSIGNMENT -> endDateBetween(fromDate, toDate);
-		};
-	}
-
 	private BooleanExpression startDateBetween(LocalDateTime fromDate, LocalDateTime toDate) {
 		return startDateGoe(fromDate).and(startDateLoe(toDate));
 	}
@@ -183,6 +171,32 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
 
 	private BooleanExpression endDateLoe(LocalDateTime toDate) {
 		return toDate != null ? activityJpaEntity.endDate.loe(toDate) : Expressions.asBoolean(true).isTrue();
+	}
+
+	private BooleanExpression createdAtBetween(LocalDateTime fromDate, LocalDateTime toDate) {
+		return createdAtGoe(fromDate).and(createdAtLoe(toDate));
+	}
+
+	private BooleanExpression createdAtGoe(LocalDateTime fromDate) {
+		return fromDate != null ? activityJpaEntity.createdAt.goe(fromDate) : Expressions.asBoolean(true).isTrue();
+	}
+
+	private BooleanExpression createdAtLoe(LocalDateTime toDate) {
+		return toDate != null ? activityJpaEntity.createdAt.loe(toDate) : Expressions.asBoolean(true).isTrue();
+	}
+
+	private BooleanExpression dateBetweenByCategory(ActivityCategory category, LocalDateTime fromDate, LocalDateTime toDate) {
+		if (category == null) {
+			return categoryEq(ActivityCategory.MEET).and(startDateBetween(fromDate, toDate))
+					.or(categoryEq(ActivityCategory.ASSIGNMENT).and(endDateBetween(fromDate, toDate)))
+					.or(categoryEq(ActivityCategory.DEFAULT).and(createdAtBetween(fromDate, toDate)));
+		}
+
+		return switch (category) {
+			case MEET -> startDateBetween(fromDate, toDate);
+			case ASSIGNMENT -> endDateBetween(fromDate, toDate);
+			case DEFAULT -> createdAtBetween(fromDate, toDate);
+		};
 	}
 
 	private OrderSpecifier<LocalDateTime> orderByCategory(ActivityCategory category) {
