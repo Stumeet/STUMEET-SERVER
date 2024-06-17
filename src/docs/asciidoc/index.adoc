@@ -486,6 +486,8 @@ include::{snippets}/create-activity/fail/not-exists-study/response-fields.adoc[]
 
 스터디 활동 상세 목록을 조회하는 API입니다.
 
+* 정렬 기준: 생성일
+
 ==== GET /api/v1/studies/activities/detail
 ===== 요청
 include::{snippets}/get-activity-details-by-condition/success/http-request.adoc[]
@@ -505,6 +507,54 @@ include::{snippets}/get-activity-details-by-condition/fail/activity-category-inv
 .존재하지 않는 스터디 ID를 요청한 경우
 include::{snippets}/get-activity-details-by-condition/fail/study-not-found/response-body.adoc[]
 include::{snippets}/get-activity-details-by-condition/fail/study-not-found/response-fields.adoc[]
+
+
+=== 스터디 활동 간략 목록 조회
+
+스터디 활동 간략 목록을 조회하는 API입니다. 페이지네이션과 단순 조회를 모두 지원합니다.
+
+* 날짜 기준ㅅ
+- 활동 유형 `MEET`: 활동 시작일
+- 활동 유형 `ASSIGNMENT`: 활동 종료일
+- 활동 유형 `DEFAULT`: 생성일
+
+* 정렬 기준
+- 활동 유형 `MEET`: 활동 시작일
+- 활동 유형 `ASSIGNMENT`: 활동 종료일
+- 활동 유형 `DEFAULT`: 생성일
+- 활동 유형 조건이 없는 경우: 생성일
+
+==== GET /api/v1/studies/activities/brief
+===== 요청
+include::{snippets}/get-activity-briefs-by-condition/success/http-request.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/success/request-headers.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-briefs-by-condition/success/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.불완전한 페이지네이션 요청변수로 요청하는 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-incomplete/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-incomplete/response-fields.adoc[]
+
+.0보다 작은 페이지네이션 요청변수로 요청하는 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-invalid/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-invalid/response-fields.adoc[]
+
+.유효하지 않은 활동 유형을 요청한 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/activity-category-invalid/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/activity-category-invalid/response-fields.adoc[]
+
+.시작기준일이 종료기준일보다 이후인 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/period_invalid/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/period_invalid/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/study-not-found/response-fields.adoc[]
 
 
 === 스터디 활동 단일 조회
