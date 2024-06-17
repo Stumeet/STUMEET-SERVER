@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface JpaActivityParticipantRepository extends JpaRepository<ActivityParticipantJpaEntity, Long> {
     List<ActivityParticipantJpaEntity> findAllByActivityId(Long activityId);
+    void deleteAllByActivityId(Long activityId);
 }

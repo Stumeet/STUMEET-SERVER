@@ -2,6 +2,7 @@ package com.stumeet.server.activity.adapter.out.persistence;
 
 import com.stumeet.server.activity.adapter.out.mapper.ActivityParticipantPersistenceMapper;
 import com.stumeet.server.activity.adapter.out.model.ActivityParticipantJpaEntity;
+import com.stumeet.server.activity.application.port.out.ActivityParticipantCommandPort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantQueryPort;
 import com.stumeet.server.activity.domain.model.ActivityParticipant;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class ActivityParticipantPersistenceAdapter implements ActivityParticipantCreatePort, ActivityParticipantQueryPort {
+public class ActivityParticipantPersistenceAdapter implements ActivityParticipantCreatePort, ActivityParticipantQueryPort, ActivityParticipantCommandPort {
 
     private final JpaActivityParticipantRepository jpaActivityParticipantRepository;
     private final ActivityParticipantPersistenceMapper activityParticipantPersistenceMapper;
@@ -32,4 +33,8 @@ public class ActivityParticipantPersistenceAdapter implements ActivityParticipan
                 .toList();
     }
 
+    @Override
+    public void deleteByActivityId(Long activityId) {
+        jpaActivityParticipantRepository.deleteAllByActivityId(activityId);
+    }
 }
