@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface JpaActivityImageRepository extends JpaRepository<ActivityImageJpaEntity, Long> {
     List<ActivityImageJpaEntity> findAllByActivityId(Long activityId);
+
+    void deleteAllByActivityId(Long activityId);
 }

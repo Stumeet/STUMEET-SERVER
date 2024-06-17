@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponse;
 import com.stumeet.server.activity.adapter.out.mapper.ActivityPersistenceMapper;
 import com.stumeet.server.activity.adapter.out.model.ActivityJpaEntity;
+import com.stumeet.server.activity.application.port.out.ActivityAuthorValidationPort;
 import com.stumeet.server.activity.application.port.out.ActivityCreatePort;
+import com.stumeet.server.activity.application.port.out.ActivityDeletePort;
 import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.activity.domain.exception.NotExistsActivityException;
 import com.stumeet.server.activity.domain.model.Activity;
@@ -20,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class ActivityPersistenceAdapter implements ActivityCreatePort, ActivityQueryPort {
+public class ActivityPersistenceAdapter implements ActivityCreatePort, ActivityQueryPort, ActivityAuthorValidationPort, ActivityDeletePort {
 
 	private final JpaActivityRepository jpaActivityRepository;
 	private final ActivityPersistenceMapper activityPersistenceMapper;
@@ -58,5 +60,16 @@ public class ActivityPersistenceAdapter implements ActivityCreatePort, ActivityQ
 	public List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId,
 			ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate) {
 		return jpaActivityRepository.findBriefsByCondition(isNotice, memberId, studyId, category, startDate, endDate);
+	}
+
+	@Override
+	public boolean isNotActivityAuthor(Long memberId, Long activityId) {
+		return jpaActivityRepository.findByIdAndAuthorId(activityId, memberId)
+				.isEmpty();
+	}
+
+	@Override
+	public void deleteById(Long activityId) {
+		jpaActivityRepository.deleteById(activityId);
 	}
 }
