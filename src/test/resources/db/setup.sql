@@ -45,7 +45,7 @@ INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (
 -- [TABLE: activity]
 -- 스터디 1 (공지) 기본 활동
 INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
-VALUES (1, 1, 1, 'DEFAULT', 'title', 'content', true, '2024-04-01T00:00:00', '2050-05-01T00:00:00', null);
+VALUES (1, 1, 2, 'DEFAULT', 'title', 'content', true, '2024-04-01T00:00:00', '2050-05-01T00:00:00', null);
 
 INSERT INTO activity_image (id, activity_id, image) VALUES (1, 1, 'https://example.com/images/image1.png');
 INSERT INTO activity_image (id, activity_id, image) VALUES (2, 1, 'https://example.com/images/image2.png');
@@ -57,6 +57,9 @@ INSERT INTO activity_participant (id, activity_id, member_id, status) VALUES (2,
 INSERT INTO activity (id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
 VALUES (2, 1, 1, 'DEFAULT', 'title', 'content', false, '2024-04-08T00:00:00', '2050-05-01T00:00:00', null);
 
+INSERT INTO activity_image (id, activity_id, image) VALUES (4, 2, 'https://example.com/images/image1.png');
+INSERT INTO activity_image (id, activity_id, image) VALUES (5, 2, 'https://example.com/images/image2.png');
+INSERT INTO activity_image (id, activity_id, image) VALUES (6, 2, 'https://example.com/images/image3.png');
 INSERT INTO activity_participant (id, activity_id, member_id, status) VALUES (3, 2, 1, 'NONE');
 INSERT INTO activity_participant (id, activity_id, member_id, status) VALUES (4, 2, 2, 'NONE');
 
