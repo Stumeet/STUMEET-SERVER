@@ -13,11 +13,13 @@ import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
 
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @WebAdapter
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Validated
 public class ActivityQueryApi {
 
 	private final ActivityQueryUseCase activityQueryUseCase;
@@ -44,8 +47,8 @@ public class ActivityQueryApi {
 	@GetMapping("/studies/activities/detail")
 	public ResponseEntity<ApiResponse<ActivityListDetailedPageResponses>> getDetailsByCondition(
 			@AuthenticationPrincipal LoginMember member,
-			@RequestParam Integer size,
-			@RequestParam Integer page,
+			@RequestParam @Min(value = 0) Integer size,
+			@RequestParam @Min(value = 0) Integer page,
 			@RequestParam(required = false) Boolean isNotice,
 			@RequestParam(required = false) Long studyId,
 			@RequestParam(required = false) String category
@@ -67,8 +70,8 @@ public class ActivityQueryApi {
 	@GetMapping("/studies/activities/brief")
 	public ResponseEntity<ApiResponse<ActivityListBriefResponses>> getBriefsByCondition(
 			@AuthenticationPrincipal LoginMember member,
-			@RequestParam(required = false) Integer size,
-			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) @Min(value = 0) Integer size,
+			@RequestParam(required = false) @Min(value = 0) Integer page,
 			@RequestParam(required = false) Boolean isNotice,
 			@RequestParam(required = false) Long studyId,
 			@RequestParam(required = false) String category,

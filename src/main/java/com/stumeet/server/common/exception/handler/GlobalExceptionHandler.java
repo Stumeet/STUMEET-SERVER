@@ -1,12 +1,18 @@
 package com.stumeet.server.common.exception.handler;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
+
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -54,6 +60,20 @@ public class GlobalExceptionHandler {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         ApiResponse response = ApiResponse.fail(ErrorCode.BIND_EXCEPTION, e);
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<ApiResponse> handleConstraintViolationException(final ConstraintViolationException e) {
+        log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+
+        List<String> errors = e.getConstraintViolations().stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .collect(Collectors.toList());
+
+        ApiResponse response = ApiResponse.fail(HttpStatus.BAD_REQUEST.value(), String.join(", ", errors));
 
         return ResponseEntity.badRequest()
                 .body(response);
