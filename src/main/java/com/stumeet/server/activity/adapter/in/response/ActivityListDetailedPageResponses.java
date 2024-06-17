@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record ActivityListDetailedPageResponses(
-	List<ActivityListDetailedPageResponse> items,
-	PageInfoResponse pageInfo
+        List<ActivityListDetailedPageResponse> items,
+        PageInfoResponse pageInfo
 ) {
 }

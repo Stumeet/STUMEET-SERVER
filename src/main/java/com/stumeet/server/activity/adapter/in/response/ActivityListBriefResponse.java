@@ -9,16 +9,16 @@ import lombok.Builder;
 
 @Builder
 public record ActivityListBriefResponse(
-	Long id,
-	String category,
-	String title,
-	LocalDateTime startDate,
-	LocalDateTime endDate,
-	String location,
-	ActivityStatus status,
-	LocalDateTime createdAt
+        Long id,
+        String category,
+        String title,
+        LocalDateTime startDate,
+        LocalDateTime endDate,
+        String location,
+        ActivityStatus status,
+        LocalDateTime createdAt
 ) {
-	@QueryProjection
-	public ActivityListBriefResponse {
-	}
+    @QueryProjection
+    public ActivityListBriefResponse {
+    }
 }
