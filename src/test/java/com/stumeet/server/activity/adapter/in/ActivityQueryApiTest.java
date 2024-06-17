@@ -36,7 +36,7 @@ class ActivityQueryApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember
-		@DisplayName("[성공] 스터디 활동 단일 조회에 성공합니다.")
+		@DisplayName("[성공] 스터디 활동 단일 조회에 성공한다.")
 		void successTest() throws Exception {
 			Long studyId = StudyStub.getStudyId();
 			Long activityId = ActivityStub.getActivityId();
@@ -81,7 +81,7 @@ class ActivityQueryApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember
-		@DisplayName("[실패] 스터디가 존재하지 않는 경우 예외가 발생합니다.")
+		@DisplayName("[실패] 스터디가 존재하지 않는 경우 예외가 발생한다.")
 		void studyNotFoundTest() throws Exception {
 			Long studyId = StudyStub.getInvalidStudyId();
 			Long activityId = ActivityStub.getActivityId();
@@ -109,7 +109,7 @@ class ActivityQueryApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember(id = 3L)
-		@DisplayName("[실패] 스터디에 가입하지 않은 사용자인 경우 예외가 발생합니다.")
+		@DisplayName("[실패] 스터디에 가입하지 않은 사용자인 경우 예외가 발생한다.")
 		void notJoinedStudyTest() throws Exception {
 			Long studyId = StudyStub.getStudyId();
 			Long activityId = ActivityStub.getActivityId();
@@ -137,7 +137,7 @@ class ActivityQueryApiTest extends ApiTest {
 
 		@Test
 		@WithMockMember
-		@DisplayName("[실패] 활동이 존재하지 않는 경우 예외가 발생합니다.")
+		@DisplayName("[실패] 활동이 존재하지 않는 경우 예외가 발생한다.")
 		void notFoundActivityTest() throws Exception {
 			Long studyId = StudyStub.getStudyId();
 			Long activityId = ActivityStub.getInvalidActivityId();
