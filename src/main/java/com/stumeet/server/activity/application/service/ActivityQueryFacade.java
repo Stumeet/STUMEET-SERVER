@@ -98,8 +98,8 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
 					query.getMemberId(),
 					query.getStudyId(),
 					query.getCategory(),
-					query.getStartDate(),
-					query.getEndDate());
+					query.getFromDate(),
+					query.getToDate());
 
 			return ActivityListBriefResponses.builder()
 					.items(activities.toList())
@@ -111,8 +111,8 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
 					query.getMemberId(),
 					query.getStudyId(),
 					query.getCategory(),
-					query.getStartDate(),
-					query.getEndDate());
+					query.getFromDate(),
+					query.getToDate());
 
 			return ActivityListBriefResponses.builder()
 					.items(activities)

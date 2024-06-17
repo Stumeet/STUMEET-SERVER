@@ -32,62 +32,62 @@ public class ActivityQueryApi {
 
 	@GetMapping("/studies/{studyId}/activities/{activityId}")
 	public ResponseEntity<ApiResponse<ActivityDetailResponse>> getById(
-		@PathVariable Long studyId,
-		@PathVariable Long activityId,
-		@AuthenticationPrincipal LoginMember member
+			@PathVariable Long studyId,
+			@PathVariable Long activityId,
+			@AuthenticationPrincipal LoginMember member
 	) {
 		ActivityDetailResponse response = activityQueryUseCase.getById(studyId, activityId, member.getId());
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
+				.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
 	}
 
 	@GetMapping("/studies/activities/detail")
 	public ResponseEntity<ApiResponse<ActivityListDetailedPageResponses>> getDetailsByCondition(
-		@AuthenticationPrincipal LoginMember member,
-		@RequestParam Integer size,
-		@RequestParam Integer page,
-		@RequestParam(required = false) Boolean isNotice,
-		@RequestParam(required = false) Long studyId,
-		@RequestParam(required = false) String category
+			@AuthenticationPrincipal LoginMember member,
+			@RequestParam Integer size,
+			@RequestParam Integer page,
+			@RequestParam(required = false) Boolean isNotice,
+			@RequestParam(required = false) Long studyId,
+			@RequestParam(required = false) String category
 	) {
 		ActivityListDetailedQuery query = ActivityListDetailedQuery.builder()
-			.size(size)
-			.page(page)
-			.isNotice(isNotice)
-			.studyId(studyId)
-			.memberId(member.getId())
-			.categoryName(category)
-			.build();
+				.size(size)
+				.page(page)
+				.isNotice(isNotice)
+				.studyId(studyId)
+				.memberId(member.getId())
+				.categoryName(category)
+				.build();
 		ActivityListDetailedPageResponses response = activityQueryUseCase.getDetails(query);
 
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
+				.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
 	}
 
 	@GetMapping("/studies/activities/brief")
 	public ResponseEntity<ApiResponse<ActivityListBriefResponses>> getBriefsByCondition(
-		@AuthenticationPrincipal LoginMember member,
-		@RequestParam(required = false) Integer size,
-		@RequestParam(required = false) Integer page,
-		@RequestParam(required = false) Boolean isNotice,
-		@RequestParam(required = false) Long studyId,
-		@RequestParam(required = false) String category,
-		@RequestParam(required = false) LocalDateTime fromDate,
-		@RequestParam(required = false) LocalDateTime toDate
+			@AuthenticationPrincipal LoginMember member,
+			@RequestParam(required = false) Integer size,
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Boolean isNotice,
+			@RequestParam(required = false) Long studyId,
+			@RequestParam(required = false) String category,
+			@RequestParam(required = false) LocalDateTime fromDate,
+			@RequestParam(required = false) LocalDateTime toDate
 	) {
 		ActivityListBriefQuery query = ActivityListBriefQuery.builder()
-			.size(size)
-			.page(page)
-			.isNotice(isNotice)
-			.studyId(studyId)
-			.memberId(member.getId())
-			.categoryName(category)
-			.startDate(fromDate)
-			.endDate(toDate)
-			.build();
+				.size(size)
+				.page(page)
+				.isNotice(isNotice)
+				.studyId(studyId)
+				.memberId(member.getId())
+				.categoryName(category)
+				.fromDate(fromDate)
+				.toDate(toDate)
+				.build();
 		ActivityListBriefResponses response = activityQueryUseCase.getBriefs(query);
 
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
+				.body(ApiResponse.success(SuccessCode.GET_SUCCESS, response));
 	}
 }
