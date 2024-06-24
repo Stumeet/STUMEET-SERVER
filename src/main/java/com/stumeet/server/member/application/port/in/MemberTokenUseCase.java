@@ -5,7 +5,5 @@ import com.stumeet.server.member.application.port.in.command.TokenRenewCommand;
 
 public interface MemberTokenUseCase {
 
-
-
-    TokenResponse renewAccessToken(TokenRenewCommand request);
+    TokenResponse renewTokens(TokenRenewCommand request);
 }

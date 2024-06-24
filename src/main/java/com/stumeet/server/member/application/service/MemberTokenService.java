@@ -22,16 +22,17 @@ public class MemberTokenService implements MemberTokenUseCase {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public TokenResponse renewAccessToken(TokenRenewCommand request) {
-        String savedRefreshToken = refreshTokenService.getRefreshToken(request.accessToken(), request.refreshToken());
+    public TokenResponse renewTokens(TokenRenewCommand request) {
+        refreshTokenService.validateRefreshToken(request.accessToken(), request.refreshToken());
         refreshTokenService.deleteByAccessToken(request.accessToken());
 
         Long id = Long.parseLong(jwtTokenProvider.getSubject(request.refreshToken()));
         Member member = memberQueryPort.getById(id);
+
         String renewAccessToken = jwtTokenProvider.generateAccessToken(new LoginMember(member));
-        refreshTokenService.save(renewAccessToken, savedRefreshToken);
+        String renewRefreshToken = jwtTokenProvider.generateRefreshToken(id);
+        refreshTokenService.save(renewAccessToken, renewRefreshToken);
 
-        return new TokenResponse(renewAccessToken);
+        return new TokenResponse(renewAccessToken, renewRefreshToken);
     }
-
 }

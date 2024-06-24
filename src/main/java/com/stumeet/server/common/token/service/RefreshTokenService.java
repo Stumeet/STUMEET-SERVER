@@ -7,8 +7,6 @@ import com.stumeet.server.common.token.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.MessageFormat;
-
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {
@@ -20,7 +18,7 @@ public class RefreshTokenService {
         refreshTokenRepository.save(accessToken, refreshToken);
     }
 
-    public String getRefreshToken(String accessToken, String refreshToken) {
+    public void validateRefreshToken(String accessToken, String refreshToken) {
         String savedRefreshToken = refreshTokenRepository.getByAccessToken(accessToken);
 
         if (!refreshToken.equals(savedRefreshToken)) {
@@ -29,8 +27,6 @@ public class RefreshTokenService {
         if (!jwtTokenProvider.validateToken(refreshToken)) {
             throw new BusinessException(ErrorCode.EXPIRED_REFRESH_TOKEN_EXCEPTION);
         }
-
-        return savedRefreshToken;
     }
 
     public void deleteByAccessToken(String accessToken) {
