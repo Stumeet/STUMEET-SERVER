@@ -51,7 +51,7 @@ class MemberAuthApiTest extends ApiTest {
     private JpaMemberRepository jpaMemberRepository;
 
     @Nested
-    @DisplayName("액세스 토큰 재발급")
+    @DisplayName("토큰 재발급")
     class tokenRenew {
 
         private final String path = "/api/v1/tokens";
@@ -74,7 +74,7 @@ class MemberAuthApiTest extends ApiTest {
         }
 
         @Test
-        @DisplayName("[성공] 액세스 토큰 재발급에 성공합니다.")
+        @DisplayName("[성공] 토큰 재발급에 성공합니다.")
         void successTest() throws Exception {
             mockMvc.perform(post(path)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -90,7 +90,8 @@ class MemberAuthApiTest extends ApiTest {
                                     responseFields(
                                             fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답에 대한 결과 코드"),
                                             fieldWithPath("message").type(JsonFieldType.STRING).description("응답에 대한 메시지"),
-                                            fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
+                                            fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                                            fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰")
                                     )
                             )
                     );
@@ -371,6 +372,4 @@ class MemberAuthApiTest extends ApiTest {
 
         }
     }
-
-
 }
