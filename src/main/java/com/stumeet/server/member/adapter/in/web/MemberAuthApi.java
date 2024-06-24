@@ -42,10 +42,10 @@ public class MemberAuthApi {
     public ResponseEntity<ApiResponse<TokenResponse>> renewAccessToken(
             @RequestBody @Valid TokenRenewCommand request
     ) {
-        TokenResponse response = memberTokenUseCase.renewAccessToken(request);
+        TokenResponse response = memberTokenUseCase.renewTokens(request);
 
         return new ResponseEntity<>(
-                ApiResponse.success(HttpStatus.OK.value(), "액세스 토큰 재발급에 성공했습니다.", response),
+                ApiResponse.success(HttpStatus.OK.value(), "토큰 재발급에 성공했습니다.", response),
                 HttpStatus.OK
         );
     }
