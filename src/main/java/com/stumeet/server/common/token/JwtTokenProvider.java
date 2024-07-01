@@ -48,11 +48,11 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        TimeZone timeZone = TimeZone.getDefault();
-        System.out.println("현재 타임존 ID: " + timeZone.getID());
-
         long now = new Date().getTime();
         Date validityTime = new Date(now + tokenValidityTime);
+
+        System.out.println("현재 타임존 ID: " + TimeZone.getDefault().getID());
+        System.out.println("현재일자 : " + new Date());
         System.out.println("만료일자: " + validityTime);
 
         return Jwts.builder()
