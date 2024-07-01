@@ -108,7 +108,7 @@ jib {
         tags = [version]
     }
     container {
-        jvmFlags = ["-Xms128m", "-Xmx128m"]
+        jvmFlags = ["-Xms128m", "-Xmx128m", '-Duser.timezone=Asia/Seoul']
         environment = [
                 'SPRING_PROFILES_ACTIVE': 'prod',
                 'TZ': 'Asia/Seoul'
