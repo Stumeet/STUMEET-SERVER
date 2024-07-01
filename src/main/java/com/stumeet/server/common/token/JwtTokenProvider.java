@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,7 +51,7 @@ public class JwtTokenProvider {
         long now = new Date().getTime();
         Date validityTime = new Date(now + tokenValidityTime);
 
-        System.out.println("tokenValidityTime = " + tokenValidityTime);
+        System.out.println("현재 타임존 ID: " + TimeZone.getDefault().getID());
         System.out.println("현재일자 : " + new Date());
         System.out.println("만료일자: " + validityTime);
 
