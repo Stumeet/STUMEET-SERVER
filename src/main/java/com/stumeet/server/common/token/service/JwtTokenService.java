@@ -5,6 +5,7 @@ import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.token.JwtTokenProvider;
 import com.stumeet.server.common.token.exception.TokenReuseDetectedException;
 import com.stumeet.server.common.token.repository.JwtTokenRepository;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class JwtTokenService {
     public void saveNewTokens(String accessToken, String refreshToken) {
         jwtTokenRepository.save(accessToken, refreshToken);
     }
+
     public void addToBlackList(String refreshToken, String renewAccessToken) {
         jwtTokenRepository.save(refreshToken, renewAccessToken);
     }

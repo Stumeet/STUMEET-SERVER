@@ -8,6 +8,7 @@ import com.stumeet.server.common.token.JwtTokenProvider;
 import com.stumeet.server.common.token.service.JwtTokenService;
 import com.stumeet.server.member.application.port.in.MemberOAuthUseCase;
 import com.stumeet.server.member.domain.Member;
+
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +31,7 @@ public class OAuthAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        StumeetAuthenticationToken token = (StumeetAuthenticationToken) authentication;
+        StumeetAuthenticationToken token = (StumeetAuthenticationToken)authentication;
         String providerAccessToken = token.getCredentials();
         String provider = token.getProvider();
 

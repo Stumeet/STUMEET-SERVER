@@ -95,7 +95,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+    protected ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(
+            final MethodArgumentNotValidException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_NOT_VALID_EXCEPTION, e);
@@ -105,7 +106,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity<ApiResponse> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
+    protected ResponseEntity<ApiResponse> handleMethodArgumentTypeMismatchException(
+            final MethodArgumentTypeMismatchException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION);
@@ -121,7 +123,7 @@ public class GlobalExceptionHandler {
         ApiResponse response = ApiResponse.fail(ErrorCode.FILE_SIZE_LIMIT_EXCEEDED_EXCEPTION);
 
         return ResponseEntity.badRequest()
-            .body(response);
+                .body(response);
     }
 
     @ExceptionHandler(BadRequestException.class)

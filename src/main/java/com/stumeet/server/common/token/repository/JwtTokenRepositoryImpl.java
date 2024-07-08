@@ -1,7 +1,9 @@
 package com.stumeet.server.common.token.repository;
 
 import com.stumeet.server.common.exception.model.BusinessException;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 

@@ -19,24 +19,24 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberTokenService implements MemberTokenUseCase {
 
-	private final MemberQueryPort memberQueryPort;
-	private final JwtTokenService jwtTokenService;
-	private final JwtTokenProvider jwtTokenProvider;
+    private final MemberQueryPort memberQueryPort;
+    private final JwtTokenService jwtTokenService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-	@Override
-	public TokenResponse renewTokens(TokenRenewCommand request) {
-		jwtTokenService.validateRefreshToken(request.accessToken(), request.refreshToken());
-		jwtTokenService.deleteUsedTokenByAccessToken(request.accessToken());
+    @Override
+    public TokenResponse renewTokens(TokenRenewCommand request) {
+        jwtTokenService.validateRefreshToken(request.accessToken(), request.refreshToken());
+        jwtTokenService.deleteUsedTokenByAccessToken(request.accessToken());
 
-		Long id = Long.parseLong(jwtTokenProvider.getSubject(request.refreshToken()));
-		Member member = memberQueryPort.getById(id);
+        Long id = Long.parseLong(jwtTokenProvider.getSubject(request.refreshToken()));
+        Member member = memberQueryPort.getById(id);
 
-		String renewAccessToken = jwtTokenProvider.generateAccessToken(new LoginMember(member));
-		String renewRefreshToken = jwtTokenProvider.generateRefreshToken(id);
+        String renewAccessToken = jwtTokenProvider.generateAccessToken(new LoginMember(member));
+        String renewRefreshToken = jwtTokenProvider.generateRefreshToken(id);
 
-		jwtTokenService.saveNewTokens(renewAccessToken, renewRefreshToken);
-		jwtTokenService.addToBlackList(request.refreshToken(), renewAccessToken);
+        jwtTokenService.saveNewTokens(renewAccessToken, renewRefreshToken);
+        jwtTokenService.addToBlackList(request.refreshToken(), renewAccessToken);
 
-		return new TokenResponse(renewAccessToken, renewRefreshToken);
-	}
+        return new TokenResponse(renewAccessToken, renewRefreshToken);
+    }
 }
