@@ -9,10 +9,9 @@ import static com.stumeet.server.common.response.ErrorCode.NOT_MATCHED_TOKEN_EXC
 
 @Repository
 @RequiredArgsConstructor
-public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
+public class JwtTokenRepositoryImpl implements JwtTokenRepository {
 
     private final RedisTemplate<String, String> redisTemplate;
-
 
     @Override
     public void save(String accessToken, String refreshToken) {
@@ -31,8 +30,13 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     }
 
     @Override
-    public void deleteByAccessToken(String accessToken) {
-        boolean isDeleted = Boolean.TRUE.equals(redisTemplate.delete(accessToken));
+    public String getByRefreshToken(String refreshToken) {
+        return redisTemplate.opsForValue().get(refreshToken);
+    }
+
+    @Override
+    public void deleteByToken(String token) {
+        boolean isDeleted = Boolean.TRUE.equals(redisTemplate.delete(token));
         if (!isDeleted) {
             throw new BusinessException(NOT_MATCHED_TOKEN_EXCEPTION);
         }

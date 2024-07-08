@@ -1,10 +1,12 @@
 package com.stumeet.server.common.token.repository;
 
-public interface RefreshTokenRepository {
+public interface JwtTokenRepository {
 
     void save(String accessToken, String refreshToken);
 
     String getByAccessToken(String accessToken);
 
-    void deleteByAccessToken(String accessToken);
+    String getByRefreshToken(String refreshToken);
+
+    void deleteByToken(String accessToken);
 }
