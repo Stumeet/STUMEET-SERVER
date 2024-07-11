@@ -8,8 +8,10 @@ import com.stumeet.server.member.application.port.in.MemberProfileUseCase;
 import com.stumeet.server.member.application.port.in.MemberTokenUseCase;
 import com.stumeet.server.member.application.port.in.command.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.command.TokenRenewCommand;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

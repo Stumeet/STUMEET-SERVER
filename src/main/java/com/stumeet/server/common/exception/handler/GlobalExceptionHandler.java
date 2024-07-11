@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.exception.model.BusinessException;
+import com.stumeet.server.common.exception.model.SecurityViolationException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
 
@@ -31,6 +32,19 @@ public class GlobalExceptionHandler {
 
     private static final String ERROR_LOG_MESSAGE = "[ERROR] {} : {}";
     private static final String WARN_LOG_MESSAGE = "[WARN] {} : {}";
+    private static final String SECURITY_LOG_MESSAGE = "[SECURITY] {} : {}";
+
+    @ExceptionHandler(SecurityViolationException.class)
+    protected ResponseEntity<ApiResponse> handleSecurityViolationException(final SecurityViolationException e) {
+        log.warn(SECURITY_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+        log.debug(e.getMessage(), e);
+
+        ErrorCode errorCode = e.getErrorCode();
+        ApiResponse response = ApiResponse.fail(errorCode);
+
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(response);
+    }
 
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ApiResponse> handleBusinessException(final BusinessException e) {
@@ -48,6 +62,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ApiResponse> handleException(final Exception e) {
         log.error(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
         log.debug(e.getMessage(), e);
+        e.printStackTrace();
 
         ApiResponse response = ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR);
 
@@ -80,7 +95,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+    protected ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(
+            final MethodArgumentNotValidException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_NOT_VALID_EXCEPTION, e);
@@ -90,7 +106,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity<ApiResponse> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
+    protected ResponseEntity<ApiResponse> handleMethodArgumentTypeMismatchException(
+            final MethodArgumentTypeMismatchException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
 
         ApiResponse response = ApiResponse.fail(ErrorCode.METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION);
@@ -106,7 +123,7 @@ public class GlobalExceptionHandler {
         ApiResponse response = ApiResponse.fail(ErrorCode.FILE_SIZE_LIMIT_EXCEEDED_EXCEPTION);
 
         return ResponseEntity.badRequest()
-            .body(response);
+                .body(response);
     }
 
     @ExceptionHandler(BadRequestException.class)
