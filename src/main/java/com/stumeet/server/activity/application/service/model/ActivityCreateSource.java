@@ -13,10 +13,11 @@ public record ActivityCreateSource(
         ActivityCategory category,
         String title,
         String content,
-        boolean isNotice,
         LocalDateTime startDate,
         LocalDateTime endDate,
         String location,
+        String link,
+        boolean isNotice,
         LocalDateTime createdAt
 ) {
     @Builder
