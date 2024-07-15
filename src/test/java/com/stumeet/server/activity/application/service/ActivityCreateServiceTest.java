@@ -15,6 +15,7 @@ import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import com.stumeet.server.studymember.domain.exception.NotStudyAdminException;
+import com.stumeet.server.studymember.domain.exception.StudyMemberNotJoinedException;
 import com.stumeet.server.template.UnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -101,18 +102,18 @@ class ActivityCreateServiceTest extends UnitTest {
                     .hasMessage(MessageFormat.format(StudyNotExistsException.MESSAGE, studyId));
         }
         @Test
-        @DisplayName("[실패] 생성 요청을 한 사용자가 스터디의 관리자가 아닌 경우 예외가 발생한다.")
-        void notAdminTest() {
+        @DisplayName("[실패] 생성 요청을 한 사용자가 스터디 멤버가 아닌 경우 예외가 발생한다.")
+        void notStudyMemberTest() {
             Long studyId = StudyStub.getStudyId();
             Long memberId = MemberStub.getInvalidMemberId();
             ActivityCreateCommand request = ActivityStub.getDefaultActivityCreateCommand();
 
-            willThrow(new NotStudyAdminException(studyId, memberId))
-                    .given(studyMemberValidationUseCase).checkAdmin(studyId, memberId);
+            willThrow(new StudyMemberNotJoinedException(studyId, memberId))
+                    .given(studyMemberValidationUseCase).checkStudyJoinMember(studyId, memberId);
 
             assertThatCode(() -> activityCreateService.create(studyId, request, memberId))
-                    .isInstanceOf(NotStudyAdminException.class)
-                    .hasMessage(MessageFormat.format(NotStudyAdminException.MESSAGE, studyId, memberId));
+                    .isInstanceOf(StudyMemberNotJoinedException.class)
+                    .hasMessage(MessageFormat.format(StudyMemberNotJoinedException.MESSAGE, studyId, memberId));
 
         }
 

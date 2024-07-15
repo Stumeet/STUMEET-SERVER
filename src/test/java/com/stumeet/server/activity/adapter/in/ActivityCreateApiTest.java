@@ -60,9 +60,10 @@ class ActivityCreateApiTest extends ApiTest {
                                     fieldWithPath("content").description("활동 내용"),
                                     fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
                                     fieldWithPath("isNotice").description("공지 여부"),
-                                    fieldWithPath("startDate").description("활동 시작 일시"),
-                                    fieldWithPath("endDate").description("활동 종료 일시"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
                                     fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
                                     fieldWithPath("participants").description("참여자 ID 리스트")
                             ),
                             responseFields(
@@ -99,9 +100,10 @@ class ActivityCreateApiTest extends ApiTest {
                                     fieldWithPath("content").description("활동 내용"),
                                     fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
                                     fieldWithPath("isNotice").description("공지 여부"),
-                                    fieldWithPath("startDate").description("활동 시작 일시"),
-                                    fieldWithPath("endDate").description("활동 종료 일시"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
                                     fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
                                     fieldWithPath("participants").description("참여자 ID 리스트")
                             ),
                             responseFields(
@@ -139,9 +141,10 @@ class ActivityCreateApiTest extends ApiTest {
                                     fieldWithPath("content").description("활동 내용"),
                                     fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
                                     fieldWithPath("isNotice").description("공지 여부"),
-                                    fieldWithPath("startDate").description("활동 시작 일시"),
-                                    fieldWithPath("endDate").description("활동 종료 일시"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
                                     fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
                                     fieldWithPath("participants").description("참여자 ID 리스트")
                             ),
                             responseFields(
@@ -180,9 +183,10 @@ class ActivityCreateApiTest extends ApiTest {
                                     fieldWithPath("content").description("활동 내용"),
                                     fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
                                     fieldWithPath("isNotice").description("공지 여부"),
-                                    fieldWithPath("startDate").description("활동 시작 일시"),
-                                    fieldWithPath("endDate").description("활동 종료 일시"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
                                     fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
                                     fieldWithPath("participants").description("참여자 ID 리스트")
                             ),
                             responseFields(
@@ -193,9 +197,9 @@ class ActivityCreateApiTest extends ApiTest {
         }
 
         @Test
-        @WithMockMember(id = 2L)
-        @DisplayName("[실패] 생성 요청을 한 사용자가 스터디의 관리자가 아닌 경우 예외가 발생한다.")
-        void notAdminTest() throws Exception {
+        @WithMockMember(id = 3L)
+        @DisplayName("[실패] 생성 요청을 한 사용자가 스터디 멤버가 아닌 경우 예외가 발생한다.")
+        void notStudyMemberTest() throws Exception {
             Long studyId = StudyStub.getStudyId();
             ActivityCreateCommand request = ActivityStub.getDefaultActivityCreateCommand();
 
@@ -204,7 +208,7 @@ class ActivityCreateApiTest extends ApiTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))
                     .andExpect(status().isForbidden())
-                    .andDo(document("create-activity/fail/not-admin",
+                    .andDo(document("create-activity/fail/not-study-member",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             pathParameters(
@@ -219,9 +223,129 @@ class ActivityCreateApiTest extends ApiTest {
                                     fieldWithPath("content").description("활동 내용"),
                                     fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
                                     fieldWithPath("isNotice").description("공지 여부"),
-                                    fieldWithPath("startDate").description("활동 시작 일시"),
-                                    fieldWithPath("endDate").description("활동 종료 일시"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
                                     fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
+                                    fieldWithPath("participants").description("참여자 ID 리스트")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 모임 활동 생성 시 장소 값이 NULL인 경우 예외가 발생한다.")
+        void locationNullForMeetTest() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+            ActivityCreateCommand request = ActivityStub.getMeetActivityCreateCommandLocationNull();
+
+            mockMvc.perform(post(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(request)))
+                    .andExpect(status().isBadRequest())
+                    .andDo(document("create-activity/fail/location-null-for-meet",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            requestFields(
+                                    fieldWithPath("category").description("활동 카테고리"),
+                                    fieldWithPath("title").description("활동 제목"),
+                                    fieldWithPath("content").description("활동 내용"),
+                                    fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
+                                    fieldWithPath("isNotice").description("공지 여부"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
+                                    fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
+                                    fieldWithPath("participants").description("참여자 ID 리스트")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )
+                    ));
+        }
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 모임, 과제 활동 생성 시 활동 기간이 NULL인 경우 예외가 발생한다.")
+        void activityPeriodRequiredTest() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+            ActivityCreateCommand request = ActivityStub.getMeetActivityCreateCommandPeriodNull();
+
+            mockMvc.perform(post(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(request)))
+                    .andExpect(status().isBadRequest())
+                    .andDo(document("create-activity/fail/period-null",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            requestFields(
+                                    fieldWithPath("category").description("활동 카테고리"),
+                                    fieldWithPath("title").description("활동 제목"),
+                                    fieldWithPath("content").description("활동 내용"),
+                                    fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
+                                    fieldWithPath("isNotice").description("공지 여부"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
+                                    fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
+                                    fieldWithPath("participants").description("참여자 ID 리스트")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )
+                    ));
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 모임, 과제 활동 생성 시 활동 기간이 유효하지 않은 경우 예외가 발생한다.")
+        void activityPeriodInvalidTest() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+            ActivityCreateCommand request = ActivityStub.getMeetActivityCreateCommandPeriodInvalid();
+
+            mockMvc.perform(post(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(toJson(request)))
+                    .andExpect(status().isBadRequest())
+                    .andDo(document("create-activity/fail/period-invalid",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            requestFields(
+                                    fieldWithPath("category").description("활동 카테고리"),
+                                    fieldWithPath("title").description("활동 제목"),
+                                    fieldWithPath("content").description("활동 내용"),
+                                    fieldWithPath("images[]").description("활동 이미지 URL 리스트"),
+                                    fieldWithPath("isNotice").description("공지 여부"),
+                                    fieldWithPath("startDate").description("활동 시작 일시").optional(),
+                                    fieldWithPath("endDate").description("활동 종료 일시").optional(),
+                                    fieldWithPath("location").description("활동 장소").optional(),
+                                    fieldWithPath("link").description("링크").optional(),
                                     fieldWithPath("participants").description("참여자 ID 리스트")
                             ),
                             responseFields(
