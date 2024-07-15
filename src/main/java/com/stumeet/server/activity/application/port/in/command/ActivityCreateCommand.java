@@ -1,5 +1,6 @@
 package com.stumeet.server.activity.application.port.in.command;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.stumeet.server.common.annotation.validator.NullOrNotBlank;
 
 @Builder
 public record ActivityCreateCommand(
@@ -28,16 +31,21 @@ public record ActivityCreateCommand(
 
         boolean isNotice,
 
-        @DateTimeFormat(pattern = "yyyy-MM-dd''HH:mm:ss")
+        @Nullable
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
         LocalDateTime startDate,
 
+        @Nullable
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
         LocalDateTime endDate,
 
+        @NullOrNotBlank
         String location,
 
+        @NullOrNotBlank
+        String link,
+
         @NotNull(message = "참여 멤버 리스트를 전달해주세요")
-        @Size(min = 1, message = "참여 멤버는 1명 이상이어야 합니다")
         List<Long> participants
 
 ) {
