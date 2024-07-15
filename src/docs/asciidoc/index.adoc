@@ -473,13 +473,25 @@ include::{snippets}/create-activity/fail/not-exists-category/response-fields.ado
 
 ===== 응답 실패 (403)
 .스터디의 관리자가 아닌 경우
-include::{snippets}/create-activity/fail/not-admin/response-body.adoc[]
-include::{snippets}/create-activity/fail/not-admin/response-fields.adoc[]
+include::{snippets}/create-activity/fail/not-study-member/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-study-member/response-fields.adoc[]
 
 ====== 응답 실패 (404)
 .존재하지 않는 스터디 ID를 요청한 경우
 include::{snippets}/create-activity/fail/not-exists-study/response-body.adoc[]
 include::{snippets}/create-activity/fail/not-exists-study/response-fields.adoc[]
+
+.모임 활동 생성 시 장소 값이 null인 경우
+include::{snippets}/create-activity/fail/location-null-for-meet/response-body.adoc[]
+include::{snippets}/create-activity/fail/location-null-for-meet/response-fields.adoc[]
+
+.모임, 과제 활동 생성 시 활동 기간이 null인 경우
+include::{snippets}/create-activity/fail/period-null/response-body.adoc[]
+include::{snippets}/create-activity/fail/period-null/response-fields.adoc[]
+
+.모임, 과제 활동 생성 시 활동 기간이 유효하지 않은 경우
+include::{snippets}/create-activity/fail/period-invalid/response-body.adoc[]
+include::{snippets}/create-activity/fail/period-invalid/response-fields.adoc[]
 
 
 === 스터디 활동 상세 목록 조회
