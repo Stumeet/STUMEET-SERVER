@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+import org.springframework.cglib.core.Local;
+
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public abstract class Activity {
@@ -22,13 +24,15 @@ public abstract class Activity {
 
     private String content;
 
-    private boolean isNotice;
+    private String link;
+
+    private String location;
 
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
 
-    private String location;
+    private boolean isNotice;
 
     private LocalDateTime createdAt;
 

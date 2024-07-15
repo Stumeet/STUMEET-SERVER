@@ -47,15 +47,15 @@ public class ActivityJpaEntity extends BaseTimeEntity {
     @Comment("공지 여부")
     private boolean isNotice;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     @Comment("활동 시작일")
     private LocalDateTime startDate;
 
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     @Comment("활동 종료일")
     private LocalDateTime endDate;
 
-    @Column(name = "location", nullable = false)
+    @Column(name = "location")
     @Comment("활동 장소")
     private String location;
 }

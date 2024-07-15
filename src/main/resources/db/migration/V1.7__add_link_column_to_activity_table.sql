@@ -1,0 +1,2 @@
+ALTER TABLE activity
+    ADD COLUMN link VARCHAR(255) NULL;

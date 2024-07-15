@@ -39,7 +39,7 @@ public class ActivityCreateService implements ActivityCreateUseCase {
     @Override
     public void create(Long studyId, ActivityCreateCommand command, Long memberId) {
         studyValidationUseCase.checkById(studyId);
-        studyMemberValidationUseCase.checkAdmin(studyId, memberId);
+        studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
 
         ActivityCreateSource activitySource = activityUseCaseMapper.toSource(studyId, command, memberId);
         Activity activity = activitySource.category().create(activitySource);

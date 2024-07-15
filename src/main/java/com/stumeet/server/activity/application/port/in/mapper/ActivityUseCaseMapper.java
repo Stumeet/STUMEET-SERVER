@@ -35,10 +35,11 @@ public class ActivityUseCaseMapper {
 				.category(ActivityCategory.getByName(command.category()))
 				.title(command.title())
 				.content(command.content())
-				.isNotice(command.isNotice())
+				.location(command.location())
+				.link(command.link())
 				.startDate(command.startDate())
 				.endDate(command.endDate())
-				.location(command.location())
+				.isNotice(command.isNotice())
 				.createdAt(LocalDateTime.now())
 				.build();
 	}

@@ -19,8 +19,6 @@ public class ActivityStub {
                 .content("")
                 .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
                 .isNotice(false)
-                .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
                 .participants(List.of())
                 .build();
     }
@@ -45,8 +43,46 @@ public class ActivityStub {
                 .content("content")
                 .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
                 .isNotice(false)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityCreateCommand getMeetActivityCreateCommandLocationNull() {
+        return ActivityCreateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
+                .location(null)
                 .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
+                .isNotice(false)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityCreateCommand getMeetActivityCreateCommandPeriodNull() {
+        return ActivityCreateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
+                .location("서울")
+                .isNotice(false)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityCreateCommand getMeetActivityCreateCommandPeriodInvalid() {
+        return ActivityCreateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("2024-05-02T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .isNotice(false)
                 .participants(List.of(MemberStub.getMemberId()))
                 .build();
     }
@@ -196,9 +232,6 @@ public class ActivityStub {
                 .author(getAuthorResponse())
                 .imageUrl(getActivityImageResponses())
                 .participants(List.of(getAuthorResponse(), getParticipantResponse()))
-                .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
-                .location(null)
                 .status(DefaultStatus.NONE.getDescription())
                 .build();
     }
@@ -211,9 +244,6 @@ public class ActivityStub {
                 .author(getAuthorResponse())
                 .imageUrl(getActivityImageResponses())
                 .participants(List.of(getAuthorResponse(), getParticipantResponse()))
-                .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
-                .location(null)
                 .status(NotJoinedStatus.NOT_JOINED.getDescription())
                 .build();
     }
