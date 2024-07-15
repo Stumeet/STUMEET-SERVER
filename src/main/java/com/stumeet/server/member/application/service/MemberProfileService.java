@@ -4,6 +4,7 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.file.application.port.in.FileUploadUseCase;
 import com.stumeet.server.member.adapter.in.web.response.MemberProfileResponse;
 import com.stumeet.server.member.application.port.in.MemberProfileUseCase;
+import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.member.application.port.in.command.MemberProfileCommand;
 import com.stumeet.server.member.application.port.in.command.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.command.MemberUpdateCommand;
@@ -23,6 +24,7 @@ public class MemberProfileService implements MemberProfileUseCase {
 
     private final ProfessionQueryUseCase professionQueryUseCase;
     private final FileUploadUseCase fileUploadUseCase;
+    private final MemberValidationUseCase memberValidationUseCase;
     private final MemberCommandPort memberCommandPort;
     private final MemberQueryPort memberQueryPort;
     private final MemberUseCaseMapper memberUseCaseMapper;
@@ -30,6 +32,8 @@ public class MemberProfileService implements MemberProfileUseCase {
 
     @Override
     public void signup(Member member, MemberSignupCommand request) {
+        memberValidationUseCase.validateNickname(request.nickname());
+
         Profession profession = professionQueryUseCase.getById(request.profession());
         String url = fileUploadUseCase.uploadUserProfileImage(member.getId(), request.image()).url();
 
