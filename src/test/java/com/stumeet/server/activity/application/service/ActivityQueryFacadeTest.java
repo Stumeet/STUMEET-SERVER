@@ -13,6 +13,7 @@ import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
+import com.stumeet.server.studymember.application.port.out.StudyMemberValidationPort;
 import com.stumeet.server.studymember.domain.exception.StudyMemberNotJoinedException;
 import com.stumeet.server.template.UnitTest;
 import org.junit.jupiter.api.DisplayName;
@@ -50,6 +51,9 @@ class ActivityQueryFacadeTest extends UnitTest {
     @Mock
     private ActivityParticipantQuery activityParticipantQuery;
 
+    @Mock
+    private StudyMemberValidationPort studyMemberValidationPort;
+
     @Spy
     private ActivityImageUseCaseMapper activityImageUseCaseMapper = new ActivityImageUseCaseMapper();
 
@@ -77,6 +81,8 @@ class ActivityQueryFacadeTest extends UnitTest {
                     .willReturn(ActivityStub.getActivityImages(ActivityStub.getDefaultActivity()));
             given(activityParticipantQuery.findAllByActivityId(any()))
                     .willReturn(ActivityStub.getActivityParticipants(ActivityStub.getDefaultActivity()));
+            given(studyMemberValidationPort.isAdmin(studyId, memberId))
+                    .willReturn(true);
 
             ActivityDetailResponse got = activityQueryFacade.getById(studyId, activityId, memberId);
 

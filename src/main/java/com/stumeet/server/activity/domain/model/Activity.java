@@ -36,4 +36,7 @@ public abstract class Activity {
 
     private LocalDateTime createdAt;
 
+    public boolean isAuthor(Long memberId) {
+        return author.getId() == memberId;
+    }
 }
