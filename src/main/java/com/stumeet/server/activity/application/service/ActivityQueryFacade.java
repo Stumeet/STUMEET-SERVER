@@ -35,94 +35,94 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ActivityQueryFacade implements ActivityQueryUseCase {
 
-	private final StudyValidationUseCase studyValidationUseCase;
-	private final StudyMemberValidationUseCase studyMemberValidationUseCase;
+    private final StudyValidationUseCase studyValidationUseCase;
+    private final StudyMemberValidationUseCase studyMemberValidationUseCase;
 
-	private final ActivityQuery activityQuery;
-	private final ActivityImageQuery activityImageQuery;
-	private final ActivityParticipantQuery activityParticipantQuery;
+    private final ActivityQuery activityQuery;
+    private final ActivityImageQuery activityImageQuery;
+    private final ActivityParticipantQuery activityParticipantQuery;
 
-	private final StudyMemberValidationPort studyMemberValidationPort;
+    private final StudyMemberValidationPort studyMemberValidationPort;
 
-	private final ActivityUseCaseMapper activityUseCaseMapper;
-	private final ActivityImageUseCaseMapper activityImageUseCaseMapper;
-	private final ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper;
-	private final PageInfoUseCaseMapper pageInfoUseCaseMapper;
+    private final ActivityUseCaseMapper activityUseCaseMapper;
+    private final ActivityImageUseCaseMapper activityImageUseCaseMapper;
+    private final ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper;
+    private final PageInfoUseCaseMapper pageInfoUseCaseMapper;
 
-	@Override
-	public ActivityDetailResponse getById(Long studyId, Long activityId, Long memberId) {
-		studyValidationUseCase.checkById(studyId);
-		studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
+    @Override
+    public ActivityDetailResponse getById(Long studyId, Long activityId, Long memberId) {
+        studyValidationUseCase.checkById(studyId);
+        studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
 
-		Activity activity = activityQuery.getById(activityId);
-		List<ActivityImage> activityImages = activityImageQuery.findAllByActivityId(activityId);
-		List<ActivityParticipant> participants = activityParticipantQuery.findAllByActivityId(activityId);
+        Activity activity = activityQuery.getById(activityId);
+        List<ActivityImage> activityImages = activityImageQuery.findAllByActivityId(activityId);
+        List<ActivityParticipant> participants = activityParticipantQuery.findAllByActivityId(activityId);
 
-		ActivityParticipant me = participants.stream()
-				.filter(participant -> participant.getMember().getId().equals(memberId))
-				.findAny()
-				.orElseGet(ActivityParticipant::makeNotJoinedMember);
+        ActivityParticipant me = participants.stream()
+                .filter(participant -> participant.getMember().getId().equals(memberId))
+                .findAny()
+                .orElseGet(ActivityParticipant::makeNotJoinedMember);
 
-		return activityUseCaseMapper.toDetailResponse(
-				activity,
-				activityImageUseCaseMapper.toResponses(activityImages),
-				activityParticipantUseCaseMapper.toResponse(activity.getAuthor()),
-				activityParticipantUseCaseMapper.toResponses(participants),
-				me.getStatus().getDescription(),
-				activity.getAuthor().getId().equals(memberId),
-				studyMemberValidationPort.isAdmin(studyId, memberId)
-		);
-	}
+        return activityUseCaseMapper.toDetailResponse(
+                activity,
+                activityImageUseCaseMapper.toResponses(activityImages),
+                activityParticipantUseCaseMapper.toResponse(activity.getAuthor()),
+                activityParticipantUseCaseMapper.toResponses(participants),
+                me.getStatus().getDescription(),
+                activity.isAuthor(memberId),
+                studyMemberValidationPort.isAdmin(studyId, memberId)
+        );
+    }
 
-	@Override
-	public ActivityListDetailedPageResponses getDetails(ActivityListDetailedQuery query) {
-		if (query.getStudyId() != null) {
-			studyValidationUseCase.checkById(query.getStudyId());
-		}
+    @Override
+    public ActivityListDetailedPageResponses getDetails(ActivityListDetailedQuery query) {
+        if (query.getStudyId() != null) {
+            studyValidationUseCase.checkById(query.getStudyId());
+        }
 
-		Page<Activity> activities = activityQuery.getDetailsByCondition(
-				PageRequest.of(query.getPage(), query.getSize()),
-				query.getIsNotice(),
-				query.getStudyId(),
-				query.getCategory());
+        Page<Activity> activities = activityQuery.getDetailsByCondition(
+                PageRequest.of(query.getPage(), query.getSize()),
+                query.getIsNotice(),
+                query.getStudyId(),
+                query.getCategory());
 
-		return activityUseCaseMapper
-				.toListDetailedPageResponses(activities, pageInfoUseCaseMapper.toPageInfoResponse(activities));
-	}
+        return activityUseCaseMapper
+                .toListDetailedPageResponses(activities, pageInfoUseCaseMapper.toPageInfoResponse(activities));
+    }
 
-	@Override
-	public ActivityListBriefResponses getBriefs(ActivityListBriefQuery query) {
-		if (query.getStudyId() != null) {
-			studyValidationUseCase.checkById(query.getStudyId());
-		}
+    @Override
+    public ActivityListBriefResponses getBriefs(ActivityListBriefQuery query) {
+        if (query.getStudyId() != null) {
+            studyValidationUseCase.checkById(query.getStudyId());
+        }
 
-		if (query.isPaginationRequest()) {
-			Page<ActivityListBriefResponse> activities = activityQuery.getPaginatedBriefsByCondition(
-					PageRequest.of(query.getPage(), query.getSize()),
-					query.getIsNotice(),
-					query.getMemberId(),
-					query.getStudyId(),
-					query.getCategory(),
-					query.getFromDate(),
-					query.getToDate());
+        if (query.isPaginationRequest()) {
+            Page<ActivityListBriefResponse> activities = activityQuery.getPaginatedBriefsByCondition(
+                    PageRequest.of(query.getPage(), query.getSize()),
+                    query.getIsNotice(),
+                    query.getMemberId(),
+                    query.getStudyId(),
+                    query.getCategory(),
+                    query.getFromDate(),
+                    query.getToDate());
 
-			return ActivityListBriefResponses.builder()
-					.items(activities.toList())
-					.pageInfo(pageInfoUseCaseMapper.toPageInfoResponse(activities))
-					.build();
-		} else {
-			List<ActivityListBriefResponse> activities = activityQuery.getBriefsByCondition(
-					query.getIsNotice(),
-					query.getMemberId(),
-					query.getStudyId(),
-					query.getCategory(),
-					query.getFromDate(),
-					query.getToDate());
+            return ActivityListBriefResponses.builder()
+                    .items(activities.toList())
+                    .pageInfo(pageInfoUseCaseMapper.toPageInfoResponse(activities))
+                    .build();
+        } else {
+            List<ActivityListBriefResponse> activities = activityQuery.getBriefsByCondition(
+                    query.getIsNotice(),
+                    query.getMemberId(),
+                    query.getStudyId(),
+                    query.getCategory(),
+                    query.getFromDate(),
+                    query.getToDate());
 
-			return ActivityListBriefResponses.builder()
-					.items(activities)
-					.pageInfo(null)
-					.build();
-		}
-	}
+            return ActivityListBriefResponses.builder()
+                    .items(activities)
+                    .pageInfo(null)
+                    .build();
+        }
+    }
 }
