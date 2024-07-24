@@ -32,7 +32,7 @@ public class StudyMemberValidationService implements StudyMemberValidationUseCas
 
     @Override
     public void checkAdmin(Long studyId, Long adminId) {
-        if (studyMemberValidationPort.isNotAdmin(studyId, adminId)) {
+        if (!studyMemberValidationPort.isAdmin(studyId, adminId)) {
             throw new NotStudyAdminException(studyId, adminId);
         }
     }

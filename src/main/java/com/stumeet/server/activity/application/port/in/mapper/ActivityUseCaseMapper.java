@@ -49,7 +49,9 @@ public class ActivityUseCaseMapper {
 			List<ActivityImageResponse> activityImages,
 			ActivityParticipantSimpleResponse author,
 			List<ActivityParticipantSimpleResponse> participants,
-			String status
+			String status,
+			boolean isAuthor,
+			boolean isAdmin
 	) {
 		return ActivityDetailResponse.builder()
 				.id(activity.getId())
@@ -64,6 +66,8 @@ public class ActivityUseCaseMapper {
 				.endDate(activity.getEndDate())
 				.location(activity.getLocation())
 				.createdAt(activity.getCreatedAt())
+				.isAuthor(isAuthor)
+				.isAdmin(isAdmin)
 				.build();
 	}
 

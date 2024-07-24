@@ -20,6 +20,7 @@ import com.stumeet.server.activity.domain.model.ActivityParticipant;
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
+import com.stumeet.server.studymember.application.port.out.StudyMemberValidationPort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +41,8 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
 	private final ActivityQuery activityQuery;
 	private final ActivityImageQuery activityImageQuery;
 	private final ActivityParticipantQuery activityParticipantQuery;
+
+	private final StudyMemberValidationPort studyMemberValidationPort;
 
 	private final ActivityUseCaseMapper activityUseCaseMapper;
 	private final ActivityImageUseCaseMapper activityImageUseCaseMapper;
@@ -65,7 +68,9 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
 				activityImageUseCaseMapper.toResponses(activityImages),
 				activityParticipantUseCaseMapper.toResponse(activity.getAuthor()),
 				activityParticipantUseCaseMapper.toResponses(participants),
-				me.getStatus().getDescription()
+				me.getStatus().getDescription(),
+				activity.getAuthor().getId().equals(memberId),
+				studyMemberValidationPort.isAdmin(studyId, memberId)
 		);
 	}
 
