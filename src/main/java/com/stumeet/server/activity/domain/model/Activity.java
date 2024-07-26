@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-import org.springframework.cglib.core.Local;
+import com.stumeet.server.activity.application.service.model.ActivitySource;
+import com.stumeet.server.activity.domain.exception.ActivityManagementAccessDeniedException;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -36,4 +38,18 @@ public abstract class Activity {
 
     private LocalDateTime createdAt;
 
+    public Activity modify(Long memberId, ActivitySource source) {
+        validateAuthor(memberId);
+        return source.category().create(source);
+    }
+
+    private void validateAuthor(Long memberId) {
+        if(!isAuthor(memberId)) {
+            throw new ActivityManagementAccessDeniedException();
+        }
+    }
+
+    private boolean isAuthor(Long memberId) {
+        return Objects.equals(this.author.getId(), memberId);
+    }
 }

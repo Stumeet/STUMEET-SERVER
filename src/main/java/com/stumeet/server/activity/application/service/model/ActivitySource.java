@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record ActivityCreateSource(
+public record ActivitySource(
         Long id,
         Long studyId,
         ActivityMemberCreateSource author,

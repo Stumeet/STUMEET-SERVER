@@ -4,7 +4,7 @@ import com.stumeet.server.activity.application.port.in.command.ActivityCreateCom
 import com.stumeet.server.activity.application.port.in.mapper.ActivityImageUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityParticipantUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMapper;
-import com.stumeet.server.activity.application.port.out.ActivityCreatePort;
+import com.stumeet.server.activity.application.port.out.ActivitySavePort;
 import com.stumeet.server.activity.application.port.out.ActivityImageCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCreatePort;
 import com.stumeet.server.activity.domain.model.Activity;
@@ -14,7 +14,6 @@ import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
-import com.stumeet.server.studymember.domain.exception.NotStudyAdminException;
 import com.stumeet.server.studymember.domain.exception.StudyMemberNotJoinedException;
 import com.stumeet.server.template.UnitTest;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +34,7 @@ class ActivityCreateServiceTest extends UnitTest {
     private ActivityCreateService activityCreateService;
 
     @Mock
-    private ActivityCreatePort activityCreatePort;
+    private ActivitySavePort activitySavePort;
 
     @Mock
     private ActivityImageCreatePort activityImageCreatePort;
@@ -71,9 +70,9 @@ class ActivityCreateServiceTest extends UnitTest {
             ActivityCreateCommand request = ActivityStub.getDefaultActivityCreateCommand();
             Activity activity = ActivityStub.getDefaultActivity();
 
-            given(activityUseCaseMapper.toSource(any(), any(), any()))
+            given(activityUseCaseMapper.toCreateSource(any(), any(), any()))
                     .willReturn(ActivityStub.getDefaultCreateSource());
-            given(activityCreatePort.create(any()))
+            given(activitySavePort.save(any()))
                     .willReturn(ActivityStub.getDefaultActivity());
             given(activityImageUseCaseMapper.toDomains(any(), any()))
                     .willReturn(ActivityStub.getActivityImages(activity));
@@ -82,7 +81,7 @@ class ActivityCreateServiceTest extends UnitTest {
 
             activityCreateService.create(studyId, request, memberId);
 
-            then(activityCreatePort).should().create(any());
+            then(activitySavePort).should().save(any());
             then(activityImageCreatePort).should().create(any());
             then(activityParticipantPort).should().create(any());
         }
