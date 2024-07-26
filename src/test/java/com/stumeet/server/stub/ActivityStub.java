@@ -1,7 +1,7 @@
 package com.stumeet.server.stub;
 
 import com.stumeet.server.activity.adapter.in.response.*;
-import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
+import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.domain.model.*;
 import com.stumeet.server.member.domain.Member;
@@ -87,12 +87,12 @@ public class ActivityStub {
                 .build();
     }
 
-    public static ActivityCreateSource getDefaultCreateSource() {
+    public static ActivitySource getDefaultCreateSource() {
         Member member = MemberStub.getMember();
-        return ActivityCreateSource.builder()
+        return ActivitySource.builder()
                 .id(1L)
                 .studyId(StudyStub.getStudyId())
-                .author(ActivityCreateSource.ActivityMemberCreateSource.builder()
+                .author(ActivitySource.ActivityMemberCreateSource.builder()
                         .id(member.getId())
                         .name(member.getName())
                         .image(member.getImage())
