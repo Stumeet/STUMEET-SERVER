@@ -102,6 +102,34 @@ public class ActivityStub {
                 .build();
     }
 
+    public static ActivityUpdateCommand getNullPeriodActivityUpdateCommand() {
+        return ActivityUpdateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png", "https://example.com/image3.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .endDate(null)
+                .isNotice(true)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityUpdateCommand getInvalidPeriodActivityUpdateCommand() {
+        return ActivityUpdateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png", "https://example.com/image3.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("9999-12-31T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .isNotice(true)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
     public static ActivitySource getDefaultCreateSource() {
         Member member = MemberStub.getMember();
         return ActivitySource.builder()
