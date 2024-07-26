@@ -1,7 +1,8 @@
 package com.stumeet.server.stub;
 
 import com.stumeet.server.activity.adapter.in.response.*;
-import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
+import com.stumeet.server.activity.application.port.in.command.ActivityUpdateCommand;
+import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.domain.model.*;
 import com.stumeet.server.member.domain.Member;
@@ -87,12 +88,54 @@ public class ActivityStub {
                 .build();
     }
 
-    public static ActivityCreateSource getDefaultCreateSource() {
+    public static ActivityUpdateCommand getActivityUpdateCommand() {
+        return ActivityUpdateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png", "https://example.com/image3.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-05-02T00:00:00"))
+                .isNotice(true)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityUpdateCommand getNullPeriodActivityUpdateCommand() {
+        return ActivityUpdateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png", "https://example.com/image3.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .endDate(null)
+                .isNotice(true)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityUpdateCommand getInvalidPeriodActivityUpdateCommand() {
+        return ActivityUpdateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png", "https://example.com/image3.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("9999-12-31T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .isNotice(true)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivitySource getDefaultCreateSource() {
         Member member = MemberStub.getMember();
-        return ActivityCreateSource.builder()
+        return ActivitySource.builder()
                 .id(1L)
                 .studyId(StudyStub.getStudyId())
-                .author(ActivityCreateSource.ActivityMemberCreateSource.builder()
+                .author(ActivitySource.ActivityMemberCreateSource.builder()
                         .id(member.getId())
                         .name(member.getName())
                         .image(member.getImage())

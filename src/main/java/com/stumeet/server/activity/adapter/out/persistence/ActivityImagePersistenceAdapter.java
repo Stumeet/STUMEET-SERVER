@@ -40,4 +40,10 @@ public class ActivityImagePersistenceAdapter implements ActivityImageCreatePort,
         jpaActivityImageRepository.deleteAllByActivityId(activityId);
         EventPublisher.raise(new ActivityImageDeleteEvent(this, studyId, activityId));
     }
+
+    @Override
+    public void update(Long activityId, List<ActivityImage> activityImages) {
+        jpaActivityImageRepository.deleteAllByActivityId(activityId);
+        create(activityImages);
+    }
 }

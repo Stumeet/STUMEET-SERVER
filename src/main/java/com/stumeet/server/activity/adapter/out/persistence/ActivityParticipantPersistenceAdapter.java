@@ -37,4 +37,10 @@ public class ActivityParticipantPersistenceAdapter implements ActivityParticipan
     public void deleteByActivityId(Long activityId) {
         jpaActivityParticipantRepository.deleteAllByActivityId(activityId);
     }
+
+    @Override
+    public void update(Long activityId, List<ActivityParticipant> participants) {
+        deleteByActivityId(activityId);
+        create(participants);
+    }
 }

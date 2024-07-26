@@ -38,6 +38,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ApiResponse> handleSecurityViolationException(final SecurityViolationException e) {
         log.warn(SECURITY_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
         log.debug(e.getMessage(), e);
+        e.printStackTrace();
 
         ErrorCode errorCode = e.getErrorCode();
         ApiResponse response = ApiResponse.fail(errorCode);
@@ -50,6 +51,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ApiResponse> handleBusinessException(final BusinessException e) {
         log.warn(WARN_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
         log.debug(e.getMessage(), e);
+        e.printStackTrace();
 
         ErrorCode errorCode = e.getErrorCode();
         ApiResponse response = ApiResponse.fail(errorCode);
@@ -129,6 +131,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<ApiResponse> handleCustomBadRequestException(final BadRequestException e) {
         log.warn(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+        e.printStackTrace();
 
         String message = String.format("%s %s", e.getErrorCode().getMessage(), e.getMessage());
         ApiResponse response = ApiResponse.fail(e.getErrorCode().getHttpStatusCode(), message);

@@ -5,7 +5,7 @@ import java.util.List;
 import com.stumeet.server.activity.adapter.out.model.ActivityJpaEntity;
 import com.stumeet.server.activity.adapter.out.model.ActivityLinkedStudyJpaEntity;
 import com.stumeet.server.activity.adapter.out.model.ActivityMemberJpaEntity;
-import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
+import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.Meet;
 
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 public class ActivityPersistenceMapper {
 
     public Activity toDomain(ActivityJpaEntity entity) {
-        ActivityCreateSource request = ActivityCreateSource.builder()
+        ActivitySource request = ActivitySource.builder()
                 .id(entity.getId())
-                .author(ActivityCreateSource.ActivityMemberCreateSource.builder()
+                .author(ActivitySource.ActivityMemberCreateSource.builder()
                         .id(entity.getAuthor().getId())
                         .name(entity.getAuthor().getName())
                         .image(entity.getAuthor().getImage())

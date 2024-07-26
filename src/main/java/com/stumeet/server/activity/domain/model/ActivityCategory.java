@@ -1,6 +1,6 @@
 package com.stumeet.server.activity.domain.model;
 
-import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
+import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.domain.exception.NotExistsActivityCategoryException;
 
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public enum ActivityCategory {
     DEFAULT(DefaultStatus.NONE) {
         @Override
-        public Activity create(ActivityCreateSource source) {
+        public Activity create(ActivitySource source) {
             return Default.builder()
                     .id(source.id())
                     .study(ActivityLinkedStudy.builder().id(source.studyId()).build())
@@ -35,7 +35,7 @@ public enum ActivityCategory {
 
     MEET(MeetStatus.MEET_NOT_STARTED) {
         @Override
-        public Activity create(ActivityCreateSource source) {
+        public Activity create(ActivitySource source) {
             return Meet.builder()
                     .id(source.id())
                     .study(ActivityLinkedStudy.builder().id(source.studyId()).build())
@@ -59,7 +59,7 @@ public enum ActivityCategory {
     },
     ASSIGNMENT(AssignmentStatus.ASSIGNMENT_NOT_STARTED) {
         @Override
-        public Activity create(ActivityCreateSource source) {
+        public Activity create(ActivitySource source) {
             return Assignment.builder()
                     .id(source.id())
                     .study(ActivityLinkedStudy.builder().id(source.studyId()).build())
@@ -72,7 +72,7 @@ public enum ActivityCategory {
                     .category(source.category())
                     .title(source.title())
                     .content(source.content())
-                    .link(source.content())
+                    .link(source.link())
                     .startDate(source.startDate())
                     .endDate(source.endDate())
                     .isNotice(source.isNotice())
@@ -90,6 +90,5 @@ public enum ActivityCategory {
                 .orElseThrow(() -> new NotExistsActivityCategoryException(category));
     }
 
-    public abstract Activity create(ActivityCreateSource source);
-
+    public abstract Activity create(ActivitySource source);
 }

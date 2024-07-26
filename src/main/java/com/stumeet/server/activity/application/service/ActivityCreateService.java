@@ -1,12 +1,12 @@
 package com.stumeet.server.activity.application.service;
 
 import com.stumeet.server.activity.application.port.in.ActivityCreateUseCase;
-import com.stumeet.server.activity.application.service.model.ActivityCreateSource;
+import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityImageUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityParticipantUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMapper;
-import com.stumeet.server.activity.application.port.out.ActivityCreatePort;
+import com.stumeet.server.activity.application.port.out.ActivitySavePort;
 import com.stumeet.server.activity.application.port.out.ActivityImageCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCreatePort;
 import com.stumeet.server.activity.domain.model.Activity;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActivityCreateService implements ActivityCreateUseCase {
 
-    private final ActivityCreatePort activityCreatePort;
+    private final ActivitySavePort activitySavePort;
     private final ActivityImageCreatePort activityImageCreatePort;
     private final ActivityParticipantCreatePort activityParticipantPort;
 
@@ -34,21 +34,21 @@ public class ActivityCreateService implements ActivityCreateUseCase {
 
     private final ActivityUseCaseMapper activityUseCaseMapper;
     private final ActivityImageUseCaseMapper activityImageUseCaseMapper;
-    private final ActivityParticipantUseCaseMapper activityMemberUseCaseMapper;
+    private final ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper;
 
     @Override
     public void create(Long studyId, ActivityCreateCommand command, Long memberId) {
         studyValidationUseCase.checkById(studyId);
         studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
 
-        ActivityCreateSource activitySource = activityUseCaseMapper.toSource(studyId, command, memberId);
+        ActivitySource activitySource = activityUseCaseMapper.toCreateSource(studyId, command, memberId);
         Activity activity = activitySource.category().create(activitySource);
-        Activity createdActivity = activityCreatePort.create(activity);
+        Activity createdActivity = activitySavePort.save(activity);
+
+        List<ActivityParticipant> participants = activityParticipantUseCaseMapper.toDomains(command.participants(), createdActivity);
+        activityParticipantPort.create(participants);
 
         List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), createdActivity);
         activityImageCreatePort.create(images);
-
-        List<ActivityParticipant> participants = activityMemberUseCaseMapper.toDomains(command.participants(), createdActivity);
-        activityParticipantPort.create(participants);
     }
 }

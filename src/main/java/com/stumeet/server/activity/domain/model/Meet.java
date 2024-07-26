@@ -11,18 +11,11 @@ import com.stumeet.server.common.response.ErrorCode;
 @Getter
 public class Meet extends Activity {
 
-    private ActivityPeriod period;
-
     @Builder
     protected Meet(Long id, ActivityLinkedStudy study, ActivityMember author, ActivityCategory category, String title, String content, String location, String link, LocalDateTime startDate, LocalDateTime endDate, boolean isNotice, LocalDateTime createdAt) {
         super(id, study, author, category, title, content, link, location, startDate, endDate, isNotice, createdAt);
 
         validateLocationNonNull(location);
-
-        this.period = ActivityPeriod.builder()
-                .startDate(startDate)
-                .endDate(endDate)
-                .build();
     }
 
     private void validateLocationNonNull(String location) {
