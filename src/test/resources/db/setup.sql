@@ -44,8 +44,8 @@ INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (
 
 -- [TABLE: activity]
 -- 스터디 1 (공지) 기본 활동
-INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
-VALUES (1, 1, 4, 'DEFAULT', 'title', 'content', true, '2024-04-01T00:00:00', '2050-05-01T00:00:00', null);
+INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice,location)
+VALUES (1, 1, 4, 'DEFAULT', 'title', 'content', true, null);
 
 INSERT INTO activity_image (activity_id, image) VALUES (1, 'https://example.com/images/image1.png');
 INSERT INTO activity_image (activity_id, image) VALUES (1, 'https://example.com/images/image2.png');
@@ -55,8 +55,8 @@ INSERT INTO activity_participant (activity_id, member_id, status) VALUES (1, 2, 
 INSERT INTO activity_participant (activity_id, member_id, status) VALUES (1, 4, 'NONE');
 
 -- 스터디 1 기본 활동
-INSERT INTO activity (id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
-VALUES (2, 1, 1, 'DEFAULT', 'title', 'content', false, '2024-04-08T00:00:00', '2050-05-01T00:00:00', null);
+INSERT INTO activity (id, study_id, author_id, category, title, content, is_notice, location)
+VALUES (2, 1, 1, 'DEFAULT', 'title', 'content', false, null);
 
 INSERT INTO activity_image (activity_id, image) VALUES (2, 'https://example.com/images/image1.png');
 INSERT INTO activity_image (activity_id, image) VALUES (2, 'https://example.com/images/image2.png');
@@ -105,8 +105,8 @@ VALUES (7, 1, 1, 'ASSIGNMENT', 'title', 'content', false, '2024-04-08T00:00:00',
 INSERT INTO activity_participant (activity_id, member_id, status) VALUES (6, 2, 'PERFORMED');
 
 -- 스터디 2 (공지) 기본 활동
-INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
-VALUES (8, 2, 1, 'DEFAULT', 'title', 'content', true, '2024-04-01T00:00:00', '2024-04-08T00:00:00', '성신여대 카페구월');
+INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice, location)
+VALUES (8, 2, 1, 'DEFAULT', 'title', 'content', true, '성신여대 카페구월');
 
 INSERT INTO activity_image (activity_id, image) VALUES (8, 'https://example.com/images/image1.png');
 INSERT INTO activity_image (activity_id, image) VALUES (8, 'https://example.com/images/image2.png');
