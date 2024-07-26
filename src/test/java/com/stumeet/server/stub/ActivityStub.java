@@ -1,6 +1,7 @@
 package com.stumeet.server.stub;
 
 import com.stumeet.server.activity.adapter.in.response.*;
+import com.stumeet.server.activity.application.port.in.command.ActivityUpdateCommand;
 import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.domain.model.*;
@@ -83,6 +84,20 @@ public class ActivityStub {
                 .startDate(LocalDateTime.parse("2024-05-02T00:00:00"))
                 .endDate(LocalDateTime.parse("2024-05-01T00:00:00"))
                 .isNotice(false)
+                .participants(List.of(MemberStub.getMemberId()))
+                .build();
+    }
+
+    public static ActivityUpdateCommand getActivityUpdateCommand() {
+        return ActivityUpdateCommand.builder()
+                .category("MEET")
+                .title("title")
+                .content("content")
+                .images(List.of("https://example.com/image1.png", "https://example.com/image2.png", "https://example.com/image3.png"))
+                .location("서울")
+                .startDate(LocalDateTime.parse("2024-05-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-05-02T00:00:00"))
+                .isNotice(true)
                 .participants(List.of(MemberStub.getMemberId()))
                 .build();
     }
