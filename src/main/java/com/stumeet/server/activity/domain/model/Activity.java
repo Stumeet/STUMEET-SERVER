@@ -83,7 +83,7 @@ public abstract class Activity {
         }
     }
 
-    private boolean isAuthor(Long memberId) {
+    public boolean isAuthor(Long memberId) {
         return Objects.equals(this.author.getId(), memberId);
     }
 }
