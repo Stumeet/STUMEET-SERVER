@@ -494,6 +494,41 @@ include::{snippets}/create-activity/fail/period-invalid/response-body.adoc[]
 include::{snippets}/create-activity/fail/period-invalid/response-fields.adoc[]
 
 
+=== 스터디 활동 수정
+
+스터디 활동을 수정하는 API입니다.
+
+==== PATCH /api/v1/studies/{studyId}/activities/{activityId}
+
+===== 요청
+include::{snippets}/update-activity/success/http-request.adoc[]
+include::{snippets}/update-activity/success/path-parameters.adoc[]
+include::{snippets}/update-activity/success/request-headers.adoc[]
+include::{snippets}/update-activity/success/request-fields.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-details-by-condition/success/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.모임/과제 유형으로 수정할 때 활동 기간이 null인 경우
+include::{snippets}/update-activity/fail/period-null/response-body.adoc[]
+include::{snippets}/update-activity/fail/period-null/response-fields.adoc[]
+
+.모임/과제 유형으로 수정할 때 활동 기간이 유효하지 않은 경우
+include::{snippets}/update-activity/fail/period-invalid/response-body.adoc[]
+include::{snippets}/update-activity/fail/period-invalid/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.스터디 멤버가 아닌 경우
+include::{snippets}/update-activity/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/update-activity/fail/not-joined-member/response-fields.adoc[]
+
+.작성자가 아닌 경우
+include::{snippets}/update-activity/fail/not-author/response-body.adoc[]
+include::{snippets}/update-activity/fail/not-author/response-fields.adoc[]
+
+
 === 스터디 활동 상세 목록 조회
 
 스터디 활동 상세 목록을 조회하는 API입니다.

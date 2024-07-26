@@ -20,6 +20,7 @@ public class ActivityStub {
                 .content("")
                 .images(List.of("https://example.com/image1.png", "https://example.com/image2.png"))
                 .isNotice(false)
+                .link("https://www.youtube.com/watch?v=TpPwI_Lo0YY&t=7s")
                 .participants(List.of())
                 .build();
     }
@@ -98,6 +99,7 @@ public class ActivityStub {
                 .startDate(LocalDateTime.parse("2024-05-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2024-05-02T00:00:00"))
                 .isNotice(true)
+                .link("https://www.youtube.com/watch?v=TpPwI_Lo0YY&t=7s")
                 .participants(List.of(MemberStub.getMemberId()))
                 .build();
     }

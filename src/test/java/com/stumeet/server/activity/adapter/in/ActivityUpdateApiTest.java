@@ -5,6 +5,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -46,6 +47,10 @@ class ActivityUpdateApiTest extends ApiTest {
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
                                             .description("서버로부터 전달받은 액세스 토큰")
                             ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("activityId").description("활동 ID")
+                            ),
                             requestFields(
                                     fieldWithPath("category").description("활동 카테고리"),
                                     fieldWithPath("title").description("활동 제목"),
@@ -81,6 +86,10 @@ class ActivityUpdateApiTest extends ApiTest {
                             requestHeaders(
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
                                             .description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(
                                     fieldWithPath("category").description("활동 카테고리"),
@@ -118,6 +127,10 @@ class ActivityUpdateApiTest extends ApiTest {
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
                                             .description("서버로부터 전달받은 액세스 토큰")
                             ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("activityId").description("활동 ID")
+                            ),
                             requestFields(
                                     fieldWithPath("category").description("활동 카테고리"),
                                     fieldWithPath("title").description("활동 제목"),
@@ -154,6 +167,10 @@ class ActivityUpdateApiTest extends ApiTest {
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
                                             .description("서버로부터 전달받은 액세스 토큰")
                             ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("activityId").description("활동 ID")
+                            ),
                             requestFields(
                                     fieldWithPath("category").description("활동 카테고리"),
                                     fieldWithPath("title").description("활동 제목"),
@@ -189,6 +206,10 @@ class ActivityUpdateApiTest extends ApiTest {
                             requestHeaders(
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
                                             .description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(
                                     fieldWithPath("category").description("활동 카테고리"),
