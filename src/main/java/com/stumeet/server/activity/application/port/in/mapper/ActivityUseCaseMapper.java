@@ -7,7 +7,7 @@ import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageR
 import com.stumeet.server.activity.adapter.in.response.ActivityParticipantSimpleResponse;
 import com.stumeet.server.activity.adapter.in.response.PageInfoResponse;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
-import com.stumeet.server.activity.application.port.in.command.ActivityModifyCommand;
+import com.stumeet.server.activity.application.port.in.command.ActivityUpdateCommand;
 import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityCategory;
@@ -45,7 +45,7 @@ public class ActivityUseCaseMapper {
                 .build();
     }
 
-    public ActivitySource toModifySource(Activity exist, ActivityModifyCommand command) {
+    public ActivitySource toUpdateSource(Activity exist, ActivityUpdateCommand command) {
         return ActivitySource.builder()
                 .id(exist.getId())
                 .studyId(exist.getStudy().getId())

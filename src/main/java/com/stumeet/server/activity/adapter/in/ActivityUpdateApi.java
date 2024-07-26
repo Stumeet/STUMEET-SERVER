@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.stumeet.server.activity.application.port.in.ActivityModifyUseCase;
-import com.stumeet.server.activity.application.port.in.command.ActivityModifyCommand;
+import com.stumeet.server.activity.application.port.in.ActivityUpdateUseCase;
+import com.stumeet.server.activity.application.port.in.command.ActivityUpdateCommand;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
@@ -21,18 +21,18 @@ import lombok.RequiredArgsConstructor;
 @WebAdapter
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-public class ActivityModifyApi {
+public class ActivityUpdateApi {
 
-    private final ActivityModifyUseCase activityModifyUseCase;
+    private final ActivityUpdateUseCase activityUpdateUseCase;
 
     @PatchMapping("/studies/{studyId}/activities/{activityId}")
-    public ResponseEntity<ApiResponse<Void>> modify(
+    public ResponseEntity<ApiResponse<Void>> update(
             @AuthenticationPrincipal LoginMember loginMember,
             @PathVariable Long studyId,
             @PathVariable Long activityId,
-            @RequestBody @Valid ActivityModifyCommand command
+            @RequestBody @Valid ActivityUpdateCommand command
     ) {
-        activityModifyUseCase.modify(loginMember.getId(), studyId, activityId, command);
+        activityUpdateUseCase.update(loginMember.getId(), studyId, activityId, command);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success(SuccessCode.UPDATE_SUCCESS));

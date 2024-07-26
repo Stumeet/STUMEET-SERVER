@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stumeet.server.activity.application.port.in.ActivityAuthorityValidationUseCase;
-import com.stumeet.server.activity.application.port.in.ActivityModifyUseCase;
-import com.stumeet.server.activity.application.port.in.command.ActivityModifyCommand;
+import com.stumeet.server.activity.application.port.in.ActivityUpdateUseCase;
+import com.stumeet.server.activity.application.port.in.command.ActivityUpdateCommand;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityImageUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityParticipantUseCaseMapper;
 import com.stumeet.server.activity.application.port.in.mapper.ActivityUseCaseMapper;
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @UseCase
 @RequiredArgsConstructor
-public class ActivityModifyService implements ActivityModifyUseCase {
+public class ActivityUpdateService implements ActivityUpdateUseCase {
 
     private final StudyMemberValidationUseCase studyMemberValidationUseCase;
     private final ActivityAuthorityValidationUseCase activityAuthorityValidationUseCase;
@@ -41,19 +41,19 @@ public class ActivityModifyService implements ActivityModifyUseCase {
     private final ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper;
 
     @Override
-    public void modify(Long memberId, Long studyId, Long activityId, ActivityModifyCommand command) {
+    public void update(Long memberId, Long studyId, Long activityId, ActivityUpdateCommand command) {
         studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
         activityAuthorityValidationUseCase.checkDeleteAuthority(studyId, memberId, activityId);
 
         Activity exist = activityQueryPort.getById(activityId);
-        ActivitySource source = activityUseCaseMapper.toModifySource(exist, command);
-        Activity modified = exist.modify(memberId, source);
-        activitySavePort.save(modified);
+        ActivitySource source = activityUseCaseMapper.toUpdateSource(exist, command);
+        Activity updated = exist.update(memberId, source);
+        activitySavePort.save(updated);
 
-        List<ActivityParticipant> participants = activityParticipantUseCaseMapper.toDomains(command.participants(), modified);
+        List<ActivityParticipant> participants = activityParticipantUseCaseMapper.toDomains(command.participants(), updated);
         activityParticipantCommandPort.update(activityId, participants);
 
-        List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), modified);
+        List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), updated);
         activityImageCommandPort.update(activityId, images);
     }
 }

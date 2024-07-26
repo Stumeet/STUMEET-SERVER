@@ -38,7 +38,7 @@ public abstract class Activity {
 
     private LocalDateTime createdAt;
 
-    public Activity modify(Long memberId, ActivitySource source) {
+    public Activity update(Long memberId, ActivitySource source) {
         validateAuthor(memberId);
         return source.category().create(source);
     }

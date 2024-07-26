@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 @Builder
-public record ActivityModifyCommand(
+public record ActivityUpdateCommand(
         @NotBlank(message = "활동 카테고리를 입력해주세요")
         String category,
 
