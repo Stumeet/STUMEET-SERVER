@@ -17,7 +17,7 @@ public class ActivityAuthorityValidationService implements ActivityAuthorityVali
 
     @Override
     public void checkDeleteAuthority(Long studyId, Long memberId, Long activityId) {
-        if (studyMemberValidationPort.isNotAdmin(studyId, memberId) && activityAuthorValidationPort.isNotActivityAuthor(memberId, activityId)) {
+        if (!studyMemberValidationPort.isAdmin(studyId, memberId) && activityAuthorValidationPort.isNotActivityAuthor(memberId, activityId)) {
             throw new ActivityManagementAccessDeniedException();
         }
     }

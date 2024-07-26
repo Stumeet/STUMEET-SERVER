@@ -144,8 +144,6 @@ public class ActivityStub {
                 .title("title")
                 .content("content")
                 .isNotice(true)
-                .startDate(LocalDateTime.parse("2024-04-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2050-05-01T00:00:00"))
                 .location(null)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -276,6 +274,8 @@ public class ActivityStub {
                 .imageUrl(getActivityImageResponses())
                 .participants(List.of(getAuthorResponse(), getParticipantResponse()))
                 .status(DefaultStatus.NONE.getDescription())
+                .isAuthor(true)
+                .isAdmin(true)
                 .build();
     }
     public static ActivityDetailResponse getActivityDetailResponseForNotJoinedUser() {

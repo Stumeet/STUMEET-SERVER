@@ -18,8 +18,9 @@ public record ActivityDetailResponse(
         LocalDateTime startDate,
         LocalDateTime endDate,
         String location,
-        LocalDateTime createdAt
-
+        LocalDateTime createdAt,
+        boolean isAuthor,
+        boolean isAdmin
 ) {
 
     @QueryProjection

@@ -5,5 +5,5 @@ public interface StudyMemberValidationPort {
 
     boolean isAlreadyStudyJoinMember(Long studyId, Long memberId);
 
-    boolean isNotAdmin(Long studyId, Long adminId);
+    boolean isAdmin(Long studyId, Long adminId);
 }
