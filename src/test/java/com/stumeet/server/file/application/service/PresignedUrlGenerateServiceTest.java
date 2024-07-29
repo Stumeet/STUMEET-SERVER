@@ -2,7 +2,7 @@ package com.stumeet.server.file.application.service;
 
 import com.stumeet.server.file.application.port.dto.FileUrl;
 import com.stumeet.server.file.application.port.in.command.PresignedUrlCommand;
-import com.stumeet.server.file.application.port.in.response.PresignedUrlResponse;
+import com.stumeet.server.file.adapter.in.response.PresignedUrlResponse;
 import com.stumeet.server.file.application.port.out.PresignedUrlGeneratePort;
 import com.stumeet.server.file.domain.exception.InvalidFileException;
 import com.stumeet.server.stub.FileStub;

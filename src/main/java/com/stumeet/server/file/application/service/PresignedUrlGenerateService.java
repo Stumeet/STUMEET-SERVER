@@ -5,7 +5,7 @@ import com.stumeet.server.common.util.FileValidator;
 import com.stumeet.server.file.application.port.dto.FileUrl;
 import com.stumeet.server.file.application.port.in.PresignedUrlGenerateUseCase;
 import com.stumeet.server.file.application.port.in.command.PresignedUrlCommand;
-import com.stumeet.server.file.application.port.in.response.PresignedUrlResponse;
+import com.stumeet.server.file.adapter.in.response.PresignedUrlResponse;
 import com.stumeet.server.file.application.port.out.PresignedUrlGeneratePort;
 import lombok.RequiredArgsConstructor;
 

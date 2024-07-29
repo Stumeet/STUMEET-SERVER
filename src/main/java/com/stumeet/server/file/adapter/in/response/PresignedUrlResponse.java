@@ -1,4 +1,4 @@
-package com.stumeet.server.file.application.port.in.response;
+package com.stumeet.server.file.adapter.in.response;
 
 import lombok.Builder;
 
