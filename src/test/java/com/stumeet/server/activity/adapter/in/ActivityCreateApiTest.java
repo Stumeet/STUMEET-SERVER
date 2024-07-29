@@ -68,7 +68,26 @@ class ActivityCreateApiTest extends ApiTest {
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
-                                    fieldWithPath("message").description("응답 메시지")
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data.id").description("활동 ID"),
+                                    fieldWithPath("data.category").description("활동 유형"),
+                                    fieldWithPath("data.title").description("활동 제목"),
+                                    fieldWithPath("data.content").description("활동 내용"),
+                                    fieldWithPath("data.imageUrl[].id").description("활동 이미지의 아이디"),
+                                    fieldWithPath("data.imageUrl[].imageUrl").description("활동 이미지의 URL"),
+                                    fieldWithPath("data.author.memberId").description("활동 작성자 ID"),
+                                    fieldWithPath("data.author.name").description("활동 작성자 이름"),
+                                    fieldWithPath("data.author.profileImageUrl").description("활동 작성자 프로필 이미지 URL"),
+                                    fieldWithPath("data.participants[].memberId").description("참여자 ID"),
+                                    fieldWithPath("data.participants[].name").description("참여자 이름"),
+                                    fieldWithPath("data.participants[].profileImageUrl").description("참여자 프로필 이미지 URL"),
+                                    fieldWithPath("data.status").description("나의 활동 상태"),
+                                    fieldWithPath("data.startDate").description("활동 시작일"),
+                                    fieldWithPath("data.endDate").description("활동 종료일"),
+                                    fieldWithPath("data.location").description("장소"),
+                                    fieldWithPath("data.createdAt").description("활동 생성일"),
+                                    fieldWithPath("data.isAuthor").description("작성자 여부"),
+                                    fieldWithPath("data.isAdmin").description("관리자 여부")
                             )
                     ));
         }
