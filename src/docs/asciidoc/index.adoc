@@ -459,8 +459,8 @@ include::{snippets}/create-activity/success/request-headers.adoc[]
 include::{snippets}/create-activity/success/request-fields.adoc[]
 
 ===== 응답 성공 (201)
-.응답 없음
 include::{snippets}/create-activity/success/response-body.adoc[]
+include::{snippets}/create-activity/success/response-fields.adoc[]
 
 ===== 응답 실패 (400)
 .활동 생성 요청 값이 유효하지 않은 경우
