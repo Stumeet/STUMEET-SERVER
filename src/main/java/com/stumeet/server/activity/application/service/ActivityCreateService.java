@@ -37,7 +37,7 @@ public class ActivityCreateService implements ActivityCreateUseCase {
     private final ActivityParticipantUseCaseMapper activityParticipantUseCaseMapper;
 
     @Override
-    public void create(Long studyId, ActivityCreateCommand command, Long memberId) {
+    public Long create(Long studyId, ActivityCreateCommand command, Long memberId) {
         studyValidationUseCase.checkById(studyId);
         studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
 
@@ -50,5 +50,7 @@ public class ActivityCreateService implements ActivityCreateUseCase {
 
         List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), createdActivity);
         activityImageCreatePort.create(images);
+
+        return createdActivity.getId();
     }
 }

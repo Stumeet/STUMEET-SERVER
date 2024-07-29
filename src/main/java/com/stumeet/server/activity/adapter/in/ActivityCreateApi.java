@@ -1,6 +1,8 @@
 package com.stumeet.server.activity.adapter.in;
 
+import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
 import com.stumeet.server.activity.application.port.in.ActivityCreateUseCase;
+import com.stumeet.server.activity.application.port.in.ActivityQueryUseCase;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
@@ -22,16 +24,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ActivityCreateApi {
 
     private final ActivityCreateUseCase activityCreateUseCase;
+    private final ActivityQueryUseCase activityQueryUseCase;
 
     @PostMapping("/studies/{studyId}/activities")
-    public ResponseEntity<ApiResponse<Void>> create(
+    public ResponseEntity<ApiResponse<ActivityDetailResponse>> create(
             @PathVariable Long studyId,
             @AuthenticationPrincipal LoginMember loginMember,
             @RequestBody @Valid ActivityCreateCommand command
     ) {
-        activityCreateUseCase.create(studyId, command, loginMember.getMember().getId());
+        Long createdId = activityCreateUseCase.create(studyId, command, loginMember.getId());
+        ActivityDetailResponse response = activityQueryUseCase.getById(studyId, createdId, loginMember.getId());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(SuccessCode.ACTIVITY_CREATE_SUCCESS));
+                .body(ApiResponse.success(SuccessCode.ACTIVITY_CREATE_SUCCESS, response));
     }
 }
