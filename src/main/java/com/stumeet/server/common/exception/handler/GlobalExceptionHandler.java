@@ -10,6 +10,7 @@ import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.exception.model.SecurityViolationException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
+import com.stumeet.server.file.domain.exception.InvalidFileException;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -63,17 +64,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CompletionException.class)
     protected ResponseEntity<ApiResponse> handleCompletionException(final CompletionException e) {
-        String message = "비동기 작업 중 에러 발생. 원인: " + e.getCause().getMessage();
-
         log.error(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
-        log.error(message);
         log.debug(e.getMessage(), e);
         e.printStackTrace();
 
-        ApiResponse response = ApiResponse.fail(500, message);
+        ApiResponse response = createApiResponse(e);
 
-        return ResponseEntity.internalServerError()
+        return ResponseEntity.status(response.code())
                 .body(response);
+    }
+
+    private ApiResponse createApiResponse(final CompletionException e) {
+        if (e.getCause() instanceof InvalidFileException invalidFileException) {
+            return ApiResponse.fail(invalidFileException.getErrorCode());
+        } else {
+            return ApiResponse.fail(ErrorCode.ASYNC_ERROR);
+        }
     }
 
     @ExceptionHandler(Exception.class)
