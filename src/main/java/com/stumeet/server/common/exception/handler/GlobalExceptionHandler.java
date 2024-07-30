@@ -1,6 +1,7 @@
 package com.stumeet.server.common.exception.handler;
 
 import java.util.List;
+import java.util.concurrent.CompletionException;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -57,6 +58,21 @@ public class GlobalExceptionHandler {
         ApiResponse response = ApiResponse.fail(errorCode);
 
         return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(response);
+    }
+
+    @ExceptionHandler(CompletionException.class)
+    protected ResponseEntity<ApiResponse> handleCompletionException(final CompletionException e) {
+        String message = "비동기 작업 중 에러 발생. 원인: " + e.getCause().getMessage();
+
+        log.error(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+        log.error(message);
+        log.debug(e.getMessage(), e);
+        e.printStackTrace();
+
+        ApiResponse response = ApiResponse.fail(500, message);
+
+        return ResponseEntity.internalServerError()
                 .body(response);
     }
 
