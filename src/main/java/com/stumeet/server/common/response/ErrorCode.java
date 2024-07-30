@@ -73,6 +73,8 @@ public enum ErrorCode {
     FILE_IO_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "파일 입출력에 실패하였습니다."),
     UPLOAD_FILE_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패하였습니다."),
     NOT_IMPLEMENTED_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "구현되지 않은 메서드를 사용했습니다."),
+
+    ASYNC_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "비동기 작업 중 에러가 발생했습니다.")
     ;
 
     private final HttpStatus httpStatus;
