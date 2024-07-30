@@ -1,6 +1,7 @@
 package com.stumeet.server.common.exception.handler;
 
 import java.util.List;
+import java.util.concurrent.CompletionException;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -9,6 +10,7 @@ import com.stumeet.server.common.exception.model.BusinessException;
 import com.stumeet.server.common.exception.model.SecurityViolationException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
+import com.stumeet.server.file.domain.exception.InvalidFileException;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +60,26 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(response);
+    }
+
+    @ExceptionHandler(CompletionException.class)
+    protected ResponseEntity<ApiResponse> handleCompletionException(final CompletionException e) {
+        log.error(ERROR_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage());
+        log.debug(e.getMessage(), e);
+        e.printStackTrace();
+
+        ApiResponse response = createApiResponse(e);
+
+        return ResponseEntity.status(response.code())
+                .body(response);
+    }
+
+    private ApiResponse createApiResponse(final CompletionException e) {
+        if (e.getCause() instanceof InvalidFileException invalidFileException) {
+            return ApiResponse.fail(invalidFileException.getErrorCode());
+        } else {
+            return ApiResponse.fail(ErrorCode.ASYNC_ERROR);
+        }
     }
 
     @ExceptionHandler(Exception.class)

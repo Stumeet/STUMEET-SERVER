@@ -425,24 +425,24 @@ include::{snippets}/study-member-join/fail/not-exist-member/response-fields.adoc
 
 ===== 요청
 
-include::{snippets}/presigned-url-generate/success/http-request.adoc[]
-include::{snippets}/presigned-url-generate/success/request-headers.adoc[]
-include::{snippets}/presigned-url-generate/success/request-fields.adoc[]
+include::{snippets}/presigned-urls-generate/success/http-request.adoc[]
+include::{snippets}/presigned-urls-generate/success/request-headers.adoc[]
+include::{snippets}/presigned-urls-generate/success/request-fields.adoc[]
 
 include::file-management-path.adoc[]
 
 ===== 응답 성공 (200)
-include::{snippets}/presigned-url-generate/success/response-body.adoc[]
-include::{snippets}/presigned-url-generate/success/response-fields.adoc[]
+include::{snippets}/presigned-urls-generate/success/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/success/response-fields.adoc[]
 
 ===== 응답 실패 (400)
 .파일이름이 유효하지 않은 경우
-include::{snippets}/presigned-url-generate/fail/invalid-file-name/response-body.adoc[]
-include::{snippets}/presigned-url-generate/fail/invalid-file-name/response-fields.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-fields.adoc[]
 
 .파일의 확장자가 유효하지 않은 경우
-include::{snippets}/presigned-url-generate/fail/invalid-file-extension/response-body.adoc[]
-include::{snippets}/presigned-url-generate/fail/invalid-file-extension/response-fields.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-fields.adoc[]
 
 == 스터디 활동 관리
 
