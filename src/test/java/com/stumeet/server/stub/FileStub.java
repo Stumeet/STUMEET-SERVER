@@ -1,12 +1,16 @@
 package com.stumeet.server.stub;
 
 import com.stumeet.server.common.response.ErrorCode;
+import com.stumeet.server.file.adapter.in.response.PresignedUrlResponse;
+import com.stumeet.server.file.adapter.in.response.PresignedUrlResponses;
 import com.stumeet.server.file.application.port.dto.FileUrl;
 import com.stumeet.server.file.application.port.in.command.PresignedUrlCommand;
+import com.stumeet.server.file.application.port.in.command.PresignedUrlCommands;
 import com.stumeet.server.file.domain.FileManagementPath;
 import com.stumeet.server.file.domain.exception.InvalidFileException;
 import org.junit.jupiter.params.provider.Arguments;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public class FileStub {
@@ -29,6 +33,32 @@ public class FileStub {
                 .path(FileManagementPath.STUDY_ACTIVITY)
                 .fileName("test.jpg")
                 .build();
+    }
+
+    public static PresignedUrlCommands getPresignedUrlCommands() {
+        return new PresignedUrlCommands(
+                List.of(
+                        getPresignedUrlCommand(),
+                        getPresignedUrlCommand(),
+                        getPresignedUrlCommand()
+                )
+        );
+    }
+
+    public static PresignedUrlResponse getPresignedUrlResponse() {
+        return PresignedUrlResponse.builder()
+                .url(getPresignedUrl().url())
+                .build();
+    }
+
+    public static PresignedUrlResponses getPresignedUrlResponses() {
+        return new PresignedUrlResponses(
+                List.of(
+                        getPresignedUrlResponse(),
+                        getPresignedUrlResponse(),
+                        getPresignedUrlResponse()
+                )
+        );
     }
 
     public static Stream<Arguments> getInvalidFileTestArguments() {
