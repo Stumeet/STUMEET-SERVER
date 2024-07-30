@@ -51,7 +51,7 @@ class PresignedUrlGenerateAsyncServiceTest extends UnitTest {
         @ParameterizedTest
         @MethodSource("com.stumeet.server.stub.FileStub#getInvalidFileTestArguments")
         @DisplayName("[실패] 파일 이름이 유효하지 않은 경우 예외가 발생합니다.")
-        void invalidFileTest(String documentPath, PresignedUrlCommand invalidFileRequest, InvalidFileException e) {
+        void invalidFileTest(PresignedUrlCommand invalidFileRequest, InvalidFileException e) {
             assertThatCode(() -> presignedUrlGenerateAsyncService.generatePresignedUrl(invalidFileRequest))
                     .isInstanceOf(e.getClass())
                     .hasMessage(e.getMessage());

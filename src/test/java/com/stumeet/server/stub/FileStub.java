@@ -64,7 +64,6 @@ public class FileStub {
     public static Stream<Arguments> getInvalidFileTestArguments() {
         return Stream.of(
                 Arguments.of(
-                        "presigned-url-generate/fail/invalid-file-name",
                         PresignedUrlCommand.builder()
                                 .path(FileManagementPath.STUDY_ACTIVITY)
                                 .fileName("test")
@@ -72,11 +71,39 @@ public class FileStub {
                         new InvalidFileException(ErrorCode.INVALID_FILE_NAME_EXCEPTION)
                 ),
                 Arguments.of(
-                        "presigned-url-generate/fail/invalid-file-extension",
                         PresignedUrlCommand.builder()
                                 .path(FileManagementPath.STUDY_ACTIVITY)
                                 .fileName("test.pxp")
                                 .build(),
+                        new InvalidFileException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION)
+                )
+        );
+    }
+
+    public static Stream<Arguments> getInvalidFilesTestArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "presigned-urls-generate/fail/invalid-file-name",
+                        new PresignedUrlCommands(
+                                List.of(
+                                        PresignedUrlCommand.builder()
+                                                .path(FileManagementPath.STUDY_ACTIVITY)
+                                                .fileName("test")
+                                                .build()
+                                )
+                        ),
+                        new InvalidFileException(ErrorCode.INVALID_FILE_NAME_EXCEPTION)
+                ),
+                Arguments.of(
+                        "presigned-urls-generate/fail/invalid-file-extension",
+                        new PresignedUrlCommands(
+                                List.of(
+                                        PresignedUrlCommand.builder()
+                                                .path(FileManagementPath.STUDY_ACTIVITY)
+                                                .fileName("test.pxp")
+                                                .build()
+                                )
+                        ),
                         new InvalidFileException(ErrorCode.INVALID_FILE_EXTENSION_EXCEPTION)
                 )
         );
