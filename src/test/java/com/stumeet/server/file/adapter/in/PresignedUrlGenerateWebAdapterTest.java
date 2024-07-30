@@ -35,12 +35,12 @@ class PresignedUrlGenerateWebAdapterTest extends ApiTest {
         @WithMockMember
         @DisplayName("[성공] 해당하는 파일 목록에 대한 PresignedUrl 목록을 생성한다.")
         void successTest() throws Exception {
-            PresignedUrlCommands commands = FileStub.getPresignedUrlCommands();
+            PresignedUrlCommands request = FileStub.getPresignedUrlCommands();
 
             mockMvc.perform(post(PATH)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(toJson(commands)))
+                            .content(toJson(request)))
                     .andExpect(status().isOk())
                     .andDo(document("presigned-urls-generate/success",
                             preprocessRequest(prettyPrint()),
@@ -49,8 +49,8 @@ class PresignedUrlGenerateWebAdapterTest extends ApiTest {
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
                             ),
                             requestFields(
-                                    fieldWithPath("commands[].path").description("해당하는 파일의 도메인"),
-                                    fieldWithPath("commands[].fileName").description("파일 이름")
+                                    fieldWithPath("requests[].path").description("해당하는 파일의 도메인"),
+                                    fieldWithPath("requests[].fileName").description("파일 이름")
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -79,8 +79,8 @@ class PresignedUrlGenerateWebAdapterTest extends ApiTest {
                                     headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
                             ),
                             requestFields(
-                                    fieldWithPath("commands[].path").description("해당하는 파일의 도메인"),
-                                    fieldWithPath("commands[].fileName").description("파일 이름")
+                                    fieldWithPath("requests[].path").description("해당하는 파일의 도메인"),
+                                    fieldWithPath("requests[].fileName").description("파일 이름")
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),

@@ -25,7 +25,7 @@ public class PresignedUrlGenerateService implements PresignedUrlGenerateUseCase 
     public PresignedUrlResponses generatePresignedUrls(PresignedUrlCommands commands) {
         List<CompletableFuture<PresignedUrlResponse>> futures = new ArrayList<>();
 
-        for (PresignedUrlCommand command : commands.commands()) {
+        for (PresignedUrlCommand command : commands.requests()) {
             CompletableFuture<PresignedUrlResponse> future =
                     presignedUrlGenerateAsyncService.generatePresignedUrl(command);
             futures.add(future);
