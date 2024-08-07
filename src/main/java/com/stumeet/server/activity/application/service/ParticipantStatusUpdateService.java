@@ -37,11 +37,18 @@ public class ParticipantStatusUpdateService implements ParticipantStatusUpdateUs
         studyMemberValidationUseCase.checkStudyJoinMember(command.studyId(), command.memberId());
 
         Activity activity = activityQueryPort.getByStudyIdAndId(command.studyId(), command.activityId());
+        validateActivityCategory(activity);
         activity.getCategory().validateStatus(command.status());
 
         ActivityParticipant participant = activityParticipantQueryPort.findByActivityIdAndMemberIdAndId(command.activityId(), command.memberId(), command.participantId());
         ActivityParticipant updated = participant.update(command.status());
 
         activityParticipantCommandPort.update(updated);
+    }
+
+    private void validateActivityCategory(Activity activity) {
+        if (ActivityCategory.DEFAULT.equals(activity.getCategory())) {
+            throw new InvalidStateException(ErrorCode.DEFAULT_ACTIVITY_STATUS_IMMUTABLE_EXCEPTION);
+        }
     }
 }
