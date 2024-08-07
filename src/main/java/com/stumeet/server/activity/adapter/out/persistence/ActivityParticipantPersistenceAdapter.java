@@ -5,8 +5,10 @@ import com.stumeet.server.activity.adapter.out.model.ActivityParticipantJpaEntit
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCommandPort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantCreatePort;
 import com.stumeet.server.activity.application.port.out.ActivityParticipantQueryPort;
+import com.stumeet.server.activity.domain.exception.NotExistsActivityParticipantException;
 import com.stumeet.server.activity.domain.model.ActivityParticipant;
 import com.stumeet.server.common.annotation.PersistenceAdapter;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,12 +20,20 @@ public class ActivityParticipantPersistenceAdapter implements ActivityParticipan
     private final JpaActivityParticipantRepository jpaActivityParticipantRepository;
     private final ActivityParticipantPersistenceMapper activityParticipantPersistenceMapper;
 
-
     @Override
     public void create(List<ActivityParticipant> participants) {
         List<ActivityParticipantJpaEntity> entities = activityParticipantPersistenceMapper.toEntities(participants);
 
         jpaActivityParticipantRepository.saveAll(entities);
+    }
+
+    @Override
+    public ActivityParticipant findByActivityIdAndMemberIdAndId(Long activityId, Long memberId, Long participantId) {
+        ActivityParticipantJpaEntity participant =
+                jpaActivityParticipantRepository.findByActivityIdAndMemberIdAndId(activityId, memberId, participantId)
+                        .orElseThrow(() -> new NotExistsActivityParticipantException(participantId));
+
+        return activityParticipantPersistenceMapper.toDomain(participant);
     }
 
     @Override
@@ -34,12 +44,17 @@ public class ActivityParticipantPersistenceAdapter implements ActivityParticipan
     }
 
     @Override
+    public void update(ActivityParticipant participant) {
+        jpaActivityParticipantRepository.save(activityParticipantPersistenceMapper.toEntity(participant));
+    }
+
+    @Override
     public void deleteByActivityId(Long activityId) {
         jpaActivityParticipantRepository.deleteAllByActivityId(activityId);
     }
 
     @Override
-    public void update(Long activityId, List<ActivityParticipant> participants) {
+    public void updateActivityParticipants(Long activityId, List<ActivityParticipant> participants) {
         deleteByActivityId(activityId);
         create(participants);
     }

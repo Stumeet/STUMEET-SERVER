@@ -658,6 +658,25 @@ include::{snippets}/get-activity-participants/fail/not-found-activity/response-b
 include::{snippets}/get-activity-participants/fail/not-found-activity/response-fields.adoc[]
 
 
+=== 스터디 활동 참여 멤버 상태 변경
+
+스터디 활동에 참여중인 멤버의 상태를 변경하는 API입니다.
+
+==== PATCH /api/v1/studies/{studyId}/members/{memberId}/activities/{activityId}/status
+
+===== 요청
+include::{snippets}/update-activity-participant-status/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/update-activity-participant-status/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/update-activity-participant-status/success/path-parameters.adoc[]
+
+====== 요청 본문
+include::{snippets}/update-activity-participant-status/success/request-fields.adoc[]
+
+
 === 스터디 활동 삭제
 
 스터디 활동을 삭제하는 API입니다.

@@ -8,6 +8,6 @@ import java.text.MessageFormat;
 public class NotExistsActivityStatusException extends InvalidStateException {
     private static final String MESSAGE = "존재하지 않는 상태입니다. 입력받은 상태 : {0}";
     public NotExistsActivityStatusException(String status) {
-        super(MessageFormat.format(MESSAGE, status), ErrorCode.NOT_EXIST_EXCEPTION);
+        super(MessageFormat.format(MESSAGE, status), ErrorCode.ACTIVITY_STATUS_NOT_FOUND);
     }
 }

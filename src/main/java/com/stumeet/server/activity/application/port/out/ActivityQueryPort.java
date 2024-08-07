@@ -13,6 +13,8 @@ import com.stumeet.server.activity.domain.model.ActivityCategory;
 public interface ActivityQueryPort {
     Activity getById(Long activityId);
 
+    Activity getByStudyIdAndId(Long studyId, Long id);
+
     Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, ActivityCategory category);
 
     Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);

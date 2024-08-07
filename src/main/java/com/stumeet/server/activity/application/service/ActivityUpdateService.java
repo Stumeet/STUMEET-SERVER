@@ -51,7 +51,7 @@ public class ActivityUpdateService implements ActivityUpdateUseCase {
         activitySavePort.save(updated);
 
         List<ActivityParticipant> participants = activityParticipantUseCaseMapper.toDomains(command.participants(), updated);
-        activityParticipantCommandPort.update(activityId, participants);
+        activityParticipantCommandPort.updateActivityParticipants(activityId, participants);
 
         List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), updated);
         activityImageCommandPort.update(activityId, images);

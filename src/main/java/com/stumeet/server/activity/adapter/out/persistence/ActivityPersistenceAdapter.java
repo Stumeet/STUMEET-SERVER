@@ -43,6 +43,14 @@ public class ActivityPersistenceAdapter implements ActivitySavePort, ActivityQue
     }
 
     @Override
+    public Activity getByStudyIdAndId(Long studyId, Long activityId) {
+        ActivityJpaEntity entity = jpaActivityRepository.findByStudyIdAndId(studyId, activityId)
+                .orElseThrow(() -> new NotExistsActivityException(activityId));
+
+        return activityPersistenceMapper.toDomain(entity);
+    }
+
+    @Override
     public Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, ActivityCategory category) {
         Page<ActivityJpaEntity> entities =
                 jpaActivityRepository.findDetailPagesByCondition(pageable, isNotice, studyId, category);

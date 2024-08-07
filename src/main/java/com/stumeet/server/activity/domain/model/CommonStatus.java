@@ -1,21 +1,20 @@
 package com.stumeet.server.activity.domain.model;
 
-public enum CommonStatus implements ActivityStatus{
-	NON_PARTICIPATION("미참여");
+import lombok.RequiredArgsConstructor;
 
-	private final String description;
+@RequiredArgsConstructor
+public enum CommonStatus implements ActivityStatus {
+    NOT_JOINED("미참여");
 
-	CommonStatus(String description) {
-		this.description = description;
-	}
+    private final String description;
 
-	@Override
-	public String getStatus() {
-		return this.name();
-	}
+    @Override
+    public String getStatus() {
+        return this.name();
+    }
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 }

@@ -14,7 +14,7 @@ public class ActivityStatusConverter implements AttributeConverter<ActivityStatu
     @Override
     public ActivityStatus convertToEntityAttribute(String s) {
         if (s == null) {
-            return CommonStatus.NON_PARTICIPATION;
+            return CommonStatus.NOT_JOINED;
         }
         return ActivityStatus.findByStatus(s);
     }
