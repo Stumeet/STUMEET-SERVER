@@ -36,6 +36,7 @@ public enum ErrorCode {
     INVALID_ACTIVITY_CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 활동 카테고리입니다."),
     START_DATE_NOT_YET_EXCEPTION(HttpStatus.BAD_REQUEST, "시작일 전에 스터디를 완료할 수 없습니다."),
     LOCATION_REQUIRED_FOR_MEET_EXCEPTION(HttpStatus.BAD_REQUEST, "모임 활동 생성 시 장소 값이 필수입니다."),
+    INVALID_STATUS_FOR_ACTIVITY_CATEGORY(HttpStatus.BAD_REQUEST, "해당 활동 카테고리에 유효하지 않은 활동 상태입니다."),
 
 
     /*
@@ -54,8 +55,8 @@ public enum ErrorCode {
     STUDY_MEMBER_NOT_JOINED_EXCEPTION(HttpStatus.FORBIDDEN, "스터디에 가입한 멤버가 아닙니다."),
     NOT_STUDY_ADMIN_EXCEPTION(HttpStatus.FORBIDDEN, "스터디 관리자가 아닙니다."),
     ALREADY_STUDY_JOIN_MEMBER_EXCEPTION(HttpStatus.FORBIDDEN, "스터디에 이미 가입한 사용자입니다."),
-    NOT_EXIST_ACTIVITY_STATUS_EXCEPTION(HttpStatus.FORBIDDEN, "존재하지 않는 활동 상태입니다."),
     ACTIVITY_MANAGEMENT_ACCESS_DENIED_EXCEPTION(HttpStatus.FORBIDDEN, "활동 관리 권한이 없습니다."),
+
 
     /*
         404 - NOT FOUND
@@ -65,6 +66,9 @@ public enum ErrorCode {
     STUDY_FIELD_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 분야 입니다."),
     STUDY_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 스터디 상태 입니다."),
     ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 입니다."),
+    ACTIVITY_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 상태 입니다."),
+    ACTIVITY_PARTICIPANT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 참가자입니다."),
+
 
     /*
         500 - INTERNAL SERVER ERROR

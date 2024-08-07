@@ -1,6 +1,7 @@
 package com.stumeet.server.activity.domain.model;
 
 import com.stumeet.server.activity.application.service.model.ActivitySource;
+import com.stumeet.server.activity.domain.exception.InvalidCategoryStatusException;
 import com.stumeet.server.activity.domain.exception.NotExistsActivityCategoryException;
 
 import lombok.Getter;
@@ -31,6 +32,16 @@ public enum ActivityCategory {
                     .createdAt(source.createdAt())
                     .build();
         }
+
+        @Override
+        public void validateStatus(ActivityStatus status) {
+            boolean isNotDefaultStatus = Arrays.stream(DefaultStatus.values())
+                    .noneMatch(defaultStatus -> defaultStatus.equals(status));
+
+            if (isNotDefaultStatus) {
+                throw new InvalidCategoryStatusException();
+            }
+        }
     },
 
     MEET(MeetStatus.MEET_NOT_STARTED) {
@@ -56,6 +67,16 @@ public enum ActivityCategory {
                     .createdAt(source.createdAt())
                     .build();
         }
+
+        @Override
+        public void validateStatus(ActivityStatus status) {
+            boolean isNotMeetStatus = Arrays.stream(MeetStatus.values())
+                    .noneMatch(meetStatus -> meetStatus.equals(status));
+
+            if (isNotMeetStatus) {
+                throw new InvalidCategoryStatusException();
+            }
+        }
     },
     ASSIGNMENT(AssignmentStatus.ASSIGNMENT_NOT_STARTED) {
         @Override
@@ -79,6 +100,16 @@ public enum ActivityCategory {
                     .createdAt(source.createdAt())
                     .build();
         }
+
+        @Override
+        public void validateStatus(ActivityStatus status) {
+            boolean isNotAssignmentStatus = Arrays.stream(AssignmentStatus.values())
+                    .noneMatch(assignmentStatus -> assignmentStatus.equals(status));
+
+            if (isNotAssignmentStatus) {
+                throw new InvalidCategoryStatusException();
+            }
+        }
     };
 
     private final ActivityStatus defaultStatus;
@@ -91,4 +122,6 @@ public enum ActivityCategory {
     }
 
     public abstract Activity create(ActivitySource source);
+
+    public abstract void validateStatus(ActivityStatus status);
 }
