@@ -20,7 +20,7 @@ public class ActivityParticipant {
 
     public static ActivityParticipant makeNotJoinedMember() {
         return ActivityParticipant.builder()
-                .status(NotJoinedStatus.NOT_JOINED)
+                .status(CommonStatus.NOT_JOINED)
                 .build();
     }
 }

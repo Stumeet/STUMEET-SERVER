@@ -289,7 +289,7 @@ public class ActivityStub {
                 .author(getAuthorResponse())
                 .imageUrl(getActivityImageResponses())
                 .participants(List.of(getAuthorResponse(), getParticipantResponse()))
-                .status(NotJoinedStatus.NOT_JOINED.getDescription())
+                .status(CommonStatus.NOT_JOINED.getDescription())
                 .build();
     }
 
