@@ -23,4 +23,13 @@ public class ActivityParticipant {
                 .status(CommonStatus.NOT_JOINED)
                 .build();
     }
+
+    public ActivityParticipant update(ActivityStatus status) {
+        return ActivityParticipant.builder()
+                .id(this.id)
+                .activity(this.activity)
+                .member(this.member)
+                .status(status)
+                .build();
+    }
 }

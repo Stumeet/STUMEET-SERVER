@@ -6,7 +6,9 @@ import com.stumeet.server.activity.domain.model.ActivityParticipant;
 
 public interface ActivityParticipantCommandPort {
 
+    void update(ActivityParticipant participant);
+
     void deleteByActivityId(Long activityId);
 
-    void update(Long activityId, List<ActivityParticipant> participants);
+    void updateActivityParticipants(Long activityId, List<ActivityParticipant> participants);
 }
