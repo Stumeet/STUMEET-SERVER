@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @WebAdapter
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-public class ActivityParticipantQueryApi {
+public class ParticipantQueryApi {
 
     private final ActivityParticipantQueryUseCase activityParticipantQueryUseCase;
 

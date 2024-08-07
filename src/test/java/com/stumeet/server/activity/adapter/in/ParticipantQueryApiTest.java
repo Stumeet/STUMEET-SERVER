@@ -23,7 +23,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class ActivityParticipantQueryApiTest extends ApiTest {
+class ParticipantQueryApiTest extends ApiTest {
 
     @Nested
     @DisplayName("활동 참여자 리스트 조회")
@@ -115,6 +115,5 @@ class ActivityParticipantQueryApiTest extends ApiTest {
                                     fieldWithPath("message").description("응답 메시지")
                             )));
         }
-
     }
 }
