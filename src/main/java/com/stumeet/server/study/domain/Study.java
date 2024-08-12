@@ -130,4 +130,22 @@ public class Study {
 	public LocalTime getMeetingTime() {
 		return meetingSchedule.getTime();
 	}
+
+	@Override
+	public String toString() {
+		return "Study{" +
+				"\n\tid=" + id +
+				",\n\tname='" + name + '\'' +
+				",\n\tstudyDomain=" + studyDomain +
+				",\n\tregion='" + region + '\'' +
+				",\n\tmeetingSchedule=" + meetingSchedule +
+				",\n\tintro='" + intro + '\'' +
+				",\n\trule='" + rule + '\'' +
+				",\n\theadcount=" + headcount +
+				",\n\tperiod=" + period +
+				",\n\timageUrl='" + imageUrl + '\'' +
+				",\n\tisFinished=" + isFinished +
+				",\n\tisDeleted=" + isDeleted +
+				"\n}";
+	}
 }
