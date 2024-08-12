@@ -32,7 +32,7 @@ public class ReportAlertService implements ReportAlertUseCase {
     @Override
     public void alert(Long reportId) {
         Report report = reportQueryPort.findById(reportId);
-        Member reporter = memberQueryPort.getById(report.getReportedId());
+        Member reporter = memberQueryPort.getById(report.getReporterId());
 
         ReportRequest request = ReportRequest.builder()
                 .content(makeContent(report, reporter))
