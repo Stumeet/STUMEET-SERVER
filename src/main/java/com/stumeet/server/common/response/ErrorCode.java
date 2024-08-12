@@ -69,6 +69,7 @@ public enum ErrorCode {
     ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 입니다."),
     ACTIVITY_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 상태 입니다."),
     ACTIVITY_PARTICIPANT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 참가자입니다."),
+    REPORT_REASON_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 신고 사유입니다."),
 
 
     /*

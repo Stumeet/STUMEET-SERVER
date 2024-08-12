@@ -19,8 +19,13 @@ public class ReportCreateService implements ReportCreateUseCase {
 
     @Override
     public Long report(ReportCreateCommand command) {
-        Report report =
-                Report.create(command.category(), command.reportedId(), command.reporterId(), command.title(), command.content());
+        Report report = Report.create(
+                command.category(),
+                command.reason(),
+                command.reportedId(),
+                command.reporterId(),
+                command.content()
+        );
 
         return reportCommandPort.save(report);
     }

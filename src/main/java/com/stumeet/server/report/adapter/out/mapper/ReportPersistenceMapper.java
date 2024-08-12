@@ -12,9 +12,9 @@ public class ReportPersistenceMapper {
         return ReportJpaEntity.builder()
                 .id(report.getId())
                 .category(report.getCategory())
+                .reason(report.getReason())
                 .reportedId(report.getReportedId())
                 .reporterId(report.getReporterId())
-                .title(report.getTitle())
                 .content(report.getContent())
                 .build();
     }

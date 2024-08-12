@@ -1,6 +1,7 @@
 package com.stumeet.server.report.adapter.out.model;
 
 import com.stumeet.server.report.domain.ReportCategory;
+import com.stumeet.server.report.domain.ReportReason;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -27,11 +28,12 @@ public class ReportJpaEntity {
     @Enumerated
     private ReportCategory category;
 
+    @Enumerated
+    private ReportReason reason;
+
     private Long reportedId;
 
     private Long reporterId;
-
-    private String title;
 
     private String content;
 }
