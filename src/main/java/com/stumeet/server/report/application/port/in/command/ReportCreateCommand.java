@@ -10,11 +10,10 @@ public record ReportCreateCommand(
         ReportReason reason,
         Long reportedId,
         Long reporterId,
-        String title,
         String content
 ) {
     @Builder
-    public ReportCreateCommand(String category, String reason, Long reportedId, Long reporterId, String title, String content) {
-        this(ReportCategory.find(category), ReportReason.find(reason), reportedId, reporterId, title, content);
+    public ReportCreateCommand(String category, String reason, Long reportedId, Long reporterId, String content) {
+        this(ReportCategory.find(category), ReportReason.find(reason), reportedId, reporterId, content);
     }
 }
