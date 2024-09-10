@@ -32,4 +32,8 @@ public class ActivityParticipant {
                 .status(status)
                 .build();
     }
+
+    public boolean isAchieved() {
+        return this.status.isSuccessfulStatus();
+    }
 }

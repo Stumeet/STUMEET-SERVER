@@ -24,4 +24,9 @@ public enum MeetStatus implements ActivityStatus {
     public String getDescription() {
         return this.description;
     }
+
+    @Override
+    public boolean isSuccessfulStatus() {
+        return this.equals(ATTENDANCE) || this.equals(ACKNOWLEDGED_ABSENCE);
+    }
 }
