@@ -413,6 +413,34 @@ include::{snippets}/study-member-join/fail/not-exist-study/response-fields.adoc[
 include::{snippets}/study-member-join/fail/not-exist-member/response-body.adoc[]
 include::{snippets}/study-member-join/fail/not-exist-member/response-fields.adoc[]
 
+=== 관리자 위임
+
+다른 멤버에게 관리자를 위임하는 API입니다.
+
+==== PATCH /v1/api/studies/{studyId}/members/{memberId}/admin/delegate
+
+===== 요청
+include::{snippets}/delegate-admin/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/delegate-admin/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/delegate-admin/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/delegate-admin/success/response-body.adoc[]
+include::{snippets}/delegate-admin/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 해당 스터디 관리자가 아닌 경우
+include::{snippets}/delegate-admin/fail/not-admin/response-body.adoc[]
+include::{snippets}/delegate-admin/fail/not-admin/response-fields.adoc[]
+
+.위임 대상자가 스터디 멤버가 아닌 경우
+include::{snippets}/delegate-admin/fail/member-not-joined/response-body.adoc[]
+include::{snippets}/delegate-admin/fail/member-not-joined/response-fields.adoc[]
+
 == 파일 관리
 
 === Presigned URL 발급
