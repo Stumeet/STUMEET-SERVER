@@ -14,4 +14,5 @@ public interface JpaStudyMemberRepositoryCustom {
 
     boolean isAdmin(Long studyId, Long adminId);
 
+    boolean isSentGrape(Long studyId, Long memberId);
 }

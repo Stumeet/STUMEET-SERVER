@@ -69,4 +69,17 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
                         ).fetchOne()
         );
     }
+
+    @Override
+    public boolean isSentGrape(Long studyId, Long memberId) {
+        return Boolean.TRUE.equals(
+                query
+                        .select(studyMemberJpaEntity.isSentGrape)
+                        .from(studyMemberJpaEntity)
+                        .where(
+                                studyMemberJpaEntity.study.id.eq(studyId),
+                                studyMemberJpaEntity.member.id.eq(memberId)
+                        ).fetchOne()
+        );
+    }
 }

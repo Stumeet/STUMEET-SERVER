@@ -36,6 +36,11 @@ public class StudyMemberPersistenceAdapter implements StudyMemberJoinPort, Study
     }
 
     @Override
+    public boolean isSentGrape(Long studyId, Long memberId) {
+        return jpaStudyMemberRepository.isSentGrape(studyId, memberId);
+    }
+
+    @Override
     public boolean isNotStudyJoinMember(Long studyId, Long memberId) {
         return !jpaStudyMemberRepository.isStudyJoinMember(studyId, memberId);
     }

@@ -43,7 +43,8 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
         studyMemberValidationUseCase.checkStudyJoinMember(studyId, requesterId);
 
         StudyMember studyMember = studyMemberQueryPort.findStudyMember(studyId, targetMemberId);
-        Integer achievement = evaluateMemberAchievementUseCase.getMemberAchievement(studyId, targetMemberId);
+        boolean canSendGrape = studyMemberQueryPort.isSentGrape(studyId, requesterId);
+        int achievement = evaluateMemberAchievementUseCase.getMemberAchievement(studyId, targetMemberId);
 
         return new StudyMemberDetailResponse(
                 studyMember.getMember().getId(),
@@ -51,7 +52,7 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
                 studyMember.getMember().getImage(),
                 studyMember.getMember().getRegion(),
                 studyMember.getMember().getProfession().getName(),
-                studyMember.isSentGrape(),
+                canSendGrape,
                 achievement
         );
     }

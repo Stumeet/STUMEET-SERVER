@@ -9,4 +9,6 @@ public interface StudyMemberQueryPort {
     List<SimpleStudyMemberResponse> findStudyMembers(Long studyId);
 
     StudyMember findStudyMember(Long studyId, Long memberId);
+
+    boolean isSentGrape(Long studyId, Long memberId);
 }
