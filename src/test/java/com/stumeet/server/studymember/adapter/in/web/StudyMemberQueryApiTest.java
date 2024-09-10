@@ -2,6 +2,7 @@ package com.stumeet.server.studymember.adapter.in.web;
 
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.helper.WithMockMember;
+import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
@@ -103,4 +104,41 @@ class StudyMemberQueryApiTest extends ApiTest {
         }
     }
 
+    @Nested
+    @DisplayName("단일 스터디 멤버 상세 조회")
+    class GetStudyMemberDetail {
+        private static final String PATH = "/api/v1/studies/{studyId}/members/{memberId}";
+
+        @Test
+        @WithMockMember
+        @DisplayName("[성공] 단일 스터디 멤버 상세 조회에 성공한다.")
+        void success() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+            Long memberId = MemberStub.getMemberId();
+
+            mockMvc.perform(get(PATH, studyId, memberId)
+                    .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(document("get-study-member-detail/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID"),
+                                    parameterWithName("memberId").description("조회할 멤버 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data").description("스터디 멤버 상세 정보"),
+                                    fieldWithPath("data.id").description("멤버 ID"),
+                                    fieldWithPath("data.name").description("스터디 멤버 이름"),
+                                    fieldWithPath("data.image").description("스터디 멤버 프로필 이미지"),
+                                    fieldWithPath("data.region").description("스터디 멤버 지역"),
+                                    fieldWithPath("data.profession").description("스터디 멤버 분야"),
+                                    fieldWithPath("data.canSendGrape").description("포도알 발송 가능 여부"),
+                                    fieldWithPath("data.achievement").description("성취도")
+                            ))
+                    );
+        }
+    }
 }
