@@ -42,6 +42,9 @@ class StudyMemberQueryApiTest extends ApiTest {
                     .andDo(document("get-study-members/success",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID")
                             ),
@@ -75,6 +78,9 @@ class StudyMemberQueryApiTest extends ApiTest {
                     .andDo(document("get-study-members/fail/not-joined-member",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID")
                             ),
@@ -96,6 +102,9 @@ class StudyMemberQueryApiTest extends ApiTest {
                     .andDo(document("get-study-members/fail/not-exist-study",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID")
                             ),
@@ -124,6 +133,9 @@ class StudyMemberQueryApiTest extends ApiTest {
                     .andDo(document("get-study-member-detail/success",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
                                     parameterWithName("memberId").description("조회할 멤버 ID")
@@ -156,6 +168,9 @@ class StudyMemberQueryApiTest extends ApiTest {
                     .andDo(document("get-study-member-detail/fail/study-not-found",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
                                     parameterWithName("memberId").description("조회할 멤버 ID")
@@ -180,6 +195,9 @@ class StudyMemberQueryApiTest extends ApiTest {
                     .andDo(document("get-study-member-detail/fail/is-not-study-member",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                            ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
                                     parameterWithName("memberId").description("조회할 멤버 ID")
