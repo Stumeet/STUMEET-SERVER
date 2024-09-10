@@ -306,6 +306,39 @@ include::{snippets}/update-study/fail/study-field-not-found/response-fields.adoc
 include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-body.adoc[]
 include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-fields.adoc[]
 
+=== 스터디 완료
+
+스터디를 완료하는 API 입니다.
+
+==== PATCH /api/v1/studies/{studyId}/finish
+
+===== 요청
+include::{snippets}/finish-study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/finish-study/success/request-headers.adoc[]
+
+===== 경로 변수
+include::{snippets}/finish-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/finish-study/success/response-body.adoc[]
+include::{snippets}/finish-study/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.현재 날짜가 시작일보다 이전인 경우
+include::{snippets}/finish-study/fail/start-date-not-yet/response-body.adoc[]
+include::{snippets}/finish-study/fail/start-date-not-yet/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.완료를 시도하는 멤버가 스터디 멤버가 아닌 경우
+include::{snippets}/finish-study/fail/member-not-joined_study/response-body.adoc[]
+include::{snippets}/finish-study/fail/member-not-joined_study/response-fields.adoc[]
+
+.완료를 시도하는 멤버가 관리자가 아닌 경우
+include::{snippets}/finish-study/fail/member-not-admin/response-body.adoc[]
+include::{snippets}/finish-study/fail/member-not-admin/response-fields.adoc[]
+
 
 == 스터디 멤버 관리
 
