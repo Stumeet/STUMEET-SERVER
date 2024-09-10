@@ -309,7 +309,33 @@ include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-fi
 
 == 스터디 멤버 관리
 
-=== 스터디 멤버 조회
+=== 스터디 멤버 단일 상세 조회
+
+전달받은 스터디 ID의 단일 멤버 정보를 상세 조회하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/members/{memberId}
+
+===== 요청
+include::{snippets}/get-study-member-detail/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-detail/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-detail/success/path-parameters.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 스터디의 멤버가 아닌 경우
+include::{snippets}/get-study-member-detail/fail/is-not-study-member/response-body.adoc[]
+include::{snippets}/get-study-member-detail/fail/is-not-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.요청한 스터디가 존재하지 않는 경우
+include::{snippets}/get-study-member-detail/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-detail/fail/study-not-found/response-fields.adoc[]
+
+
+=== 스터디 멤버 목록 조회
 
 전달받은 스터디 ID의 속한 멤버들을 조회하는 API입니다.
 
