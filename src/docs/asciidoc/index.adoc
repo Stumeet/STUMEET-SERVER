@@ -357,6 +357,10 @@ include::{snippets}/get-study-member-detail/success/request-headers.adoc[]
 ====== 경로 변수
 include::{snippets}/get-study-member-detail/success/path-parameters.adoc[]
 
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-detail/success/response-body.adoc[]
+include::{snippets}/get-study-member-detail/success/response-fields.adoc[]
+
 ===== 응답 실패 (403)
 .요청자가 스터디의 멤버가 아닌 경우
 include::{snippets}/get-study-member-detail/fail/is-not-study-member/response-body.adoc[]
