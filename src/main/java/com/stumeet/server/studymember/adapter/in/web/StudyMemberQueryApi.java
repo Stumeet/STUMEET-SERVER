@@ -4,6 +4,7 @@ import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberAdminResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberDetailResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberGrapeResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberResponses;
@@ -43,6 +44,18 @@ public class StudyMemberQueryApi {
             @PathVariable Long memberId
     ) {
         StudyMemberDetailResponse response = studyMemberQueryUseCase.getStudyMemberDetail(studyId, memberId, member.getId());
+
+        return ResponseEntity.ok(
+                ApiResponse.success(SuccessCode.GET_SUCCESS, response)
+        );
+    }
+
+    @GetMapping("/studies/{studyId}/me/admin/check")
+    public ResponseEntity<ApiResponse<StudyMemberAdminResponse>> isMemberAdmin(
+            @AuthenticationPrincipal LoginMember member,
+            @PathVariable Long studyId
+    ) {
+        StudyMemberAdminResponse response = studyMemberQueryUseCase.isMemberAdmin(studyId, member.getId());
 
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessCode.GET_SUCCESS, response)

@@ -60,6 +60,13 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
     }
 
     @Override
+    public StudyMemberAdminResponse isMemberAdmin(Long studyId, Long memberId) {
+        return new StudyMemberAdminResponse(
+                studyMemberValidationPort.isAdmin(studyId, memberId)
+        );
+    }
+
+    @Override
     public StudyMemberGrapeResponse canStudyMemberSendGrape(Long studyId, Long memberId) {
         return new StudyMemberGrapeResponse(
                 !studyMemberQueryPort.isSentGrape(studyId, memberId)
