@@ -6,7 +6,6 @@ public record StudyMemberDetailResponse(
         String image,
         String region,
         String profession,
-        boolean canSendGrape,
         Integer achievement
 ) {
 }

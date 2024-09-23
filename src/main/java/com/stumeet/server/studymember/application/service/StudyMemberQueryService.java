@@ -4,11 +4,14 @@ import com.stumeet.server.activity.application.port.in.EvaluateMemberAchievement
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberAdminResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberDetailResponse;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberGrapeResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberResponses;
 import com.stumeet.server.studymember.application.port.in.StudyMemberQueryUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import com.stumeet.server.studymember.application.port.out.StudyMemberQueryPort;
+import com.stumeet.server.studymember.application.port.out.StudyMemberValidationPort;
 import com.stumeet.server.studymember.domain.StudyMember;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
     private final EvaluateMemberAchievementUseCase evaluateMemberAchievementUseCase;
 
     private final StudyMemberQueryPort studyMemberQueryPort;
+    private final StudyMemberValidationPort studyMemberValidationPort;
 
     @Override
     public StudyMemberResponses getStudyMembers(Long studyId, Long requesterId) {
@@ -43,7 +47,6 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
         studyMemberValidationUseCase.checkStudyJoinMember(studyId, requesterId);
 
         StudyMember studyMember = studyMemberQueryPort.findStudyMember(studyId, targetMemberId);
-        boolean canSendGrape = studyMemberQueryPort.isSentGrape(studyId, requesterId);
         int achievement = evaluateMemberAchievementUseCase.getMemberAchievement(studyId, targetMemberId);
 
         return new StudyMemberDetailResponse(
@@ -52,8 +55,14 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
                 studyMember.getMember().getImage(),
                 studyMember.getMember().getRegion(),
                 studyMember.getMember().getProfession().getName(),
-                canSendGrape,
                 achievement
+        );
+    }
+
+    @Override
+    public StudyMemberGrapeResponse canStudyMemberSendGrape(Long studyId, Long memberId) {
+        return new StudyMemberGrapeResponse(
+                !studyMemberQueryPort.isSentGrape(studyId, memberId)
         );
     }
 }
