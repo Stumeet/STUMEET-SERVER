@@ -43,7 +43,8 @@ class StudyMemberQueryApiTest extends ApiTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID")
@@ -79,7 +80,8 @@ class StudyMemberQueryApiTest extends ApiTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID")
@@ -103,7 +105,8 @@ class StudyMemberQueryApiTest extends ApiTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID")
@@ -134,7 +137,8 @@ class StudyMemberQueryApiTest extends ApiTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
@@ -149,7 +153,6 @@ class StudyMemberQueryApiTest extends ApiTest {
                                     fieldWithPath("data.image").description("스터디 멤버 프로필 이미지"),
                                     fieldWithPath("data.region").description("스터디 멤버 지역"),
                                     fieldWithPath("data.profession").description("스터디 멤버 분야"),
-                                    fieldWithPath("data.canSendGrape").description("포도알 발송 가능 여부"),
                                     fieldWithPath("data.achievement").description("성취도")
                             ))
                     );
@@ -169,7 +172,8 @@ class StudyMemberQueryApiTest extends ApiTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
@@ -196,11 +200,72 @@ class StudyMemberQueryApiTest extends ApiTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
                                     parameterWithName("memberId").description("조회할 멤버 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            ))
+                    );
+        }
+    }
+
+    @Nested
+    @DisplayName("스터디 멤버 관리자 여부 조회")
+    class CheckMemberAdmin {
+        private static final String PATH = "/api/v1/studies/{studyId}/me/admin/check";
+
+        @Test
+        @WithMockMember
+        @DisplayName("[성공] 스터디 멤버의 관리자 여부 조회에 성공한다.")
+        void success() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+
+            mockMvc.perform(get(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(document("get-study-member-is-admin/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data").description("스터디 멤버 관리자 여부"),
+                                    fieldWithPath("data.isAdmin").description("관리자 여부")
+                            ))
+                    );
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[성공] 스터디가 존재하지 않을 경우 스터디 멤버의 관리자 여부 조회에 실패한다.")
+        void fail_when_study_not_exist() throws Exception {
+            Long studyId = StudyStub.getInvalidStudyId();
+
+            mockMvc.perform(get(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isNotFound())
+                    .andDo(document("get-study-member-is-admin/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
