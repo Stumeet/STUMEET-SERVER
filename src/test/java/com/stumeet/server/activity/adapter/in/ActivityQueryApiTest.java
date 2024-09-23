@@ -6,6 +6,7 @@ import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.response.SuccessCode;
 import com.stumeet.server.helper.WithMockMember;
 import com.stumeet.server.stub.ActivityStub;
+import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
@@ -84,7 +85,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 스터디가 존재하지 않는 경우 예외가 발생한다.")
+        @DisplayName("[실패] 스터디가 존재하지 않는 경우 조회에 실패한다.")
         void studyNotFoundTest() throws Exception {
             Long studyId = StudyStub.getInvalidStudyId();
             Long activityId = ActivityStub.getActivityId();
@@ -113,7 +114,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember(id = 3L)
-        @DisplayName("[실패] 스터디에 가입하지 않은 사용자인 경우 예외가 발생한다.")
+        @DisplayName("[실패] 스터디에 가입하지 않은 사용자인 경우 조회에 실패한다.")
         void notJoinedStudyTest() throws Exception {
             Long studyId = StudyStub.getStudyId();
             Long activityId = ActivityStub.getActivityId();
@@ -142,7 +143,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 활동이 존재하지 않는 경우 예외가 발생한다.")
+        @DisplayName("[실패] 활동이 존재하지 않는 경우 조회에 실패한다.")
         void notFoundActivityTest() throws Exception {
             Long studyId = StudyStub.getStudyId();
             Long activityId = ActivityStub.getInvalidActivityId();
@@ -227,7 +228,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 존재하지 않는 스터디 id로 요청하는 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 존재하지 않는 스터디 id로 요청하는 경우 조회에 실패한다.")
         void fail_when_study_id_not_found() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("size", "2")
@@ -258,7 +259,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 유효하지 않은 활동 유형으로 요청하는 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 유효하지 않은 활동 유형으로 요청하는 경우 조회에 실패한다.")
         void fail_when_activity_category_not_found() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("size", "2")
@@ -303,6 +304,7 @@ class ActivityQueryApiTest extends ApiTest {
                             .param("isNotice", "true")
                             .param("category", ActivityCategory.MEET.name())
                             .param("studyId", StudyStub.getStudyId().toString())
+                            .param("memberId", MemberStub.getMemberId().toString())
                             .param("fromDate", "2024-04-01T00:00:00")
                             .param("toDate", "2024-04-30T00:00:00")
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
@@ -319,6 +321,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호").optional(),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
+                                    parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
                                     parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
@@ -346,7 +349,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 불완전한 페이지네이션 요청변수로 요청하는 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 불완전한 페이지네이션 요청변수로 요청하는 경우 조회에 실패한다.")
         void fail_when_pagination_parameters_is_incomplete() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("size", "5")
@@ -364,6 +367,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호").optional(),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
+                                    parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
                                     parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
@@ -377,7 +381,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 0보다 작은 페이지네이션 요청변수로 요청하는 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 0보다 작은 페이지네이션 요청변수로 요청하는 경우 조회에 실패한다.")
         void fail_when_pagination_parameters_is_smaller_than_zero() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("size", "-1")
@@ -396,6 +400,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호").optional(),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
+                                    parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
                                     parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
@@ -409,7 +414,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 존재하지 않는 스터디 id로 요청하는 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 존재하지 않는 스터디 id로 요청하는 경우 조회에 실패한다.")
         void fail_when_study_id_not_found() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("studyId", StudyStub.getInvalidStudyId().toString())
@@ -427,6 +432,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호").optional(),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
+                                    parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
                                     parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
@@ -440,7 +446,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 유효하지 않은 활동 유형으로 요청하는 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 유효하지 않은 활동 유형으로 요청하는 경우 조회에 실패한다.")
         void fail_when_activity_category_not_found() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("category", ActivityStub.getInvalidActivityCategoryName())
@@ -458,6 +464,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호").optional(),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
+                                    parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
                                     parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
@@ -471,7 +478,7 @@ class ActivityQueryApiTest extends ApiTest {
 
         @Test
         @WithMockMember
-        @DisplayName("[실패] 시작기준일이 종료기준일보다 이후인 경우 활동 상세 조회에 실패한다.")
+        @DisplayName("[실패] 시작기준일이 종료기준일보다 이후인 경우 조회에 실패한다.")
         void fail_when_fromDate_is_after_toDate() throws Exception {
             mockMvc.perform(get(PATH)
                             .param("fromDate", "2024-06-01T00:00:00")
@@ -490,6 +497,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호").optional(),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
+                                    parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
                                     parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
