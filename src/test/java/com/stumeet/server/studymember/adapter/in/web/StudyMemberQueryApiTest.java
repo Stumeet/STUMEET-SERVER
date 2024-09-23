@@ -274,4 +274,64 @@ class StudyMemberQueryApiTest extends ApiTest {
                     );
         }
     }
+
+    @Nested
+    @DisplayName("스터디 멤버 포도알 전송 가능 여부 조회")
+    class CanMemberSendGrape {
+        private static final String PATH = "/api/v1/studies/{studyId}/me/grapes/available";
+
+        @Test
+        @WithMockMember
+        @DisplayName("[성공] 스터디 멤버의 포도알 전송 가능 여부 조회에 성공한다.")
+        void success() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+
+            mockMvc.perform(get(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(document("get-study-member-can-send-grape/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data").description("스터디 멤버 포도알 전송 가능 여부"),
+                                    fieldWithPath("data.canSendGrape").description("포도알 전송 가능 여부")
+                            ))
+                    );
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 스터디가 존재하지 않을 경우 스터디 멤버의 포도알 전송 가능 여부 조회에 실패한다.")
+        void fail_when_study_not_exist() throws Exception {
+            Long studyId = StudyStub.getInvalidStudyId();
+
+            mockMvc.perform(get(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isNotFound())
+                    .andDo(document("get-study-member-can-send-grape/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            ))
+                    );
+        }
+    }
 }
