@@ -257,7 +257,7 @@ class StudyMemberQueryApiTest extends ApiTest {
             mockMvc.perform(get(PATH, studyId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
                     .andExpect(status().isNotFound())
-                    .andDo(document("get-study-member-is-admin/success",
+                    .andDo(document("get-study-member-is-admin/fail/study-not-found",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
@@ -317,7 +317,7 @@ class StudyMemberQueryApiTest extends ApiTest {
             mockMvc.perform(get(PATH, studyId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
                     .andExpect(status().isNotFound())
-                    .andDo(document("get-study-member-can-send-grape/success",
+                    .andDo(document("get-study-member-can-send-grape/fail/study-not-found",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
