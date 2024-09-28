@@ -504,6 +504,55 @@ include::{snippets}/delegate-admin/fail/not-admin/response-fields.adoc[]
 include::{snippets}/delegate-admin/fail/member-not-joined/response-body.adoc[]
 include::{snippets}/delegate-admin/fail/member-not-joined/response-fields.adoc[]
 
+=== 관리자 여부 조회
+
+로그인 멤버가 스터디 관리자인지 조회하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/me/admin/check
+
+===== 요청
+include::{snippets}/get-study-member-is-admin/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-is-admin/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-is-admin/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-is-admin/success/response-body.adoc[]
+include::{snippets}/get-study-member-is-admin/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.스터디가 존재하지 않을 경우
+include::{snippets}/get-study-member-is-admin/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-is-admin/fail/study-not-found/response-fields.adoc[]
+
+=== 포도알 전송 가능 여부 조회
+
+로그인 멤버의 포도알 전송 가능 여부를 조회하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/me/grapes/available
+
+===== 요청
+include::{snippets}/get-study-member-can-send-grape/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-can-send-grape/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-can-send-grape/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-can-send-grape/success/response-body.adoc[]
+include::{snippets}/get-study-member-can-send-grape/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.스터디가 존재하지 않을 경우
+include::{snippets}/get-study-member-can-send-grape/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-can-send-grape/fail/study-not-found/response-fields.adoc[]
+
+
 == 파일 관리
 
 === Presigned URL 발급
@@ -512,7 +561,7 @@ include::{snippets}/delegate-admin/fail/member-not-joined/response-fields.adoc[]
 
 해당 API는 1시간동안 유효합니다.
 
-==== POST /api/v1/presigned-url
+==== POST /api/v1/presigned-urls
 
 ===== 요청
 
@@ -810,3 +859,58 @@ include::{snippets}/delete-activity/fail/forbidden/response-fields.adoc[]
 .스터디의 멤버가 아닌 경우
 include::{snippets}/delete-activity/fail/not-joined-member/response-body.adoc[]
 include::{snippets}/delete-activity/fail/not-joined-member/response-fields.adoc[]
+
+== 통합 API
+
+=== 스터디 홈 화면 조회
+
+스터디 홈 화면을 조회하는 API입니다.
+
+==== GET /api/external/v1/studies/{studyId}
+
+===== 요청
+include::{snippets}/get-study-home-full/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-home-full/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-home-full/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-home-full/success/response-body.adoc[]
+include::{snippets}/get-study-home-full/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.스터디가 존재하지 않는 경우
+include::{snippets}/get-study-home-full/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-home-full/fail/study-not-found/response-fields.adoc[]
+
+=== 스터디 멤버 상세 화면 조회
+
+스터디 멤버 상세 화면을 조회하는 API입니다.
+
+==== GET /api/external/v1/studies/{studyId}/members/{memberId}
+
+===== 요청
+include::{snippets}/get-study-member-detail-full/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-detail-full/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-detail-full/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-detail-full/success/response-body.adoc[]
+include::{snippets}/get-study-member-detail-full/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.해당 스터디에 가입한 멤버가 요청한 것이 아닌 경우
+include::{snippets}/get-study-member-detail-full/fail/is-not-study-member/response-body.adoc[]
+include::{snippets}/get-study-member-detail-full/fail/is-not-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.스터디가 존재하지 않는 경우
+include::{snippets}/get-study-member-detail-full/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-detail-full/fail/study-not-found/response-fields.adoc[]
