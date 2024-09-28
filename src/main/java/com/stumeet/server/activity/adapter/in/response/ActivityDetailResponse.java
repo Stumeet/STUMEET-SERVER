@@ -18,6 +18,7 @@ public record ActivityDetailResponse(
         LocalDateTime startDate,
         LocalDateTime endDate,
         String location,
+        String link,
         LocalDateTime createdAt,
         boolean isAuthor,
         boolean isAdmin
