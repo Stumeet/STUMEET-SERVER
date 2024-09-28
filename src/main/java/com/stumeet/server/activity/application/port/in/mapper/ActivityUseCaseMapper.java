@@ -85,6 +85,7 @@ public class ActivityUseCaseMapper {
                 .startDate(activity.getStartDate())
                 .endDate(activity.getEndDate())
                 .location(activity.getLocation())
+                .link(activity.getLink())
                 .createdAt(activity.getCreatedAt())
                 .isAuthor(isAuthor)
                 .isAdmin(isAdmin)

@@ -58,4 +58,8 @@ public class ActivityJpaEntity extends BaseTimeEntity {
     @Column(name = "location")
     @Comment("활동 장소")
     private String location;
+
+    @Column(name = "link")
+    @Comment("링크")
+    private String link;
 }

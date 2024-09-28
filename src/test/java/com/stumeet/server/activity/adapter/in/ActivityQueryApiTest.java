@@ -76,6 +76,7 @@ class ActivityQueryApiTest extends ApiTest {
                                     fieldWithPath("data.startDate").description("활동 시작일"),
                                     fieldWithPath("data.endDate").description("활동 종료일"),
                                     fieldWithPath("data.location").description("장소"),
+                                    fieldWithPath("data.link").description("링크"),
                                     fieldWithPath("data.createdAt").description("활동 생성일"),
                                     fieldWithPath("data.isAuthor").description("작성자 여부"),
                                     fieldWithPath("data.isAdmin").description("관리자 여부")

@@ -42,10 +42,11 @@ VALUES (4, 'test4', 'http://localhost:4572/user/1/profile/2024030416531039839905
         '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);
 INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 1, false, false);
 
+
 -- [TABLE: activity]
 -- 스터디 1 (공지) 기본 활동
-INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice,location)
-VALUES (1, 1, 4, 'DEFAULT', 'title', 'content', true, null);
+INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice, location, link)
+VALUES (1, 1, 4, 'DEFAULT', 'title', 'content', true, null, 'https://www.naver.com');
 
 INSERT INTO activity_image (activity_id, image) VALUES (1, 'https://example.com/images/image1.png');
 INSERT INTO activity_image (activity_id, image) VALUES (1, 'https://example.com/images/image2.png');

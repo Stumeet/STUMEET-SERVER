@@ -32,6 +32,7 @@ public class ActivityPersistenceMapper {
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
                 .location(entity.getLocation())
+                .link(entity.getLink())
                 .createdAt(entity.getCreatedAt())
                 .location(entity.getLocation())
                 .build();
@@ -65,6 +66,7 @@ public class ActivityPersistenceMapper {
                 .startDate(domain.getStartDate())
                 .endDate(domain.getEndDate())
                 .location(domain instanceof Meet meet ? meet.getLocation() : null)
+                .link(domain.getLink())
                 .build();
     }
 }

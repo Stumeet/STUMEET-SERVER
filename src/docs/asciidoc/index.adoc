@@ -258,7 +258,7 @@ include::{snippets}/create-study/success/request-headers.adoc[]
 ===== 파트
 include::{snippets}/create-study/success/request-parts.adoc[]
 
-===== 요청 본문 매개변수
+===== 요청 파트 매개변수
 include::{snippets}/create-study/success/request-part-request-fields.adoc[]
 
 ===== 응답 성공 (200)
@@ -290,7 +290,7 @@ include::{snippets}/update-study/success/request-headers.adoc[]
 ===== 파트
 include::{snippets}/update-study/success/request-parts.adoc[]
 
-===== 요청 본문 매개변수
+===== 요청 파트 매개변수
 include::{snippets}/update-study/success/request-part-request-fields.adoc[]
 
 ===== 응답 성공 (200)

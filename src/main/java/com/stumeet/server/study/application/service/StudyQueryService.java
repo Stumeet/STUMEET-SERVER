@@ -41,6 +41,7 @@ public class StudyQueryService implements StudyQueryUseCase {
 				return studyUseCaseMapper.toMyStudiesResponse(activeJoinedStudies);
 			}
 
+			// TODO: 완료된 스터디 조회의 경우
 			// case FINISHED -> {
 			//
 			// }
