@@ -7,6 +7,6 @@ import com.stumeet.server.study.domain.Study;
 public interface StudyQueryPort {
 
 	Study getById(Long id);
-
 	List<Study> getMemberRecentActiveStudies(Long memberId);
+	List<Study> getMemberLegacyStudies(Long memberId);
 }

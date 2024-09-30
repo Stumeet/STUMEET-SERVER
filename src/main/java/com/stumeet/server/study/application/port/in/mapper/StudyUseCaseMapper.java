@@ -60,7 +60,7 @@ public class StudyUseCaseMapper {
 			.build();
 	}
 
-	public JoinedStudiesResponse toMyStudiesResponse(List<Study> studies) {
+	public JoinedStudiesResponse toJoinedStudiesResponse(List<Study> studies) {
 		return studies.stream()
 			.map(this::toStudySimpleResponse)
 			.collect(collectingAndThen(toList(), JoinedStudiesResponse::new));
