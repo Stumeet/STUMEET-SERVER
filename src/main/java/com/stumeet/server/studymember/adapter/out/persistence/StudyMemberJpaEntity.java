@@ -35,4 +35,8 @@ public class StudyMemberJpaEntity extends BaseTimeEntity {
     @Column(name = "is_sent_grape")
     @Comment("포도알 전송 여부")
     private boolean isSentGrape;
+
+    @Column(name = "is_legacy_hidden")
+    @Comment("레거시 스터디 숨김 처리 여부")
+    private boolean isLegacyHidden;
 }

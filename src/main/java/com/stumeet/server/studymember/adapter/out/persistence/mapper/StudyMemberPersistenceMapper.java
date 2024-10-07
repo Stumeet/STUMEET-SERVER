@@ -19,6 +19,7 @@ public class StudyMemberPersistenceMapper {
                 .study(studyPersistenceMapper.toEntity(domain.getStudy()))
                 .isAdmin(domain.isAdmin())
                 .isSentGrape(domain.isSentGrape())
+                .isLegacyHidden(domain.isLegacyHidden())
                 .build();
     }
 
@@ -29,6 +30,7 @@ public class StudyMemberPersistenceMapper {
                 .study(studyPersistenceMapper.toDomain(entity.getStudy()))
                 .isAdmin(entity.isAdmin())
                 .isSentGrape(entity.isSentGrape())
+                .isLegacyHidden(entity.isLegacyHidden())
                 .build();
     }
 }

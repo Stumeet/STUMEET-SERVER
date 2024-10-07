@@ -18,4 +18,10 @@ public class StudyMember {
     private boolean isAdmin;
 
     private boolean isSentGrape;
+
+    private boolean isLegacyHidden;
+
+    public void hideLegacyStudy() {
+        this.isLegacyHidden = true;
+    }
 }

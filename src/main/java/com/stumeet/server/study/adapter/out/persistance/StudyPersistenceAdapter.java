@@ -36,6 +36,13 @@ public class StudyPersistenceAdapter implements StudyQueryPort, StudyValidationP
 	}
 
 	@Override
+	public List<Study> getMemberLegacyStudies(Long memberId) {
+		List<StudyJpaEntity> legacyStudies = studyRepository.findLegacyStudiesNotHidden(memberId);
+
+		return studyPersistenceMapper.toDomains(legacyStudies);
+	}
+
+	@Override
 	public boolean existsById(Long id) {
 		return studyRepository.existsById(id);
 	}
