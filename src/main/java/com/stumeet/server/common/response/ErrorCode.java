@@ -70,6 +70,11 @@ public enum ErrorCode {
     ACTIVITY_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 상태 입니다."),
     ACTIVITY_PARTICIPANT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 참가자입니다."),
 
+    /*
+        409 - CONFLICT
+     */
+    ALREADY_DELETED_STUDY(HttpStatus.CONFLICT, "이미 삭제된 스터디 입니다."),
+    NOT_YET_FINISHED_STUDY(HttpStatus.CONFLICT, "완료되지 않은 스터디 입니다."),
 
     /*
         500 - INTERNAL SERVER ERROR
