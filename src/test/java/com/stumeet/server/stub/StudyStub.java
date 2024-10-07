@@ -27,6 +27,10 @@ public class StudyStub {
 		return 2L;
 	}
 
+	public static Long getFinishedStudyId() {
+		return 3L;
+	}
+
 	public static StudyCreateCommand getStudyCreateCommand() {
 		return new StudyCreateCommand(
 			"어학",
