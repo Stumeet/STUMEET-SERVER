@@ -49,29 +49,6 @@ class LegacyStudyHideApiTest extends ApiTest {
         }
 
         @Test
-        @WithMockMember
-        @DisplayName("[실패] 완료되지 않은 스터디(레거시 스터디)의 경우 숨김 처리에 실패한다.")
-        void fail_when_study_not_finished() throws Exception {
-            mockMvc.perform(patch(PATH, StudyStub.getStudyId())
-                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
-                    .andExpect(status().isConflict())
-                    .andDo(document("hide-legacy-study/fail/study-not-finished",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
-                                            .description("서버로부터 전달받은 액세스 토큰")
-                            ),
-                            pathParameters(
-                                    parameterWithName("studyId").description("스터디 ID")
-                            ),
-                            responseFields(
-                                    fieldWithPath("code").description("응답 상태"),
-                                    fieldWithPath("message").description("응답 메시지")
-                            )));
-        }
-
-        @Test
         @WithMockMember(id = 2L)
         @DisplayName("[실패] 요청자가 스터디 멤버가 아닌 경우 경우 숨김 처리에 실패한다.")
         void fail_when_requester_not_joined_study_member() throws Exception {
@@ -102,6 +79,29 @@ class LegacyStudyHideApiTest extends ApiTest {
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isNotFound())
                     .andDo(document("hide-legacy-study/fail/study-not-exist",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
+                                            .description("서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 상태"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )));
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 완료되지 않은 스터디(레거시 스터디)의 경우 숨김 처리에 실패한다.")
+        void fail_when_study_not_finished() throws Exception {
+            mockMvc.perform(patch(PATH, StudyStub.getStudyId())
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
+                    .andExpect(status().isConflict())
+                    .andDo(document("hide-legacy-study/fail/study-not-finished",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(

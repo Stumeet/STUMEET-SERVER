@@ -26,8 +26,8 @@ public class LegacyStudyHideService implements LegacyStudyHideUseCase {
 
     @Override
     public void hideLegacyStudyForMember(Long studyId, Long memberId) {
-        studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
         studyValidationUseCase.checkLegacyStudy(studyId);
+        studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
 
         StudyMember studyMember = studyMemberQueryPort.findStudyMember(studyId, memberId);
         studyMember.hideLegacyStudy();
