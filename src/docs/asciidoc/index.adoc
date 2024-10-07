@@ -557,6 +557,41 @@ include::{snippets}/get-study-member-can-send-grape/fail/study-not-found/respons
 include::{snippets}/get-study-member-can-send-grape/fail/study-not-found/response-fields.adoc[]
 
 
+=== 레거시 스터디 숨김 처리
+
+멤버의 레거시 스터디를 숨김 처리하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/legacy/hide
+
+===== 요청
+include::{snippets}/hide-legacy-study/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/hide-legacy-study/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/hide-legacy-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/hide-legacy-study/success/response-body.adoc[]
+include::{snippets}/hide-legacy-study/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 스터디 멤버가 아닌 경우 경우
+include::{snippets}/hide-legacy-study/fail/not-joined-study-member/response-body.adoc[]
+include::{snippets}/hide-legacy-study/fail/not-joined-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디의 경우
+include::{snippets}/hide-legacy-study/fail/study-not-exist/response-body.adoc[]
+include::{snippets}/hide-legacy-study/fail/study-not-exist/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.레거시 스터디가 아닌 경우
+include::{snippets}/hide-legacy-study/fail/study-not-finished/response-body.adoc[]
+include::{snippets}/hide-legacy-study/fail/study-not-finished/response-fields.adoc[]
+
+
 == 파일 관리
 
 === Presigned URL 발급
