@@ -25,6 +25,7 @@ jobs:
           echo "${{ secrets.ENV }}" > ./application-secret.properties
           mkdir -p ./firebase
           echo "${{ secrets.FCM_ACCOUNT_SECRET }}" > ./firebase/"${{ secrets.FCM_ACCOUNT_SECRET_FILE_NAME }}"
+          cat ./firebase/"${{ secrets.FCM_ACCOUNT_SECRET_FILE_NAME }}"
 
       - name: Gradle Caching
         uses: actions/cache@v3
