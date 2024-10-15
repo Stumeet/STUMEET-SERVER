@@ -48,4 +48,4 @@ presigned:
 
 fcm:
   secret:
-    path: ${FCM_SECRET_PROD_PATH}
+    path: ${FCM_SECRET_PATH}
