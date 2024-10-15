@@ -37,7 +37,9 @@ public class RenewNotificationTokenApi {
 
         renewNotificationTokenUseCase.renewNotificationToken(command);
 
-        return ResponseEntity.ok(
-                ApiResponse.success(HttpStatus.OK.value(), "알림 토큰이 갱신되었습니다."));
+        return new ResponseEntity<>(
+                ApiResponse.success(HttpStatus.CREATED.value(), "알림 토큰이 갱신되었습니다."),
+                HttpStatus.CREATED
+        );
     }
 }
