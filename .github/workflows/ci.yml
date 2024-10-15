@@ -23,6 +23,7 @@ jobs:
         run: |
           cd ./src/test/resources
           echo "${{ secrets.ENV }}" > ./application-secret.properties
+          echo "${{ secrets.FCM_ACCOUNT_SECRET }}" > ./firebase/"${{secrets.FCM_ACCOUNT_SECRET_FILE_NAME}}"
 
       - name: Gradle Caching
         uses: actions/cache@v3
