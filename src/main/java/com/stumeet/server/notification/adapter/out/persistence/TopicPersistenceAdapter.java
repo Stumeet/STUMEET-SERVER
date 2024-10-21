@@ -16,8 +16,8 @@ public class TopicPersistenceAdapter implements SaveTopicPort {
     private final TopicPersistenceMapper topicPersistenceMapper;
 
     @Override
-    public void save(Topic domain) {
+    public Long save(Topic domain) {
         TopicJpaEntity entity = topicPersistenceMapper.toEntity(domain);
-        jpaTopicRepository.save(entity);
+        return jpaTopicRepository.save(entity).getId();
     }
 }

@@ -22,7 +22,7 @@ public class InitializeTopicService implements InitializeTopicUseCase {
     private final SaveTopicPort saveTopicPort;
 
     @Override
-    public void initializeStudyNoticeTopic(Long studyId) {
+    public Long initializeStudyNoticeTopic(Long studyId) {
         String topicName = String.format(STUDY_NOTICE_TOPIC_TEMPLATE, studyId, UUID.randomUUID());
 
         Topic topic = Topic.builder()
@@ -32,6 +32,6 @@ public class InitializeTopicService implements InitializeTopicUseCase {
             .referId(studyId)
             .build();
 
-        saveTopicPort.save(topic);
+        return saveTopicPort.save(topic);
     }
 }
