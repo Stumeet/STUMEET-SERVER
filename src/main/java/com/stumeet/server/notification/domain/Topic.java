@@ -13,7 +13,8 @@ public class Topic {
     private Long referId;
 
     @Builder
-    private Topic(String name, String description, TopicReferType referType, Long referId) {
+    private Topic(Long id, String name, String description, TopicReferType referType, Long referId) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.referType = referType;

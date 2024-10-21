@@ -17,4 +17,14 @@ public class TopicPersistenceMapper {
             .referId(domain.getReferId())
             .build();
     }
+
+    public Topic toDomain(TopicJpaEntity entity) {
+        return Topic.builder()
+            .id(entity.getId())
+            .name(entity.getName())
+            .description(entity.getDescription())
+            .referType(entity.getReferType())
+            .referId(entity.getReferId())
+            .build();
+    }
 }
