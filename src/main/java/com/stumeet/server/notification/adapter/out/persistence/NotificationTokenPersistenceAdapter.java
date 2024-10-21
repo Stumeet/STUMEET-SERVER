@@ -1,5 +1,7 @@
 package com.stumeet.server.notification.adapter.out.persistence;
 
+import java.util.List;
+
 import com.stumeet.server.common.annotation.PersistenceAdapter;
 import com.stumeet.server.notification.adapter.out.mapper.NotificationTokenPersistenceMapper;
 import com.stumeet.server.notification.domain.exception.NotExistsNotificationTokenException;
@@ -23,6 +25,12 @@ public class NotificationTokenPersistenceAdapter implements NotificationTokenQue
                 .orElseThrow(() -> new NotExistsNotificationTokenException(memberId));
 
         return notificationTokenPersistenceMapper.toDomain(entity);
+    }
+
+    @Override
+    public List<NotificationToken> findTokensForMember(Long memberId) {
+        List<NotificationTokenJpaEntity> entities = jpaNotificationTokenRepository.findAllByMemberId(memberId);
+        return notificationTokenPersistenceMapper.toDomains(entities);
     }
 
     @Override
