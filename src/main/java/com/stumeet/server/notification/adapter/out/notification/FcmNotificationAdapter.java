@@ -15,6 +15,7 @@ import com.stumeet.server.notification.application.port.out.ManageSubscriptionPo
 import com.stumeet.server.notification.application.port.out.NotificationSendPort;
 import com.stumeet.server.notification.application.port.out.command.SendMessageCommand;
 import com.stumeet.server.notification.application.port.out.command.SubscribeCommand;
+import com.stumeet.server.notification.application.port.out.command.UnsubscribeCommand;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,19 @@ public class FcmNotificationAdapter implements ManageSubscriptionPort, Notificat
                     .subscribeToTopic(command.registrationTokens(), command.topic());
 
             System.out.println(response.getSuccessCount() + " tokens were subscribed successfully");
+        } catch (FirebaseMessagingException e) {
+            String message = makeErrorMessage(e);
+            throw new NotificationException(message, e, ErrorCode.EXTERNAL_SERVICE_UNAVAILABLE_ERROR);
+        }
+    }
+
+    @Override
+    public void unsubscribe(UnsubscribeCommand command) {
+        try {
+            TopicManagementResponse response = FirebaseMessaging.getInstance()
+                .unsubscribeFromTopic(command.registrationTokens(), command.topic());
+
+            System.out.println(response.getSuccessCount() + " tokens were unsubscribed successfully");
         } catch (FirebaseMessagingException e) {
             String message = makeErrorMessage(e);
             throw new NotificationException(message, e, ErrorCode.EXTERNAL_SERVICE_UNAVAILABLE_ERROR);
