@@ -13,7 +13,7 @@ public class TopicPersistenceMapper {
             .id(domain.getId())
             .name(domain.getName())
             .description(domain.getDescription())
-            .referType(domain.getReferType())
+            .type(domain.getType())
             .referId(domain.getReferId())
             .build();
     }
@@ -23,7 +23,7 @@ public class TopicPersistenceMapper {
             .id(entity.getId())
             .name(entity.getName())
             .description(entity.getDescription())
-            .referType(entity.getReferType())
+            .type(entity.getType())
             .referId(entity.getReferId())
             .build();
     }

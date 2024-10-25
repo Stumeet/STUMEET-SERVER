@@ -3,9 +3,11 @@ package com.stumeet.server.notification.adapter.out.persistence.entity;
 import org.hibernate.annotations.Comment;
 
 import com.stumeet.server.common.model.BaseTimeEntity;
-import com.stumeet.server.notification.domain.TopicReferType;
+import com.stumeet.server.notification.domain.TopicType;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +38,8 @@ public class TopicJpaEntity extends BaseTimeEntity {
     private String description;
 
     @Comment("참조 유형")
-    private TopicReferType referType;
+    @Enumerated(EnumType.STRING)
+    private TopicType type;
 
     @Comment("참조 ID")
     private Long referId;

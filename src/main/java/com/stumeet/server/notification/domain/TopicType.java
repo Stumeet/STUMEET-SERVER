@@ -1,5 +1,5 @@
 package com.stumeet.server.notification.domain;
 
-public enum TopicReferType {
-    STUDY
+public enum TopicType {
+    STUDY_NOTICE
 }
