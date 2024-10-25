@@ -1,7 +1,9 @@
 ALTER TABLE notification_token RENAME TO device;
 
+ALTER TABLE device RENAME COLUMN `token` TO `notification_token`;
+
 ALTER TABLE device
-    CHANGE token notification_token VARCHAR(255) NOT NULL COMMENT '알림 토큰';
+    MODIFY COLUMN notification_token VARCHAR(255) NOT NULL COMMENT '알림 토큰';
 
 ALTER TABLE device
     DROP FOREIGN KEY `fk_registration_token_by_member_id`;
