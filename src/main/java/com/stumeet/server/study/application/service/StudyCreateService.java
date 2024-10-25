@@ -28,7 +28,6 @@ public class StudyCreateService implements StudyCreateUseCase {
     private final MemberValidationUseCase memberValidationUseCase;
     private final StudyImageUpdateUseCase studyImageUpdateUseCase;
     private final InitializeTopicUseCase initializeTopicUseCase;
-    private final ManageSubscriptionUseCase manageSubscriptionUseCase;
 
     private final StudyCommandPort studyCommandPort;
     private final StudyTagCommandPort studyTagCommandPort;
@@ -44,10 +43,9 @@ public class StudyCreateService implements StudyCreateUseCase {
         studyImageUpdateUseCase.updateMainImage(studyCreatedId, mainImageFile);
 
         studyTagCommandPort.saveAllStudyTags(study.getStudyTags(), studyCreatedId);
-        memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
+        initializeTopicUseCase.initializeStudyNoticeTopic(studyCreatedId);
 
-        initializeTopicUseCase.initializeStudyNoticeTopic(study.getId());
-        manageSubscriptionUseCase.subscribeStudyNoticeTopic(memberId, study.getId());
+        memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
 
         return studyCreatedId;
     }
