@@ -8,7 +8,7 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.notification.application.port.in.InitializeTopicUseCase;
 import com.stumeet.server.notification.application.port.out.SaveTopicPort;
 import com.stumeet.server.notification.domain.Topic;
-import com.stumeet.server.notification.domain.TopicReferType;
+import com.stumeet.server.notification.domain.TopicType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,16 +22,16 @@ public class InitializeTopicService implements InitializeTopicUseCase {
     private final SaveTopicPort saveTopicPort;
 
     @Override
-    public Long initializeStudyNoticeTopic(Long studyId) {
+    public void initializeStudyNoticeTopic(Long studyId) {
         String topicName = String.format(STUDY_NOTICE_TOPIC_TEMPLATE, studyId, UUID.randomUUID());
 
         Topic topic = Topic.builder()
             .name(topicName)
             .description(String.format(STUDY_NOTICE_DESCRIPTION_TEMPLATE, studyId))
-            .referType(TopicReferType.STUDY)
+            .type(TopicType.STUDY_NOTICE)
             .referId(studyId)
             .build();
 
-        return saveTopicPort.save(topic);
+        saveTopicPort.save(topic);
     }
 }

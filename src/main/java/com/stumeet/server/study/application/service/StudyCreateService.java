@@ -24,31 +24,31 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class StudyCreateService implements StudyCreateUseCase {
 
-	private final StudyMemberJoinUseCase memberJoinUseCase;
-	private final MemberValidationUseCase memberValidationUseCase;
-	private final StudyImageUpdateUseCase studyImageUpdateUseCase;
-	private final InitializeTopicUseCase initializeTopicUseCase;
-	private final SubscribeTopicUseCase subscribeTopicUseCase;
+    private final StudyMemberJoinUseCase memberJoinUseCase;
+    private final MemberValidationUseCase memberValidationUseCase;
+    private final StudyImageUpdateUseCase studyImageUpdateUseCase;
+    private final InitializeTopicUseCase initializeTopicUseCase;
+    private final SubscribeTopicUseCase subscribeTopicUseCase;
 
-	private final StudyCommandPort studyCommandPort;
-	private final StudyTagCommandPort studyTagCommandPort;
+    private final StudyCommandPort studyCommandPort;
+    private final StudyTagCommandPort studyTagCommandPort;
 
-	private final StudyUseCaseMapper studyUseCaseMapper;
+    private final StudyUseCaseMapper studyUseCaseMapper;
 
-	@Override
-	public Long create(Long memberId, StudyCreateCommand command, MultipartFile mainImageFile) {
-		memberValidationUseCase.checkById(memberId);
+    @Override
+    public Long create(Long memberId, StudyCreateCommand command, MultipartFile mainImageFile) {
+        memberValidationUseCase.checkById(memberId);
 
-		Study study = Study.create(command);
-		long studyCreatedId = studyCommandPort.save(study).getId();
-		studyImageUpdateUseCase.updateMainImage(studyCreatedId, mainImageFile);
+        Study study = Study.create(command);
+        long studyCreatedId = studyCommandPort.save(study).getId();
+        studyImageUpdateUseCase.updateMainImage(studyCreatedId, mainImageFile);
 
-		studyTagCommandPort.saveAllStudyTags(study.getStudyTags(), studyCreatedId);
-		memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
+        studyTagCommandPort.saveAllStudyTags(study.getStudyTags(), studyCreatedId);
+        memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
 
-		Long topicId = initializeTopicUseCase.initializeStudyNoticeTopic(study.getId());
-		subscribeTopicUseCase.subscribeStudyNoticeTopic(memberId, topicId);
+        initializeTopicUseCase.initializeStudyNoticeTopic(study.getId());
+        subscribeTopicUseCase.subscribeStudyNoticeTopic(memberId, study.getId());
 
-		return studyCreatedId;
-	}
+        return studyCreatedId;
+    }
 }

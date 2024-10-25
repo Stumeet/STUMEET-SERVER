@@ -29,8 +29,8 @@ public class SubscribeTopicService implements SubscribeTopicUseCase {
     private final ManageSubscriptionPort manageSubscriptionPort;
 
     @Override
-    public void subscribeStudyNoticeTopic(Long memberId, Long topicId) {
-        Topic topic = topicQueryPort.findById(topicId);
+    public void subscribeStudyNoticeTopic(Long memberId, Long studyId) {
+        Topic topic = topicQueryPort.findStudyNoticeTopic(studyId);
         TopicSubscription topicSubscription = TopicSubscription.create(topic, memberId);
         saveTopicSubscriptionPort.save(topicSubscription);
 

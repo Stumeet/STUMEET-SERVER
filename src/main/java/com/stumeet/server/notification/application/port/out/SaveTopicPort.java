@@ -4,5 +4,5 @@ import com.stumeet.server.notification.domain.Topic;
 
 public interface SaveTopicPort {
 
-    Long save(Topic topic);
+    void save(Topic topic);
 }
