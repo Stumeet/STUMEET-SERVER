@@ -1,6 +1,8 @@
 package com.stumeet.server.study.application.service;
 
 import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
+import com.stumeet.server.notification.application.port.in.InitializeTopicUseCase;
+import com.stumeet.server.notification.application.port.in.SubscribeTopicUseCase;
 import com.stumeet.server.study.application.port.in.StudyImageUpdateUseCase;
 import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
 
@@ -25,6 +27,8 @@ public class StudyCreateService implements StudyCreateUseCase {
 	private final StudyMemberJoinUseCase memberJoinUseCase;
 	private final MemberValidationUseCase memberValidationUseCase;
 	private final StudyImageUpdateUseCase studyImageUpdateUseCase;
+	private final InitializeTopicUseCase initializeTopicUseCase;
+	private final SubscribeTopicUseCase subscribeTopicUseCase;
 
 	private final StudyCommandPort studyCommandPort;
 	private final StudyTagCommandPort studyTagCommandPort;
@@ -41,6 +45,9 @@ public class StudyCreateService implements StudyCreateUseCase {
 
 		studyTagCommandPort.saveAllStudyTags(study.getStudyTags(), studyCreatedId);
 		memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
+
+		Long topicId = initializeTopicUseCase.initializeStudyNoticeTopic(study.getId());
+		subscribeTopicUseCase.subscribeStudyNoticeTopic(memberId, topicId);
 
 		return studyCreatedId;
 	}
