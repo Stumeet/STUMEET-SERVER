@@ -1,4 +1,4 @@
-package com.stumeet.server.notification.adapter.out.persistence;
+package com.stumeet.server.notification.adapter.out.persistence.entity;
 
 import org.hibernate.annotations.Comment;
 
@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "notification_token")
+@Table(name = "device")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder

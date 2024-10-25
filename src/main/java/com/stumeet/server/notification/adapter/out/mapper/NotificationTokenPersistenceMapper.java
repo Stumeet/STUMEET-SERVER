@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.stumeet.server.notification.adapter.out.persistence.DeviceJpaEntity;
+import com.stumeet.server.notification.adapter.out.persistence.entity.DeviceJpaEntity;
 import com.stumeet.server.notification.domain.Device;
 
 @Component

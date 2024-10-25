@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.stumeet.server.common.annotation.PersistenceAdapter;
 import com.stumeet.server.notification.adapter.out.mapper.NotificationTokenPersistenceMapper;
+import com.stumeet.server.notification.adapter.out.persistence.entity.DeviceJpaEntity;
 import com.stumeet.server.notification.domain.Device;
 import com.stumeet.server.notification.domain.exception.NotExistsNotificationTokenException;
 import com.stumeet.server.notification.application.port.out.DeviceQueryPort;
