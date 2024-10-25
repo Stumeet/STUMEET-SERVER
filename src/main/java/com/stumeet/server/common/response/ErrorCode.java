@@ -86,7 +86,12 @@ public enum ErrorCode {
     UPLOAD_FILE_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패하였습니다."),
     NOT_IMPLEMENTED_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "구현되지 않은 메서드를 사용했습니다."),
 
-    ASYNC_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "비동기 작업 중 에러가 발생했습니다.")
+    ASYNC_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "비동기 작업 중 에러가 발생했습니다."),
+
+    /*
+        503 - SERVICE UNAVAILABLE
+    */
+    EXTERNAL_SERVICE_UNAVAILABLE_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "외부 서비스가 일시적으로 사용 불가능합니다. 잠시 후 다시 시도해 주세요.")
     ;
 
     private final HttpStatus httpStatus;
