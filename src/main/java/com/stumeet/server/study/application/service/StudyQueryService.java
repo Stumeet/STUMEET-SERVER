@@ -49,4 +49,10 @@ public class StudyQueryService implements StudyQueryUseCase {
 			default -> throw new StudyStatusNotExistsException(status.name());
 		}
 	}
+
+	@Override
+	public String getStudyName(Long id) {
+		Study study = studyQueryPort.getById(id);
+		return study.getName();
+	}
 }
