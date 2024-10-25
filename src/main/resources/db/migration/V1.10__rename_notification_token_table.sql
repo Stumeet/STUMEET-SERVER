@@ -1,5 +1,4 @@
-ALTER TABLE notification_token
-    RENAME device;
+ALTER TABLE notification_token RENAME TO device;
 
 ALTER TABLE device
     CHANGE token notification_token VARCHAR(255) NOT NULL COMMENT '알림 토큰';
