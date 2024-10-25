@@ -15,7 +15,7 @@ public class NotificationTokenPersistenceMapper {
             .id(entity.getId())
             .memberId(entity.getMemberId())
             .deviceId(entity.getDeviceId())
-            .notificationToken(entity.getToken())
+            .notificationToken(entity.getNotificationToken())
             .build();
     }
 
@@ -24,7 +24,7 @@ public class NotificationTokenPersistenceMapper {
             .id(domain.getId())
             .memberId(domain.getMemberId())
             .deviceId(domain.getDeviceId())
-            .token(domain.getNotificationToken())
+            .notificationToken(domain.getNotificationToken())
             .build();
     }
 

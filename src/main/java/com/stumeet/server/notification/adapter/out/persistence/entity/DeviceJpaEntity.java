@@ -37,7 +37,7 @@ public class DeviceJpaEntity extends BaseTimeEntity {
     @Comment("기기 식별자")
     private String deviceId;
 
-    @Column(name = "token")
+    @Column(name = "notification_token")
     @Comment("알림 토큰")
-    private String token;
+    private String notificationToken;
 }
