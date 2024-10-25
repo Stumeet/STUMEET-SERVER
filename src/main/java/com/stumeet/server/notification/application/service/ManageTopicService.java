@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stumeet.server.common.annotation.UseCase;
-import com.stumeet.server.notification.application.port.in.SubscribeTopicUseCase;
+import com.stumeet.server.notification.application.port.in.ManageSubscriptionUseCase;
 import com.stumeet.server.notification.application.port.out.ManageSubscriptionPort;
 import com.stumeet.server.notification.application.port.out.NotificationTokenQueryPort;
 import com.stumeet.server.notification.application.port.out.SaveTopicSubscriptionPort;
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class SubscribeTopicService implements SubscribeTopicUseCase {
+public class ManageTopicService implements ManageSubscriptionUseCase {
 
     private final TopicQueryPort topicQueryPort;
     private final NotificationTokenQueryPort notificationTokenQueryPort;
