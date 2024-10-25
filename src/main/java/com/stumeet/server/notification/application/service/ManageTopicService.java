@@ -7,11 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.notification.application.port.in.ManageSubscriptionUseCase;
 import com.stumeet.server.notification.application.port.out.ManageSubscriptionPort;
-import com.stumeet.server.notification.application.port.out.NotificationTokenQueryPort;
+import com.stumeet.server.notification.application.port.out.DeviceQueryPort;
 import com.stumeet.server.notification.application.port.out.SaveTopicSubscriptionPort;
 import com.stumeet.server.notification.application.port.out.TopicQueryPort;
 import com.stumeet.server.notification.application.port.out.command.SubscribeCommand;
-import com.stumeet.server.notification.domain.NotificationToken;
+import com.stumeet.server.notification.domain.Device;
 import com.stumeet.server.notification.domain.Topic;
 import com.stumeet.server.notification.domain.TopicSubscription;
 
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class ManageTopicService implements ManageSubscriptionUseCase {
 
     private final TopicQueryPort topicQueryPort;
-    private final NotificationTokenQueryPort notificationTokenQueryPort;
+    private final DeviceQueryPort deviceQueryPort;
 
     private final SaveTopicSubscriptionPort saveTopicSubscriptionPort;
     private final ManageSubscriptionPort manageSubscriptionPort;
@@ -34,8 +34,8 @@ public class ManageTopicService implements ManageSubscriptionUseCase {
         TopicSubscription topicSubscription = TopicSubscription.create(topic, memberId);
         saveTopicSubscriptionPort.save(topicSubscription);
 
-        List<String> tokens = notificationTokenQueryPort.findTokensForMember(memberId)
-            .stream().map(NotificationToken::getToken)
+        List<String> tokens = deviceQueryPort.findTokensForMember(memberId)
+            .stream().map(Device::getNotificationToken)
             .toList();
 
         SubscribeCommand subscribeCommand = new SubscribeCommand(tokens, topic.getName());

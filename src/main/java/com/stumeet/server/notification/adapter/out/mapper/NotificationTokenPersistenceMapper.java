@@ -4,31 +4,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.stumeet.server.notification.adapter.out.persistence.NotificationTokenJpaEntity;
-import com.stumeet.server.notification.domain.NotificationToken;
+import com.stumeet.server.notification.adapter.out.persistence.DeviceJpaEntity;
+import com.stumeet.server.notification.domain.Device;
 
 @Component
 public class NotificationTokenPersistenceMapper {
 
-    public NotificationToken toDomain(NotificationTokenJpaEntity entity) {
-        return NotificationToken.builder()
+    public Device toDomain(DeviceJpaEntity entity) {
+        return Device.builder()
             .id(entity.getId())
             .memberId(entity.getMemberId())
             .deviceId(entity.getDeviceId())
-            .token(entity.getToken())
+            .notificationToken(entity.getToken())
             .build();
     }
 
-    public NotificationTokenJpaEntity toEntity(NotificationToken domain) {
-        return NotificationTokenJpaEntity.builder()
+    public DeviceJpaEntity toEntity(Device domain) {
+        return DeviceJpaEntity.builder()
             .id(domain.getId())
             .memberId(domain.getMemberId())
             .deviceId(domain.getDeviceId())
-            .token(domain.getToken())
+            .token(domain.getNotificationToken())
             .build();
     }
 
-    public List<NotificationToken> toDomains(List<NotificationTokenJpaEntity> entities) {
+    public List<Device> toDomains(List<DeviceJpaEntity> entities) {
         return entities.stream().map(this::toDomain)
             .toList();
     }

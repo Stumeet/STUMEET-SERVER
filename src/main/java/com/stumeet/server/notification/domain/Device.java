@@ -8,18 +8,18 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
-public class NotificationToken {
+public class Device {
     private final Long id;
     private final Long memberId;
     private final String deviceId;
-    private final String token;
+    private final String notificationToken;
 
-    public NotificationToken renewNotificationToken(String token) {
-        return NotificationToken.builder()
+    public Device renewNotificationToken(String notificationToken) {
+        return Device.builder()
                 .id(this.id)
                 .memberId(this.memberId)
                 .deviceId(this.deviceId)
-                .token(token)
+                .notificationToken(notificationToken)
                 .build();
     }
 }

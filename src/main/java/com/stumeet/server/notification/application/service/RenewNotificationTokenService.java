@@ -3,9 +3,9 @@ package com.stumeet.server.notification.application.service;
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.notification.application.port.in.RenewNotificationTokenUseCase;
 import com.stumeet.server.notification.application.port.in.command.RenewNotificationTokenCommand;
-import com.stumeet.server.notification.application.port.out.NotificationTokenQueryPort;
-import com.stumeet.server.notification.application.port.out.SaveNotificationTokenPort;
-import com.stumeet.server.notification.domain.NotificationToken;
+import com.stumeet.server.notification.application.port.out.DeviceQueryPort;
+import com.stumeet.server.notification.application.port.out.SaveDevicePort;
+import com.stumeet.server.notification.domain.Device;
 import com.stumeet.server.notification.domain.exception.NotExistsNotificationTokenException;
 
 import lombok.RequiredArgsConstructor;
@@ -14,24 +14,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RenewNotificationTokenService implements RenewNotificationTokenUseCase {
 
-    private final NotificationTokenQueryPort notificationTokenQueryPort;
-    private final SaveNotificationTokenPort saveNotificationTokenPort;
+    private final DeviceQueryPort deviceQueryPort;
+    private final SaveDevicePort saveDevicePort;
 
     @Override
     public void renewNotificationToken(RenewNotificationTokenCommand command) {
-        NotificationToken token;
+        Device token;
         try {
-            token = notificationTokenQueryPort
+            token = deviceQueryPort
                     .findTokenForMember(command.memberId(), command.deviceId())
                     .renewNotificationToken(command.notificationToken());
         } catch (NotExistsNotificationTokenException exception) {
-            token = NotificationToken.builder()
+            token = Device.builder()
                     .memberId(command.memberId())
                     .deviceId(command.deviceId())
-                    .token(command.notificationToken())
+                    .notificationToken(command.notificationToken())
                     .build();
         }
 
-        saveNotificationTokenPort.save(token);
+        saveDevicePort.save(token);
     }
 }
