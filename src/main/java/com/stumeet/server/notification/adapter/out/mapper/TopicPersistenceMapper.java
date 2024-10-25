@@ -1,4 +1,4 @@
-package com.stumeet.server.notification.adapter.out.persistence;
+package com.stumeet.server.notification.adapter.out.mapper;
 
 import org.springframework.stereotype.Component;
 

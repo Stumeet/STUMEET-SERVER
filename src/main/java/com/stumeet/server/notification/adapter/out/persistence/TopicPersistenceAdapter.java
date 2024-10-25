@@ -1,6 +1,7 @@
 package com.stumeet.server.notification.adapter.out.persistence;
 
 import com.stumeet.server.common.annotation.PersistenceAdapter;
+import com.stumeet.server.notification.adapter.out.mapper.TopicPersistenceMapper;
 import com.stumeet.server.notification.adapter.out.persistence.entity.TopicJpaEntity;
 import com.stumeet.server.notification.application.port.out.SaveTopicPort;
 import com.stumeet.server.notification.application.port.out.TopicQueryPort;
