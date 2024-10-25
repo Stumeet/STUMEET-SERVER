@@ -71,6 +71,7 @@ public enum ErrorCode {
     ACTIVITY_PARTICIPANT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 참가자입니다."),
     NOTIFICATION_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 알림 토큰입니다."),
     TOPIC_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 토픽입니다."),
+    STUDY_NOTICE_TOPIC_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 스터디의 공지 토픽이 존재하지 않습니다."),
 
     /*
         409 - CONFLICT

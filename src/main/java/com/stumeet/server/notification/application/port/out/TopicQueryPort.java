@@ -5,4 +5,6 @@ import com.stumeet.server.notification.domain.Topic;
 public interface TopicQueryPort {
 
     Topic findById(Long id);
+
+    Topic findStudyNoticeTopic(Long studyId);
 }
