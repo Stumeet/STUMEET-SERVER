@@ -18,7 +18,9 @@ import com.stumeet.server.notification.application.port.out.command.SubscribeCom
 import com.stumeet.server.notification.application.port.out.command.UnsubscribeCommand;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class FcmNotificationAdapter implements ManageSubscriptionPort, NotificationSendPort {
@@ -29,7 +31,7 @@ public class FcmNotificationAdapter implements ManageSubscriptionPort, Notificat
             TopicManagementResponse response = FirebaseMessaging.getInstance()
                     .subscribeToTopic(command.registrationTokens(), command.topic());
 
-            System.out.println(response.getSuccessCount() + " tokens were subscribed successfully");
+            log.info("[subscription] success: " + response.getSuccessCount() + ", failure: " + response.getFailureCount());
         } catch (FirebaseMessagingException e) {
             String message = makeErrorMessage(e);
             throw new NotificationException(message, e, ErrorCode.EXTERNAL_SERVICE_UNAVAILABLE_ERROR);
@@ -42,7 +44,7 @@ public class FcmNotificationAdapter implements ManageSubscriptionPort, Notificat
             TopicManagementResponse response = FirebaseMessaging.getInstance()
                 .unsubscribeFromTopic(command.registrationTokens(), command.topic());
 
-            System.out.println(response.getSuccessCount() + " tokens were unsubscribed successfully");
+            log.info("[unsubscription] success: " + response.getSuccessCount() + ", failure: " + response.getFailureCount());
         } catch (FirebaseMessagingException e) {
             String message = makeErrorMessage(e);
             throw new NotificationException(message, e, ErrorCode.EXTERNAL_SERVICE_UNAVAILABLE_ERROR);
@@ -63,8 +65,8 @@ public class FcmNotificationAdapter implements ManageSubscriptionPort, Notificat
             BatchResponse response = FirebaseMessaging.getInstance()
                 .sendEachForMulticast(multicastMessage);
 
-            System.out.println(response.getSuccessCount() + " messages were sent successfully");
-            System.out.println(response);
+            log.info("[notification] success: " + response.getSuccessCount() + ", failure: " + response.getFailureCount());
+            log.info(response.toString());
         } catch (FirebaseMessagingException e) {
             String message = makeErrorMessage(e);
             throw new NotificationException(message, e, ErrorCode.EXTERNAL_SERVICE_UNAVAILABLE_ERROR);
@@ -83,7 +85,8 @@ public class FcmNotificationAdapter implements ManageSubscriptionPort, Notificat
                 .build();
 
             String response = FirebaseMessaging.getInstance().send(message);
-            System.out.println("Successfully sent message: " + response);
+
+            log.info("[notification] success\n" + response);
         } catch (FirebaseMessagingException e) {
             String message = makeErrorMessage(e);
             throw new NotificationException(message, e, ErrorCode.EXTERNAL_SERVICE_UNAVAILABLE_ERROR);
