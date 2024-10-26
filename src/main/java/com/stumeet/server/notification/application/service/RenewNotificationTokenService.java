@@ -19,19 +19,19 @@ public class RenewNotificationTokenService implements RenewNotificationTokenUseC
 
     @Override
     public void renewNotificationToken(RenewNotificationTokenCommand command) {
-        Device token;
+        Device device;
         try {
-            token = deviceQueryPort
-                    .findTokenForMember(command.memberId(), command.deviceId())
+            device = deviceQueryPort
+                    .findDeviceForMember(command.memberId(), command.deviceId())
                     .renewNotificationToken(command.notificationToken());
         } catch (NotExistsNotificationTokenException exception) {
-            token = Device.builder()
+            device = Device.builder()
                     .memberId(command.memberId())
                     .deviceId(command.deviceId())
                     .notificationToken(command.notificationToken())
                     .build();
         }
 
-        saveDevicePort.save(token);
+        saveDevicePort.save(device);
     }
 }

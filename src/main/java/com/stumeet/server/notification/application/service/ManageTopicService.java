@@ -37,7 +37,7 @@ public class ManageTopicService implements ManageSubscriptionUseCase {
         TopicSubscription topicSubscription = TopicSubscription.create(topic, memberId);
         saveTopicSubscriptionPort.save(topicSubscription);
 
-        List<String> tokens = deviceQueryPort.findTokensForMember(memberId)
+        List<String> tokens = deviceQueryPort.findDevicesForMember(memberId)
             .stream().map(Device::getNotificationToken)
             .toList();
 
@@ -50,7 +50,7 @@ public class ManageTopicService implements ManageSubscriptionUseCase {
         Topic topic = topicQueryPort.findStudyNoticeTopic(studyId);
         deleteTopicSubscriptionPort.delete(memberId, topic.getId());
 
-        List<String> tokens = deviceQueryPort.findTokensForMember(memberId)
+        List<String> tokens = deviceQueryPort.findDevicesForMember(memberId)
             .stream().map(Device::getNotificationToken)
             .toList();
 

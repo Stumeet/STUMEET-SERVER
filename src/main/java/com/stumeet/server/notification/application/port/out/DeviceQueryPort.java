@@ -5,7 +5,7 @@ import java.util.List;
 import com.stumeet.server.notification.domain.Device;
 
 public interface DeviceQueryPort {
-    Device findTokenForMember(Long memberId, String deviceId);
+    Device findDeviceForMember(Long memberId, String deviceId);
 
-    List<Device> findTokensForMember(Long memberId);
+    List<Device> findDevicesForMember(Long memberId);
 }

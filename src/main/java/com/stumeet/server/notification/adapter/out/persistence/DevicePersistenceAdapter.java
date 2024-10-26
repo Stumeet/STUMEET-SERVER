@@ -21,7 +21,7 @@ public class DevicePersistenceAdapter implements DeviceQueryPort, SaveDevicePort
     private final NotificationTokenPersistenceMapper notificationTokenPersistenceMapper;
 
     @Override
-    public Device findTokenForMember(Long memberId, String deviceId) {
+    public Device findDeviceForMember(Long memberId, String deviceId) {
         DeviceJpaEntity entity = jpaDeviceRepository.findByMemberIdAndDeviceId(memberId, deviceId)
                 .orElseThrow(() -> new NotExistsNotificationTokenException(memberId));
 
@@ -29,7 +29,7 @@ public class DevicePersistenceAdapter implements DeviceQueryPort, SaveDevicePort
     }
 
     @Override
-    public List<Device> findTokensForMember(Long memberId) {
+    public List<Device> findDevicesForMember(Long memberId) {
         List<DeviceJpaEntity> entities = jpaDeviceRepository.findAllByMemberId(memberId);
         return notificationTokenPersistenceMapper.toDomains(entities);
     }
