@@ -63,4 +63,15 @@ public class ManageTopicService implements ManageSubscriptionUseCase {
         UnsubscribeCommand unsubscribeCommand = new UnsubscribeCommand(tokens, topic.getName());
         manageSubscriptionPort.unsubscribe(unsubscribeCommand);
     }
+
+    @Override
+    public void renewSubscription(Device device) {
+        List<TopicSubscription> subscriptions = topicSubscriptionQueryPort.getAllForMember(device.getMemberId());
+        List<String> tokens = List.of(device.getNotificationToken());
+
+        subscriptions.parallelStream()
+            .forEach(subscription -> manageSubscriptionPort.subscribe(
+                new SubscribeCommand(tokens, subscription.getTopic().getName())
+            ));
+    }
 }
