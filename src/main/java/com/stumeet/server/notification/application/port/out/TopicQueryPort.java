@@ -1,10 +1,11 @@
 package com.stumeet.server.notification.application.port.out;
 
 import com.stumeet.server.notification.domain.Topic;
+import com.stumeet.server.notification.domain.TopicType;
 
 public interface TopicQueryPort {
 
-    Topic findById(Long id);
+    Topic getById(Long id);
 
-    Topic findStudyNoticeTopic(Long studyId);
+    Topic getByTypeAndReferId(TopicType type, Long referId);
 }
