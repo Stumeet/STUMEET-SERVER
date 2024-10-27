@@ -5,6 +5,7 @@ import com.stumeet.server.notification.adapter.out.mapper.TopicPersistenceMapper
 import com.stumeet.server.notification.adapter.out.persistence.entity.TopicJpaEntity;
 import com.stumeet.server.notification.application.port.out.SaveTopicPort;
 import com.stumeet.server.notification.application.port.out.TopicQueryPort;
+import com.stumeet.server.notification.application.port.out.TopicValidationPort;
 import com.stumeet.server.notification.domain.Topic;
 import com.stumeet.server.notification.domain.TopicType;
 import com.stumeet.server.notification.domain.exception.NotExistsStudyNoticeTopicException;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class TopicPersistenceAdapter implements SaveTopicPort, TopicQueryPort {
+public class TopicPersistenceAdapter implements SaveTopicPort, TopicQueryPort, TopicValidationPort {
 
     private final JpaTopicRepository jpaTopicRepository;
 
@@ -40,5 +41,10 @@ public class TopicPersistenceAdapter implements SaveTopicPort, TopicQueryPort {
     public void save(Topic domain) {
         TopicJpaEntity entity = topicPersistenceMapper.toEntity(domain);
         jpaTopicRepository.save(entity);
+    }
+
+    @Override
+    public boolean existsByTypeAndId(TopicType type, Long referId) {
+        return jpaTopicRepository.existsByTypeAndReferId(type, referId);
     }
 }

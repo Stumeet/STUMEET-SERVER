@@ -10,4 +10,6 @@ import com.stumeet.server.notification.domain.TopicType;
 public interface JpaTopicRepository extends JpaRepository<TopicJpaEntity, Long> {
 
     Optional<TopicJpaEntity> findByTypeAndReferId(TopicType type, Long referId);
+
+    boolean existsByTypeAndReferId(TopicType type, Long referId);
 }
