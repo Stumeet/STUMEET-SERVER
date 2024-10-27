@@ -31,6 +31,13 @@ INSERT INTO study_tag (study_id, name) VALUES (3, '객체지향프로그래밍')
 
 INSERT INTO topic (id, name, description, type, refer_id) VALUES (3, '3_STUDY_NOTICE_dalIAE024kldA', 'ID: 3 스터디 공지 토픽', 'STUDY_NOTICE', 3);
 
+-- study 4: 토픽 아직 없는 스터디
+INSERT INTO study (id, study_field, name, region, intro, rule, image, meeting_time, meeting_repetition, start_date, end_date)
+VALUES (4, 'PROGRAMMING', 'future study', '서울', 'java 스터디 입니다.', '- 장소: 태릉입구역\n- 제시간에 제출하기!',
+        'https://stumeet.s3.ap-northeast-2.amazonaws.com/study/1/image/2023062711172178420.png',
+        '18:00:00', 'WEEKLY;월;수;목;', '2999-04-01', '2999-05-01');
+
+
 -- [TABLE: member, study_member]
 -- member id 1: study id 1의 멤버이자 관리자
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
