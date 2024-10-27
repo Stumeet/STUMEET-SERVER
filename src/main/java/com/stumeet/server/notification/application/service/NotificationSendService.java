@@ -10,6 +10,7 @@ import com.stumeet.server.notification.application.port.out.NotificationSendPort
 import com.stumeet.server.notification.application.port.out.TopicQueryPort;
 import com.stumeet.server.notification.application.port.out.command.SendMessageCommand;
 import com.stumeet.server.notification.domain.Topic;
+import com.stumeet.server.notification.domain.TopicType;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class NotificationSendService implements StudyNoticeSendUseCase {
     @Override
     public void sendStudyNotice(Long studyId, Long activityId) {
         String studyName = studyQueryUseCase.getStudyName(studyId);
-        Topic topic = topicQueryPort.findStudyNoticeTopic(studyId);
+        Topic topic = topicQueryPort.getByTypeAndReferId(TopicType.STUDY_NOTICE, studyId);
 
         Map<String, String> data = Map.of(
             STUDY_ID, Long.toString(studyId),

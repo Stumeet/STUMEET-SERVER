@@ -23,7 +23,7 @@ public class TopicPersistenceAdapter implements SaveTopicPort, TopicQueryPort, T
     private final TopicPersistenceMapper topicPersistenceMapper;
 
     @Override
-    public Topic findById(Long id) {
+    public Topic getById(Long id) {
         TopicJpaEntity entity = jpaTopicRepository.findById(id)
             .orElseThrow(() -> new NotExistsTopicException(id));
 
@@ -31,9 +31,9 @@ public class TopicPersistenceAdapter implements SaveTopicPort, TopicQueryPort, T
     }
 
     @Override
-    public Topic findStudyNoticeTopic(Long studyId) {
-        TopicJpaEntity entity = jpaTopicRepository.findByTypeAndReferId(TopicType.STUDY_NOTICE, studyId)
-            .orElseThrow(() -> new NotExistsStudyNoticeTopicException(studyId));
+    public Topic getByTypeAndReferId(TopicType type, Long referId) {
+        TopicJpaEntity entity = jpaTopicRepository.findByTypeAndReferId(type, referId)
+            .orElseThrow(() -> new NotExistsStudyNoticeTopicException(referId));
 
         return topicPersistenceMapper.toDomain(entity);
     }

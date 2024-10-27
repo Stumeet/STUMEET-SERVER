@@ -2,12 +2,13 @@ package com.stumeet.server.notification.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
 public class TopicSubscription {
 
     private Long id;
-    private Topic topic;
+    @NonNull private Topic topic;
     private Long memberId;
 
     @Builder
