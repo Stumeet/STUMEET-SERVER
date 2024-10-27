@@ -33,9 +33,9 @@ public class RenewNotificationTokenService implements RenewNotificationTokenUseC
                     .deviceId(command.deviceId())
                     .notificationToken(command.notificationToken())
                     .build();
+
+            manageSubscriptionUseCase.renewSubscription(device);
         }
         saveDevicePort.save(device);
-
-        manageSubscriptionUseCase.renewSubscription(device);
     }
 }
