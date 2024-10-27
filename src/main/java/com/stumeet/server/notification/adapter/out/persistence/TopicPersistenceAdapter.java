@@ -10,6 +10,7 @@ import com.stumeet.server.notification.domain.Topic;
 import com.stumeet.server.notification.domain.TopicType;
 import com.stumeet.server.notification.domain.exception.NotExistsStudyNoticeTopicException;
 import com.stumeet.server.notification.domain.exception.NotExistsTopicException;
+import com.stumeet.server.notification.domain.exception.TopicAlreadyExistsException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,7 +45,9 @@ public class TopicPersistenceAdapter implements SaveTopicPort, TopicQueryPort, T
     }
 
     @Override
-    public boolean existsByTypeAndId(TopicType type, Long referId) {
-        return jpaTopicRepository.existsByTypeAndReferId(type, referId);
+    public void validateUnique(TopicType type, Long referId) {
+        if (jpaTopicRepository.existsByTypeAndReferId(type, referId)) {
+            throw new TopicAlreadyExistsException(type.name(), referId);
+        }
     }
 }

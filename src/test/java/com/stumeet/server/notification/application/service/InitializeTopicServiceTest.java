@@ -7,8 +7,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.stumeet.server.notification.application.port.in.TopicValidationUseCase;
 import com.stumeet.server.notification.application.port.out.SaveTopicPort;
+import com.stumeet.server.notification.application.port.out.TopicValidationPort;
 import com.stumeet.server.notification.domain.Topic;
 import com.stumeet.server.notification.domain.TopicType;
 import com.stumeet.server.notification.domain.exception.TopicAlreadyExistsException;
@@ -30,7 +30,7 @@ class InitializeTopicServiceTest extends UnitTest {
     @Mock
     private StudyValidationUseCase studyValidationUseCase;
     @Mock
-    private TopicValidationUseCase topicValidationUseCase;
+    private TopicValidationPort topicValidationPort;
 
     @Nested
     @DisplayName("알림 토픽 초기화")
@@ -41,7 +41,7 @@ class InitializeTopicServiceTest extends UnitTest {
         void success() {
             // given
             willDoNothing().given(studyValidationUseCase).checkById(STUDY_ID);
-            willDoNothing().given(topicValidationUseCase).validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
+            willDoNothing().given(topicValidationPort).validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
 
             ArgumentCaptor<Topic> topicCaptor = ArgumentCaptor.forClass(Topic.class);
 
@@ -50,7 +50,7 @@ class InitializeTopicServiceTest extends UnitTest {
 
             // then
             then(studyValidationUseCase).should().checkById(STUDY_ID);
-            then(topicValidationUseCase).should().validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
+            then(topicValidationPort).should().validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
             then(saveTopicPort).should().save(topicCaptor.capture());
 
             Topic capturedTopic = topicCaptor.getValue();
@@ -71,7 +71,7 @@ class InitializeTopicServiceTest extends UnitTest {
                 .isInstanceOf(StudyNotExistsException.class);
 
             then(studyValidationUseCase).should().checkById(STUDY_ID);
-            then(topicValidationUseCase).shouldHaveNoInteractions();
+            then(topicValidationPort).shouldHaveNoInteractions();
             then(saveTopicPort).shouldHaveNoInteractions();
         }
 
@@ -80,14 +80,14 @@ class InitializeTopicServiceTest extends UnitTest {
         void fail_when_topic_already_exists() {
             // given
             willThrow(new TopicAlreadyExistsException(TopicType.STUDY_NOTICE.name(), STUDY_ID))
-                .given(topicValidationUseCase).validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
+                .given(topicValidationPort).validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
 
             // when & then
             assertThatThrownBy(() -> initializeTopicService.initializeStudyNoticeTopic(STUDY_ID))
                 .isInstanceOf(TopicAlreadyExistsException.class);
 
             then(studyValidationUseCase).should().checkById(STUDY_ID);
-            then(topicValidationUseCase).should().validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
+            then(topicValidationPort).should().validateUnique(TopicType.STUDY_NOTICE, STUDY_ID);
             then(saveTopicPort).shouldHaveNoInteractions();
         }
     }
