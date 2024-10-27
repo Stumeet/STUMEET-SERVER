@@ -1,4 +1,4 @@
-package com.stumeet.server.notification.adapter.out.persistence;
+package com.stumeet.server.notification.adapter.out.persistence.entity;
 
 import org.hibernate.annotations.Comment;
 
@@ -17,12 +17,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "notification_token")
+@Table(name = "device")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
-public class NotificationTokenJpaEntity extends BaseTimeEntity {
+public class DeviceJpaEntity extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class NotificationTokenJpaEntity extends BaseTimeEntity {
     @Comment("기기 식별자")
     private String deviceId;
 
-    @Column(name = "token")
+    @Column(name = "notification_token")
     @Comment("알림 토큰")
-    private String token;
+    private String notificationToken;
 }

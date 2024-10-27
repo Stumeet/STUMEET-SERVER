@@ -70,12 +70,15 @@ public enum ErrorCode {
     ACTIVITY_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 상태 입니다."),
     ACTIVITY_PARTICIPANT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 활동 참가자입니다."),
     NOTIFICATION_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 알림 토큰입니다."),
+    TOPIC_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 토픽입니다."),
+    STUDY_NOTICE_TOPIC_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 스터디의 공지 토픽이 존재하지 않습니다."),
 
     /*
         409 - CONFLICT
      */
     ALREADY_DELETED_STUDY(HttpStatus.CONFLICT, "이미 삭제된 스터디 입니다."),
     NOT_YET_FINISHED_STUDY(HttpStatus.CONFLICT, "완료되지 않은 스터디 입니다."),
+    ALREADY_TOPIC_EXISTS(HttpStatus.CONFLICT, "요청한 알림 토픽이 이미 이미 존재합니다."),
 
     /*
         500 - INTERNAL SERVER ERROR
@@ -85,7 +88,12 @@ public enum ErrorCode {
     UPLOAD_FILE_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패하였습니다."),
     NOT_IMPLEMENTED_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "구현되지 않은 메서드를 사용했습니다."),
 
-    ASYNC_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "비동기 작업 중 에러가 발생했습니다.")
+    ASYNC_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "비동기 작업 중 에러가 발생했습니다."),
+
+    /*
+        503 - SERVICE UNAVAILABLE
+    */
+    EXTERNAL_SERVICE_UNAVAILABLE_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "외부 서비스가 일시적으로 사용 불가능합니다. 잠시 후 다시 시도해 주세요.")
     ;
 
     private final HttpStatus httpStatus;

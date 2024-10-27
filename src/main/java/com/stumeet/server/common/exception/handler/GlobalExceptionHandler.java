@@ -5,8 +5,10 @@ import java.util.concurrent.CompletionException;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.google.api.Http;
 import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.exception.model.BusinessException;
+import com.stumeet.server.common.exception.model.NotificationException;
 import com.stumeet.server.common.exception.model.SecurityViolationException;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.model.ApiResponse;
@@ -35,6 +37,7 @@ public class GlobalExceptionHandler {
     private static final String ERROR_LOG_MESSAGE = "[ERROR] {} : {}";
     private static final String WARN_LOG_MESSAGE = "[WARN] {} : {}";
     private static final String SECURITY_LOG_MESSAGE = "[SECURITY] {} : {}";
+    private static final String EXTERNAL_LOG_MESSAGE = "[EXTERNAL] {} : {} : {}";
 
     @ExceptionHandler(SecurityViolationException.class)
     protected ResponseEntity<ApiResponse> handleSecurityViolationException(final SecurityViolationException e) {
@@ -80,6 +83,19 @@ public class GlobalExceptionHandler {
         } else {
             return ApiResponse.fail(ErrorCode.ASYNC_ERROR);
         }
+    }
+
+    @ExceptionHandler(NotificationException.class)
+    protected ResponseEntity<ApiResponse> handleNotificationException(final NotificationException e) {
+        String cause = e.getCause() != null ? e.getCause().toString() : "No cause";
+
+        log.error(EXTERNAL_LOG_MESSAGE, e.getClass().getSimpleName(), e.getMessage(), cause);
+        log.debug(e.getMessage(), e);
+        e.printStackTrace();
+
+        ApiResponse response = ApiResponse.fail(e.getErrorCode());
+
+        return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(Exception.class)

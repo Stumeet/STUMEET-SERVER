@@ -19,11 +19,11 @@ import com.stumeet.server.stub.NotificationStub;
 import com.stumeet.server.stub.TokenStub;
 import com.stumeet.server.template.ApiTest;
 
-class RenewNotificationTokenApiTest extends ApiTest {
+class RenewDeviceApiTest extends ApiTest {
 
     @Nested
     @DisplayName("알림 토큰 갱신 API")
-    class RenewNotificationToken {
+    class RenewDevice {
         private final String path = "/api/v1/notification-token/renew";
 
         @Test
