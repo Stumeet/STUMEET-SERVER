@@ -78,6 +78,7 @@ public enum ErrorCode {
      */
     ALREADY_DELETED_STUDY(HttpStatus.CONFLICT, "이미 삭제된 스터디 입니다."),
     NOT_YET_FINISHED_STUDY(HttpStatus.CONFLICT, "완료되지 않은 스터디 입니다."),
+    ALREADY_TOPIC_EXISTS(HttpStatus.CONFLICT, "요청한 알림 토픽이 이미 이미 존재합니다."),
 
     /*
         500 - INTERNAL SERVER ERROR
