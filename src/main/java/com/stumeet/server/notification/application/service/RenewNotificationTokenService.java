@@ -1,6 +1,7 @@
 package com.stumeet.server.notification.application.service;
 
 import com.stumeet.server.common.annotation.UseCase;
+import com.stumeet.server.notification.application.port.in.ManageSubscriptionUseCase;
 import com.stumeet.server.notification.application.port.in.RenewNotificationTokenUseCase;
 import com.stumeet.server.notification.application.port.in.command.RenewNotificationTokenCommand;
 import com.stumeet.server.notification.application.port.out.DeviceQueryPort;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 @UseCase
 @RequiredArgsConstructor
 public class RenewNotificationTokenService implements RenewNotificationTokenUseCase {
+
+    private final ManageSubscriptionUseCase manageSubscriptionUseCase;
 
     private final DeviceQueryPort deviceQueryPort;
     private final SaveDevicePort saveDevicePort;
@@ -31,7 +34,8 @@ public class RenewNotificationTokenService implements RenewNotificationTokenUseC
                     .notificationToken(command.notificationToken())
                     .build();
         }
-
         saveDevicePort.save(device);
+
+        manageSubscriptionUseCase.renewSubscription(device);
     }
 }
