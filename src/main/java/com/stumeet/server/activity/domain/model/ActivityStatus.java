@@ -18,4 +18,6 @@ public interface ActivityStatus {
                 .findAny()
                 .orElseThrow(() -> new NotExistsActivityStatusException(status));
     }
+
+    boolean isSuccessfulStatus();
 }

@@ -74,6 +74,7 @@ public class ActivityQueryApi {
 			@RequestParam(required = false) @Min(value = 0) Integer page,
 			@RequestParam(required = false) Boolean isNotice,
 			@RequestParam(required = false) Long studyId,
+			@RequestParam(required = false) Long memberId,
 			@RequestParam(required = false) String category,
 			@RequestParam(required = false) LocalDateTime fromDate,
 			@RequestParam(required = false) LocalDateTime toDate
@@ -83,7 +84,7 @@ public class ActivityQueryApi {
 				.page(page)
 				.isNotice(isNotice)
 				.studyId(studyId)
-				.memberId(member.getId())
+				.memberId(memberId != null ? memberId : member.getId())
 				.categoryName(category)
 				.fromDate(fromDate)
 				.toDate(toDate)

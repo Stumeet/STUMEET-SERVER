@@ -2,6 +2,7 @@ package com.stumeet.server.studymember.application.service;
 
 import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.member.domain.exception.MemberNotExistsException;
+import com.stumeet.server.notification.application.port.in.ManageSubscriptionUseCase;
 import com.stumeet.server.stub.StudyMemberStub;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
@@ -42,6 +43,9 @@ class StudyMemberJoinServiceTest extends UnitTest {
     @Mock
     private StudyMemberValidationUseCase studyMemberValidationUseCase;
 
+    @Mock
+    private ManageSubscriptionUseCase manageSubscriptionUseCase;
+
     @Nested
     @DisplayName("[단위테스트] 스터디 가입")
     class Join {
@@ -63,6 +67,7 @@ class StudyMemberJoinServiceTest extends UnitTest {
             then(studyMemberValidationUseCase).should().checkAlreadyStudyJoinMember(any(), any());
             then(studyMemberUseCaseMapper).should().toDomain(any());
             then(studyMemberJoinPort).should().join(any());
+            then(manageSubscriptionUseCase).should().subscribeStudyNoticeTopic(any(), any());
         }
 
         @Test

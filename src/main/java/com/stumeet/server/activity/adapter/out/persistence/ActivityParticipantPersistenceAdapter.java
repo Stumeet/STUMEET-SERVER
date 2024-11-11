@@ -44,6 +44,13 @@ public class ActivityParticipantPersistenceAdapter implements ActivityParticipan
     }
 
     @Override
+    public List<ActivityParticipant> findMemberParticipation(Long studyId, Long memberId) {
+        return jpaActivityParticipantRepository.findAllByActivityStudyIdAndMemberId(studyId, memberId).stream()
+                .map(activityParticipantPersistenceMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public void update(ActivityParticipant participant) {
         jpaActivityParticipantRepository.save(activityParticipantPersistenceMapper.toEntity(participant));
     }

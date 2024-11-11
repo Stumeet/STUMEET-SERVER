@@ -93,7 +93,7 @@ class StudyQueryApiTest extends ApiTest {
 		@Test
 		@WithMockMember
 		@DisplayName("[성공] 가입 스터디 리스트 조회를 성공한다.")
-		void successTest() throws Exception {
+		void success_get_active_joined_studies() throws Exception {
 			mockMvc.perform(get("/api/v1/studies")
 					.param("status", StudyStatus.ACTIVE.toString())
 					.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
@@ -105,7 +105,7 @@ class StudyQueryApiTest extends ApiTest {
 						headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
 					),
 					queryParameters(
-						parameterWithName("status").description("스터디 상태 (ACTIVE/FINISHED)")
+						parameterWithName("status").description("스터디 상태 (`ACTIVE`/`FINISHED`)")
 					),
 					responseFields(
 						fieldWithPath("code").description("응답 상태"),
@@ -120,6 +120,38 @@ class StudyQueryApiTest extends ApiTest {
 						fieldWithPath("data.studySimpleResponses[].startDate").description("시작 날짜"),
 						fieldWithPath("data.studySimpleResponses[].endDate").description("종료 날짜")
 					)));
+		}
+
+		@Test
+		@WithMockMember
+		@DisplayName("[성공] 레거시 스터디 리스트 조회를 성공한다.")
+		void success_get_legacy_studies() throws Exception {
+			mockMvc.perform(get("/api/v1/studies")
+							.param("status", StudyStatus.FINISHED.name())
+							.header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
+					.andExpect(status().isOk())
+					.andDo(document("get-legacy-studies/success",
+							preprocessRequest(prettyPrint()),
+							preprocessResponse(prettyPrint()),
+							requestHeaders(
+									headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description("서버로부터 전달받은 액세스 토큰")
+							),
+							queryParameters(
+									parameterWithName("status").description("스터디 상태 (`ACTIVE`/`FINISHED`)")
+							),
+							responseFields(
+									fieldWithPath("code").description("응답 상태"),
+									fieldWithPath("message").description("응답 메시지"),
+									fieldWithPath("data.studySimpleResponses").description("스터디 간단 정보 리스트"),
+									fieldWithPath("data.studySimpleResponses[].id").description("스터디 ID"),
+									fieldWithPath("data.studySimpleResponses[].name").description("스터디 이름"),
+									fieldWithPath("data.studySimpleResponses[].field").description("분야"),
+									fieldWithPath("data.studySimpleResponses[].tags").description("태그 리스트"),
+									fieldWithPath("data.studySimpleResponses[].image").description("이미지 URL"),
+									fieldWithPath("data.studySimpleResponses[].headcount").description("참여 인원 수"),
+									fieldWithPath("data.studySimpleResponses[].startDate").description("시작 날짜"),
+									fieldWithPath("data.studySimpleResponses[].endDate").description("종료 날짜")
+							)));
 		}
 
 		@Test

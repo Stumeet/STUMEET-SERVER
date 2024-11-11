@@ -3,6 +3,7 @@ package com.stumeet.server.studymember.adapter.out.persistence;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.stumeet.server.studymember.application.port.in.response.QSimpleStudyMemberResponse;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -14,6 +15,18 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
 
     private final JPAQueryFactory query;
 
+    @Override
+    public StudyMemberJpaEntity findStudyMemberByStudyIdAndMemberId(Long studyId, Long memberId) {
+        return query
+                .select(studyMemberJpaEntity)
+                .from(studyMemberJpaEntity)
+                .innerJoin(studyMemberJpaEntity.member)
+                .where(
+                        studyMemberJpaEntity.study.id.eq(studyId),
+                        studyMemberJpaEntity.member.id.eq(memberId)
+                )
+                .fetchOne();
+    }
 
     @Override
     public List<SimpleStudyMemberResponse> findStudyMembersByStudyId(Long studyId) {
@@ -53,6 +66,19 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
                         .where(
                                 studyMemberJpaEntity.study.id.eq(studyId),
                                 studyMemberJpaEntity.member.id.eq(adminId)
+                        ).fetchOne()
+        );
+    }
+
+    @Override
+    public boolean isSentGrape(Long studyId, Long memberId) {
+        return Boolean.TRUE.equals(
+                query
+                        .select(studyMemberJpaEntity.isSentGrape)
+                        .from(studyMemberJpaEntity)
+                        .where(
+                                studyMemberJpaEntity.study.id.eq(studyId),
+                                studyMemberJpaEntity.member.id.eq(memberId)
                         ).fetchOne()
         );
     }

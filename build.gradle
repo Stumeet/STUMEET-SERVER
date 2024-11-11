@@ -68,7 +68,8 @@ dependencies {
     testImplementation 'org.springframework.cloud:spring-cloud-contract-stub-runner'
     testImplementation 'org.testcontainers:localstack'
 
-
+    // fcm
+    implementation 'com.google.firebase:firebase-admin:9.3.0'
 }
 
 dependencyManagement {

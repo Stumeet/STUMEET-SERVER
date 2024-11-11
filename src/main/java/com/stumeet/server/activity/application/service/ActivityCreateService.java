@@ -1,5 +1,6 @@
 package com.stumeet.server.activity.application.service;
 
+import com.stumeet.server.activity.adapter.out.event.model.StudyNoticeNotificationEvent;
 import com.stumeet.server.activity.application.port.in.ActivityCreateUseCase;
 import com.stumeet.server.activity.application.service.model.ActivitySource;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
@@ -13,6 +14,7 @@ import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityImage;
 import com.stumeet.server.activity.domain.model.ActivityParticipant;
 import com.stumeet.server.common.annotation.UseCase;
+import com.stumeet.server.common.event.EventPublisher;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +52,10 @@ public class ActivityCreateService implements ActivityCreateUseCase {
 
         List<ActivityImage> images = activityImageUseCaseMapper.toDomains(command.images(), createdActivity);
         activityImageCreatePort.create(images);
+
+        if (createdActivity.isNotice()) {
+            EventPublisher.raise(new StudyNoticeNotificationEvent(this, studyId, createdActivity.getId()));
+        }
 
         return createdActivity.getId();
     }

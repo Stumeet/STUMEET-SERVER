@@ -9,4 +9,6 @@ public interface StudyQueryUseCase {
 	StudyDetailResponse getStudyDetailById(Long id);
 
 	JoinedStudiesResponse getJoinedStudiesByStatus(GetJoinedStudyCommand command);
+
+	String getStudyName(Long id);
 }

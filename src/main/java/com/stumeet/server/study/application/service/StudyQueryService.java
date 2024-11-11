@@ -38,14 +38,21 @@ public class StudyQueryService implements StudyQueryUseCase {
 		switch (status) {
 			case ACTIVE -> {
 				List<Study> activeJoinedStudies = studyQueryPort.getMemberRecentActiveStudies(command.memberId());
-				return studyUseCaseMapper.toMyStudiesResponse(activeJoinedStudies);
+				return studyUseCaseMapper.toJoinedStudiesResponse(activeJoinedStudies);
 			}
 
-			// case FINISHED -> {
-			//
-			// }
+			case FINISHED -> {
+				List<Study> legacyStudies = studyQueryPort.getMemberLegacyStudies(command.memberId());
+				return studyUseCaseMapper.toJoinedStudiesResponse(legacyStudies);
+			}
 
 			default -> throw new StudyStatusNotExistsException(status.name());
 		}
+	}
+
+	@Override
+	public String getStudyName(Long id) {
+		Study study = studyQueryPort.getById(id);
+		return study.getName();
 	}
 }

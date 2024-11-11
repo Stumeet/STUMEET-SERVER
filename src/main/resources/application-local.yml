@@ -58,6 +58,10 @@ discord:
     report:
       url: ${DISCORD_REPORT_WEBHOOK_URL}
 
+fcm:
+  secret:
+    path: ${FCM_SECRET_PATH}
+
 #logging:
 #  level:
 #    root: debug
