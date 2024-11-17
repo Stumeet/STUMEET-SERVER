@@ -30,7 +30,7 @@ public class ActivityParticipantPersistenceAdapter implements ActivityParticipan
     @Override
     public ActivityParticipant findByIdAndActivityId(Long participantId, Long activityId) {
         ActivityParticipantJpaEntity participant =
-                jpaActivityParticipantRepository.findByActivityIdAndMemberIdAndId(activityId, participantId)
+                jpaActivityParticipantRepository.findByIdAndActivityId(participantId, activityId)
                         .orElseThrow(() -> new NotExistsActivityParticipantException(participantId));
 
         return activityParticipantPersistenceMapper.toDomain(participant);

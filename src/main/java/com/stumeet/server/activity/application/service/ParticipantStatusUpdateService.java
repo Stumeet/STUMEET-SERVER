@@ -40,8 +40,6 @@ public class ParticipantStatusUpdateService implements ParticipantStatusUpdateUs
         activity.getCategory().validateStatus(command.status());
 
         ActivityParticipant participant = activityParticipantQueryPort.findByIdAndActivityId(command.participantId(), command.activityId());
-        studyMemberValidationUseCase.checkStudyJoinMember(command.studyId(), participant.getMember().getId());
-
         ActivityParticipant updated = participant.update(command.status());
         activityParticipantCommandPort.update(updated);
     }
