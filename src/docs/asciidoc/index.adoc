@@ -865,10 +865,6 @@ include::{snippets}/update-activity-participant-status/fail/activity-is-default/
 include::{snippets}/update-activity-participant-status/fail/member-is-not-admin/response-body.adoc[]
 include::{snippets}/update-activity-participant-status/fail/member-is-not-admin/response-fields.adoc[]
 
-.상태 변경되는 멤버가 스터디의 멤버가 아닌 경우
-include::{snippets}/update-activity-participant-status/fail/member-is-not-joined-member/response-body.adoc[]
-include::{snippets}/update-activity-participant-status/fail/member-is-not-joined-member/response-fields.adoc[]
-
 ===== 응답 실패 (404)
 .요청한 스터디가 존재하지 않는 경우
 include::{snippets}/update-activity-participant-status/fail/study-not-found/response-body.adoc[]
