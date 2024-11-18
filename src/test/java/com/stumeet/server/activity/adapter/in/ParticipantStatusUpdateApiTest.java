@@ -167,7 +167,7 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
         void fail_when_activity_category_default() throws Exception {
             ParticipantStatusUpdateRequest request = ActivityParticipantStub.getParticipantStatusUpdateRequest();
 
-            mockMvc.perform(patch(path, StudyStub.getStudyId(), ActivityStub.getDefaultActivity())
+            mockMvc.perform(patch(path, StudyStub.getStudyId(), ActivityStub.getDefaultActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))

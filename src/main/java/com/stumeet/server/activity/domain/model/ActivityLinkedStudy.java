@@ -11,4 +11,10 @@ import lombok.Getter;
 public class ActivityLinkedStudy {
     private Long id;
 
+    @Override
+    public String toString() {
+        return "ActivityLinkedStudy{" +
+                "\n\tid=" + id +
+                "\n}";
+    }
 }
