@@ -22,4 +22,9 @@ public enum AssignmentStatus implements ActivityStatus {
     public String getDescription() {
         return this.description;
     }
+
+    @Override
+    public boolean isSuccessfulStatus() {
+        return this.equals(PERFORMED);
+    }
 }

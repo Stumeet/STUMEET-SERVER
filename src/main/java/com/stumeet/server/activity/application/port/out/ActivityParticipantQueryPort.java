@@ -9,4 +9,6 @@ public interface ActivityParticipantQueryPort {
     ActivityParticipant findByActivityIdAndMemberIdAndId(Long activityId, Long memberId, Long id);
 
     List<ActivityParticipant> findAllByActivityId(Long activityId);
+
+    List<ActivityParticipant> findMemberParticipation(Long studyId, Long memberId);
 }

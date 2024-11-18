@@ -64,7 +64,7 @@ class StudyCreateApiTest extends ApiTest {
 						fieldWithPath("startDate").description("시작일"),
 						fieldWithPath("endDate").description("종료일"),
 						fieldWithPath("meetingTime").description("정기모임 시간"),
-						fieldWithPath("meetingRepetitionType").description("정기모임 반복 유형"),
+						fieldWithPath("meetingRepetitionType").description("정기모임 반복 유형 | `DAILY`, `WEEKLY`, `MONTHLY`"),
 						fieldWithPath("meetingRepetitionDates").description("정기모임 반복 일자 | DAILY 유형의 경우 빈 배열"),
 						fieldWithPath("studyTags").description("스터디 태그 | 값이 없는 경우 빈 배열")
 					),

@@ -1,5 +1,6 @@
 package com.stumeet.server.studymember.application.service;
 
+import com.stumeet.server.notification.application.port.in.ManageSubscriptionUseCase;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyMemberStub;
 import com.stumeet.server.stub.StudyStub;
@@ -35,6 +36,9 @@ class StudyMemberLeaveServiceTest extends UnitTest {
     @Mock
     private StudyMemberLeavePort studyMemberLeavePort;
 
+    @Mock
+    private ManageSubscriptionUseCase manageSubscriptionUseCase;
+
     @Nested
     @DisplayName("스터디 멤버 탈퇴")
     class Leave {
@@ -48,6 +52,7 @@ class StudyMemberLeaveServiceTest extends UnitTest {
             studyMemberLeaveService.leave(studyId, memberId);
 
             then(studyMemberLeavePort).should().leave(any(), any());
+            then(manageSubscriptionUseCase).should().unsubscribeStudyNoticeTopic(any(), any());
         }
 
         @Test

@@ -55,3 +55,7 @@ oauth:
 presigned:
   url:
     expired-time: 3600
+
+fcm:
+  secret:
+    path: ${FCM_SECRET_PATH}

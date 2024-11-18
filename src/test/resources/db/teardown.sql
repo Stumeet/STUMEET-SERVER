@@ -8,5 +8,8 @@ TRUNCATE TABLE study;
 TRUNCATE TABLE activity;
 TRUNCATE TABLE activity_participant;
 TRUNCATE TABLE activity_image;
+TRUNCATE TABLE device;
+TRUNCATE TABLE topic_subscription;
+TRUNCATE TABLE topic;
 
 SET FOREIGN_KEY_CHECKS = 1;

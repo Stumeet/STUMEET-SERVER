@@ -19,4 +19,9 @@ public enum DefaultStatus implements ActivityStatus {
     public String getDescription() {
         return this.description;
     }
+
+    @Override
+    public boolean isSuccessfulStatus() {
+        return false;
+    }
 }

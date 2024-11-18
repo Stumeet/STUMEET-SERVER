@@ -5,6 +5,7 @@ import com.stumeet.server.studymember.adapter.out.persistence.mapper.StudyMember
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
 import com.stumeet.server.studymember.application.port.out.StudyMemberJoinPort;
 import com.stumeet.server.studymember.application.port.out.StudyMemberQueryPort;
+import com.stumeet.server.studymember.application.port.out.StudyMemberUpdatePort;
 import com.stumeet.server.studymember.application.port.out.StudyMemberValidationPort;
 import com.stumeet.server.studymember.domain.StudyMember;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,23 @@ import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class StudyMemberPersistenceAdapter implements StudyMemberJoinPort, StudyMemberQueryPort, StudyMemberValidationPort {
+public class StudyMemberPersistenceAdapter implements StudyMemberJoinPort, StudyMemberQueryPort, StudyMemberValidationPort,
+        StudyMemberUpdatePort {
 
     private final JpaStudyMemberRepository jpaStudyMemberRepository;
     private final StudyMemberPersistenceMapper studyMemberPersistenceMapper;
+
+    @Override
+    public List<SimpleStudyMemberResponse> findStudyMembers(Long studyId) {
+        return jpaStudyMemberRepository.findStudyMembersByStudyId(studyId);
+    }
+
+    @Override
+    public StudyMember findStudyMember(Long studyId, Long memberId) {
+        StudyMemberJpaEntity entity = jpaStudyMemberRepository.findStudyMemberByStudyIdAndMemberId(studyId, memberId);
+
+        return studyMemberPersistenceMapper.toDomain(entity);
+    }
 
     @Override
     public void join(StudyMember studyMember) {
@@ -24,8 +38,14 @@ public class StudyMemberPersistenceAdapter implements StudyMemberJoinPort, Study
     }
 
     @Override
-    public List<SimpleStudyMemberResponse> findStudyMembers(Long studyId) {
-        return jpaStudyMemberRepository.findStudyMembersByStudyId(studyId);
+    public void update(StudyMember studyMember) {
+        StudyMemberJpaEntity entity = studyMemberPersistenceMapper.toEntity(studyMember);
+        jpaStudyMemberRepository.save(entity);
+    }
+
+    @Override
+    public boolean isSentGrape(Long studyId, Long memberId) {
+        return jpaStudyMemberRepository.isSentGrape(studyId, memberId);
     }
 
     @Override
