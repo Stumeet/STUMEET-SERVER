@@ -5,6 +5,7 @@ import com.stumeet.server.report.domain.ReportCategory;
 import com.stumeet.server.report.domain.ReportReason;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,10 +29,10 @@ public class ReportJpaEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ReportCategory category;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ReportReason reason;
 
     private Long reportedId;
