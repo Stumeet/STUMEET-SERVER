@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/report")
-public class ReportCreateAdapter {
+public class ReportCreateApi {
 
     private final ReportCreateUseCase reportCreateUseCase;
     private final ReportAlertUseCase reportAlertUseCase;
