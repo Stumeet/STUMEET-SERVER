@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ActivityParticipantQueryPort {
 
-    ActivityParticipant findByActivityIdAndMemberIdAndId(Long activityId, Long memberId, Long id);
+    ActivityParticipant findByIdAndActivityId(Long id, Long activityId);
 
     List<ActivityParticipant> findAllByActivityId(Long activityId);
 

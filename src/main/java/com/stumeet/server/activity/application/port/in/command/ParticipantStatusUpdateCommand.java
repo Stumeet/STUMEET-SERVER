@@ -8,13 +8,12 @@ public record ParticipantStatusUpdateCommand(
         Long adminId,
         Long studyId,
         Long activityId,
-        Long memberId,
         Long participantId,
         ActivityStatus status
 ) {
 
     @Builder
-    public ParticipantStatusUpdateCommand(Long adminId, Long studyId, Long activityId, Long memberId, Long participantId, String status) {
-        this(adminId, studyId, activityId, memberId, participantId, ActivityStatus.findByStatus(status));
+    public ParticipantStatusUpdateCommand(Long adminId, Long studyId, Long activityId, Long participantId, String status) {
+        this(adminId, studyId, activityId, participantId, ActivityStatus.findByStatus(status));
     }
 }

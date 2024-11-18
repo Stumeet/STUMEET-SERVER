@@ -26,11 +26,10 @@ public class ParticipantStatusUpdateApi {
 
     private final ParticipantStatusUpdateUseCase participantStatusUpdateUseCase;
 
-    @PatchMapping("/studies/{studyId}/members/{memberId}/activities/{activityId}/status")
+    @PatchMapping("/studies/{studyId}/activities/{activityId}/status")
     public ResponseEntity<ApiResponse<Void>> updateStatus(
             @AuthenticationPrincipal LoginMember loginMember,
             @PathVariable Long studyId,
-            @PathVariable Long memberId,
             @PathVariable Long activityId,
             @RequestBody @Valid ParticipantStatusUpdateRequest request
     ) {
@@ -38,7 +37,6 @@ public class ParticipantStatusUpdateApi {
                 .adminId(loginMember.getId())
                 .studyId(studyId)
                 .activityId(activityId)
-                .memberId(memberId)
                 .participantId(request.participantId())
                 .status(request.status())
                 .build();

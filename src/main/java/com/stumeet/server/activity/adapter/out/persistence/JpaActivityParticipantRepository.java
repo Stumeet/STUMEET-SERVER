@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface JpaActivityParticipantRepository extends JpaRepository<ActivityParticipantJpaEntity, Long> {
 
-    Optional<ActivityParticipantJpaEntity> findByActivityIdAndMemberIdAndId(Long activityId, Long memberId, Long id);
+    Optional<ActivityParticipantJpaEntity> findByIdAndActivityId(Long id, Long activityId);
 
     List<ActivityParticipantJpaEntity> findAllByActivityId(Long activityId);
 
