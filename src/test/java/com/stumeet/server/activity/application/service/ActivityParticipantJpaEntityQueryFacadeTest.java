@@ -13,7 +13,6 @@ import com.stumeet.server.template.UnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -22,13 +21,12 @@ import java.text.MessageFormat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 
 
-class ActivityParticipantQueryFacadeTest extends UnitTest {
+class ActivityParticipantJpaEntityQueryFacadeTest extends UnitTest {
 
     @InjectMocks
     private ActivityParticipantQueryFacade activityParticipantQueryFacade;
@@ -92,6 +90,4 @@ class ActivityParticipantQueryFacadeTest extends UnitTest {
                     .hasMessage(MessageFormat.format(NotExistsActivityException.MESSAGE, invalidActivityId));
         }
     }
-
-
 }
