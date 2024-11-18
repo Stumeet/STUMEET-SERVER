@@ -343,6 +343,50 @@ include::{snippets}/finish-study/fail/member-not-joined_study/response-fields.ad
 include::{snippets}/finish-study/fail/member-not-admin/response-body.adoc[]
 include::{snippets}/finish-study/fail/member-not-admin/response-fields.adoc[]
 
+=== 스터디/활동 신고
+
+스터디와 활동을 신고하는 API 입니다.
+
+==== PATCH /api/v1/report
+
+===== 요청
+include::{snippets}/create-report/study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/create-report/study/success/request-headers.adoc[]
+
+===== 본문
+include::{snippets}/create-report/study/success/request-fields.adoc[]
+
+===== 신고 카테고리 종류
+[cols="1,2", options="header"]
+|===
+| Category  | Description
+| STUDY     | 스터디
+| ACTIVITY  | 활동
+|===
+
+===== 신고 사유 종류
+[cols="1,2", options="header"]
+|===
+| Reason  | Description
+| COMMERCIAL_ADVERTISEMENT_AND_SPAM  | 상업적 광고 및 스팸
+| PORNOGRAPHY_AND_HARMFUL_ACTIVITIES  | 음란물 및 유해성 활동
+| PROFANITY_AND_SLANDER  | 욕설 및 비방
+| FRAUD_OR_IMPERSONATION  | 사기 또는 사칭
+| FLOODING  | 도배
+| OTHERS  | 기타
+|===
+
+===== 응답 성공 (200)
+include::{snippets}/create-report/study/success/response-body.adoc[]
+include::{snippets}/create-report/study/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.신고자를 찾을 수 없는 경우
+include::{snippets}/create-report/fail/reporter-not-found/response-body.adoc[]
+include::{snippets}/create-report/fail/reporter-not-found/response-fields.adoc[]
+
 
 == 스터디 멤버 관리
 
@@ -592,37 +636,6 @@ include::{snippets}/hide-legacy-study/fail/study-not-finished/response-body.adoc
 include::{snippets}/hide-legacy-study/fail/study-not-finished/response-fields.adoc[]
 
 
-== 파일 관리
-
-=== Presigned URL 발급
-
-파일 업로드를 위한 Presigned URL을 발급하는 API입니다.
-
-해당 API는 1시간동안 유효합니다.
-
-==== POST /api/v1/presigned-urls
-
-===== 요청
-
-include::{snippets}/presigned-urls-generate/success/http-request.adoc[]
-include::{snippets}/presigned-urls-generate/success/request-headers.adoc[]
-include::{snippets}/presigned-urls-generate/success/request-fields.adoc[]
-
-include::file-management-path.adoc[]
-
-===== 응답 성공 (200)
-include::{snippets}/presigned-urls-generate/success/response-body.adoc[]
-include::{snippets}/presigned-urls-generate/success/response-fields.adoc[]
-
-===== 응답 실패 (400)
-.파일이름이 유효하지 않은 경우
-include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-body.adoc[]
-include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-fields.adoc[]
-
-.파일의 확장자가 유효하지 않은 경우
-include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-body.adoc[]
-include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-fields.adoc[]
-
 == 스터디 활동 관리
 
 === 스터디 활동 생성
@@ -855,6 +868,35 @@ include::{snippets}/update-activity-participant-status/success/path-parameters.a
 ====== 요청 본문
 include::{snippets}/update-activity-participant-status/success/request-fields.adoc[]
 
+===== 활동 멤버 상태 종류
+====== 공통
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| NOT_JOINED  | 미참여
+|===
+
+====== 모임 (Meet)
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| MEET_NOT_STARTED  | 시작 전
+| ATTENDANCE  | 출석
+| ABSENCE  | 결석
+| ACKNOWLEDGED_ABSENCE  | 인정결석
+| TARDINESS  | 지각
+|===
+
+====== 과제 (Assignment)
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| ASSIGNMENT_NOT_STARTED  | 시작 전
+| UNSUBMITTED  | 미제출
+| PERFORMED  | 수행
+| UNPERFORMED  | 미수행
+|===
+
 ===== 응답 실패 (400)
 .상태 수정 요청한 활동의 카테고리가 자유인 경우
 include::{snippets}/update-activity-participant-status/fail/activity-is-default/response-body.adoc[]
@@ -864,10 +906,6 @@ include::{snippets}/update-activity-participant-status/fail/activity-is-default/
 .수정하는 멤버가 관리자가 아닌 경우
 include::{snippets}/update-activity-participant-status/fail/member-is-not-admin/response-body.adoc[]
 include::{snippets}/update-activity-participant-status/fail/member-is-not-admin/response-fields.adoc[]
-
-.상태 변경되는 멤버가 스터디의 멤버가 아닌 경우
-include::{snippets}/update-activity-participant-status/fail/member-is-not-joined-member/response-body.adoc[]
-include::{snippets}/update-activity-participant-status/fail/member-is-not-joined-member/response-fields.adoc[]
 
 ===== 응답 실패 (404)
 .요청한 스터디가 존재하지 않는 경우
@@ -898,6 +936,39 @@ include::{snippets}/delete-activity/fail/forbidden/response-fields.adoc[]
 .스터디의 멤버가 아닌 경우
 include::{snippets}/delete-activity/fail/not-joined-member/response-body.adoc[]
 include::{snippets}/delete-activity/fail/not-joined-member/response-fields.adoc[]
+
+
+== 파일 관리
+
+=== Presigned URL 발급
+
+파일 업로드를 위한 Presigned URL을 발급하는 API입니다.
+
+해당 API는 1시간동안 유효합니다.
+
+==== POST /api/v1/presigned-urls
+
+===== 요청
+
+include::{snippets}/presigned-urls-generate/success/http-request.adoc[]
+include::{snippets}/presigned-urls-generate/success/request-headers.adoc[]
+include::{snippets}/presigned-urls-generate/success/request-fields.adoc[]
+
+include::file-management-path.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/presigned-urls-generate/success/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.파일이름이 유효하지 않은 경우
+include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-fields.adoc[]
+
+.파일의 확장자가 유효하지 않은 경우
+include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-fields.adoc[]
+
 
 == 알림
 === 알림 토큰 갱신

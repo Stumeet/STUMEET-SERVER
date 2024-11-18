@@ -266,6 +266,10 @@ public class ActivityStub {
         return 3L;
     }
 
+    public static Long getDefaultActivityId() {
+        return 1L;
+    }
+
     public static Long getInvalidActivityId() {
         return 0L;
     }

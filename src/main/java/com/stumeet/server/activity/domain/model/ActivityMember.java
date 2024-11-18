@@ -15,4 +15,13 @@ public class ActivityMember {
     private String name;
 
     private String image;
+
+    @Override
+    public String toString() {
+        return "ActivityMember{" +
+                "\n\tid=" + id +
+                ",\n\tname='" + name + '\'' +
+                ",\n\timage='" + image + '\'' +
+                "\n}";
+    }
 }

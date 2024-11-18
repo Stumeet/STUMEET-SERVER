@@ -62,6 +62,11 @@ presigned:
   url:
     expired-time: 3600
 
+discord:
+  webhook:
+    report:
+      url: ${DISCORD_REPORT_WEBHOOK_URL}
+
 fcm:
   secret:
     path: ${FCM_SECRET_PATH}

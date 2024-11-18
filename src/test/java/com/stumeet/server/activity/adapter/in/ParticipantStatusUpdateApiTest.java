@@ -25,10 +25,10 @@ import com.stumeet.server.template.ApiTest;
 class ParticipantStatusUpdateApiTest extends ApiTest {
 
     @Nested
-    @DisplayName("활동 수정 API")
+    @DisplayName("멤버 활동 상태 수정 API")
     class UpdateActivity {
 
-        private final String path = "/api/v1/studies/{studyId}/members/{memberId}/activities/{activityId}/status";
+        private final String path = "/api/v1/studies/{studyId}/activities/{activityId}/status";
 
         @Test
         @WithMockMember
@@ -36,7 +36,7 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
         void success() throws Exception {
             ParticipantStatusUpdateRequest request = ActivityParticipantStub.getParticipantStatusUpdateRequest();
 
-            mockMvc.perform(patch(path, StudyStub.getStudyId(), 2L, ActivityStub.getMeetActivityId())
+            mockMvc.perform(patch(path, StudyStub.getStudyId(), ActivityStub.getMeetActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))
@@ -50,7 +50,6 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("memberId").description("멤버 ID"),
                                     parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(
@@ -72,7 +71,7 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
                     .status("HELLO")
                     .build();
 
-            mockMvc.perform(patch(path, StudyStub.getStudyId(), 2L, ActivityStub.getMeetActivityId())
+            mockMvc.perform(patch(path, StudyStub.getStudyId(), ActivityStub.getMeetActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))
@@ -86,7 +85,6 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("memberId").description("멤버 ID"),
                                     parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(
@@ -105,7 +103,7 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
         void fail_when_study_not_found() throws Exception {
             ParticipantStatusUpdateRequest request = ActivityParticipantStub.getParticipantStatusUpdateRequest();
 
-            mockMvc.perform(patch(path, StudyStub.getInvalidStudyId(), 2L, ActivityStub.getMeetActivityId())
+            mockMvc.perform(patch(path, StudyStub.getInvalidStudyId(), ActivityStub.getMeetActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))
@@ -119,7 +117,6 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("memberId").description("멤버 ID"),
                                     parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(
@@ -138,7 +135,7 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
         void fail_when_member_is_not_admin() throws Exception {
             ParticipantStatusUpdateRequest request = ActivityParticipantStub.getParticipantStatusUpdateRequest();
 
-            mockMvc.perform(patch(path, StudyStub.getStudyId(), 2L, ActivityStub.getMeetActivityId())
+            mockMvc.perform(patch(path, StudyStub.getStudyId(), ActivityStub.getMeetActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))
@@ -152,40 +149,6 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("memberId").description("멤버 ID"),
-                                    parameterWithName("activityId").description("활동 ID")
-                            ),
-                            requestFields(
-                                    fieldWithPath("participantId").description("참가자 ID"),
-                                    fieldWithPath("status").description("활동 멤버 상태")
-                            ),
-                            responseFields(
-                                    fieldWithPath("code").description("응답 상태"),
-                                    fieldWithPath("message").description("응답 메시지")
-                            )));
-        }
-
-        @Test
-        @WithMockMember
-        @DisplayName("[실패] 상태 변경되는 멤버가 스터디의 멤버가 아닌 경우 멤버의 활동 상태 수정에 실패한다.")
-        void fail_when_member_is_not_joined_member() throws Exception {
-            ParticipantStatusUpdateRequest request = ActivityParticipantStub.getParticipantStatusUpdateRequest();
-
-            mockMvc.perform(patch(path, StudyStub.getStudyId(), 3L, ActivityStub.getMeetActivityId())
-                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(toJson(request)))
-                    .andExpect(status().isForbidden())
-                    .andDo(document("update-activity-participant-status/fail/member-is-not-joined-member",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
-                                            .description("서버로부터 전달받은 액세스 토큰")
-                            ),
-                            pathParameters(
-                                    parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("memberId").description("멤버 ID"),
                                     parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(
@@ -204,7 +167,7 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
         void fail_when_activity_category_default() throws Exception {
             ParticipantStatusUpdateRequest request = ActivityParticipantStub.getParticipantStatusUpdateRequest();
 
-            mockMvc.perform(patch(path, StudyStub.getStudyId(), 2L, ActivityStub.getDefaultActivity())
+            mockMvc.perform(patch(path, StudyStub.getStudyId(), ActivityStub.getDefaultActivityId())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(toJson(request)))
@@ -218,7 +181,6 @@ class ParticipantStatusUpdateApiTest extends ApiTest {
                             ),
                             pathParameters(
                                     parameterWithName("studyId").description("스터디 ID"),
-                                    parameterWithName("memberId").description("멤버 ID"),
                                     parameterWithName("activityId").description("활동 ID")
                             ),
                             requestFields(

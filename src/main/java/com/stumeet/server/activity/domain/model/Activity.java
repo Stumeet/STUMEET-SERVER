@@ -86,4 +86,22 @@ public abstract class Activity {
     public boolean isAuthor(Long memberId) {
         return Objects.equals(this.author.getId(), memberId);
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "\n\tid=" + id +
+                ",\n\tstudy=" + study +
+                ",\n\tauthor=" + author +
+                ",\n\tcategory=" + category +
+                ",\n\ttitle='" + title + '\'' +
+                ",\n\tcontent='" + content + '\'' +
+                ",\n\tlink='" + link + '\'' +
+                ",\n\tlocation='" + location + '\'' +
+                ",\n\tstartDate=" + startDate +
+                ",\n\tendDate=" + endDate +
+                ",\n\tisNotice=" + isNotice +
+                ",\n\tcreatedAt=" + createdAt +
+                "\n}";
+    }
 }
