@@ -7,10 +7,16 @@ spring:
     multipart:
       max-file-size: 5MB
   datasource:
-    url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    app:
+      jdbc-url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+    batch:
+      jdbc-url: jdbc:h2:mem:batchdb;DATABASE_TO_UPPER=false;MODE=MYSQL
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
   sql:
     init:
       mode: always
@@ -26,6 +32,9 @@ spring:
         show_sql: true
         format_sql: true
     open-in-view: false
+  batch:
+    job:
+      enabled: false
   cloud:
     config:
       server:
@@ -57,6 +66,8 @@ fcm:
   secret:
     path: ${FCM_SECRET_PATH}
 
-#logging:
-#  level:
-#    root: debug
+logging:
+  level:
+    org:
+      springframework:
+        batch: debug
