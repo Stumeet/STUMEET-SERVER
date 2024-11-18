@@ -868,6 +868,35 @@ include::{snippets}/update-activity-participant-status/success/path-parameters.a
 ====== 요청 본문
 include::{snippets}/update-activity-participant-status/success/request-fields.adoc[]
 
+===== 활동 멤버 상태 종류
+====== 공통
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| NOT_JOINED  | 미참여
+|===
+
+====== 모임 (Meet)
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| MEET_NOT_STARTED  | 시작 전
+| ATTENDANCE  | 출석
+| ABSENCE  | 결석
+| ACKNOWLEDGED_ABSENCE  | 인정결석
+| TARDINESS  | 지각
+|===
+
+====== 과제 (Assignment)
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| ASSIGNMENT_NOT_STARTED  | 시작 전
+| UNSUBMITTED  | 미제출
+| PERFORMED  | 수행
+| UNPERFORMED  | 미수행
+|===
+
 ===== 응답 실패 (400)
 .상태 수정 요청한 활동의 카테고리가 자유인 경우
 include::{snippets}/update-activity-participant-status/fail/activity-is-default/response-body.adoc[]
