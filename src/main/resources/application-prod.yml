@@ -59,3 +59,8 @@ presigned:
 fcm:
   secret:
     path: ${FCM_SECRET_PATH}
+
+discord:
+  webhook:
+    report:
+      url: ${DISCORD_REPORT_WEBHOOK_URL}
