@@ -129,14 +129,14 @@ INSERT INTO activity_participant (activity_id, member_id, status) VALUES (4, 2, 
 INSERT INTO activity (id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
 VALUES (5, 1, 1, 'ASSIGNMENT', 'title', 'content', false, '2024-04-01T00:00:00', '2024-04-08T00:00:00', null);
 
-INSERT INTO activity_participant (activity_id, member_id, status) VALUES (5, 1, 'UNSUBMITTED');
+INSERT INTO activity_participant (activity_id, member_id, status) VALUES (5, 1, 'UNPERFORMED');
 INSERT INTO activity_participant (activity_id, member_id, status) VALUES (5, 2, 'PERFORMED');
 
 -- 스터디 1 (공지) 과제 활동
 INSERT INTO activity (id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
 VALUES (6, 1, 1, 'ASSIGNMENT', 'title', 'content', true, '2024-04-08T00:00:00', '2024-04-15T00:00:00', null);
 
-INSERT INTO activity_participant (activity_id, member_id, status) VALUES (6, 1, 'UNSUBMITTED');
+INSERT INTO activity_participant (activity_id, member_id, status) VALUES (6, 1, 'LATE_SUBMISSION');
 INSERT INTO activity_participant (activity_id, member_id, status) VALUES (6, 2, 'PERFORMED');
 
 -- 스터디 1 미참여 과제 활동

@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 public enum MeetStatus implements ActivityStatus {
     MEET_NOT_STARTED("시작 전"),
     ATTENDANCE("출석"),
-    ABSENCE("결석"),
+    TARDINESS("지각"),
     ACKNOWLEDGED_ABSENCE("인정결석"),
-    TARDINESS("지각")
+    ABSENCE("결석")
     ;
 
     private final String description;

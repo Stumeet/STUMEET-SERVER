@@ -882,9 +882,9 @@ include::{snippets}/update-activity-participant-status/success/request-fields.ad
 | Status  | Description
 | MEET_NOT_STARTED  | 시작 전
 | ATTENDANCE  | 출석
-| ABSENCE  | 결석
-| ACKNOWLEDGED_ABSENCE  | 인정결석
 | TARDINESS  | 지각
+| ACKNOWLEDGED_ABSENCE  | 인정결석
+| ABSENCE  | 결석
 |===
 
 ====== 과제 (Assignment)
@@ -892,8 +892,8 @@ include::{snippets}/update-activity-participant-status/success/request-fields.ad
 |===
 | Status  | Description
 | ASSIGNMENT_NOT_STARTED  | 시작 전
-| UNSUBMITTED  | 미제출
 | PERFORMED  | 수행
+| LATE_SUBMISSION  | 지각제출
 | UNPERFORMED  | 미수행
 |===
 
