@@ -165,24 +165,3 @@ INSERT IGNORE INTO `profession` (id, name, parent_id) VALUES (135, '수의사', 
 INSERT IGNORE INTO `profession` (id, name, parent_id) VALUES (136, '한약사', 124);
 INSERT IGNORE INTO `profession` (id, name, parent_id) VALUES (137, '한의사', 124);
 INSERT IGNORE INTO `profession` (id, name, parent_id) VALUES (138, '원무', 124);
-
-
-/**
-  REVIEW TAG
- */
-INSERT IGNORE INTO `review_tag` (id, tag_name) VALUES
-(1, '귀차니즘'),
-(2, '과제 성실도'),
-(3, '프로개근러'),
-(4, '최고의 리더'),
-(5, '최고의 서포터'),
-(6, '빠른 응답'),
-(7, '느린 응답'),
-(8, '확신의 J'),
-(9, '확신의 P'),
-(10, '책임감 MAX'),
-(11, '분위기 메이커'),
-(12, '노력 1등'),
-(13, '분발이 필요해요'),
-(14, '깔끔한 필기'),
-(15, '쪽집게 강사');
