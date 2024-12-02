@@ -27,7 +27,9 @@ public enum SuccessCode {
     FILE_UPLOAD_SUCCESS(HttpStatus.CREATED, "파일 업로드에 성공했습니다."),
     STUDY_CREATE_SUCCESS(HttpStatus.CREATED, "스터디 그룹 생성에 성공했습니다."),
     STUDY_JOIN_SUCCESS(HttpStatus.CREATED, "스터디 가입에 성공했습니다."),
-    ACTIVITY_CREATE_SUCCESS(HttpStatus.CREATED, "활동 생성에 성공했습니다.");
+    ACTIVITY_CREATE_SUCCESS(HttpStatus.CREATED, "활동 생성에 성공했습니다."),
+    REVIEW_CREATE_SUCCESS(HttpStatus.CREATED, "리뷰 생성에 성공했습니다.")
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
