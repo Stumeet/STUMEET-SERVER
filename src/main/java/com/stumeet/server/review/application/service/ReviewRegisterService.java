@@ -2,6 +2,7 @@ package com.stumeet.server.review.application.service;
 
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.review.application.port.in.ReviewRegisterUseCase;
+import com.stumeet.server.review.application.port.in.ReviewValidationUseCase;
 import com.stumeet.server.review.application.port.in.command.ReviewRegisterCommand;
 import com.stumeet.server.review.application.port.out.ReviewSavePort;
 import com.stumeet.server.review.domain.Review;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewRegisterService implements ReviewRegisterUseCase {
 
+    private final ReviewValidationUseCase reviewValidationUseCase;
     private final StudyValidationUseCase studyValidationUseCase;
     private final StudyMemberValidationUseCase studyMemberValidationUseCase;
 
@@ -24,6 +26,7 @@ public class ReviewRegisterService implements ReviewRegisterUseCase {
         studyValidationUseCase.checkById(command.studyId());
         studyMemberValidationUseCase.checkStudyJoinMember(command.studyId(), command.reviewerId());
         studyMemberValidationUseCase.checkStudyJoinMember(command.studyId(), command.revieweeId());
+        reviewValidationUseCase.validateDuplicate(command.studyId(), command.reviewerId(), command.revieweeId());
 
         Review review = Review.create(
             command.reviewerId(),
