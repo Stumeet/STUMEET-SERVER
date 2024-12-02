@@ -850,7 +850,7 @@ include::{snippets}/get-activity-participants/fail/not-found-activity/response-b
 include::{snippets}/get-activity-participants/fail/not-found-activity/response-fields.adoc[]
 
 
-=== 스터디 활동 참여 멤버 상태 변경
+=== 스터디 활동 참여멤버 상태 변경
 
 스터디 활동에 참여중인 멤버의 상태를 변경하는 API입니다.
 
@@ -936,6 +936,76 @@ include::{snippets}/delete-activity/fail/forbidden/response-fields.adoc[]
 .스터디의 멤버가 아닌 경우
 include::{snippets}/delete-activity/fail/not-joined-member/response-body.adoc[]
 include::{snippets}/delete-activity/fail/not-joined-member/response-fields.adoc[]
+
+
+== 멤버 리뷰 관리
+
+=== 리뷰 등록
+
+스터디 완료 후 멤버의 리뷰를 등록하는 API입니다.
+
+==== POST /api/v1/reviews
+===== 요청
+include::{snippets}/register-review/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/register-review/success/request-headers.adoc[]
+
+====== 요청 본문
+include::{snippets}/register-review/success/request-fields.adoc[]
+
+===== 리뷰 태그 종류
+[cols="1,2", options="header"]
+|===
+| Tag                | Description
+| DILIGENCE          | 귀차니즘
+| TASK_COMMITMENT    | 과제 성실도
+| CONSISTENT_ATTENDANCE | 프로개근러
+| BEST_LEADER        | 최고의 리더
+| BEST_SUPPORTER     | 최고의 서포터
+| FAST_RESPONSE      | 빠른 응답
+| SLOW_RESPONSE      | 느린 응답
+| DECISIVE_J         | 확신의 J
+| FLEXIBLE_P         | 확신의 P
+| MAX_RESPONSIBILITY | 책임감 MAX
+| MOOD_MAKER         | 분위기 메이커
+| EFFORT_TOP         | 노력 1등
+| NEEDS_IMPROVEMENT  | 분발이 필요해요
+| NEAT_NOTES         | 깔끔한 필기
+| PINPOINT_TEACHER   | 쪽집게 강사
+|===
+
+===== 응답 성공 (200)
+include::{snippets}/register-review/success/response-body.adoc[]
+include::{snippets}/register-review/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.평점이 범위에서 벗어난 경우
+include::{snippets}/register-review/fail/rate-out-of-range/response-body.adoc[]
+include::{snippets}/register-review/fail/rate-out-of-range/response-fields.adoc[]
+
+.리뷰 태그 개수가 유효하지 않은 경우
+include::{snippets}/register-review/fail/invalid-review-tag-count/response-body.adoc[]
+include::{snippets}/register-review/fail/invalid-review-tag-count/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.리뷰어가 스터디 멤버가 아닌 경우
+include::{snippets}/register-review/fail/reviewer-not-joined/response-body.adoc[]
+include::{snippets}/register-review/fail/reviewer-not-joined/response-fields.adoc[]
+
+.리뷰 대상 멤버가 스터디 멤버가 아닌 경우
+include::{snippets}/register-review/fail/reviewee-not-joined/response-body.adoc[]
+include::{snippets}/register-review/fail/reviewee-not-joined/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.입력한 스터디가 존재하지 않는 경우
+include::{snippets}/register-review/fail/study-not-found/response-body.adoc[]
+include::{snippets}/register-review/fail/study-not-found/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.이미 작성된 리뷰가 존재하는 경우
+include::{snippets}/register-review/fail/review-already-exists/response-body.adoc[]
+include::{snippets}/register-review/fail/review-already-exists/response-fields.adoc[]
 
 
 == 파일 관리
