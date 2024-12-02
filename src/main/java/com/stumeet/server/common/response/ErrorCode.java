@@ -38,6 +38,7 @@ public enum ErrorCode {
     LOCATION_REQUIRED_FOR_MEET_EXCEPTION(HttpStatus.BAD_REQUEST, "모임 활동 생성 시 장소 값이 필수입니다."),
     DEFAULT_ACTIVITY_STATUS_IMMUTABLE_EXCEPTION(HttpStatus.BAD_REQUEST, "자유 활동의 경우 참여자 상태를 수정할 수 없습니다."),
     INVALID_STATUS_FOR_ACTIVITY_CATEGORY(HttpStatus.BAD_REQUEST, "해당 활동 카테고리에 유효하지 않은 활동 상태입니다."),
+    INVALID_REVIEW_TAG_COUNT_EXCEPTION(HttpStatus.BAD_REQUEST, "리뷰 태그 개수는 3개를 초과할 수 없습니다."),
 
 
     /*
