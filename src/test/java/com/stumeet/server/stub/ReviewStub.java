@@ -55,4 +55,14 @@ public class ReviewStub {
             List.of("TASK_COMMITMENT", "CONSISTENT_ATTENDANCE")
         );
     }
+
+    public static ReviewRegisterRequest getAlreadyReviewedRegisterRequest() {
+        return new ReviewRegisterRequest(
+            4L,
+            1L,
+            5,
+            "성실하게 참여해주셨습니다.",
+            List.of("TASK_COMMITMENT", "CONSISTENT_ATTENDANCE")
+        );
+    }
 }

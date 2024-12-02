@@ -277,5 +277,46 @@ class ReviewRegisterApiTest extends ApiTest {
                         fieldWithPath("data[].message").description("상세 응답 메시지")
                     )));
         }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 이미 작성된 리뷰가 존재하는 경우 경우 리뷰 등록에 실패한다.")
+        void fail_when_review_already_exists() throws Exception {
+            ReviewRegisterRequest request = ReviewStub.getAlreadyReviewedRegisterRequest();
+
+            mockMvc.perform(post(path)
+                    .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toJson(request)))
+                .andExpect(status().isConflict())
+                .andDo(document("register-review/fail/review-already-exists",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    requestHeaders(
+                        headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
+                            .description("서버로부터 전달받은 액세스 토큰")
+                    ),
+                    requestFields(
+                        fieldWithPath("revieweeId")
+                            .description("리뷰 받을 멤버의 ID")
+                            .attributes(key("constraints").value("NotNull")),
+                        fieldWithPath("studyId")
+                            .description("리뷰가 속한 스터디의 ID")
+                            .attributes(key("constraints").value("NotNull")),
+                        fieldWithPath("rate")
+                            .description("리뷰 평점")
+                            .attributes(key("constraints").value("NotNull, Range: 1 ~ 5")),
+                        fieldWithPath("content")
+                            .description("리뷰 내용")
+                            .optional(),
+                        fieldWithPath("reviewTags")
+                            .description("리뷰 태그 목록")
+                            .attributes(key("constraints").value("NotEmpty, 최소 1개, 최대 3개"))
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description("응답 상태"),
+                        fieldWithPath("message").description("응답 메시지")
+                    )));
+        }
     }
 }
