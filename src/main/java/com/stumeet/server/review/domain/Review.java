@@ -6,8 +6,6 @@ import org.hibernate.validator.constraints.Range;
 
 import com.stumeet.server.review.domain.exception.InvalidReviewTagException;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -29,7 +27,8 @@ public class Review {
     private List<ReviewTag> reviewTags;
 
     @Builder
-    private Review(Long id, Long reviewerId, Long revieweeId, Long studyId, Integer rate, String content, List<ReviewTag> reviewTags) {
+    private Review(Long id, Long reviewerId, Long revieweeId, Long studyId, Integer rate, String content,
+        List<ReviewTag> reviewTags) {
         validateReviewTagCount(reviewTags);
 
         this.id = id;
@@ -38,6 +37,7 @@ public class Review {
         this.studyId = studyId;
         this.rate = rate;
         this.content = content;
+        this.reviewTags = reviewTags;
     }
 
     private void validateReviewTagCount(List<ReviewTag> reviewTags) {

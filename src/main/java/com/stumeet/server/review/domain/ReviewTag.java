@@ -20,9 +20,9 @@ public enum ReviewTag {
     NEAT_NOTES("깔끔한 필기"),
     PINPOINT_TEACHER("쪽집게 강사");
 
-    private final String description;
+    private final String tagName;
 
-    ReviewTag(String description) {
-        this.description = description;
+    ReviewTag(String tagName) {
+        this.tagName = tagName;
     }
 }
