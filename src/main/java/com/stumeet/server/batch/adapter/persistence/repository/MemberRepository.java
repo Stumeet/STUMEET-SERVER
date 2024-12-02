@@ -1,4 +1,4 @@
-package com.stumeet.server.batch.repository;
+package com.stumeet.server.batch.adapter.persistence.repository;
 
 import java.time.LocalDate;
 

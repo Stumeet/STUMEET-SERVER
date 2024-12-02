@@ -1,4 +1,4 @@
-CREATE TABLE report
+CREATE TABLE IF NOT EXISTS report
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     category    VARCHAR(50) NOT NULL,

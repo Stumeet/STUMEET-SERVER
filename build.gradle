@@ -29,7 +29,7 @@ ext {
 }
 
 dependencies {
-    // jwt 의존성 추가
+    // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
@@ -53,8 +53,10 @@ dependencies {
     implementation 'org.flywaydb:flyway-mysql'
     implementation 'org.flywaydb:flyway-core'
 
+    // s3
     implementation(platform("software.amazon.awssdk:bom:2.21.1"))
     implementation 'software.amazon.awssdk:s3'
+    implementation 'software.amazon.awssdk:sqs'
 
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

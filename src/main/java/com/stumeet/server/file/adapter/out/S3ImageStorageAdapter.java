@@ -37,9 +37,9 @@ public class S3ImageStorageAdapter implements FileCommandPort, PresignedUrlGener
 
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
-    @Value("${spring.cloud.config.server.awss3.bucket}")
+    @Value("${spring.cloud.config.server.aws.s3.bucket}")
     private String bucket;
-    @Value("${spring.cloud.config.server.awss3.endpoint}")
+    @Value("${spring.cloud.config.server.aws.s3.endpoint}")
     private String endpoint;
     @Value("${presigned.url.expired-time}")
     private int expiredTime;
