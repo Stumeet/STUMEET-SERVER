@@ -83,8 +83,11 @@ INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (
 
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 4);
 
-INSERT INTO review (reviewer_id, reviewee_id, study_id, rate, content)
-VALUES (1, 4, 1, 5, '리뷰 내용입니다.');
+INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
+VALUES (1, 1, 4, 1, 5, '리뷰 내용입니다.');
+
+INSERT INTO review_tag_usage (review_id, review_tag)
+VALUES (1, 'MAX_RESPONSIBILITY');
 
 
 -- [TABLE: activity]
