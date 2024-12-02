@@ -13,7 +13,7 @@ import com.stumeet.server.batch.domain.member.Device;
 import com.stumeet.server.batch.domain.member.Member;
 import com.stumeet.server.batch.domain.study.Activity;
 import com.stumeet.server.batch.dto.Notification;
-import com.stumeet.server.batch.repository.ActivityRepository;
+import com.stumeet.server.batch.adapter.persistence.repository.ActivityRepository;
 
 import lombok.RequiredArgsConstructor;
 
