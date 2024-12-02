@@ -14,20 +14,19 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 @Profile("!test")
 public class AwsS3Config {
 
-    @Value("${spring.cloud.config.server.awss3.region}")
+    @Value("${spring.cloud.config.server.aws.s3.region}")
     private String region;
 
-    @Value("${spring.cloud.config.server.awss3.credentials.access-key}")
+    @Value("${spring.cloud.config.server.aws.s3.credentials.access-key}")
     private String accessKey;
 
-    @Value("${spring.cloud.config.server.awss3.credentials.secret-key}")
+    @Value("${spring.cloud.config.server.aws.s3.credentials.secret-key}")
     private String secretKey;
 
     private AwsBasicCredentials awsBasicCredentials() {
         return AwsBasicCredentials.create(accessKey, secretKey);
     }
 
-    @Bean
     public StaticCredentialsProvider staticCredentialsProvider() {
         return StaticCredentialsProvider.create(awsBasicCredentials());
     }
