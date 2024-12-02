@@ -1,10 +1,11 @@
 |===
-|Path|Type|Description|Optional
+|Path|Type|Description|Constraints|Optional
 
 {{#fields}}
 |{{path}}
 |{{type}}
 |{{description}}
+    |{{#attributes.constraints}}{{attributes.constraints}}{{/attributes.constraints}}{{^attributes.constraints}} {{/attributes.constraints}}
 |{{#optional}}Yes{{/optional}}{{^optional}}No{{/optional}}
 {{/fields}}
 |===
