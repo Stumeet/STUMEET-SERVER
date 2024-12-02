@@ -7,6 +7,7 @@ import com.stumeet.server.review.adapter.out.persistence.entity.ReviewJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.entity.ReviewTagJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.entity.ReviewTagUsageJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.mapper.ReviewPersistenceMapper;
+import com.stumeet.server.review.application.port.out.ReviewQueryPort;
 import com.stumeet.server.review.application.port.out.ReviewSavePort;
 import com.stumeet.server.review.domain.Review;
 import com.stumeet.server.review.domain.ReviewTag;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class ReviewPersistenceAdapter implements ReviewSavePort {
+public class ReviewPersistenceAdapter implements ReviewSavePort, ReviewQueryPort {
 
     private final JpaReviewRepository jpaReviewRepository;
     private final JpaReviewTagRepository jpaReviewTagRepository;
@@ -47,5 +48,10 @@ public class ReviewPersistenceAdapter implements ReviewSavePort {
             .toList();
 
         jpaReviewTagUsageRepository.saveAll(reviewTagUsageJpaEntities);
+    }
+
+    @Override
+    public boolean isExists(Long studyId, Long reviewerId, Long revieweeId) {
+        return jpaReviewRepository.existsByStudyIdAndReviewerIdAndRevieweeId(studyId, reviewerId, revieweeId);
     }
 }
