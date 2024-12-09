@@ -47,7 +47,4 @@ public class ReviewJpaEntity extends BaseTimeEntity {
 
     @Column(length = 1000)
     private String content;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 }

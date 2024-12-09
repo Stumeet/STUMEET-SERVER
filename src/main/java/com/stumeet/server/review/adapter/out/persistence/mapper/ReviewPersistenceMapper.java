@@ -19,7 +19,6 @@ public class ReviewPersistenceMapper {
             .studyId(domain.getStudyId())
             .rate(domain.getRate())
             .content(domain.getContent())
-            .createdAt(domain.getCreatedAt())
             .build();
     }
 
