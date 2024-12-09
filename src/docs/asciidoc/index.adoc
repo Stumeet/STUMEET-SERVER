@@ -1007,6 +1007,34 @@ include::{snippets}/register-review/fail/study-not-found/response-fields.adoc[]
 include::{snippets}/register-review/fail/review-already-exists/response-body.adoc[]
 include::{snippets}/register-review/fail/review-already-exists/response-fields.adoc[]
 
+=== 멤버 리뷰 조회
+
+멤버의 리뷰 목록을 조회하는 API입니다.
+
+==== GET /api/v1/reviews
+===== 요청
+include::{snippets}/get-member-reviews/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-member-reviews/success/request-headers.adoc[]
+
+====== 요청 파라미터
+include::{snippets}/get-member-reviews/success/query-parameters.adoc[]
+
+===== 리뷰 정렬 종류
+추가 및 수정 가능성 존재합니다.
+[cols="1,2", options="header"]
+|===
+| Sort                | Description
+| LATEST          | 최근등록순
+| HIGHEST_RATING    | 별점높은순
+| LOWEST_RATING    | 별점낮은순
+|===
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-reviews/success/response-body.adoc[]
+include::{snippets}/get-member-reviews/success/response-fields.adoc[]
+
 
 == 파일 관리
 
