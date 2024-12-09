@@ -1,5 +1,6 @@
 package com.stumeet.server.review.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Range;
@@ -26,9 +27,11 @@ public class Review {
 
     private List<ReviewTag> reviewTags;
 
+    private LocalDateTime createdAt;
+
     @Builder
-    private Review(Long id, Long reviewerId, Long revieweeId, Long studyId, Integer rate, String content,
-        List<ReviewTag> reviewTags) {
+    public Review(Long id, Long reviewerId, Long revieweeId, Long studyId, Integer rate, String content,
+        List<ReviewTag> reviewTags, LocalDateTime createdAt) {
         validateReviewTagCount(reviewTags);
 
         this.id = id;
@@ -38,6 +41,7 @@ public class Review {
         this.rate = rate;
         this.content = content;
         this.reviewTags = reviewTags;
+        this.createdAt = createdAt;
     }
 
     private void validateReviewTagCount(List<ReviewTag> reviewTags) {

@@ -12,7 +12,7 @@ TRUNCATE TABLE device;
 TRUNCATE TABLE topic_subscription;
 TRUNCATE TABLE topic;
 TRUNCATE TABLE review;
-TRUNCATE TABLE review_tag_usage;
+TRUNCATE TABLE review_tag;
 TRUNCATE TABLE notification_log;
 
 SET FOREIGN_KEY_CHECKS = 1;
