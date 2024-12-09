@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
-@Table(name = "review_tag_usage")
-public class ReviewTagUsageJpaEntity {
+@Table(name = "review_tag")
+public class ReviewTagJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

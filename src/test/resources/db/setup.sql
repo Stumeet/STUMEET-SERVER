@@ -86,8 +86,18 @@ INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 4);
 INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
 VALUES (1, 1, 4, 1, 5, '리뷰 내용입니다.');
 
-INSERT INTO review_tag_usage (review_id, review_tag)
+INSERT INTO review_tag (review_id, review_tag)
 VALUES (1, 'MAX_RESPONSIBILITY');
+
+INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
+VALUES (2, 2, 4, 1, 5, '리뷰 내용입니다.');
+
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (2, 'MAX_RESPONSIBILITY');
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (2, 'FAST_RESPONSE');
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (2, 'MOOD_MAKER');
 
 
 -- [TABLE: activity]
