@@ -1,10 +1,13 @@
 package com.stumeet.server.review.adapter.out.persistence;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 
 import com.stumeet.server.common.annotation.PersistenceAdapter;
+import com.stumeet.server.review.adapter.out.persistence.dto.ReviewTagCountDto;
 import com.stumeet.server.review.adapter.out.persistence.entity.ReviewJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.entity.ReviewTagJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.mapper.ReviewPersistenceMapper;
@@ -54,5 +57,13 @@ public class ReviewPersistenceAdapter implements ReviewSavePort, ReviewQueryPort
     public List<Review> findMemberReviews(Long memberId, Integer size, Integer page, ReviewSort sort) {
         List<ReviewJpaEntity> entities = jpaReviewRepositoryCustom.findByMemberId(memberId, PageRequest.of(page, size), sort);
         return reviewPersistenceMapper.toDomains(entities);
+    }
+
+    @Override
+    public Map<ReviewTag, Long> countMemberReviewTags(Long memberId) {
+        List<ReviewTagCountDto> result = jpaReviewTagRepository.countReviewTagByRevieweeId(memberId);
+
+        return result.stream()
+            .collect(Collectors.toMap(ReviewTagCountDto::reviewTag, ReviewTagCountDto::count));
     }
 }
