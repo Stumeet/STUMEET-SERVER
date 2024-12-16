@@ -29,7 +29,7 @@ class ReviewQueryApiTest extends ApiTest {
         @Test
         @WithMockMember(id = 4L)
         @DisplayName("[성공] 멤버의 리뷰 목록 조회에 성공한다.")
-        void successTest() throws Exception {
+        void success() throws Exception {
             Integer size = 2;
             Integer page = 0;
             ReviewSort sort = ReviewSort.LATEST;
@@ -62,6 +62,37 @@ class ReviewQueryApiTest extends ApiTest {
                         fieldWithPath("data[].content").description("내용"),
                         fieldWithPath("data[].createdAt").description("생성일자"),
                         fieldWithPath("data[].tags[]").description("리뷰 태그 목록")
+                    )
+                ));
+        }
+    }
+
+    @Nested
+    @DisplayName("멤버 리뷰 태그 통계 조회 API")
+    class GetMemberReviewTagStats {
+        private static final String PATH = "/api/v1/reviews/tags/stats";
+
+        @Test
+        @WithMockMember(id = 4L)
+        @DisplayName("[성공] 멤버의 리뷰 목록 조회에 성공한다.")
+        void success() throws Exception {
+            mockMvc.perform(get(PATH)
+                    .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value(SuccessCode.GET_SUCCESS.getMessage()))
+                .andDo(document("get-member-review-tags-stats/success",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    requestHeaders(
+                        headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName())
+                            .description("서버로부터 전달받은 액세스 토큰")
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description("응답 코드"),
+                        fieldWithPath("message").description("응답 메시지"),
+                        fieldWithPath("data.tagCounts").description("리뷰 태그 개수 통계")
+                    ).andWithPrefix("data.tagCounts.",
+                        fieldWithPath("*").description("리뷰 태그 이름과 태그 개수")
                     )
                 ));
         }
