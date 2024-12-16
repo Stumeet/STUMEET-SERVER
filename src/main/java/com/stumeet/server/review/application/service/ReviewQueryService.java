@@ -1,10 +1,11 @@
 package com.stumeet.server.review.application.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.stumeet.server.common.annotation.UseCase;
-import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewDetailResponse;
+import com.stumeet.server.review.adapter.out.web.dto.ReviewTagStatsResponse;
 import com.stumeet.server.review.application.port.in.ReviewQueryUseCase;
 import com.stumeet.server.review.application.port.out.ReviewQueryPort;
 import com.stumeet.server.review.domain.Review;
@@ -35,5 +36,11 @@ public class ReviewQueryService implements ReviewQueryUseCase {
                     .toList()
             ))
             .toList();
+    }
+
+    @Override
+    public ReviewTagStatsResponse getMemberReviewTagStats(Long memberId) {
+        Map<ReviewTag, Long> reviewTagsCnt = reviewQueryPort.countMemberReviewTags(memberId);
+        return new ReviewTagStatsResponse(reviewTagsCnt);
     }
 }
