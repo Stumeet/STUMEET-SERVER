@@ -1035,6 +1035,21 @@ include::{snippets}/get-member-reviews/success/query-parameters.adoc[]
 include::{snippets}/get-member-reviews/success/response-body.adoc[]
 include::{snippets}/get-member-reviews/success/response-fields.adoc[]
 
+=== 멤버 리뷰 태그 통계 조회
+
+멤버의 리뷰 태그 통계를 조회하는 API입니다.
+
+==== GET /api/v1/reviews/tags/stats
+===== 요청
+include::{snippets}/get-member-review-tags-stats/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-member-review-tags-stats/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-review-tags-stats/success/response-body.adoc[]
+include::{snippets}/get-member-review-tags-stats/success/response-fields.adoc[]
+
 
 == 파일 관리
 
