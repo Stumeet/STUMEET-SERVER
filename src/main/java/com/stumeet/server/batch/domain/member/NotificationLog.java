@@ -1,10 +1,14 @@
 package com.stumeet.server.batch.domain.member;
 
+import java.util.Map;
+
 import org.hibernate.annotations.Comment;
 
 import com.stumeet.server.common.model.BaseTimeEntity;
+import com.stumeet.server.notification.adapter.out.mapper.JsonToMapConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,17 +39,18 @@ public class NotificationLog extends BaseTimeEntity {
 
     @Column(name = "title")
     @Comment("제목")
-    String title;
+    private String title;
 
     @Column(name = "body")
     @Comment("본문")
-    String body;
+    private String body;
 
     @Column(name = "img_url")
     @Comment("커스텀 뱃지 이미지 URL")
-    String imgUrl;
+    private String imgUrl;
 
     @Column(name = "data")
     @Comment("메타 데이터")
-    String data;
+    @Convert(converter = JsonToMapConverter.class)
+    private Map<String, String> data;
 }
