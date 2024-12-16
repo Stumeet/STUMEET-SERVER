@@ -1,4 +1,4 @@
-package com.stumeet.server.activity.adapter.in.response;
+package com.stumeet.server.common.model;
 
 import lombok.Builder;
 
