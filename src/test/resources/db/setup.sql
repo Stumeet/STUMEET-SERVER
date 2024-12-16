@@ -54,6 +54,12 @@ INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 1);
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (2, 1);
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (3, 1);
 
+INSERT INTO notification_log (member_id, title, body, img_url, data)
+VALUES(1, '[자바를 자바]', '공지사항이 올라왔어요!', 'http://example.com/welcome.png', '{"type":"notice"}');
+INSERT INTO notification_log (member_id, title, body, img_url, data)
+VALUES(1, '[자바를 자바]', '공지사항이 업데이트 되었어요!', 'http://example.com/welcome.png', '{"type":"update"}');
+
+
 -- member id 2: study id 1의 멤버
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (2, 'test2', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',

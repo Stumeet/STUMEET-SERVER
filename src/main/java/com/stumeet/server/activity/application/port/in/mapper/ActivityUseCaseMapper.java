@@ -5,7 +5,7 @@ import com.stumeet.server.activity.adapter.in.response.ActivityImageResponse;
 import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageResponse;
 import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageResponses;
 import com.stumeet.server.activity.adapter.in.response.ActivityParticipantSimpleResponse;
-import com.stumeet.server.activity.adapter.in.response.PageInfoResponse;
+import com.stumeet.server.common.model.PageInfoResponse;
 import com.stumeet.server.activity.application.port.in.command.ActivityCreateCommand;
 import com.stumeet.server.activity.application.port.in.command.ActivityUpdateCommand;
 import com.stumeet.server.activity.application.service.model.ActivitySource;

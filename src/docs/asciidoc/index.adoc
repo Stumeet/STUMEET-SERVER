@@ -1108,6 +1108,25 @@ include::{snippets}/renew-notification-token/success/response-fields.adoc[]
 include::{snippets}/renew-notification-token/fail/invalid-format/response-body.adoc[]
 include::{snippets}/renew-notification-token/fail/invalid-format/response-fields.adoc[]
 
+=== 멤버 알림 기록 목록 조회
+
+멤버의 알림 기록 목록을 조회하는 API 입니다.
+
+==== POST /api/v1/notification/logs
+
+===== 요청
+include::{snippets}/get-member-notification-logs/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/get-member-notification-logs/success/request-headers.adoc[]
+
+===== 요청 변수
+include::{snippets}/get-member-notification-logs/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-notification-logs/success/response-body.adoc[]
+include::{snippets}/get-member-notification-logs/success/response-fields.adoc[]
+
 
 == 통합 API
 

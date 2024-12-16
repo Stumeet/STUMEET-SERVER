@@ -11,13 +11,13 @@ import com.stumeet.server.batch.dto.Notification;
 public class NotificationLogPersistenceMapper {
 
     public NotificationLog toDomain(Notification notification) {
-        return NotificationLog.builder()
-            .title(notification.title())
-            .body(notification.body())
-            .imgUrl(notification.imgUrl())
-            .data(notification.data().toString())
-            .memberId(notification.memberId())
-            .build();
+            return NotificationLog.builder()
+                .title(notification.title())
+                .body(notification.body())
+                .imgUrl(notification.imgUrl())
+                .data(notification.data())
+                .memberId(notification.memberId())
+                .build();
     }
 
     public List<NotificationLog> toDomains(List<Notification> notifications) {
