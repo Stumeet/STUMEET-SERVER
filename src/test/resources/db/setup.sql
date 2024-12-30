@@ -59,6 +59,13 @@ VALUES(1, '[자바를 자바]', '공지사항이 올라왔어요!', 'http://exam
 INSERT INTO notification_log (member_id, title, body, img_url, data)
 VALUES(1, '[자바를 자바]', '공지사항이 업데이트 되었어요!', 'http://example.com/welcome.png', '{"type":"update"}');
 
+INSERT INTO grape (member_id, study_id, compliment_type, created_at, updated_at)
+VALUES (1, 1, 'PASSIONATE', NOW(), NOW());
+INSERT INTO grape (member_id, study_id, compliment_type, created_at, updated_at)
+VALUES (1, 2, 'DILIGENT', NOW(), NOW());
+INSERT INTO grape (member_id, study_id, compliment_type, created_at, updated_at)
+VALUES (1, 3, 'OUTSTANDING', NOW(), NOW());
+
 
 -- member id 2: study id 1의 멤버
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
