@@ -975,7 +975,7 @@ include::{snippets}/register-review/success/request-fields.adoc[]
 | PINPOINT_TEACHER   | 쪽집게 강사
 |===
 
-===== 응답 성공 (200)
+===== 응답 성공 (201)
 include::{snippets}/register-review/success/response-body.adoc[]
 include::{snippets}/register-review/success/response-fields.adoc[]
 
@@ -1064,7 +1064,7 @@ include::{snippets}/send-grape-praise/success/request-headers.adoc[]
 ====== 요청 본문
 include::{snippets}/send-grape-praise/success/request-fields.adoc[]
 
-===== 응답 성공 (200)
+===== 응답 성공 (201)
 include::{snippets}/send-grape-praise/success/response-body.adoc[]
 include::{snippets}/send-grape-praise/success/response-fields.adoc[]
 
@@ -1086,6 +1086,24 @@ include::{snippets}/send-grape-praise/fail/sender_is_not_the_study_member/respon
 .전송자가 해당 스터디의 이미 이번주 포도알을 전송한 경우
 include::{snippets}/send-grape-praise/fail/sender_already_sent_grape/response-body.adoc[]
 include::{snippets}/send-grape-praise/fail/sender_already_sent_grape/response-fields.adoc[]
+
+=== 포도알 칭찬 목록 조회
+
+받은 포도알 칭찬 목록을 조회하는 API입니다.
+
+==== GET /api/v1/reviews/grapes
+===== 요청
+include::{snippets}/get-member-grapes/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-member-grapes/success/request-headers.adoc[]
+
+====== 요청 매개 변수
+include::{snippets}/get-member-grapes/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-grapes/success/response-body.adoc[]
+include::{snippets}/get-member-grapes/success/response-fields.adoc[]
 
 
 == 파일 관리
