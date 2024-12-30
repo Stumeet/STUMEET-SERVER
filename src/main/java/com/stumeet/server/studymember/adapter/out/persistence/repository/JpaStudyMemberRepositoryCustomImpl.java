@@ -1,14 +1,16 @@
-package com.stumeet.server.studymember.adapter.out.persistence;
+package com.stumeet.server.studymember.adapter.out.persistence.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.stumeet.server.studymember.adapter.out.persistence.entity.StudyMemberJpaEntity;
 import com.stumeet.server.studymember.application.port.in.response.QSimpleStudyMemberResponse;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.stumeet.server.studymember.adapter.out.persistence.QStudyMemberJpaEntity.studyMemberJpaEntity;
+import static com.stumeet.server.studymember.adapter.out.persistence.entity.QStudyMemberJpaEntity.studyMemberJpaEntity;
 
 @RequiredArgsConstructor
 public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberRepositoryCustom {
@@ -16,16 +18,17 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
     private final JPAQueryFactory query;
 
     @Override
-    public StudyMemberJpaEntity findStudyMemberByStudyIdAndMemberId(Long studyId, Long memberId) {
+    public Optional<StudyMemberJpaEntity> findStudyMemberByStudyIdAndMemberId(Long studyId, Long memberId) {
         return query
-                .select(studyMemberJpaEntity)
-                .from(studyMemberJpaEntity)
-                .innerJoin(studyMemberJpaEntity.member)
-                .where(
-                        studyMemberJpaEntity.study.id.eq(studyId),
-                        studyMemberJpaEntity.member.id.eq(memberId)
-                )
-                .fetchOne();
+            .select(studyMemberJpaEntity)
+            .from(studyMemberJpaEntity)
+            .innerJoin(studyMemberJpaEntity.member)
+            .where(
+                studyMemberJpaEntity.study.id.eq(studyId),
+                studyMemberJpaEntity.member.id.eq(memberId)
+            )
+            .stream()
+            .findFirst();
     }
 
     @Override
