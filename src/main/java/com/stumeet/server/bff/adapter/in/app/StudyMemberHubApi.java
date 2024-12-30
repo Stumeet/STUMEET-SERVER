@@ -31,7 +31,7 @@ public class StudyMemberHubApi {
     ) {
         StudyMemberDetailResponse studyMemberDetail = studyMemberQueryUseCase.getStudyMemberDetail(studyId, memberId, member.getId());
         boolean isAdmin = studyMemberQueryUseCase.isMemberAdmin(studyId, memberId).isAdmin();
-        boolean canSendGrape = studyMemberQueryUseCase.canStudyMemberSendGrape(studyId, memberId).canSendGrape();
+        boolean canSendGrape = studyMemberQueryUseCase.canSendGrape(studyId, memberId);
 
         StudyMemberDetailFullResponse response = new StudyMemberDetailFullResponse(
                 studyMemberDetail,

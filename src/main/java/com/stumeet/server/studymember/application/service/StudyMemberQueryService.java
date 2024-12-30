@@ -69,11 +69,9 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
     }
 
     @Override
-    public StudyMemberGrapeResponse canStudyMemberSendGrape(Long studyId, Long memberId) {
+    public boolean canSendGrape(Long studyId, Long memberId) {
         studyValidationUseCase.checkById(studyId);
 
-        return new StudyMemberGrapeResponse(
-                !studyMemberQueryPort.isSentGrape(studyId, memberId)
-        );
+        return !studyMemberQueryPort.isSentGrape(studyId, memberId);
     }
 }
