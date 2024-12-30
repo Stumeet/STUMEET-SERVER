@@ -78,14 +78,14 @@ VALUES (3, 'test3', 'http://localhost:4572/user/1/profile/2024030416531039839905
 
 INSERT INTO device (member_id, device_id, notification_token) VALUES (3, 'GFGHGFJFDX', 'ERAHGFJJGYFY');
 
--- member id 4: study id 1을 참여했지만 활동은 참여하지 않은 멤버, 멤버 1이 리뷰 작성 완료
+-- member id 4: study id 1을 참여했지만 활동은 참여하지 않은 멤버, 멤버 1이 리뷰 작성 완료, 스터디 1 이번주 포도알 전송 완료
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (4, 'test4', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
         '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);
 
 INSERT INTO device (member_id, device_id, notification_token) VALUES (4, 'ADGERGRGJSJHG', 'AHFGFJHGHKHVV');
 
-INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 1, false, false);
+INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 1, false, true);
 
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 4);
 
