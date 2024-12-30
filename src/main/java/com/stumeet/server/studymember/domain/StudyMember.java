@@ -1,5 +1,8 @@
 package com.stumeet.server.studymember.domain;
 
+import com.stumeet.server.studymember.domain.exception.AlreadySentGrapeException;
+import com.stumeet.server.studymember.domain.exception.SelfGrapePraiseForbiddenException;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +26,25 @@ public class StudyMember {
 
     public void hideLegacyStudy() {
         this.isLegacyHidden = true;
+    }
+
+    public void resetGrapeStatus() {
+        this.isSentGrape = false;
+    }
+
+    public void markGrapeSent() {
+        this.isSentGrape = true;
+    }
+
+    public void checkAlreadySentGrape() {
+        if (this.isSentGrape()) {
+            throw new AlreadySentGrapeException();
+        }
+    }
+
+    public void checkSelfPraise(long receiverId) {
+        if (this.id == receiverId) {
+            throw new SelfGrapePraiseForbiddenException();
+        }
     }
 }
