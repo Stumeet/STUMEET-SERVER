@@ -1,6 +1,5 @@
 package com.stumeet.server.review.adapter.out.persistence.entity;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.stumeet.server.common.model.BaseTimeEntity;

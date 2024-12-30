@@ -67,7 +67,8 @@ public class StudyMemberQueryApi {
             @AuthenticationPrincipal LoginMember member,
             @PathVariable Long studyId
     ) {
-        StudyMemberGrapeResponse response = studyMemberQueryUseCase.canStudyMemberSendGrape(studyId, member.getId());
+        boolean canSendGrape = studyMemberQueryUseCase.canSendGrape(studyId, member.getId());
+        StudyMemberGrapeResponse response = new StudyMemberGrapeResponse(canSendGrape);
 
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessCode.GET_SUCCESS, response)

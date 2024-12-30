@@ -3,7 +3,7 @@ package com.stumeet.server.studymember.application.service.integration;
 import com.stumeet.server.member.domain.exception.MemberNotExistsException;
 import com.stumeet.server.stub.StudyMemberStub;
 import com.stumeet.server.study.domain.exception.StudyNotExistsException;
-import com.stumeet.server.studymember.adapter.out.persistence.JpaStudyMemberRepository;
+import com.stumeet.server.studymember.adapter.out.persistence.repository.JpaStudyMemberRepository;
 import com.stumeet.server.studymember.application.port.in.command.StudyMemberJoinCommand;
 import com.stumeet.server.studymember.application.service.StudyMemberJoinService;
 import com.stumeet.server.template.IntegrationTest;

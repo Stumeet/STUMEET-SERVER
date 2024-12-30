@@ -1,6 +1,6 @@
 package com.stumeet.server.studymember.adapter.out.persistence.mapper;
 
-import com.stumeet.server.studymember.adapter.out.persistence.JoinMemberJpaEntity;
+import com.stumeet.server.studymember.adapter.out.persistence.entity.JoinMemberJpaEntity;
 import com.stumeet.server.studymember.domain.JoinMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

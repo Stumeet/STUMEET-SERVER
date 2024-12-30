@@ -59,6 +59,13 @@ VALUES(1, '[자바를 자바]', '공지사항이 올라왔어요!', 'http://exam
 INSERT INTO notification_log (member_id, title, body, img_url, data)
 VALUES(1, '[자바를 자바]', '공지사항이 업데이트 되었어요!', 'http://example.com/welcome.png', '{"type":"update"}');
 
+INSERT INTO grape (member_id, study_id, compliment_type, created_at, updated_at)
+VALUES (1, 1, 'PASSIONATE', NOW(), NOW());
+INSERT INTO grape (member_id, study_id, compliment_type, created_at, updated_at)
+VALUES (1, 2, 'DILIGENT', NOW(), NOW());
+INSERT INTO grape (member_id, study_id, compliment_type, created_at, updated_at)
+VALUES (1, 3, 'OUTSTANDING', NOW(), NOW());
+
 
 -- member id 2: study id 1의 멤버
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
@@ -78,14 +85,14 @@ VALUES (3, 'test3', 'http://localhost:4572/user/1/profile/2024030416531039839905
 
 INSERT INTO device (member_id, device_id, notification_token) VALUES (3, 'GFGHGFJFDX', 'ERAHGFJJGYFY');
 
--- member id 4: study id 1을 참여했지만 활동은 참여하지 않은 멤버, 멤버 1이 리뷰 작성 완료
+-- member id 4: study id 1을 참여했지만 활동은 참여하지 않은 멤버, 멤버 1이 리뷰 작성 완료, 스터디 1 이번주 포도알 전송 완료
 INSERT INTO member (id, name, image, region, profession_id, role, auth_type, tier, experience, is_deleted, deleted_at)
 VALUES (4, 'test4', 'http://localhost:4572/user/1/profile/2024030416531039839905-b7e8-4ad3-9552-7d9cbc01cb14-test.jpg',
         '서울', 1, 'MEMBER', 'OAUTH', 'SEED', 0.0, false, null);
 
 INSERT INTO device (member_id, device_id, notification_token) VALUES (4, 'ADGERGRGJSJHG', 'AHFGFJHGHKHVV');
 
-INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 1, false, false);
+INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 1, false, true);
 
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 4);
 
