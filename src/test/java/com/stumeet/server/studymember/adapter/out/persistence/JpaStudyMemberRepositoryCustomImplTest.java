@@ -2,6 +2,7 @@ package com.stumeet.server.studymember.adapter.out.persistence;
 
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.StudyStub;
+import com.stumeet.server.studymember.adapter.out.persistence.repository.JpaStudyMemberRepositoryCustomImpl;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
 import com.stumeet.server.template.IntegrationTest;
 import org.junit.jupiter.api.DisplayName;

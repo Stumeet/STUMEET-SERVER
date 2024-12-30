@@ -1,4 +1,4 @@
-package com.stumeet.server.studymember.adapter.out.persistence;
+package com.stumeet.server.studymember.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

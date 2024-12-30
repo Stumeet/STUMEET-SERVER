@@ -1,6 +1,6 @@
 package com.stumeet.server.studymember.adapter.out.persistence.mapper;
 
-import com.stumeet.server.studymember.adapter.out.persistence.JoinStudyJpaEntity;
+import com.stumeet.server.studymember.adapter.out.persistence.entity.JoinStudyJpaEntity;
 import com.stumeet.server.studymember.domain.JoinStudy;
 import org.springframework.stereotype.Component;
 
