@@ -1035,9 +1035,9 @@ include::{snippets}/get-member-reviews/success/query-parameters.adoc[]
 include::{snippets}/get-member-reviews/success/response-body.adoc[]
 include::{snippets}/get-member-reviews/success/response-fields.adoc[]
 
-=== 멤버 리뷰 태그 통계 조회
+=== 멤버 리뷰 태그 개수 통계 조회
 
-멤버의 리뷰 태그 통계를 조회하는 API입니다.
+멤버의 리뷰 태그 개수 통계를 조회하는 API입니다.
 
 ==== GET /api/v1/reviews/tags/stats
 ===== 요청
