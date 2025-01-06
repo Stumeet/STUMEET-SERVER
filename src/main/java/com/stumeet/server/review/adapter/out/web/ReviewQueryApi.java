@@ -14,7 +14,7 @@ import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewDetailResponse;
-import com.stumeet.server.review.adapter.out.web.dto.ReviewTagStatsResponse;
+import com.stumeet.server.review.adapter.out.web.dto.ReviewTagCountStatsResponse;
 import com.stumeet.server.review.application.port.in.ReviewQueryUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -41,10 +41,10 @@ public class ReviewQueryApi {
     }
 
     @GetMapping("/reviews/tags/stats")
-    public ResponseEntity<ApiResponse<ReviewTagStatsResponse>> getReviewStats(
+    public ResponseEntity<ApiResponse<List<ReviewTagCountStatsResponse>>> getReviewStats(
         @AuthenticationPrincipal LoginMember member
     ) {
-        ReviewTagStatsResponse response =
+        List<ReviewTagCountStatsResponse> response =
             reviewQueryUseCase.getMemberReviewTagStats(member.getId());
 
         return new ResponseEntity<>(

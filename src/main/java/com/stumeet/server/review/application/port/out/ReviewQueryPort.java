@@ -1,11 +1,10 @@
 package com.stumeet.server.review.application.port.out;
 
 import java.util.List;
-import java.util.Map;
 
+import com.stumeet.server.review.adapter.out.web.dto.ReviewTagCountStatsResponse;
 import com.stumeet.server.review.domain.Review;
 import com.stumeet.server.review.domain.ReviewSort;
-import com.stumeet.server.review.domain.ReviewTag;
 
 public interface ReviewQueryPort {
 
@@ -13,5 +12,5 @@ public interface ReviewQueryPort {
 
     List<Review> findMemberReviews(Long memberId, Integer size, Integer page, ReviewSort sort);
 
-    Map<ReviewTag, Long> countMemberReviewTags(Long memberId);
+    List<ReviewTagCountStatsResponse> countMemberReviewTags(Long memberId);
 }
