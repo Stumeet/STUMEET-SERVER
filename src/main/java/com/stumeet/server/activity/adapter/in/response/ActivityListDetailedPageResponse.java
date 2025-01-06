@@ -7,6 +7,8 @@ import lombok.Builder;
 @Builder
 public record ActivityListDetailedPageResponse(
 		Long id,
+		Long studyId,
+		String studyName,
 		String category,
 		String title,
 		String content,

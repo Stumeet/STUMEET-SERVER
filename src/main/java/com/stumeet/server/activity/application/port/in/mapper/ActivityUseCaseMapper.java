@@ -29,7 +29,9 @@ public class ActivityUseCaseMapper {
     public ActivitySource toCreateSource(Long studyId, ActivityCreateCommand command, Long id) {
         return ActivitySource.builder()
                 .id(null)
-                .studyId(studyId)
+                .study(ActivitySource.ActivityLinkedStudyCreateSource.builder()
+                    .id(studyId)
+                    .build())
                 .author(ActivitySource.ActivityMemberCreateSource.builder()
                         .id(id)
                         .build())
@@ -48,7 +50,9 @@ public class ActivityUseCaseMapper {
     public ActivitySource toUpdateSource(Activity exist, ActivityUpdateCommand command) {
         return ActivitySource.builder()
                 .id(exist.getId())
-                .studyId(exist.getStudy().getId())
+                .study(ActivitySource.ActivityLinkedStudyCreateSource.builder()
+                    .id(exist.getId())
+                    .build())
                 .author(ActivitySource.ActivityMemberCreateSource.builder()
                         .id(exist.getAuthor().getId())
                         .build())
@@ -95,6 +99,8 @@ public class ActivityUseCaseMapper {
     private ActivityListDetailedPageResponse toListDetailedPageResponse(Activity activity) {
         return ActivityListDetailedPageResponse.builder()
                 .id(activity.getId())
+                .studyId(activity.getStudy().getId())
+                .studyName(activity.getStudy().getName())
                 .category(activity.getCategory().name())
                 .title(activity.getTitle())
                 .content(activity.getContent())
