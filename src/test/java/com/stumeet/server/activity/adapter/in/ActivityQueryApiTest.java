@@ -208,6 +208,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     fieldWithPath("message").description("응답 메시지"),
                                     fieldWithPath("data.items[]").description("활동 상세 목록"),
                                     fieldWithPath("data.items[].id").description("활동 ID"),
+                                    fieldWithPath("data.items[].studyId").description("활동 연관 스터디 ID"),
+                                    fieldWithPath("data.items[].studyName").description("활동 연관 스터디명"),
                                     fieldWithPath("data.items[].category").description("활동 유형"),
                                     fieldWithPath("data.items[].title").description("활동 제목"),
                                     fieldWithPath("data.items[].content").description("활동 내용"),

@@ -136,7 +136,9 @@ public class ActivityStub {
         Member member = MemberStub.getMember();
         return ActivitySource.builder()
                 .id(1L)
-                .studyId(StudyStub.getStudyId())
+                .study(ActivitySource.ActivityLinkedStudyCreateSource.builder()
+                        .id(StudyStub.getStudyId())
+                        .build())
                 .author(ActivitySource.ActivityMemberCreateSource.builder()
                         .id(member.getId())
                         .name(member.getName())
