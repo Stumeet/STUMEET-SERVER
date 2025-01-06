@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public class ActivityLinkedStudy {
     private Long id;
+    private String name;
 
     @Override
     public String toString() {

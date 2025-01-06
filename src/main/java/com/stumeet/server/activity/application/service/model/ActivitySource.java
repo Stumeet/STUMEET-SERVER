@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 public record ActivitySource(
         Long id,
-        Long studyId,
+        ActivityLinkedStudyCreateSource study,
         ActivityMemberCreateSource author,
         ActivityCategory category,
         String title,
@@ -25,6 +25,13 @@ public record ActivitySource(
         Long id,
         String name,
         String image
+    ) {
+    }
+
+    @Builder
+    public record ActivityLinkedStudyCreateSource(
+        Long id,
+        String name
     ) {
     }
 }

@@ -1,6 +1,7 @@
 package com.stumeet.server.activity.adapter.out.persistence;
 
 import static com.stumeet.server.activity.adapter.out.model.QActivityJpaEntity.*;
+import static com.stumeet.server.activity.adapter.out.model.QActivityLinkedStudyJpaEntity.*;
 import static com.stumeet.server.activity.adapter.out.model.QActivityParticipantJpaEntity.*;
 
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
             Pageable pageable, Boolean isNotice, Long studyId, ActivityCategory category) {
         List<ActivityJpaEntity> content = query
                 .selectFrom(activityJpaEntity)
+                .join(activityJpaEntity.study, activityLinkedStudyJpaEntity).fetchJoin()
                 .where(
                         isNoticeEq(isNotice),
                         studyIdEq(studyId),
@@ -61,6 +63,8 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .select(
                         new QActivityListBriefResponse(
                                 activityJpaEntity.id,
+                                activityLinkedStudyJpaEntity.id,
+                                activityLinkedStudyJpaEntity.name,
                                 activityJpaEntity.category.stringValue(),
                                 activityJpaEntity.title,
                                 activityJpaEntity.startDate,
@@ -71,6 +75,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                         )
                 )
                 .from(activityJpaEntity)
+                .join(activityJpaEntity.study, activityLinkedStudyJpaEntity)
                 .leftJoin(activityParticipantJpaEntity)
                 .on(
                         activityJpaEntity.id.eq(activityParticipantJpaEntity.activity.id)
@@ -113,6 +118,8 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .select(
                         new QActivityListBriefResponse(
                                 activityJpaEntity.id,
+                                activityLinkedStudyJpaEntity.id,
+                                activityLinkedStudyJpaEntity.name,
                                 activityJpaEntity.category.stringValue(),
                                 activityJpaEntity.title,
                                 activityJpaEntity.startDate,
@@ -123,6 +130,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                         )
                 )
                 .from(activityJpaEntity)
+                .join(activityJpaEntity.study, activityLinkedStudyJpaEntity)
                 .leftJoin(activityParticipantJpaEntity)
                 .on(
                         activityJpaEntity.id.eq(activityParticipantJpaEntity.activity.id)

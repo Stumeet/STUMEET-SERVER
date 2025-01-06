@@ -69,6 +69,8 @@ class StudyHubApiTest extends ApiTest {
                                     fieldWithPath("data.studyDetail.isDeleted").description("삭제 여부"),
                                     fieldWithPath("data.activityNotice").description("최근 공지 활동"),
                                     fieldWithPath("data.activityNotice.id").description("활동 ID"),
+                                    fieldWithPath("data.activityNotice.studyId").description("활동 연관 스터디 ID"),
+                                    fieldWithPath("data.activityNotice.studyName").description("활동 연관 스터디명"),
                                     fieldWithPath("data.activityNotice.category").description("활동 유형"),
                                     fieldWithPath("data.activityNotice.title").description("활동 제목"),
                                     fieldWithPath("data.activityNotice.content").description("활동 내용"),
