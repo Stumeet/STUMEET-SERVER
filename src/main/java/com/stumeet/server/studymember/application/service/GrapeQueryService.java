@@ -34,6 +34,11 @@ public class GrapeQueryService implements MemberGrapeQueryUseCase {
             .build();
     }
 
+    @Override
+    public int countMemberGrape(Long memberId) {
+        return grapeQueryPort.countMemberGrapes(memberId);
+    }
+
     private List<GrapeResponse> mapToGrapeResponse(Page<Grape> pages) {
         return pages.map(grape -> GrapeResponse.builder()
                 .id(grape.getId())

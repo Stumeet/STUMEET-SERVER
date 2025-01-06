@@ -26,6 +26,11 @@ public class GrapePersistenceAdapter implements GrapeQueryPort, GrapeSavePort {
     }
 
     @Override
+    public int countMemberGrapes(Long memberId) {
+        return jpaGrapeRepository.countByMemberId(memberId);
+    }
+
+    @Override
     public void save(Grape grape) {
         GrapeJpaEntity entity = grapePersistenceMapper.toEntity(grape);
         jpaGrapeRepository.save(entity);
