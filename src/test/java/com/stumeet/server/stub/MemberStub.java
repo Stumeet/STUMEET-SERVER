@@ -97,6 +97,7 @@ public class MemberStub {
                 .profession(member.getProfession().getName())
                 .tier(member.getLevel().getTier().getName())
                 .experience(member.getLevel().getExperience())
+                .grapeCount(115)
                 .build();
     }
 

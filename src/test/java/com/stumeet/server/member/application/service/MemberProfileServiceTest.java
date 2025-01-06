@@ -11,7 +11,9 @@ import com.stumeet.server.profession.application.port.in.ProfessionQueryUseCase;
 import com.stumeet.server.stub.FileStub;
 import com.stumeet.server.stub.MemberStub;
 import com.stumeet.server.stub.ProfessionStub;
+import com.stumeet.server.studymember.application.port.in.MemberGrapeQueryUseCase;
 import com.stumeet.server.template.UnitTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,6 @@ import org.mockito.Mock;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-
 
 class MemberProfileServiceTest extends UnitTest {
 
@@ -36,6 +37,9 @@ class MemberProfileServiceTest extends UnitTest {
 
     @Mock
     private ProfessionQueryUseCase professionQueryUseCase;
+
+    @Mock
+    private MemberGrapeQueryUseCase memberGrapeQueryUseCase;
 
     @Mock
     private MemberQueryPort memberQueryPort;
@@ -72,10 +76,13 @@ class MemberProfileServiceTest extends UnitTest {
         void successTest() {
             Member member = MemberStub.getMember();
             MemberProfileResponse want = MemberStub.getMemberProfileResponse(member);
+            int grapeCount = 115;
 
             given(memberQueryPort.getById(member.getId()))
                     .willReturn(member);
-            given(memberUseCaseMapper.toProfileResponse(member))
+            given(memberGrapeQueryUseCase.countMemberGrape(member.getId()))
+                    .willReturn(grapeCount);
+            given(memberUseCaseMapper.toProfileResponse(member, grapeCount))
                     .willReturn(want);
 
             MemberProfileResponse got = memberProfileService.getProfileById(member.getId());
@@ -83,5 +90,4 @@ class MemberProfileServiceTest extends UnitTest {
             assertThat(got).usingRecursiveComparison().isEqualTo(want);
         }
     }
-
 }
