@@ -14,6 +14,7 @@ public interface JpaReviewTagRepository extends JpaRepository<ReviewTagJpaEntity
         + "FROM ReviewTagJpaEntity rt "
         + "JOIN rt.review r "
         + "WHERE r.revieweeId = :memberId "
-        + "GROUP BY rt.reviewTag")
-    List<ReviewTagCountDto> countReviewTagByRevieweeId(Long memberId);
+        + "GROUP BY rt.reviewTag "
+        + "ORDER BY COUNT(rt) DESC, rt.reviewTag ASC ")
+    List<ReviewTagCountDto> countReviewTagByRevieweeIdOrdered(Long memberId);
 }

@@ -1,8 +1,6 @@
 package com.stumeet.server.review.adapter.out.persistence;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 
@@ -11,6 +9,7 @@ import com.stumeet.server.review.adapter.out.persistence.dto.ReviewTagCountDto;
 import com.stumeet.server.review.adapter.out.persistence.entity.ReviewJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.entity.ReviewTagJpaEntity;
 import com.stumeet.server.review.adapter.out.persistence.mapper.ReviewPersistenceMapper;
+import com.stumeet.server.review.adapter.out.web.dto.ReviewTagCountStatsResponse;
 import com.stumeet.server.review.application.port.out.ReviewQueryPort;
 import com.stumeet.server.review.application.port.out.ReviewSavePort;
 import com.stumeet.server.review.domain.Review;
@@ -60,10 +59,14 @@ public class ReviewPersistenceAdapter implements ReviewSavePort, ReviewQueryPort
     }
 
     @Override
-    public Map<ReviewTag, Long> countMemberReviewTags(Long memberId) {
-        List<ReviewTagCountDto> result = jpaReviewTagRepository.countReviewTagByRevieweeId(memberId);
+    public List<ReviewTagCountStatsResponse> countMemberReviewTags(Long memberId) {
+        List<ReviewTagCountDto> result = jpaReviewTagRepository.countReviewTagByRevieweeIdOrdered(memberId);
 
         return result.stream()
-            .collect(Collectors.toMap(ReviewTagCountDto::reviewTag, ReviewTagCountDto::count));
+            .map(tagStat -> ReviewTagCountStatsResponse.builder()
+                .reviewTagName(tagStat.reviewTag().getTagName())
+                .count(tagStat.count())
+                .build())
+            .toList();
     }
 }

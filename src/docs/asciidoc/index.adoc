@@ -1035,9 +1035,9 @@ include::{snippets}/get-member-reviews/success/query-parameters.adoc[]
 include::{snippets}/get-member-reviews/success/response-body.adoc[]
 include::{snippets}/get-member-reviews/success/response-fields.adoc[]
 
-=== 멤버 리뷰 태그 통계 조회
+=== 멤버 리뷰 태그 개수 통계 조회
 
-멤버의 리뷰 태그 통계를 조회하는 API입니다.
+멤버의 리뷰 태그 개수 통계를 조회하는 API입니다.
 
 ==== GET /api/v1/reviews/tags/stats
 ===== 요청
@@ -1063,6 +1063,15 @@ include::{snippets}/send-grape-praise/success/request-headers.adoc[]
 
 ====== 요청 본문
 include::{snippets}/send-grape-praise/success/request-fields.adoc[]
+
+===== 포도알 칭찬 종류
+[cols="1,2", options="header"]
+|===
+| Compliment   | Description
+| PASSIONATE   | 🔥 열정이 돋보이는 활동이에요
+| DILIGENT     | ✨ 성실하게 참여했어요
+| OUTSTANDING  | 👍 결과물이 훌륭해요
+|===
 
 ===== 응답 성공 (201)
 include::{snippets}/send-grape-praise/success/response-body.adoc[]
