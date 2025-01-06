@@ -10,6 +10,8 @@ import lombok.Builder;
 @Builder
 public record ActivityListBriefResponse(
         Long id,
+        Long studyId,
+        String studyName,
         String category,
         String title,
         LocalDateTime startDate,

@@ -63,6 +63,8 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .select(
                         new QActivityListBriefResponse(
                                 activityJpaEntity.id,
+                                activityLinkedStudyJpaEntity.id,
+                                activityLinkedStudyJpaEntity.name,
                                 activityJpaEntity.category.stringValue(),
                                 activityJpaEntity.title,
                                 activityJpaEntity.startDate,
@@ -73,6 +75,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                         )
                 )
                 .from(activityJpaEntity)
+                .join(activityJpaEntity.study, activityLinkedStudyJpaEntity)
                 .leftJoin(activityParticipantJpaEntity)
                 .on(
                         activityJpaEntity.id.eq(activityParticipantJpaEntity.activity.id)
@@ -115,6 +118,8 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .select(
                         new QActivityListBriefResponse(
                                 activityJpaEntity.id,
+                                activityLinkedStudyJpaEntity.id,
+                                activityLinkedStudyJpaEntity.name,
                                 activityJpaEntity.category.stringValue(),
                                 activityJpaEntity.title,
                                 activityJpaEntity.startDate,
@@ -125,6 +130,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                         )
                 )
                 .from(activityJpaEntity)
+                .join(activityJpaEntity.study, activityLinkedStudyJpaEntity)
                 .leftJoin(activityParticipantJpaEntity)
                 .on(
                         activityJpaEntity.id.eq(activityParticipantJpaEntity.activity.id)
