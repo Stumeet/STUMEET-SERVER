@@ -90,9 +90,9 @@ class ReviewQueryApiTest extends ApiTest {
                     responseFields(
                         fieldWithPath("code").description("응답 코드"),
                         fieldWithPath("message").description("응답 메시지"),
-                        fieldWithPath("data.tagCounts").description("리뷰 태그 개수 통계")
-                    ).andWithPrefix("data.tagCounts.",
-                        fieldWithPath("*").description("리뷰 태그 이름과 태그 개수")
+                        fieldWithPath("data").description("리뷰 태그 개수 통계"),
+                        fieldWithPath("data[].reviewTagName").description("리뷰 태그 이름"),
+                        fieldWithPath("data[].count").description("리뷰 태그 개수")
                     )
                 ));
         }
