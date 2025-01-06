@@ -1,7 +1,5 @@
 package com.stumeet.server.studymember.domain;
 
-import org.springframework.security.core.parameters.P;
-
 import com.stumeet.server.common.exception.model.EnumValidationException;
 import com.stumeet.server.common.response.ErrorCode;
 
@@ -11,11 +9,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ComplimentType {
-    PASSIONATE("열정이 돋보이는 활동이에요"),
-    DILIGENT("성실하게 참여했어요"),
-    OUTSTANDING("결과물이 훌륭해요");
+    PASSIONATE("\uD83D\uDD25 열정이 돋보이는 활동이에요"),
+    DILIGENT("✨ 성실하게 참여했어요"),
+    OUTSTANDING("\uD83D\uDC4D 결과물이 훌륭해요");
 
-    private String description;
+    private final String description;
 
     public static ComplimentType safeValueOf(String name) {
         try {
