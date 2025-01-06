@@ -10,6 +10,7 @@ public record MemberProfileResponse(
         String region,
         String profession,
         String tier,
-        double experience
-) {
+        double experience,
+        Integer grapeCount
+        ) {
 }

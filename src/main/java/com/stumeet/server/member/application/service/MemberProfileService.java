@@ -14,6 +14,8 @@ import com.stumeet.server.member.application.port.out.MemberQueryPort;
 import com.stumeet.server.member.domain.Member;
 import com.stumeet.server.profession.application.port.in.ProfessionQueryUseCase;
 import com.stumeet.server.profession.domain.Profession;
+import com.stumeet.server.studymember.application.port.in.MemberGrapeQueryUseCase;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,11 @@ public class MemberProfileService implements MemberProfileUseCase {
     private final ProfessionQueryUseCase professionQueryUseCase;
     private final FileUploadUseCase fileUploadUseCase;
     private final MemberValidationUseCase memberValidationUseCase;
+    private final MemberGrapeQueryUseCase memberGrapeQueryUseCase;
+
     private final MemberCommandPort memberCommandPort;
     private final MemberQueryPort memberQueryPort;
+
     private final MemberUseCaseMapper memberUseCaseMapper;
 
 
@@ -74,7 +79,8 @@ public class MemberProfileService implements MemberProfileUseCase {
     @Override
     public MemberProfileResponse getProfileById(Long id) {
         Member member = memberQueryPort.getById(id);
-        return memberUseCaseMapper.toProfileResponse(member);
-    }
+        int grapeCount = memberGrapeQueryUseCase.countMemberGrape(id);
 
+        return memberUseCaseMapper.toProfileResponse(member, grapeCount);
+    }
 }

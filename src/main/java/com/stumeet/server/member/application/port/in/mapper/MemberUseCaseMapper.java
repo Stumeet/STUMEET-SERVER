@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberUseCaseMapper {
 
-    public MemberProfileResponse toProfileResponse(Member member) {
+    public MemberProfileResponse toProfileResponse(Member member, int grapeCount) {
         return MemberProfileResponse.builder()
                 .id(member.getId())
                 .image(member.getImage())
@@ -16,6 +16,7 @@ public class MemberUseCaseMapper {
                 .profession(member.getProfession().getName())
                 .tier(member.getLevel().getTier().getName())
                 .experience(member.getLevel().getExperience())
+                .grapeCount(grapeCount)
                 .build();
     }
 }

@@ -9,4 +9,6 @@ import com.stumeet.server.studymember.adapter.out.persistence.entity.GrapeJpaEnt
 public interface JpaGrapeRepository extends JpaRepository<GrapeJpaEntity, Long> {
 
     Page<GrapeJpaEntity> findAllByMemberIdOrderByCreatedAtDesc(Long memberId, Pageable pageable);
+
+    int countByMemberId(Long memberId);
 }
