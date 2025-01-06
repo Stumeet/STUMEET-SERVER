@@ -17,4 +17,7 @@ public class ActivityLinkedStudyJpaEntity {
     @Comment("스터디 id")
     private Long id;
 
+    @Column(name = "name")
+    @Comment("스터디명")
+    private String name;
 }
