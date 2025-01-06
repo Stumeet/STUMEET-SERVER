@@ -39,6 +39,7 @@ public class MemberProfileApi {
             @AuthenticationPrincipal LoginMember member
     ) {
         MemberProfileResponse response = memberProfileUseCase.getProfileById(member.getMember().getId());
+
         return new ResponseEntity<>(
                 ApiResponse.success(HttpStatus.OK.value(), "내 프로필 조회에 성공했습니다.", response),
                 HttpStatus.OK
