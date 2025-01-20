@@ -5,6 +5,7 @@ import com.stumeet.server.studymember.adapter.out.persistence.entity.StudyMember
 import com.stumeet.server.studymember.adapter.out.persistence.mapper.StudyMemberPersistenceMapper;
 import com.stumeet.server.studymember.adapter.out.persistence.repository.JpaStudyMemberRepository;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberReviewStatusResponse;
 import com.stumeet.server.studymember.application.port.out.StudyMemberJoinPort;
 import com.stumeet.server.studymember.application.port.out.StudyMemberQueryPort;
 import com.stumeet.server.studymember.application.port.out.StudyMemberUpdatePort;
@@ -60,6 +61,11 @@ public class StudyMemberPersistenceAdapter
     @Override
     public boolean isSentGrape(Long studyId, Long memberId) {
         return jpaStudyMemberRepository.isSentGrape(studyId, memberId);
+    }
+
+    @Override
+    public List<StudyMemberReviewStatusResponse> findStudyMemberReviewStatusByMember(Long studyId, Long memberId) {
+        return jpaStudyMemberRepository.findStudyMemberReviewStatusByMember(studyId, memberId);
     }
 
     @Override
