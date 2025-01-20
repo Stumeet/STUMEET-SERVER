@@ -49,7 +49,7 @@ class LegacyStudyHideApiTest extends ApiTest {
         }
 
         @Test
-        @WithMockMember(id = 2L)
+        @WithMockMember(id = 3L)
         @DisplayName("[실패] 요청자가 스터디 멤버가 아닌 경우 경우 숨김 처리에 실패한다.")
         void fail_when_requester_not_joined_study_member() throws Exception {
             mockMvc.perform(patch(PATH, StudyStub.getFinishedStudyId())
