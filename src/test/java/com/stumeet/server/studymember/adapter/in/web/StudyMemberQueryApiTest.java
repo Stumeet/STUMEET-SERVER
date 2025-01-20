@@ -64,7 +64,6 @@ class StudyMemberQueryApiTest extends ApiTest {
                                     fieldWithPath("data.studyMembers[].profession").description("스터디 멤버 분야"),
                                     fieldWithPath("data.studyMembers[].isAdmin").description("스터디 관리자 여부")
                             )));
-
         }
 
         @Test
@@ -332,6 +331,136 @@ class StudyMemberQueryApiTest extends ApiTest {
                                     fieldWithPath("message").description("응답 메시지")
                             ))
                     );
+        }
+    }
+
+    @Nested
+    @DisplayName("특정 멤버의 스터디 멤버 리뷰 상태 조회")
+    class GetUnreviewedStudyMembersForMember {
+        private final String path = "/api/v1/studies/{studyId}/members/review-status";
+
+        @Test
+        @WithMockMember
+        @DisplayName("[성공] 특정 멤버의 스터디 멤버 리뷰 상태 목록을 조회할 수 있다.")
+        void success() throws Exception {
+            Long studyId = StudyStub.getFinishedStudyId();
+
+            mockMvc.perform(get(path, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(document("get-study-member-review-status/success",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data").description("스터디 멤버 리뷰 상태 목록"),
+                                    fieldWithPath("data[].studyMemberId").description("스터디 멤버 ID"),
+                                    fieldWithPath("data[].memberId").description("멤버 ID"),
+                                    fieldWithPath("data[].name").description("멤버 이름"),
+                                    fieldWithPath("data[].region").description("멤버가 활동하는 지역"),
+                                    fieldWithPath("data[].profession").description("멤버의 직업"),
+                                    fieldWithPath("data[].image").description("멤버 프로필 이미지 URL"),
+                                    fieldWithPath("data[].isReviewed").description("리뷰가 작성되었는지 여부")
+                            )));
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 스터디가 존재하지 않으면, 특정 멤버의 스터디 멤버 리뷰 상태 목록 조회에 실패한다.")
+        void fail_when_study_not_found() throws Exception {
+            Long studyId = StudyStub.getInvalidStudyId();
+
+            mockMvc.perform(get(path, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isNotFound())
+                    .andDo(document("get-study-member-review-status/fail/study-not-found",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )));
+        }
+
+        @Test
+        @WithMockMember
+        @DisplayName("[실패] 완료된 스터디가 아니라면, 특정 멤버의 스터디 멤버 리뷰 상태 목록 조회에 실패한다.")
+        void fail_when_study_not_legacy() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+
+            mockMvc.perform(get(path, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isConflict())
+                    .andDo(document("get-study-member-review-status/fail/study-not-legacy",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )));
+        }
+
+        @Test
+        @WithMockMember(id = 3L)
+        @DisplayName("[실패] 요청 멤버가 해당 스터디의 멤버가 아니라면, 특정 멤버의 스터디 멤버 리뷰 상태 목록 조회에 실패한다.")
+        void fail_when_member_not_study_member() throws Exception {
+            Long studyId = StudyStub.getFinishedStudyId();
+
+            mockMvc.perform(get(path, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isForbidden())
+                    .andDo(document("get-study-member-review-status/fail/member-not-joined-member",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지")
+                            )));
         }
     }
 }
