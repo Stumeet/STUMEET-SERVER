@@ -1,9 +1,11 @@
 package com.stumeet.server.studymember.adapter.out.persistence.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.stumeet.server.studymember.adapter.out.persistence.entity.StudyMemberJpaEntity;
 import com.stumeet.server.studymember.application.port.in.response.QSimpleStudyMemberResponse;
 import com.stumeet.server.studymember.application.port.in.response.SimpleStudyMemberResponse;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberReviewStatusResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.stumeet.server.studymember.adapter.out.persistence.entity.QStudyMemberJpaEntity.studyMemberJpaEntity;
+import static com.stumeet.server.studymember.adapter.out.persistence.entity.QStudyMemberReview.studyMemberReview;
 
 @RequiredArgsConstructor
 public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberRepositoryCustom {
@@ -47,6 +50,28 @@ public class JpaStudyMemberRepositoryCustomImpl implements JpaStudyMemberReposit
                 .from(studyMemberJpaEntity)
                 .innerJoin(studyMemberJpaEntity.member)
                 .where(studyMemberJpaEntity.study.id.eq(studyId))
+                .fetch();
+    }
+
+    @Override
+    public List<StudyMemberReviewStatusResponse> findStudyMemberReviewStatusByMember(Long studyId, Long memberId) {
+        return query
+                .select(Projections.constructor(
+                        StudyMemberReviewStatusResponse.class,
+                        studyMemberJpaEntity.id,
+                        studyMemberJpaEntity.member.id,
+                        studyMemberJpaEntity.member.name,
+                        studyMemberJpaEntity.member.region,
+                        studyMemberJpaEntity.member.profession.name,
+                        studyMemberJpaEntity.member.image,
+                        studyMemberReview.id.isNotNull()
+                ))
+                .from(studyMemberJpaEntity)
+                .leftJoin(studyMemberReview)
+                .on(studyMemberReview.reviewerId.eq(memberId)
+                        .and(studyMemberReview.revieweeId.eq(studyMemberJpaEntity.member.id)))
+                .where(studyMemberJpaEntity.study.id.eq(studyId)
+                        .and(studyMemberJpaEntity.member.id.ne(memberId)))
                 .fetch();
     }
 

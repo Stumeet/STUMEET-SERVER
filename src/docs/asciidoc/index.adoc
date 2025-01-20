@@ -444,6 +444,40 @@ include::{snippets}/get-study-members/fail/not-joined-member/response-fields.ado
 include::{snippets}/get-study-members/fail/not-exist-study/response-body.adoc[]
 include::{snippets}/get-study-members/fail/not-exist-study/response-fields.adoc[]
 
+=== 스터디 멤버 리뷰 상태 목록 조회
+
+로그인 멤버 기준으로 해당 스터디 멤버들의 리뷰 상태를 포함하는 정보를 조회하는 API 입니다.
+
+==== GET /v1/api/studies/{studyId}/members/review-status
+
+===== 요청
+include::{snippets}/get-study-member-review-status/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-review-status/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-review-status/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-review-status/success/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청 멤버가 해당 스터디의 멤버가 아닌 경우
+include::{snippets}/get-study-member-review-status/fail/member-not-joined-member/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/fail/member-not-joined-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.요청한 스터디가 존재하지 않는 경우
+include::{snippets}/get-study-member-review-status/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/fail/study-not-found/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.요청한 스터디가 완료 스터디가 아닌 경우
+include::{snippets}/get-study-member-review-status/fail/study-not-legacy/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/fail/study-not-legacy/response-fields.adoc[]
+
 === 스터디 멤버 탈퇴
 
 전달받은 스터디에 대해 탈퇴하는 API입니다.

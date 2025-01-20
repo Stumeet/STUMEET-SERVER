@@ -75,6 +75,7 @@ VALUES (2, 'test2', 'http://localhost:4572/user/1/profile/2024030416531039839905
 INSERT INTO device (member_id, device_id, notification_token) VALUES (2, 'AJDLKJGALKJ', 'WEAGEEWXVVVV');
 
 INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (2, 1, false, false);
+INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (2, 3, false, false);
 
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 2);
 
@@ -93,24 +94,9 @@ VALUES (4, 'test4', 'http://localhost:4572/user/1/profile/2024030416531039839905
 INSERT INTO device (member_id, device_id, notification_token) VALUES (4, 'ADGERGRGJSJHG', 'AHFGFJHGHKHVV');
 
 INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 1, false, true);
+INSERT INTO study_member (member_id, study_id, is_admin, is_sent_grape) VALUES (4, 3, false, false);
 
 INSERT INTO topic_subscription (topic_id, member_id) VALUES (1, 4);
-
-INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
-VALUES (1, 1, 4, 1, 5, '리뷰 내용입니다.');
-
-INSERT INTO review_tag (review_id, review_tag)
-VALUES (1, 'MAX_RESPONSIBILITY');
-
-INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
-VALUES (2, 2, 4, 1, 5, '리뷰 내용입니다.');
-
-INSERT INTO review_tag (review_id, review_tag)
-VALUES (2, 'MAX_RESPONSIBILITY');
-INSERT INTO review_tag (review_id, review_tag)
-VALUES (2, 'FAST_RESPONSE');
-INSERT INTO review_tag (review_id, review_tag)
-VALUES (2, 'MOOD_MAKER');
 
 
 -- [TABLE: activity]
@@ -173,7 +159,7 @@ INSERT INTO activity_participant (activity_id, member_id, status) VALUES (6, 2, 
 INSERT INTO activity (id, study_id, author_id, category, title, content, is_notice, start_date, end_date, location)
 VALUES (7, 1, 1, 'ASSIGNMENT', 'title', 'content', false, '2024-04-08T00:00:00', '2024-04-15T00:00:00', null);
 
-INSERT INTO activity_participant (activity_id, member_id, status) VALUES (6, 2, 'PERFORMED');
+INSERT INTO activity_participant (activity_id, member_id, status) VALUES (7, 2, 'PERFORMED');
 
 -- 스터디 2 (공지) 기본 활동
 INSERT INTO activity(id, study_id, author_id, category, title, content, is_notice, location)
@@ -184,3 +170,21 @@ INSERT INTO activity_image (activity_id, image) VALUES (8, 'https://example.com/
 INSERT INTO activity_image (activity_id, image) VALUES (8, 'https://example.com/images/image3.png');
 INSERT INTO activity_participant (activity_id, member_id, status) VALUES (8, 1, 'NONE');
 INSERT INTO activity_participant (activity_id, member_id, status) VALUES (8, 2, 'NONE');
+
+
+-- [TABLE: review]
+INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
+VALUES (1, 1, 4, 3, 5, '리뷰 내용입니다.');
+
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (1, 'MAX_RESPONSIBILITY');
+
+INSERT INTO review (id, reviewer_id, reviewee_id, study_id, rate, content)
+VALUES (2, 2, 4, 3, 5, '리뷰 내용입니다.');
+
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (2, 'MAX_RESPONSIBILITY');
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (2, 'FAST_RESPONSE');
+INSERT INTO review_tag (review_id, review_tag)
+VALUES (2, 'MOOD_MAKER');

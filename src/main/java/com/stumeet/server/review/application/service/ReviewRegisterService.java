@@ -24,6 +24,7 @@ public class ReviewRegisterService implements ReviewRegisterUseCase {
     @Override
     public void register(ReviewRegisterCommand command) {
         studyValidationUseCase.checkById(command.studyId());
+        studyValidationUseCase.checkLegacyStudy(command.studyId());
         studyMemberValidationUseCase.checkStudyJoinMember(command.studyId(), command.reviewerId());
         studyMemberValidationUseCase.checkStudyJoinMember(command.studyId(), command.revieweeId());
         reviewValidationUseCase.validateDuplicate(command.studyId(), command.reviewerId(), command.revieweeId());

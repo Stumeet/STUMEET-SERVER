@@ -1,5 +1,7 @@
 package com.stumeet.server.studymember.adapter.in.web;
 
+import java.util.List;
+
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
@@ -9,6 +11,8 @@ import com.stumeet.server.studymember.application.port.in.response.StudyMemberDe
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberGrapeResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberResponses;
 import com.stumeet.server.studymember.application.port.in.StudyMemberQueryUseCase;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberReviewStatusResponse;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -69,6 +73,19 @@ public class StudyMemberQueryApi {
     ) {
         boolean canSendGrape = studyMemberQueryUseCase.canSendGrape(studyId, member.getId());
         StudyMemberGrapeResponse response = new StudyMemberGrapeResponse(canSendGrape);
+
+        return ResponseEntity.ok(
+                ApiResponse.success(SuccessCode.GET_SUCCESS, response)
+        );
+    }
+
+    @GetMapping("/studies/{studyId}/members/review-status")
+    public ResponseEntity<ApiResponse<List<StudyMemberReviewStatusResponse>>> getStudyMembersReviewStatus(
+            @AuthenticationPrincipal LoginMember member,
+            @PathVariable Long studyId
+    ) {
+        List<StudyMemberReviewStatusResponse> response =
+                studyMemberQueryUseCase.getStudyMemberReviewStatusByMember(studyId, member.getId());
 
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessCode.GET_SUCCESS, response)
