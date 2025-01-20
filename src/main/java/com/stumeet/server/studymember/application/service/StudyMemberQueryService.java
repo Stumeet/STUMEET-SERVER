@@ -10,6 +10,7 @@ import com.stumeet.server.studymember.application.port.in.response.StudyMemberGr
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberResponses;
 import com.stumeet.server.studymember.application.port.in.StudyMemberQueryUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
+import com.stumeet.server.studymember.application.port.in.response.StudyMemberReviewStatusResponse;
 import com.stumeet.server.studymember.application.port.out.StudyMemberQueryPort;
 import com.stumeet.server.studymember.application.port.out.StudyMemberValidationPort;
 import com.stumeet.server.studymember.domain.StudyMember;
@@ -73,5 +74,14 @@ public class StudyMemberQueryService implements StudyMemberQueryUseCase {
         studyValidationUseCase.checkById(studyId);
 
         return !studyMemberQueryPort.isSentGrape(studyId, memberId);
+    }
+
+    @Override
+    public List<StudyMemberReviewStatusResponse> getStudyMemberReviewStatusByMember(Long studyId, Long memberId) {
+        studyValidationUseCase.checkById(studyId);
+        studyValidationUseCase.checkLegacyStudy(studyId);
+        studyMemberValidationUseCase.checkStudyJoinMember(studyId, memberId);
+
+        return studyMemberQueryPort.findStudyMemberReviewStatusByMember(studyId, memberId);
     }
 }
