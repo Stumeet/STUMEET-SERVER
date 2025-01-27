@@ -312,10 +312,12 @@ class ActivityQueryApiTest extends ApiTest {
                             .param("page", "0")
                             .param("isNotice", "true")
                             .param("category", ActivityCategory.MEET.name())
+                            .param("category", ActivityCategory.ASSIGNMENT.name())
                             .param("studyId", StudyStub.getStudyId().toString())
                             .param("memberId", MemberStub.getMemberId().toString())
                             .param("fromDate", "2024-04-01T00:00:00")
                             .param("toDate", "2024-04-30T00:00:00")
+                            .param("sort", ActivitySort.SPECIFIC.name())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isOk())
                     .andDo(document("get-activity-briefs-by-condition/success",
@@ -333,7 +335,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
-                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
+                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional(),
+                                    parameterWithName("sort").description("정렬 기준 (LATEST/SPECIFIC)").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -344,9 +347,9 @@ class ActivityQueryApiTest extends ApiTest {
                                     fieldWithPath("data.items[].studyName").description("활동 연관 스터디명"),
                                     fieldWithPath("data.items[].category").description("활동 유형"),
                                     fieldWithPath("data.items[].title").description("활동 제목"),
-                                    fieldWithPath("data.items[].startDate").description("활동 시작일"),
-                                    fieldWithPath("data.items[].endDate").description("활동 종료일"),
-                                    fieldWithPath("data.items[].location").description("장소"),
+                                    fieldWithPath("data.items[].startDate").optional().description("활동 시작일"),
+                                    fieldWithPath("data.items[].endDate").optional().description("활동 종료일"),
+                                    fieldWithPath("data.items[].location").description("장소").optional(),
                                     fieldWithPath("data.items[].status").description("내 활동 상태"),
                                     fieldWithPath("data.items[].createdAt").description("활동 생성일"),
                                     fieldWithPath("data.pageInfo").description("페이지 메타 정보"),
@@ -381,7 +384,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
-                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
+                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional(),
+                                    parameterWithName("sort").description("정렬 기준 (LATEST/SPECIFIC)").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -414,7 +418,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
-                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
+                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional(),
+                                    parameterWithName("sort").description("정렬 기준 (LATEST/SPECIFIC)").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -446,7 +451,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
-                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
+                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional(),
+                                    parameterWithName("sort").description("정렬 기준 (LATEST/SPECIFIC)").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -478,7 +484,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
-                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
+                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional(),
+                                    parameterWithName("sort").description("정렬 기준 (LATEST/SPECIFIC)").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -511,7 +518,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("memberId").description("멤버 ID (생략 시 로그인 멤버 id로 조회)").optional(),
                                     parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional(),
                                     parameterWithName("fromDate").description("YYYY-MM-DDThh:mm:ss").optional(),
-                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional()
+                                    parameterWithName("toDate").description("YYYY-MM-DDThh:mm:ss").optional(),
+                                    parameterWithName("sort").description("정렬 기준 (LATEST/SPECIFIC)").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
