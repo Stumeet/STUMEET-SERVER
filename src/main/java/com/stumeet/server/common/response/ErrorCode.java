@@ -42,6 +42,7 @@ public enum ErrorCode {
     INVALID_REVIEW_TAG_COUNT_EXCEPTION(HttpStatus.BAD_REQUEST, "리뷰 태그 개수는 3개를 초과할 수 없습니다."),
 
     INVALID_ACTIVITY_CATEGORY_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 활동 카테고리입니다."),
+    INVALID_ACTIVITY_SORT_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 활동 종류입니다."),
     INVALID_COMPLIMENT_TYPE_EXCEPTION(HttpStatus.BAD_REQUEST, "유효하지 않은 칭찬 타입입니다."),
 
     /*
