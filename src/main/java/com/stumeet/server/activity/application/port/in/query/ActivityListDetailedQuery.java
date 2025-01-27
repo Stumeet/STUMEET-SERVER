@@ -1,10 +1,16 @@
 package com.stumeet.server.activity.application.port.in.query;
 
-import com.stumeet.server.activity.domain.model.ActivityCategory;
+import java.util.List;
 
+import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+@AllArgsConstructor
+@Builder
 @Getter
 public class ActivityListDetailedQuery {
 	private final Integer size;
@@ -12,19 +18,6 @@ public class ActivityListDetailedQuery {
 	private final Boolean isNotice;
 	Long memberId;
 	Long studyId;
-	ActivityCategory category;
-
-	@Builder
-	private ActivityListDetailedQuery(Integer size, Integer page, Boolean isNotice, Long memberId, Long studyId, String categoryName) {
-		this(size, page, isNotice, memberId, studyId, categoryName != null ? ActivityCategory.getByName(categoryName) : null);
-	}
-
-	private ActivityListDetailedQuery(Integer size, Integer page, Boolean isNotice, Long memberId, Long studyId, ActivityCategory category) {
-		this.size = size;
-		this.page = page;
-		this.isNotice = isNotice;
-		this.memberId = memberId;
-		this.studyId = studyId;
-		this.category = category;
-	}
+	List<ActivityCategory> categories;
+	ActivitySort sort;
 }

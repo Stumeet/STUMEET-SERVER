@@ -8,6 +8,7 @@ import com.stumeet.server.activity.application.port.in.ActivityQuery;
 import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.UseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,9 @@ public class ActivityQueryService implements ActivityQuery {
             Pageable pageable,
             Boolean isNotice,
             Long studyId,
-            ActivityCategory category) {
-        return activityQueryPort.getDetailPagesByCondition(pageable, isNotice, studyId, category);
+            List<ActivityCategory> categories,
+            ActivitySort sort) {
+        return activityQueryPort.getDetailPagesByCondition(pageable, isNotice, studyId, categories, sort);
     }
 
     @Override

@@ -84,7 +84,8 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
                 PageRequest.of(query.getPage(), query.getSize()),
                 query.getIsNotice(),
                 query.getStudyId(),
-                query.getCategory());
+                query.getCategories(),
+                query.getSort());
 
         return activityUseCaseMapper
                 .toListDetailedPageResponses(activities, pageInfoUseCaseMapper.toPageInfoResponse(activities));
