@@ -9,15 +9,16 @@ import org.springframework.data.domain.Pageable;
 import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponse;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 
 public interface ActivityQueryPort {
     Activity getById(Long activityId);
 
     Activity getByStudyIdAndId(Long studyId, Long id);
 
-    Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, ActivityCategory category);
+    Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, List<ActivityCategory> categories, ActivitySort sort);
 
-    Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);
+    Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort);
 
-    List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);
+    List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort);
 }

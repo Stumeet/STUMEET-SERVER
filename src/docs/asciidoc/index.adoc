@@ -759,7 +759,15 @@ include::{snippets}/update-activity/fail/not-author/response-fields.adoc[]
 
 스터디 활동 상세 목록을 조회하는 API입니다.
 
-* 정렬 기준: 생성일
+.정렬 기준
+[horizontal]
+`LATEST`:: 최신순
+** 모든 유형: 생성일 기준 정렬
+`SPECIFIC`:: 각 유형 기준
+** 활동 유형 `MEET`: 활동 시작일
+** 활동 유형 `ASSIGNMENT`: 활동 종료일
+** 활동 유형 `DEFAULT`: 생성일
+** 활동 유형 조건이 없는 경우: 생성일
 
 ==== GET /api/v1/studies/activities/detail
 ===== 요청
@@ -786,16 +794,20 @@ include::{snippets}/get-activity-details-by-condition/fail/study-not-found/respo
 
 스터디 활동 간략 목록을 조회하는 API입니다. 페이지네이션과 단순 조회를 모두 지원합니다.
 
-* 날짜 기준
-- 활동 유형 `MEET`: 활동 시작일
-- 활동 유형 `ASSIGNMENT`: 활동 종료일
-- 활동 유형 `DEFAULT`: 생성일
+.날짜 기준
+* 활동 유형 `MEET`: 활동 시작일
+* 활동 유형 `ASSIGNMENT`: 활동 종료일
+* 활동 유형 `DEFAULT`: 생성일
 
-* 정렬 기준
-- 활동 유형 `MEET`: 활동 시작일
-- 활동 유형 `ASSIGNMENT`: 활동 종료일
-- 활동 유형 `DEFAULT`: 생성일
-- 활동 유형 조건이 없는 경우: 생성일
+.정렬 기준
+[horizontal]
+`LATEST`:: 최신순
+** 모든 유형: 생성일 기준 정렬
+`SPECIFIC`:: 각 유형 기준
+** 활동 유형 `MEET`: 활동 시작일
+** 활동 유형 `ASSIGNMENT`: 활동 종료일
+** 활동 유형 `DEFAULT`: 생성일
+** 활동 유형 조건이 없는 경우: 생성일
 
 ==== GET /api/v1/studies/activities/brief
 ===== 요청

@@ -16,6 +16,7 @@ import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.activity.domain.exception.NotExistsActivityException;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.PersistenceAdapter;
 
 import lombok.RequiredArgsConstructor;
@@ -51,23 +52,24 @@ public class ActivityPersistenceAdapter implements ActivitySavePort, ActivityQue
     }
 
     @Override
-    public Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, ActivityCategory category) {
+    public Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, List<ActivityCategory> categories, ActivitySort sort) {
         Page<ActivityJpaEntity> entities =
-                jpaActivityRepository.findDetailPagesByCondition(pageable, isNotice, studyId, category);
+                jpaActivityRepository.findDetailPagesByCondition(pageable, isNotice, studyId, categories, sort);
 
         return activityPersistenceMapper.toDomainPages(entities);
     }
 
     @Override
     public Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId,
-            Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaActivityRepository.findBriefsByConditionWithPagination(pageable, isNotice, memberId, studyId, category, startDate, endDate);
+            Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort) {
+        return jpaActivityRepository.findBriefsByConditionWithPagination(pageable, isNotice, memberId, studyId,
+                categories, startDate, endDate, sort);
     }
 
     @Override
     public List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId,
-            ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaActivityRepository.findBriefsByCondition(isNotice, memberId, studyId, category, startDate, endDate);
+            List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort) {
+        return jpaActivityRepository.findBriefsByCondition(isNotice, memberId, studyId, categories, startDate, endDate, sort);
     }
 
     @Override

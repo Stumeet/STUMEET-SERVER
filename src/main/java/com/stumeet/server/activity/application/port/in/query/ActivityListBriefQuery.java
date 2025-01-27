@@ -1,16 +1,16 @@
 package com.stumeet.server.activity.application.port.in.query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.exception.model.BadRequestException;
 import com.stumeet.server.common.response.ErrorCode;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public class ActivityListBriefQuery {
 	private final Integer size;
@@ -18,16 +18,23 @@ public class ActivityListBriefQuery {
 	private final Boolean isNotice;
 	private final Long memberId;
 	private final Long studyId;
-	private final ActivityCategory category;
 	private final LocalDateTime fromDate;
 	private final LocalDateTime toDate;
+	private List<ActivityCategory> categories;
+	private ActivitySort sort;
 
 	@Builder
 	private ActivityListBriefQuery(Integer size, Integer page, Boolean isNotice, Long memberId, Long studyId,
-			String categoryName, LocalDateTime fromDate, LocalDateTime toDate) {
-		this(size, page, isNotice, memberId, studyId,
-				categoryName != null ? ActivityCategory.getByName(categoryName) : null,
-				fromDate, toDate);
+			LocalDateTime fromDate, LocalDateTime toDate, List<ActivityCategory> categories, ActivitySort sort) {
+		this.size = size;
+		this.page = page;
+		this.isNotice = isNotice;
+		this.memberId = memberId;
+		this.studyId = studyId;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.categories = categories;
+		this.sort = sort;
 		validate();
 	}
 

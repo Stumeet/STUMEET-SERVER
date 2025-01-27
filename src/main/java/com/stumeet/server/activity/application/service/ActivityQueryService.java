@@ -8,6 +8,7 @@ import com.stumeet.server.activity.application.port.in.ActivityQuery;
 import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.UseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,9 @@ public class ActivityQueryService implements ActivityQuery {
             Pageable pageable,
             Boolean isNotice,
             Long studyId,
-            ActivityCategory category) {
-        return activityQueryPort.getDetailPagesByCondition(pageable, isNotice, studyId, category);
+            List<ActivityCategory> categories,
+            ActivitySort sort) {
+        return activityQueryPort.getDetailPagesByCondition(pageable, isNotice, studyId, categories, sort);
     }
 
     @Override
@@ -43,11 +45,11 @@ public class ActivityQueryService implements ActivityQuery {
             Boolean isNotice,
             Long memberId,
             Long studyId,
-            ActivityCategory category,
+            List<ActivityCategory> categories,
             LocalDateTime startDate,
-            LocalDateTime endDate) {
-        return activityQueryPort.getPaginatedBriefsByCondition(pageable, isNotice, memberId, studyId, category,
-                startDate, endDate);
+            LocalDateTime endDate,
+            ActivitySort sort) {
+        return activityQueryPort.getPaginatedBriefsByCondition(pageable, isNotice, memberId, studyId, categories, startDate, endDate, sort);
     }
 
     @Override
@@ -55,9 +57,10 @@ public class ActivityQueryService implements ActivityQuery {
             Boolean isNotice,
             Long memberId,
             Long studyId,
-            ActivityCategory category,
+            List<ActivityCategory> categories,
             LocalDateTime startDate,
-            LocalDateTime endDate) {
-        return activityQueryPort.getBriefsByCondition(isNotice, memberId, studyId, category, startDate, endDate);
+            LocalDateTime endDate,
+            ActivitySort sort) {
+        return activityQueryPort.getBriefsByCondition(isNotice, memberId, studyId, categories, startDate, endDate, sort);
     }
 }

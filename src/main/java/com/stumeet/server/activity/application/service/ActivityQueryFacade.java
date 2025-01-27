@@ -17,6 +17,7 @@ import com.stumeet.server.activity.application.port.in.query.ActivityListDetaile
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityImage;
 import com.stumeet.server.activity.domain.model.ActivityParticipant;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.study.application.port.in.StudyValidationUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
@@ -84,7 +85,8 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
                 PageRequest.of(query.getPage(), query.getSize()),
                 query.getIsNotice(),
                 query.getStudyId(),
-                query.getCategory());
+                query.getCategories(),
+                query.getSort());
 
         return activityUseCaseMapper
                 .toListDetailedPageResponses(activities, pageInfoUseCaseMapper.toPageInfoResponse(activities));
@@ -102,9 +104,10 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
                     query.getIsNotice(),
                     query.getMemberId(),
                     query.getStudyId(),
-                    query.getCategory(),
+                    query.getCategories(),
                     query.getFromDate(),
-                    query.getToDate());
+                    query.getToDate(),
+                    query.getSort());
 
             return ActivityListBriefResponses.builder()
                     .items(activities.toList())
@@ -115,9 +118,10 @@ public class ActivityQueryFacade implements ActivityQueryUseCase {
                     query.getIsNotice(),
                     query.getMemberId(),
                     query.getStudyId(),
-                    query.getCategory(),
+                    query.getCategories(),
                     query.getFromDate(),
-                    query.getToDate());
+                    query.getToDate(),
+                    query.getSort());
 
             return ActivityListBriefResponses.builder()
                     .items(activities)

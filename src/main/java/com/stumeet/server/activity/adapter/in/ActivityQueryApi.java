@@ -1,6 +1,7 @@
 package com.stumeet.server.activity.adapter.in;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
 import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponses;
@@ -8,6 +9,8 @@ import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageR
 import com.stumeet.server.activity.application.port.in.ActivityQueryUseCase;
 import com.stumeet.server.activity.application.port.in.query.ActivityListBriefQuery;
 import com.stumeet.server.activity.application.port.in.query.ActivityListDetailedQuery;
+import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
@@ -51,7 +54,8 @@ public class ActivityQueryApi {
 			@RequestParam @Min(value = 0) Integer page,
 			@RequestParam(required = false) Boolean isNotice,
 			@RequestParam(required = false) Long studyId,
-			@RequestParam(required = false) String category
+			@RequestParam(name = "category", required = false) List<ActivityCategory> categories,
+			@RequestParam(required = false) ActivitySort sort
 	) {
 		ActivityListDetailedQuery query = ActivityListDetailedQuery.builder()
 				.size(size)
@@ -59,7 +63,8 @@ public class ActivityQueryApi {
 				.isNotice(isNotice)
 				.studyId(studyId)
 				.memberId(member.getId())
-				.categoryName(category)
+				.categories(categories)
+				.sort(sort)
 				.build();
 		ActivityListDetailedPageResponses response = activityQueryUseCase.getDetails(query);
 
@@ -75,9 +80,10 @@ public class ActivityQueryApi {
 			@RequestParam(required = false) Boolean isNotice,
 			@RequestParam(required = false) Long studyId,
 			@RequestParam(required = false) Long memberId,
-			@RequestParam(required = false) String category,
+			@RequestParam(name = "category", required = false) List<ActivityCategory> categories,
 			@RequestParam(required = false) LocalDateTime fromDate,
-			@RequestParam(required = false) LocalDateTime toDate
+			@RequestParam(required = false) LocalDateTime toDate,
+			@RequestParam(required = false) ActivitySort sort
 	) {
 		ActivityListBriefQuery query = ActivityListBriefQuery.builder()
 				.size(size)
@@ -85,9 +91,10 @@ public class ActivityQueryApi {
 				.isNotice(isNotice)
 				.studyId(studyId)
 				.memberId(memberId != null ? memberId : member.getId())
-				.categoryName(category)
+				.categories(categories)
 				.fromDate(fromDate)
 				.toDate(toDate)
+				.sort(sort)
 				.build();
 		ActivityListBriefResponses response = activityQueryUseCase.getBriefs(query);
 
