@@ -1,6 +1,7 @@
 package com.stumeet.server.activity.adapter.in;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.stumeet.server.activity.adapter.in.response.ActivityDetailResponse;
 import com.stumeet.server.activity.adapter.in.response.ActivityListBriefResponses;
@@ -8,6 +9,8 @@ import com.stumeet.server.activity.adapter.in.response.ActivityListDetailedPageR
 import com.stumeet.server.activity.application.port.in.ActivityQueryUseCase;
 import com.stumeet.server.activity.application.port.in.query.ActivityListBriefQuery;
 import com.stumeet.server.activity.application.port.in.query.ActivityListDetailedQuery;
+import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
@@ -51,7 +54,8 @@ public class ActivityQueryApi {
 			@RequestParam @Min(value = 0) Integer page,
 			@RequestParam(required = false) Boolean isNotice,
 			@RequestParam(required = false) Long studyId,
-			@RequestParam(required = false) String category
+			@RequestParam(required = false) List<ActivityCategory> category,
+			@RequestParam(required = false) ActivitySort sort
 	) {
 		ActivityListDetailedQuery query = ActivityListDetailedQuery.builder()
 				.size(size)
@@ -59,7 +63,8 @@ public class ActivityQueryApi {
 				.isNotice(isNotice)
 				.studyId(studyId)
 				.memberId(member.getId())
-				.categoryName(category)
+				.categories(category)
+				.sort(sort)
 				.build();
 		ActivityListDetailedPageResponses response = activityQueryUseCase.getDetails(query);
 
