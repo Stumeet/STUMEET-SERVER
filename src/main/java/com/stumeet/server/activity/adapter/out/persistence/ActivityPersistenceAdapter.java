@@ -16,6 +16,7 @@ import com.stumeet.server.activity.application.port.out.ActivityQueryPort;
 import com.stumeet.server.activity.domain.exception.NotExistsActivityException;
 import com.stumeet.server.activity.domain.model.Activity;
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.annotation.PersistenceAdapter;
 
 import lombok.RequiredArgsConstructor;
@@ -51,9 +52,9 @@ public class ActivityPersistenceAdapter implements ActivitySavePort, ActivityQue
     }
 
     @Override
-    public Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, ActivityCategory category) {
+    public Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, List<ActivityCategory> categories, ActivitySort sort) {
         Page<ActivityJpaEntity> entities =
-                jpaActivityRepository.findDetailPagesByCondition(pageable, isNotice, studyId, category);
+                jpaActivityRepository.findDetailPagesByCondition(pageable, isNotice, studyId, categories, sort);
 
         return activityPersistenceMapper.toDomainPages(entities);
     }
