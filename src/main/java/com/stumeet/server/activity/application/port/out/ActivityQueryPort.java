@@ -18,7 +18,7 @@ public interface ActivityQueryPort {
 
     Page<Activity> getDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, List<ActivityCategory> categories, ActivitySort sort);
 
-    Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);
+    Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort);
 
-    List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);
+    List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort);
 }

@@ -61,14 +61,15 @@ public class ActivityPersistenceAdapter implements ActivitySavePort, ActivityQue
 
     @Override
     public Page<ActivityListBriefResponse> getPaginatedBriefsByCondition(Pageable pageable, Boolean isNotice, Long memberId,
-            Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaActivityRepository.findBriefsByConditionWithPagination(pageable, isNotice, memberId, studyId, category, startDate, endDate);
+            Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort) {
+        return jpaActivityRepository.findBriefsByConditionWithPagination(pageable, isNotice, memberId, studyId,
+                categories, startDate, endDate, sort);
     }
 
     @Override
     public List<ActivityListBriefResponse> getBriefsByCondition(Boolean isNotice, Long memberId, Long studyId,
-            ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaActivityRepository.findBriefsByCondition(isNotice, memberId, studyId, category, startDate, endDate);
+            List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort) {
+        return jpaActivityRepository.findBriefsByCondition(isNotice, memberId, studyId, categories, startDate, endDate, sort);
     }
 
     @Override

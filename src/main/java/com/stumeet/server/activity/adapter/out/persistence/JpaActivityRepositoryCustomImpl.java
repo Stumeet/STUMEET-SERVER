@@ -43,7 +43,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(orderBy(sort).toArray(OrderSpecifier[]::new))
+                .orderBy(orderBy(sort))
                 .fetch();
 
         JPAQuery<Long> countQuery = query
@@ -60,7 +60,7 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
 
     @Override
     public Page<ActivityListBriefResponse> findBriefsByConditionWithPagination(Pageable pageable, Boolean isNotice,
-            Long memberId, Long studyId, ActivityCategory category, LocalDateTime fromDate, LocalDateTime toDate) {
+            Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime fromDate, LocalDateTime toDate, ActivitySort sort) {
         List<ActivityListBriefResponse> content = query
                 .select(
                         new QActivityListBriefResponse(
@@ -86,12 +86,12 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .where(
                         isNoticeEq(isNotice),
                         studyIdEq(studyId),
-                        categoryEq(category),
-                        dateBetweenByCategory(category, fromDate, toDate)
+                        categoriesEq(categories),
+                        dateBetweenByCategory(categories, fromDate, toDate)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(orderByCategory(category))
+                .orderBy(orderBy(sort))
                 .orderBy(activityJpaEntity.createdAt.desc())
                 .fetch();
 
@@ -106,16 +106,16 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .where(
                         isNoticeEq(isNotice),
                         studyIdEq(studyId),
-                        categoryEq(category),
-                        dateBetweenByCategory(category, fromDate, toDate)
+                        categoriesEq(categories),
+                        dateBetweenByCategory(categories, fromDate, toDate)
                 );
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public List<ActivityListBriefResponse> findBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, ActivityCategory category,
-            LocalDateTime fromDate, LocalDateTime toDate) {
+    public List<ActivityListBriefResponse> findBriefsByCondition(Boolean isNotice, Long memberId, Long studyId,
+            List<ActivityCategory> categories, LocalDateTime fromDate, LocalDateTime toDate, ActivitySort sort) {
         return query
                 .select(
                         new QActivityListBriefResponse(
@@ -141,10 +141,10 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
                 .where(
                         isNoticeEq(isNotice),
                         studyIdEq(studyId),
-                        categoryEq(category),
-                        dateBetweenByCategory(category, fromDate, toDate)
+                        categoriesEq(categories),
+                        dateBetweenByCategory(categories, fromDate, toDate)
                 )
-                .orderBy(orderByCategory(category))
+                .orderBy(orderBy(sort))
                 .orderBy(activityJpaEntity.createdAt.desc())
                 .fetch();
     }
@@ -209,42 +209,43 @@ public class JpaActivityRepositoryCustomImpl implements JpaActivityRepositoryCus
         return toDate != null ? activityJpaEntity.createdAt.loe(toDate) : alwaysTrue();
     }
 
-    private BooleanExpression dateBetweenByCategory(ActivityCategory category, LocalDateTime fromDate, LocalDateTime toDate) {
-        if (category == null) {
-            return categoryEq(ActivityCategory.MEET).and(startDateBetween(fromDate, toDate))
-                    .or(categoryEq(ActivityCategory.ASSIGNMENT).and(endDateBetween(fromDate, toDate)))
-                    .or(categoryEq(ActivityCategory.DEFAULT).and(createdAtBetween(fromDate, toDate)));
+    private BooleanExpression dateBetweenByCategory(List<ActivityCategory> categories, LocalDateTime fromDate, LocalDateTime toDate) {
+        if (categories == null || categories.isEmpty()) {
+            return dateBetweenByMeet(fromDate, toDate)
+                    .or(dateBetweenByAssignment(fromDate, toDate))
+                    .or(dateBetweenByDefault(fromDate, toDate));
         }
 
-        return switch (category) {
-            case MEET -> startDateBetween(fromDate, toDate);
-            case ASSIGNMENT -> endDateBetween(fromDate, toDate);
-            case DEFAULT -> createdAtBetween(fromDate, toDate);
-        };
+        return categories.stream()
+                .map(category -> switch (category) {
+                        case MEET -> dateBetweenByMeet(fromDate, toDate);
+                        case ASSIGNMENT -> dateBetweenByAssignment(fromDate, toDate);
+                        case DEFAULT -> dateBetweenByDefault(fromDate, toDate);
+                })
+                .reduce(BooleanExpression::or)
+                .orElse(null);
     }
 
-    private OrderSpecifier<LocalDateTime> orderByCategory(ActivityCategory category) {
-        if (category == null) {
-            return activityJpaEntity.createdAt.desc();
-        }
-
-        return switch (category) {
-            case MEET -> activityJpaEntity.startDate.desc();
-            case ASSIGNMENT -> activityJpaEntity.endDate.desc();
-            case DEFAULT -> activityJpaEntity.createdAt.desc();
-        };
+    private BooleanExpression dateBetweenByMeet(LocalDateTime fromDate, LocalDateTime toDate) {
+        return categoryEq(ActivityCategory.MEET).and(startDateBetween(fromDate, toDate));
     }
 
-    private List<OrderSpecifier<LocalDateTime>> orderBy(ActivitySort sort) {
+    private BooleanExpression dateBetweenByAssignment(LocalDateTime fromDate, LocalDateTime toDate) {
+        return categoryEq(ActivityCategory.ASSIGNMENT).and(endDateBetween(fromDate, toDate));
+    }
+
+    private BooleanExpression dateBetweenByDefault(LocalDateTime fromDate, LocalDateTime toDate) {
+        return categoryEq(ActivityCategory.DEFAULT).and(createdAtBetween(fromDate, toDate));
+    }
+
+    private OrderSpecifier<?> orderBy(ActivitySort sort) {
         return switch (sort) {
-            case SPECIFIC -> List.of(
-                        new CaseBuilder()
-                                .when(categoryEq(ActivityCategory.MEET)).then(activityJpaEntity.startDate)
-                                .when(categoryEq(ActivityCategory.ASSIGNMENT)).then(activityJpaEntity.endDate)
-                                .otherwise(activityJpaEntity.createdAt)
-                                .asc(),
-                        activityJpaEntity.createdAt.desc());
-            case null, default -> List.of(activityJpaEntity.createdAt.desc());
+            case SPECIFIC -> new CaseBuilder()
+                    .when(categoryEq(ActivityCategory.MEET)).then(activityJpaEntity.startDate)
+                    .when(categoryEq(ActivityCategory.ASSIGNMENT)).then(activityJpaEntity.endDate)
+                    .otherwise(activityJpaEntity.createdAt)
+                    .asc();
+            case null, default -> activityJpaEntity.createdAt.desc();
         };
     }
 }

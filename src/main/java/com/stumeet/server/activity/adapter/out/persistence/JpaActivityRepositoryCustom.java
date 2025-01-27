@@ -14,7 +14,7 @@ import com.stumeet.server.activity.domain.model.ActivitySort;
 public interface JpaActivityRepositoryCustom {
 	Page<ActivityJpaEntity> findDetailPagesByCondition(Pageable pageable, Boolean isNotice, Long studyId, List<ActivityCategory> categories, ActivitySort sort);
 
-	Page<ActivityListBriefResponse> findBriefsByConditionWithPagination(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);
+	Page<ActivityListBriefResponse> findBriefsByConditionWithPagination(Pageable pageable, Boolean isNotice, Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort);
 
-	List<ActivityListBriefResponse> findBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, ActivityCategory category, LocalDateTime startDate, LocalDateTime endDate);
+	List<ActivityListBriefResponse> findBriefsByCondition(Boolean isNotice, Long memberId, Long studyId, List<ActivityCategory> categories, LocalDateTime startDate, LocalDateTime endDate, ActivitySort sort);
 }
