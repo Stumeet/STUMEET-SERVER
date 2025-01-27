@@ -45,11 +45,11 @@ public class ActivityQueryService implements ActivityQuery {
             Boolean isNotice,
             Long memberId,
             Long studyId,
-            ActivityCategory category,
+            List<ActivityCategory> categories,
             LocalDateTime startDate,
-            LocalDateTime endDate) {
-        return activityQueryPort.getPaginatedBriefsByCondition(pageable, isNotice, memberId, studyId, category,
-                startDate, endDate);
+            LocalDateTime endDate,
+            ActivitySort sort) {
+        return activityQueryPort.getPaginatedBriefsByCondition(pageable, isNotice, memberId, studyId, categories, startDate, endDate, sort);
     }
 
     @Override
@@ -57,9 +57,10 @@ public class ActivityQueryService implements ActivityQuery {
             Boolean isNotice,
             Long memberId,
             Long studyId,
-            ActivityCategory category,
+            List<ActivityCategory> categories,
             LocalDateTime startDate,
-            LocalDateTime endDate) {
-        return activityQueryPort.getBriefsByCondition(isNotice, memberId, studyId, category, startDate, endDate);
+            LocalDateTime endDate,
+            ActivitySort sort) {
+        return activityQueryPort.getBriefsByCondition(isNotice, memberId, studyId, categories, startDate, endDate, sort);
     }
 }
