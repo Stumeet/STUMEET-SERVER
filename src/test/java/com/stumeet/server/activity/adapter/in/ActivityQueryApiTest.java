@@ -1,6 +1,7 @@
 package com.stumeet.server.activity.adapter.in;
 
 import com.stumeet.server.activity.domain.model.ActivityCategory;
+import com.stumeet.server.activity.domain.model.ActivitySort;
 import com.stumeet.server.common.auth.model.AuthenticationHeader;
 import com.stumeet.server.common.response.ErrorCode;
 import com.stumeet.server.common.response.SuccessCode;
@@ -187,6 +188,8 @@ class ActivityQueryApiTest extends ApiTest {
                             .param("isNotice", "true")
                             .param("studyId", StudyStub.getStudyId().toString())
                             .param("category", ActivityCategory.MEET.name())
+                            .param("category", ActivityCategory.ASSIGNMENT.name())
+                            .param("sort", ActivitySort.SPECIFIC.name())
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                     .andExpect(status().isOk())
                     .andDo(document("get-activity-details-by-condition/success",
@@ -201,7 +204,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호"),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
-                                    parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional()
+                                    parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT) 복수 선택 가능").optional(),
+                                    parameterWithName("sort").description("정렬 종류 (LATEST/SPECIFIC) 단일 선택").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -213,9 +217,9 @@ class ActivityQueryApiTest extends ApiTest {
                                     fieldWithPath("data.items[].category").description("활동 유형"),
                                     fieldWithPath("data.items[].title").description("활동 제목"),
                                     fieldWithPath("data.items[].content").description("활동 내용"),
-                                    fieldWithPath("data.items[].startDate").description("활동 시작일"),
-                                    fieldWithPath("data.items[].endDate").description("활동 종료일"),
-                                    fieldWithPath("data.items[].location").description("장소"),
+                                    fieldWithPath("data.items[].startDate").optional().description("활동 시작일"),
+                                    fieldWithPath("data.items[].endDate").optional().description("활동 종료일"),
+                                    fieldWithPath("data.items[].location").optional().description("장소"),
                                     fieldWithPath("data.items[].author.memberId").description("활동 작성자 ID"),
                                     fieldWithPath("data.items[].author.name").description("활동 작성자 이름"),
                                     fieldWithPath("data.items[].author.profileImageUrl").description("활동 작성자 프로필 이미지 URL"),
@@ -251,7 +255,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호"),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
-                                    parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional()
+                                    parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT) 복수 선택 가능").optional(),
+                                    parameterWithName("sort").description("정렬 종류 (LATEST/SPECIFIC) 단일 선택").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
@@ -282,7 +287,8 @@ class ActivityQueryApiTest extends ApiTest {
                                     parameterWithName("page").description("조회할 페이지 번호"),
                                     parameterWithName("isNotice").description("공지사항 여부 (true/false)").optional(),
                                     parameterWithName("studyId").description("특정 스터디 ID").optional(),
-                                    parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT)").optional()
+                                    parameterWithName("category").description("활동 유형 (DEFAULT/MEET/ASSIGNMENT) 복수 선택 가능").optional(),
+                                    parameterWithName("sort").description("정렬 종류 (LATEST/SPECIFIC) 단일 선택").optional()
                             ),
                             responseFields(
                                     fieldWithPath("code").description("응답 코드"),
