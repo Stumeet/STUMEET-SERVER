@@ -25,6 +25,17 @@ public class JwtTokenService {
         jwtTokenRepository.save(refreshToken, renewAccessToken);
     }
 
+    public void validateAccessToken(String accessToken) {
+        validateTokenExpiration(accessToken);
+        validateTokenExist(accessToken);
+    }
+
+    public void validateTokenExist(String token) {
+        if (!jwtTokenRepository.isExist(token)) {
+            throw new BusinessException(ErrorCode.JWT_TOKEN_NOT_EXIST_EXCEPTION);
+        }
+    }
+
     public void validateRefreshToken(String accessToken, String refreshToken) {
         validateTokenExpiration(refreshToken);
         validateTokenNotInBlackList(refreshToken);

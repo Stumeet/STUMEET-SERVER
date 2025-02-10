@@ -37,6 +37,11 @@ public class JwtTokenRepositoryImpl implements JwtTokenRepository {
     }
 
     @Override
+    public boolean isExist(String token) {
+        return Boolean.TRUE.equals(redisTemplate.hasKey(token));
+    }
+
+    @Override
     public void deleteByToken(String token) {
         boolean isDeleted = Boolean.TRUE.equals(redisTemplate.delete(token));
         if (!isDeleted) {
