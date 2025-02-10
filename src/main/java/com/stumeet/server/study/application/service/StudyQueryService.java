@@ -55,4 +55,10 @@ public class StudyQueryService implements StudyQueryUseCase {
 		Study study = studyQueryPort.getById(id);
 		return study.getName();
 	}
+
+	@Override
+	public boolean isFinishedStudy(Long id) {
+		Study study = studyQueryPort.getById(id);
+		return study.isFinished();
+	}
 }
