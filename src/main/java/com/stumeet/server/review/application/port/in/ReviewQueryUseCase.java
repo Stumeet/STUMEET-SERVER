@@ -10,4 +10,6 @@ public interface ReviewQueryUseCase {
     List<ReviewDetailResponse> getMemberReview(Long memberId, int size, int page, String sortName);
 
     List<ReviewTagCountStatsResponse> getMemberReviewTagStats(Long memberId);
+
+    long getStudyMemberReviewCount(Long studyId, Long memberId);
 }

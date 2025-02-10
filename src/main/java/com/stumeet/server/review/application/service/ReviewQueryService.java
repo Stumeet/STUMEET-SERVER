@@ -42,4 +42,9 @@ public class ReviewQueryService implements ReviewQueryUseCase {
         List<ReviewTagCountStatsResponse> reviewTagsCnt = reviewQueryPort.countMemberReviewTags(memberId);
         return reviewTagsCnt;
     }
+
+    @Override
+    public long getStudyMemberReviewCount(Long studyId, Long memberId) {
+        return reviewQueryPort.getStudyMemberReviewCount(studyId, memberId);
+    }
 }
