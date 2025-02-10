@@ -8,5 +8,7 @@ public interface JwtTokenRepository {
 
     String getByRefreshToken(String refreshToken);
 
+    boolean isExist(String token);
+
     void deleteByToken(String accessToken);
 }

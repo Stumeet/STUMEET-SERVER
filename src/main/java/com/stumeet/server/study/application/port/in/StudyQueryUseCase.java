@@ -11,4 +11,6 @@ public interface StudyQueryUseCase {
 	JoinedStudiesResponse getJoinedStudiesByStatus(GetJoinedStudyCommand command);
 
 	String getStudyName(Long id);
+
+	boolean isFinishedStudy(Long id);
 }

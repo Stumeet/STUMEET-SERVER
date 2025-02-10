@@ -20,8 +20,7 @@ import java.util.List;
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class StudyMemberPersistenceAdapter
-    implements StudyMemberJoinPort, StudyMemberQueryPort, StudyMemberValidationPort,
-    StudyMemberUpdatePort {
+        implements StudyMemberJoinPort, StudyMemberQueryPort, StudyMemberValidationPort, StudyMemberUpdatePort {
 
     private final JpaStudyMemberRepository jpaStudyMemberRepository;
     private final StudyMemberPersistenceMapper studyMemberPersistenceMapper;
@@ -34,7 +33,7 @@ public class StudyMemberPersistenceAdapter
     @Override
     public StudyMember findStudyMember(Long studyId, Long memberId) {
         StudyMemberJpaEntity entity = jpaStudyMemberRepository.findStudyMemberByStudyIdAndMemberId(studyId, memberId)
-            .orElseThrow(() -> new StudyMemberNotExistException(memberId));
+                .orElseThrow(() -> new StudyMemberNotExistException(memberId));
 
         return studyMemberPersistenceMapper.toDomain(entity);
     }
@@ -42,7 +41,7 @@ public class StudyMemberPersistenceAdapter
     @Override
     public StudyMember findStudyMember(Long studyMemberId) {
         StudyMemberJpaEntity entity = jpaStudyMemberRepository.findById(studyMemberId)
-            .orElseThrow(() -> new StudyMemberNotExistException(studyMemberId));
+                .orElseThrow(() -> new StudyMemberNotExistException(studyMemberId));
 
         return studyMemberPersistenceMapper.toDomain(entity);
     }
@@ -66,6 +65,11 @@ public class StudyMemberPersistenceAdapter
     @Override
     public List<StudyMemberReviewStatusResponse> findStudyMemberReviewStatusByMember(Long studyId, Long memberId) {
         return jpaStudyMemberRepository.findStudyMemberReviewStatusByMember(studyId, memberId);
+    }
+
+    @Override
+    public long getStudyMemberCount(Long studyId) {
+        return jpaStudyMemberRepository.countByStudyId(studyId);
     }
 
     @Override

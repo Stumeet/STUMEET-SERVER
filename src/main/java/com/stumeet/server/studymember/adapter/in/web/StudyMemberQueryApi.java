@@ -6,9 +6,8 @@ import com.stumeet.server.common.annotation.WebAdapter;
 import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
-import com.stumeet.server.studymember.application.port.in.response.StudyMemberAdminResponse;
+import com.stumeet.server.studymember.application.port.in.response.MyStudyMemberDetailResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberDetailResponse;
-import com.stumeet.server.studymember.application.port.in.response.StudyMemberGrapeResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberResponses;
 import com.stumeet.server.studymember.application.port.in.StudyMemberQueryUseCase;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberReviewStatusResponse;
@@ -54,25 +53,12 @@ public class StudyMemberQueryApi {
         );
     }
 
-    @GetMapping("/studies/{studyId}/me/admin/check")
-    public ResponseEntity<ApiResponse<StudyMemberAdminResponse>> isMemberAdmin(
+    @GetMapping("/studies/{studyId}/members/me")
+    public ResponseEntity<ApiResponse<MyStudyMemberDetailResponse>> getMyStudyMemberDetail(
             @AuthenticationPrincipal LoginMember member,
             @PathVariable Long studyId
     ) {
-        StudyMemberAdminResponse response = studyMemberQueryUseCase.isMemberAdmin(studyId, member.getId());
-
-        return ResponseEntity.ok(
-                ApiResponse.success(SuccessCode.GET_SUCCESS, response)
-        );
-    }
-
-    @GetMapping("/studies/{studyId}/me/grapes/available")
-    public ResponseEntity<ApiResponse<StudyMemberGrapeResponse>> canMemberSendGrape(
-            @AuthenticationPrincipal LoginMember member,
-            @PathVariable Long studyId
-    ) {
-        boolean canSendGrape = studyMemberQueryUseCase.canSendGrape(studyId, member.getId());
-        StudyMemberGrapeResponse response = new StudyMemberGrapeResponse(canSendGrape);
+        MyStudyMemberDetailResponse response = studyMemberQueryUseCase.getMyStudyMemberDetail(studyId, member.getId());
 
         return ResponseEntity.ok(
                 ApiResponse.success(SuccessCode.GET_SUCCESS, response)

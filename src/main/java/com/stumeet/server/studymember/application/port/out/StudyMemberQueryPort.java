@@ -16,4 +16,6 @@ public interface StudyMemberQueryPort {
     boolean isSentGrape(Long studyId, Long memberId);
 
     List<StudyMemberReviewStatusResponse> findStudyMemberReviewStatusByMember(Long studyId, Long memberId);
+
+    long getStudyMemberCount(Long studyId);
 }

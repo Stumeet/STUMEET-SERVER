@@ -20,7 +20,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class StudyMemberQueryApiTest extends ApiTest {
 
@@ -215,20 +215,21 @@ class StudyMemberQueryApiTest extends ApiTest {
     }
 
     @Nested
-    @DisplayName("스터디 멤버 관리자 여부 조회")
-    class CheckMemberAdmin {
-        private static final String PATH = "/api/v1/studies/{studyId}/me/admin/check";
+    @DisplayName("내 스터디 멤버 상세 정보 조회")
+    class GetMyStudyMemberDetail {
+        private static final String PATH = "/api/v1/studies/{studyId}/members/me";
 
         @Test
         @WithMockMember
-        @DisplayName("[성공] 스터디 멤버의 관리자 여부 조회에 성공한다.")
-        void success() throws Exception {
+        @DisplayName("[성공] 활성화된 스터디의 내 스터디 멤버 상세 조회를 성공한다.")
+        void success_active_study() throws Exception {
             Long studyId = StudyStub.getStudyId();
 
             mockMvc.perform(get(PATH, studyId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
                     .andExpect(status().isOk())
-                    .andDo(document("get-study-member-is-admin/success",
+                    .andExpect(jsonPath("$.data.isReviewCompleted").isEmpty())
+                    .andDo(document("get-my-study-member-detail/success/active-study",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
@@ -242,21 +243,56 @@ class StudyMemberQueryApiTest extends ApiTest {
                                     fieldWithPath("code").description("응답 코드"),
                                     fieldWithPath("message").description("응답 메시지"),
                                     fieldWithPath("data").description("스터디 멤버 관리자 여부"),
-                                    fieldWithPath("data.isAdmin").description("관리자 여부")
+                                    fieldWithPath("data.isAdmin").description("관리자 여부"),
+                                    fieldWithPath("data.canSendGrape").description("포도알 전송 가능 여부"),
+                                    fieldWithPath("data.isReviewCompleted").description("리뷰 작성 완료 여부 "
+                                            + "`null`: 미완료 스터디")
                             ))
                     );
         }
 
         @Test
         @WithMockMember
-        @DisplayName("[성공] 스터디가 존재하지 않을 경우 스터디 멤버의 관리자 여부 조회에 실패한다.")
-        void fail_when_study_not_exist() throws Exception {
-            Long studyId = StudyStub.getInvalidStudyId();
+        @DisplayName("[성공] 완료된 스터디의 내 스터디 멤버 상세 조회를 성공한다.")
+        void success_finished_study() throws Exception {
+            Long studyId = StudyStub.getFinishedStudyId();
 
             mockMvc.perform(get(PATH, studyId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
-                    .andExpect(status().isNotFound())
-                    .andDo(document("get-study-member-is-admin/fail/study-not-found",
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.canSendGrape").value(false))
+                    .andDo(document("get-my-study-member-detail/success/finished-study",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
+                                            "서버로부터 전달받은 액세스 토큰")
+                            ),
+                            pathParameters(
+                                    parameterWithName("studyId").description("스터디 ID")
+                            ),
+                            responseFields(
+                                    fieldWithPath("code").description("응답 코드"),
+                                    fieldWithPath("message").description("응답 메시지"),
+                                    fieldWithPath("data").description("스터디 멤버 관리자 여부"),
+                                    fieldWithPath("data.isAdmin").description("관리자 여부"),
+                                    fieldWithPath("data.canSendGrape").description("포도알 전송 가능 여부"),
+                                    fieldWithPath("data.isReviewCompleted").description("리뷰 작성 완료 여부 "
+                                            + "`false`: 리뷰 미완료 / `true`: 리뷰 완료")
+                            ))
+                    );
+        }
+
+        @Test
+        @WithMockMember(id = 3L)
+        @DisplayName("[성공] 요청자가 스터디 멤버가 아닌 경우 내 스터디 멤버 상세 정보 조회에 실패한다.")
+        void fail_when_not_joined_study_member() throws Exception {
+            Long studyId = StudyStub.getStudyId();
+
+            mockMvc.perform(get(PATH, studyId)
+                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
+                    .andExpect(status().isForbidden())
+                    .andDo(document("get-my-study-member-detail/fail/not-joined-study-member",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
@@ -272,51 +308,17 @@ class StudyMemberQueryApiTest extends ApiTest {
                             ))
                     );
         }
-    }
-
-    @Nested
-    @DisplayName("스터디 멤버 포도알 전송 가능 여부 조회")
-    class CanMemberSendGrape {
-        private static final String PATH = "/api/v1/studies/{studyId}/me/grapes/available";
 
         @Test
         @WithMockMember
-        @DisplayName("[성공] 스터디 멤버의 포도알 전송 가능 여부 조회에 성공한다.")
-        void success() throws Exception {
-            Long studyId = StudyStub.getStudyId();
-
-            mockMvc.perform(get(PATH, studyId)
-                            .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
-                    .andExpect(status().isOk())
-                    .andDo(document("get-study-member-can-send-grape/success",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName(AuthenticationHeader.ACCESS_TOKEN.getName()).description(
-                                            "서버로부터 전달받은 액세스 토큰")
-                            ),
-                            pathParameters(
-                                    parameterWithName("studyId").description("스터디 ID")
-                            ),
-                            responseFields(
-                                    fieldWithPath("code").description("응답 코드"),
-                                    fieldWithPath("message").description("응답 메시지"),
-                                    fieldWithPath("data").description("스터디 멤버 포도알 전송 가능 여부"),
-                                    fieldWithPath("data.canSendGrape").description("포도알 전송 가능 여부")
-                            ))
-                    );
-        }
-
-        @Test
-        @WithMockMember
-        @DisplayName("[실패] 스터디가 존재하지 않을 경우 스터디 멤버의 포도알 전송 가능 여부 조회에 실패한다.")
+        @DisplayName("[성공] 스터디가 존재하지 않을 경우 내 스터디 멤버 상세 정보 조회에 실패한다.")
         void fail_when_study_not_exist() throws Exception {
             Long studyId = StudyStub.getInvalidStudyId();
 
             mockMvc.perform(get(PATH, studyId)
                             .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getKakaoAccessToken()))
                     .andExpect(status().isNotFound())
-                    .andDo(document("get-study-member-can-send-grape/fail/study-not-found",
+                    .andDo(document("get-my-study-member-detail/fail/study-not-found",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(
