@@ -17,6 +17,7 @@ import com.stumeet.server.common.response.SuccessCode;
 import com.stumeet.server.study.adapter.in.web.response.StudyDetailResponse;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 import com.stumeet.server.studymember.application.port.in.StudyMemberQueryUseCase;
+import com.stumeet.server.studymember.application.port.in.response.MyStudyMemberDetailResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,15 +41,14 @@ public class StudyHubApi {
         ActivityListDetailedPageResponse activityNotice = activityQueryUseCase.getDetails(noticeQuery)
                 .items()
                 .getFirst();
+        MyStudyMemberDetailResponse myStudyMemberDetail = studyMemberQueryUseCase.getMyStudyMemberDetail(studyId, member.getId());
 
-        boolean isAdmin = studyMemberQueryUseCase.isMemberAdmin(studyId, member.getId()).isAdmin();
-        boolean canSendGrape = studyMemberQueryUseCase.canSendGrape(studyId, member.getId());
 
         StudyDetailFullResponse response = new StudyDetailFullResponse(
                 studyDetailResponse,
                 activityNotice,
-                isAdmin,
-                canSendGrape
+                myStudyMemberDetail.isAdmin(),
+                myStudyMemberDetail.canSendGrape()
         );
 
         return ResponseEntity.ok(

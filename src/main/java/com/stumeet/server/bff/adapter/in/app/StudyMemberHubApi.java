@@ -12,6 +12,7 @@ import com.stumeet.server.common.auth.model.LoginMember;
 import com.stumeet.server.common.model.ApiResponse;
 import com.stumeet.server.common.response.SuccessCode;
 import com.stumeet.server.studymember.application.port.in.StudyMemberQueryUseCase;
+import com.stumeet.server.studymember.application.port.in.response.MyStudyMemberDetailResponse;
 import com.stumeet.server.studymember.application.port.in.response.StudyMemberDetailResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -30,13 +31,12 @@ public class StudyMemberHubApi {
             @PathVariable Long memberId
     ) {
         StudyMemberDetailResponse studyMemberDetail = studyMemberQueryUseCase.getStudyMemberDetail(studyId, memberId, member.getId());
-        boolean isAdmin = studyMemberQueryUseCase.isMemberAdmin(studyId, memberId).isAdmin();
-        boolean canSendGrape = studyMemberQueryUseCase.canSendGrape(studyId, memberId);
+        MyStudyMemberDetailResponse myStudyMemberDetail = studyMemberQueryUseCase.getMyStudyMemberDetail(studyId, memberId);
 
         StudyMemberDetailFullResponse response = new StudyMemberDetailFullResponse(
                 studyMemberDetail,
-                isAdmin,
-                canSendGrape
+                myStudyMemberDetail.isAdmin(),
+                myStudyMemberDetail.canSendGrape()
         );
 
         return ResponseEntity.ok(
