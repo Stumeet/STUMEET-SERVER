@@ -15,4 +15,6 @@ public interface ReviewQueryPort {
     List<ReviewTagCountStatsResponse> countMemberReviewTags(Long memberId);
 
     long getStudyMemberReviewCount(Long studyId, Long memberId);
+
+    long getMemberReviewTagCount(Long memberId);
 }
