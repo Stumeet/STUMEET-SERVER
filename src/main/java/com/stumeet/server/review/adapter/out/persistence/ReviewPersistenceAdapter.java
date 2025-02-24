@@ -74,4 +74,9 @@ public class ReviewPersistenceAdapter implements ReviewSavePort, ReviewQueryPort
     public long getStudyMemberReviewCount(Long studyId, Long memberId) {
         return jpaReviewRepository.countByReviewerIdAndStudyId(memberId, studyId);
     }
+
+    @Override
+    public long getMemberReviewTagCount(Long memberId) {
+        return jpaReviewTagRepository.countByReview_RevieweeId(memberId);
+    }
 }

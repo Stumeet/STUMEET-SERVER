@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewDetailResponse;
+import com.stumeet.server.review.adapter.out.web.dto.ReviewStatsResponse;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewTagCountStatsResponse;
 import com.stumeet.server.review.application.port.in.ReviewQueryUseCase;
 import com.stumeet.server.review.application.port.out.ReviewQueryPort;
@@ -38,13 +39,28 @@ public class ReviewQueryService implements ReviewQueryUseCase {
     }
 
     @Override
+    public ReviewStatsResponse getReviewStats(Long memberId) {
+        long reviewTagCount = reviewQueryPort.getMemberReviewTagCount(memberId);
+        List<ReviewTagCountStatsResponse> reviewTagStats = getMemberReviewTagStats(memberId);
+
+        return ReviewStatsResponse.builder()
+                .totalCount(reviewTagCount)
+                .tagCountStats(reviewTagStats)
+                .build();
+    }
+
+    @Override
     public List<ReviewTagCountStatsResponse> getMemberReviewTagStats(Long memberId) {
-        List<ReviewTagCountStatsResponse> reviewTagsCnt = reviewQueryPort.countMemberReviewTags(memberId);
-        return reviewTagsCnt;
+        return reviewQueryPort.countMemberReviewTags(memberId);
     }
 
     @Override
     public long getStudyMemberReviewCount(Long studyId, Long memberId) {
         return reviewQueryPort.getStudyMemberReviewCount(studyId, memberId);
+    }
+
+    @Override
+    public long getMemberReviewTagCount(Long memberId) {
+        return reviewQueryPort.getMemberReviewTagCount(memberId);
     }
 }
