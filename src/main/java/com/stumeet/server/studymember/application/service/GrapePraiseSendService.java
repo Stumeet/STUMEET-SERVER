@@ -2,6 +2,7 @@ package com.stumeet.server.studymember.application.service;
 
 import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.common.event.EventPublisher;
+import com.stumeet.server.member.application.port.in.MemberLevelUseCase;
 import com.stumeet.server.studymember.adapter.out.event.model.GrapePraiseAlertEvent;
 import com.stumeet.server.studymember.application.port.in.GrapePraiseSendUseCase;
 import com.stumeet.server.studymember.application.port.in.command.GrapeSendCommand;
@@ -11,7 +12,6 @@ import com.stumeet.server.studymember.domain.Grape;
 import com.stumeet.server.studymember.domain.StudyMember;
 import com.stumeet.server.study.application.port.in.StudyQueryUseCase;
 import com.stumeet.server.studymember.application.port.in.HandleGrapeStatusUseCase;
-import com.stumeet.server.studymember.application.port.in.StudyMemberValidationUseCase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class GrapePraiseSendService implements GrapePraiseSendUseCase {
     private final StudyQueryUseCase studyQueryUseCase;
     private final HandleGrapeStatusUseCase handleGrapeStatusUseCase;
+    private final MemberLevelUseCase memberLevelUseCase;
 
     private final GrapeSavePort grapeSavePort;
     private final StudyMemberQueryPort studyMemberQueryPort;
@@ -36,8 +37,11 @@ public class GrapePraiseSendService implements GrapePraiseSendUseCase {
 
         Grape grape = createGrape(receiver, command);
         grapeSavePort.save(grape);
-
         handleGrapeStatusUseCase.markGrapeSent(sender.getId());
+
+        // 포도알 발신, 수신자 경험치 처리
+        memberLevelUseCase.progress(sender.getId(), 5);
+        memberLevelUseCase.progress(receiver.getId(), 5);
 
         EventPublisher.raise(
             new GrapePraiseAlertEvent(this, receiver.getStudy().getId(), receiver.getMember().getId()));

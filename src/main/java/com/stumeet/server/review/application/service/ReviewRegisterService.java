@@ -1,6 +1,7 @@
 package com.stumeet.server.review.application.service;
 
 import com.stumeet.server.common.annotation.UseCase;
+import com.stumeet.server.member.application.port.in.MemberLevelUseCase;
 import com.stumeet.server.review.application.port.in.ReviewRegisterUseCase;
 import com.stumeet.server.review.application.port.in.ReviewValidationUseCase;
 import com.stumeet.server.review.application.port.in.command.ReviewRegisterCommand;
@@ -18,6 +19,7 @@ public class ReviewRegisterService implements ReviewRegisterUseCase {
     private final ReviewValidationUseCase reviewValidationUseCase;
     private final StudyValidationUseCase studyValidationUseCase;
     private final StudyMemberValidationUseCase studyMemberValidationUseCase;
+    private final MemberLevelUseCase memberLevelUseCase;
 
     private final ReviewSavePort reviewSavePort;
 
@@ -39,5 +41,8 @@ public class ReviewRegisterService implements ReviewRegisterUseCase {
         );
 
         reviewSavePort.save(review);
+
+        // 경험치 처리
+        memberLevelUseCase.progress(command.reviewerId(), 40);
     }
 }

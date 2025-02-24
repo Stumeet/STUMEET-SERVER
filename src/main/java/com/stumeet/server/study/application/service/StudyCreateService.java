@@ -1,8 +1,8 @@
 package com.stumeet.server.study.application.service;
 
+import com.stumeet.server.member.application.port.in.MemberLevelUseCase;
 import com.stumeet.server.member.application.port.in.MemberValidationUseCase;
 import com.stumeet.server.notification.application.port.in.InitializeTopicUseCase;
-import com.stumeet.server.notification.application.port.in.ManageSubscriptionUseCase;
 import com.stumeet.server.study.application.port.in.StudyImageUpdateUseCase;
 import com.stumeet.server.study.application.port.out.StudyTagCommandPort;
 
@@ -28,6 +28,7 @@ public class StudyCreateService implements StudyCreateUseCase {
     private final MemberValidationUseCase memberValidationUseCase;
     private final StudyImageUpdateUseCase studyImageUpdateUseCase;
     private final InitializeTopicUseCase initializeTopicUseCase;
+    private final MemberLevelUseCase memberLevelUseCase;
 
     private final StudyCommandPort studyCommandPort;
     private final StudyTagCommandPort studyTagCommandPort;
@@ -44,8 +45,10 @@ public class StudyCreateService implements StudyCreateUseCase {
 
         studyTagCommandPort.saveAllStudyTags(study.getStudyTags(), studyCreatedId);
         initializeTopicUseCase.initializeStudyNoticeTopic(studyCreatedId);
-
         memberJoinUseCase.join(studyUseCaseMapper.toAdminStudyMemberJoinCommand(memberId, studyCreatedId));
+
+        // 경험치 처리
+        memberLevelUseCase.progress(memberId, 10);
 
         return studyCreatedId;
     }

@@ -11,4 +11,12 @@ public class MemberLevel {
 
     private MemberTier tier;
     private double experience;
+
+    public void gainXP(int exp) {
+        this.experience += exp;
+    }
+
+    public void levelUp() {
+        this.tier = MemberTier.getTierByXP(this.experience);
+    }
 }
