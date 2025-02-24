@@ -9,6 +9,7 @@ import com.stumeet.server.common.annotation.UseCase;
 import com.stumeet.server.notification.application.port.in.DeviceQueryUseCase;
 import com.stumeet.server.notification.application.port.in.SendGrapePraiseAlertUseCase;
 import com.stumeet.server.notification.application.port.in.SendStudyNoticeUseCase;
+import com.stumeet.server.notification.application.port.in.SendUserLevelUpAlertUseCase;
 import com.stumeet.server.notification.application.port.out.NotificationSendPort;
 import com.stumeet.server.notification.application.port.out.TopicQueryPort;
 import com.stumeet.server.notification.application.port.out.command.SendMessageCommand;
@@ -22,10 +23,15 @@ import lombok.RequiredArgsConstructor;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class SendNotificationService implements SendStudyNoticeUseCase, SendGrapePraiseAlertUseCase {
+public class SendNotificationService implements SendStudyNoticeUseCase, SendGrapePraiseAlertUseCase,
+        SendUserLevelUpAlertUseCase {
+    // title
+    private static final String APP_NAME = "스터밋";
+
     // template
     private static final String STUDY_NOTICE_BODY_TEMPLATE = "\"%s\" 에 새로운 공지가 올라왔어요!";
     private static final String GRAPE_ALERT_BODY_TEMPLATE = "포도알 칭찬을 받았어요!";
+    private static final String LEVEL_UP_ALERT_BODY_TEMPLATE = "레벨 업!";
 
     // data key
     private static final String STUDY_ID = "studyId";
@@ -71,6 +77,22 @@ public class SendNotificationService implements SendStudyNoticeUseCase, SendGrap
             .body(GRAPE_ALERT_BODY_TEMPLATE)
             .image(null)
             .build();
+
+        notificationSendPort.sendTokenMulticastMessage(command);
+    }
+
+    @Override
+    public void sendUserLevelUpAlert(long memberId, String tierName) {
+        List<String> tokens = deviceQueryUseCase.getMemberDevices(memberId).stream()
+                .map(Device::getNotificationToken)
+                .toList();
+
+        SendMessageCommand command = SendMessageCommand.builder()
+                .registrationTokens(tokens)
+                .title(APP_NAME)
+                .body(LEVEL_UP_ALERT_BODY_TEMPLATE)
+                .image(null)
+                .build();
 
         notificationSendPort.sendTokenMulticastMessage(command);
     }
