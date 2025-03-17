@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ScheduleNotificationJobConfig {
 
-    @Bean
+    @Bean(name = "memberScheduleNotificationItemReader")
     @StepScope
     public RepositoryItemReader<Member> itemReader(MemberRepository repository) {
         return new RepositoryItemReaderBuilder<Member>()
@@ -45,7 +45,7 @@ public class ScheduleNotificationJobConfig {
             .build();
     }
 
-    @Bean
+    @Bean(name = "memberScheduleNotificationItemWriter")
     public ItemWriter<Notification> itemWriter(NotificationLogRepository notificationLogRepository,
         NotificationQueuePort notificationQueuePort, NotificationLogPersistenceMapper mapper) {
         return chunk -> {
@@ -58,7 +58,7 @@ public class ScheduleNotificationJobConfig {
         };
     }
 
-    @Bean
+    @Bean(name = "memberScheduleNotificationJob")
     public Job job(JobRepository jobRepository, JpaTransactionManager transactionManager, RepositoryItemReader<Member> itemReader,
         ItemWriter<Notification> itemWriter, ActivityRepository activityRepository) {
         return new JobBuilder("memberScheduleNotification", jobRepository)
