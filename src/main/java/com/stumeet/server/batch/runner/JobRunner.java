@@ -27,6 +27,11 @@ public class JobRunner {
         executeJob("memberScheduleNotification", Map.of());
     }
 
+    @Scheduled(cron = "0 55 23 * * ?")
+    public void scheduleGrapeStatusResetJob() {
+        executeJob("GrapeStatusReset", Map.of());
+    }
+
     public void executeJob(String jobName, Map<String, Object> params) {
         log.info("Starting the batch job: {}", jobName);
         try {
