@@ -6,7 +6,6 @@ import com.stumeet.server.study.domain.StudyField;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 import java.time.LocalDate;
