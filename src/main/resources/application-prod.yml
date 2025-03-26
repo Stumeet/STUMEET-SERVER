@@ -27,6 +27,8 @@ spring:
     redis:
       host: ${REDIS_URL}
       port: ${REDIS_PORT}
+      ssl:
+        enabled: true
   jpa:
     hibernate:
       ddl-auto: none
