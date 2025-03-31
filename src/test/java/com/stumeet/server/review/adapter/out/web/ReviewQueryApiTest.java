@@ -30,13 +30,13 @@ class ReviewQueryApiTest extends ApiTest {
         @WithMockMember(id = 4L)
         @DisplayName("[성공] 멤버의 리뷰 목록 조회에 성공한다.")
         void success() throws Exception {
-            Integer size = 2;
-            Integer page = 0;
+            int size = 2;
+            int page = 0;
             ReviewSort sort = ReviewSort.LATEST;
 
             mockMvc.perform(get(PATH)
-                    .param("size", size.toString())
-                    .param("page", page.toString())
+                    .param("size", Integer.toString(size))
+                    .param("page", Integer.toString(page))
                     .param("sort", sort.name())
                     .header(AuthenticationHeader.ACCESS_TOKEN.getName(), TokenStub.getMockAccessToken()))
                 .andExpect(status().isOk())
@@ -57,11 +57,17 @@ class ReviewQueryApiTest extends ApiTest {
                         fieldWithPath("code").description("응답 코드"),
                         fieldWithPath("message").description("응답 메시지"),
                         fieldWithPath("data").description("응답 데이터"),
-                        fieldWithPath("data[].id").description("리뷰 ID"),
-                        fieldWithPath("data[].rate").description("별점"),
-                        fieldWithPath("data[].content").description("내용"),
-                        fieldWithPath("data[].createdAt").description("생성일자"),
-                        fieldWithPath("data[].tags[]").description("리뷰 태그 목록")
+                        fieldWithPath("data.items").description("리뷰 목록"),
+                        fieldWithPath("data.items[].id").description("리뷰 ID"),
+                        fieldWithPath("data.items[].rate").description("별점"),
+                        fieldWithPath("data.items[].content").description("내용"),
+                        fieldWithPath("data.items[].createdAt").description("생성일자"),
+                        fieldWithPath("data.items[].tags[]").description("리뷰 태그 목록"),
+                        fieldWithPath("data.pageInfo").description("페이지 메타 정보"),
+                        fieldWithPath("data.pageInfo.totalPages").description("전체 페이지 수"),
+                        fieldWithPath("data.pageInfo.totalElements").description("전체 요소 수"),
+                        fieldWithPath("data.pageInfo.currentPage").description("현재 페이지"),
+                        fieldWithPath("data.pageInfo.pageSize").description("페이지 크기")
                     )
                 ));
         }

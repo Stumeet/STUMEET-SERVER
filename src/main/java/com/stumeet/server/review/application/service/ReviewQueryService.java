@@ -2,8 +2,13 @@ package com.stumeet.server.review.application.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
+import com.stumeet.server.activity.application.port.in.mapper.PageInfoUseCaseMapper;
 import com.stumeet.server.common.annotation.UseCase;
+import com.stumeet.server.common.model.PageInfoResponse;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewDetailResponse;
+import com.stumeet.server.review.adapter.out.web.dto.ReviewDetailResponses;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewStatsResponse;
 import com.stumeet.server.review.adapter.out.web.dto.ReviewTagCountStatsResponse;
 import com.stumeet.server.review.application.port.in.ReviewQueryUseCase;
@@ -19,13 +24,14 @@ import lombok.RequiredArgsConstructor;
 public class ReviewQueryService implements ReviewQueryUseCase {
 
     private final ReviewQueryPort reviewQueryPort;
+    private final PageInfoUseCaseMapper pageInfoUseCaseMapper;
 
     @Override
-    public List<ReviewDetailResponse> getMemberReview(Long memberId, int size, int page, String sortName) {
+    public ReviewDetailResponses getMemberReview(Long memberId, int size, int page, String sortName) {
         ReviewSort sort = ReviewSort.valueOf(sortName);
-        List<Review> reviews = reviewQueryPort.findMemberReviews(memberId, size, page, sort);
+        Page<Review> reviews = reviewQueryPort.findMemberReviews(memberId, size, page, sort);
 
-        return reviews.stream()
+        List<ReviewDetailResponse> items = reviews.stream()
             .map(review -> new ReviewDetailResponse(
                 review.getId(),
                 review.getRate(),
@@ -36,6 +42,11 @@ public class ReviewQueryService implements ReviewQueryUseCase {
                     .toList()
             ))
             .toList();
+
+        return ReviewDetailResponses.builder()
+                .items(items)
+                .pageInfo(pageInfoUseCaseMapper.toPageInfoResponse(reviews))
+                .build();
     }
 
     @Override
