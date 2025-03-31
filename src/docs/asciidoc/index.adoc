@@ -1209,7 +1209,7 @@ include::{snippets}/renew-notification-token/fail/invalid-format/response-fields
 
 멤버의 알림 기록 목록을 조회하는 API 입니다.
 
-==== POST /api/v1/notification/logs
+==== GET /api/v1/notification/logs
 
 ===== 요청
 include::{snippets}/get-member-notification-logs/success/http-request.adoc[]
