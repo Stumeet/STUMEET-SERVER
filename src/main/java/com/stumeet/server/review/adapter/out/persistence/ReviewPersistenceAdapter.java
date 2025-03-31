@@ -2,6 +2,7 @@ package com.stumeet.server.review.adapter.out.persistence;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import com.stumeet.server.common.annotation.PersistenceAdapter;
@@ -53,8 +54,8 @@ public class ReviewPersistenceAdapter implements ReviewSavePort, ReviewQueryPort
     }
 
     @Override
-    public List<Review> findMemberReviews(Long memberId, Integer size, Integer page, ReviewSort sort) {
-        List<ReviewJpaEntity> entities = jpaReviewRepositoryCustom.findByMemberId(memberId, PageRequest.of(page, size), sort);
+    public Page<Review> findMemberReviews(Long memberId, Integer size, Integer page, ReviewSort sort) {
+        Page<ReviewJpaEntity> entities = jpaReviewRepositoryCustom.findByMemberId(memberId, PageRequest.of(page, size), sort);
         return reviewPersistenceMapper.toDomains(entities);
     }
 
