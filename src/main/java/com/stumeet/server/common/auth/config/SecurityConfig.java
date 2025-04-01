@@ -68,10 +68,12 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers(HttpMethod.POST, "/api/v1/oauth").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/api/v1/tokens").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/api/v1/dev/**").permitAll();
             auth.requestMatchers("/h2-console/**").permitAll();
             auth.requestMatchers("/docs/**").permitAll();
             auth.requestMatchers("/api/v1/signup").hasAnyAuthority(UserRole.FIRST_LOGIN.toString());
             auth.requestMatchers("/api/v1/professions").hasAnyAuthority(UserRole.FIRST_LOGIN.toString(), UserRole.MEMBER.toString());
+            auth.requestMatchers("/api/v1/members/validate-nickname").hasAnyAuthority(UserRole.FIRST_LOGIN.toString(), UserRole.MEMBER.toString());
             auth.anyRequest().hasAnyAuthority(UserRole.MEMBER.toString());
         });
 

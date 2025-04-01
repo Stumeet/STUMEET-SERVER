@@ -10,4 +10,5 @@ public interface MemberQueryPort {
 
     boolean isDuplicateNickname(String name);
 
+    boolean existsById(Long id);
 }

@@ -6,15 +6,29 @@ spring:
     activate:
       on-profile: prod
     import: application-secret.properties
+  servlet:
+    multipart:
+      max-file-size: 5MB
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
-    username: ${DEV_DB_USER}
-    password: ${DEV_DB_PASSWORD}
+    app:
+      jdbc-url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
+      username: ${DEV_DB_USER}
+      password: ${DEV_DB_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    batch:
+      jdbc-url: jdbc:mysql://${DEV_DB_ENDPOINT_URL}:3306/${DEV_BATCH_DB_NAME}?serverTimezone=Asia/Seoul&autoReconnect=true&useSSL=true&useUnicode=true
+      username: ${DEV_DB_USER}
+      password: ${DEV_DB_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
   data:
     redis:
       host: ${REDIS_URL}
       port: ${REDIS_PORT}
+      ssl:
+        enabled: true
   jpa:
     hibernate:
       ddl-auto: none
@@ -22,16 +36,29 @@ spring:
       hibernate:
         show_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: never
   cloud:
     config:
       server:
-        awss3:
-          region: ${S3_REGION}
-          bucket: ${S3_BUCKET_NAME}
-          endpoint: ${S3_ENDPOINT}
-          credentials:
-            access-key: ${S3_ACCESS_KEY}
-            secret-key: ${S3_SECRET_KEY}
+        aws:
+          s3:
+            region: ${S3_REGION}
+            bucket: ${S3_BUCKET_NAME}
+            endpoint: ${S3_ENDPOINT}
+            credentials:
+              access-key: ${S3_ACCESS_KEY}
+              secret-key: ${S3_SECRET_KEY}
+          sqs:
+            region: ${SQS_REGION}
+            url: ${SQS_URL}
+            credentials:
+              access-key: ${SQS_ACCESS_KEY}
+              secret-key: ${SQS_SECRET_KEY}
 
 jwt:
   issuer: ${JWT_ISSUER}
@@ -44,3 +71,22 @@ oauth:
       url: https://appleid.apple.com
     kakao:
       url: https://kapi.kakao.com
+
+presigned:
+  url:
+    expired-time: 3600
+
+fcm:
+  secret:
+    path: ${FCM_SECRET_PATH}
+
+discord:
+  webhook:
+    report:
+      url: ${DISCORD_REPORT_WEBHOOK_URL}
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: debug

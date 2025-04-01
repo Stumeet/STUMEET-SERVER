@@ -8,8 +8,10 @@ import com.stumeet.server.member.application.port.in.MemberProfileUseCase;
 import com.stumeet.server.member.application.port.in.MemberTokenUseCase;
 import com.stumeet.server.member.application.port.in.command.MemberSignupCommand;
 import com.stumeet.server.member.application.port.in.command.TokenRenewCommand;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,10 +44,10 @@ public class MemberAuthApi {
     public ResponseEntity<ApiResponse<TokenResponse>> renewAccessToken(
             @RequestBody @Valid TokenRenewCommand request
     ) {
-        TokenResponse response = memberTokenUseCase.renewAccessToken(request);
+        TokenResponse response = memberTokenUseCase.renewTokens(request);
 
         return new ResponseEntity<>(
-                ApiResponse.success(HttpStatus.OK.value(), "액세스 토큰 재발급에 성공했습니다.", response),
+                ApiResponse.success(HttpStatus.OK.value(), "토큰 재발급에 성공했습니다.", response),
                 HttpStatus.OK
         );
     }

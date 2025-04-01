@@ -32,10 +32,14 @@ include::{snippets}/social_login/success/response-fields.adoc[]
 
 .유효한 토큰이 아닌 경우
 include::{snippets}/social_login/fail/invalid-token/response-body.adoc[]
+
 .토큰이 전달되지 않은 경우
 include::{snippets}/social_login/fail/not-exist-header/response-body.adoc[]
-
 include::{snippets}/social_login/fail/invalid-token/response-fields.adoc[]
+
+.전달한 JWT 토큰의 서명이 유효하지 않은 경우
+include::{snippets}/social_login/fail/invalid-signature/response-body.adoc[]
+include::{snippets}/social_login/fail/invalid-signature/response-fields.adoc[]
 
 === 로그아웃
 
@@ -134,6 +138,9 @@ include::{snippets}/validate_nickname/success/query-parameters.adoc[]
 
 ===== 응답 성공 (200)
 
+include::{snippets}/validate_nickname/success/response-body.adoc[]
+include::{snippets}/validate_nickname/success/response-fields.adoc[]
+
 ===== 응답 실패 (400)
 
 .닉네임이 유효성 검사에 실패한 경우
@@ -174,7 +181,9 @@ include::{snippets}/update-my-profile/success/response-fields.adoc[]
 include::{snippets}/update-my-profile/fail/invalid-request/response-body.adoc[]
 include::{snippets}/update-my-profile/fail/invalid-request/response-fields.adoc[]
 
+
 == 분야 관리
+
 === 분야 정보 전체 조회
 
 모든 분야 정보를 조회하는 API입니다.
@@ -189,3 +198,1084 @@ include::{snippets}/find_professions/success/request-headers.adoc[]
 
 include::{snippets}/find_professions/success/response-body.adoc[]
 include::{snippets}/find_professions/success/response-fields.adoc[]
+
+
+== 스터디 관리
+
+=== 스터디 상세 정보 조회
+
+스터디 상세 정보를 조회하는 API입니다.
+
+==== GET /api/v1/studies/{id}
+
+===== 요청
+include::{snippets}/get-study-detail/success/http-request.adoc[]
+include::{snippets}/get-study-detail/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-detail/success/response-body.adoc[]
+include::{snippets}/get-study-detail/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/get-study-detail/fail/not-found/response-body.adoc[]
+include::{snippets}/get-study-detail/fail/not-found/response-fields.adoc[]
+
+
+=== 스터디 리스트 조회
+
+사용자의 스터디 리스트를 조회하는 API입니다.
+
+* 스터디 상태 정의
+- `ACTIVE`: 사용자가 참여중인 스터디 중 미완료 목록 조회
+- `FINSHED`: 사용자가 참여했던 완료 스터디 중 숨김처리 되지 않은 목록 조회
+
+==== GET /api/v1/studies
+
+===== 요청
+include::{snippets}/get-joined-studies/success/http-request.adoc[]
+include::{snippets}/get-joined-studies/success/request-headers.adoc[]
+include::{snippets}/get-joined-studies/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-joined-studies/success/response-body.adoc[]
+include::{snippets}/get-joined-studies/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 상태로 요청한 경우
+include::{snippets}/get-joined-studies/fail/study-status-not-found/response-body.adoc[]
+include::{snippets}/get-joined-studies/fail/study-status-not-found/response-fields.adoc[]
+
+
+=== 스터디 생성
+
+스터디를 생성하는 API 입니다.
+
+==== POST /api/v1/studies
+
+===== 요청
+include::{snippets}/create-study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/create-study/success/request-headers.adoc[]
+
+===== 파트
+include::{snippets}/create-study/success/request-parts.adoc[]
+
+===== 요청 파트 매개변수
+include::{snippets}/create-study/success/request-part-request-fields.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/create-study/success/response-body.adoc[]
+include::{snippets}/create-study/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 분야 ID를 요청한 경우
+include::{snippets}/create-study/fail/study-field-not-found/response-body.adoc[]
+include::{snippets}/create-study/fail/study-field-not-found/response-fields.adoc[]
+
+.일정 반복 유형 DAILY일 때를 제외하고 반복일을 null 값으로 요청한 경우
+include::{snippets}/create-study/fail/invalid-study-meeting-schedule/response-body.adoc[]
+include::{snippets}/create-study/fail/invalid-study-meeting-schedule/response-fields.adoc[]
+
+
+=== 스터디 수정
+
+스터디 정보를 수정하는 API 입니다.
+
+==== PATCH /api/v1/studies/{studyId}
+
+===== 요청
+include::{snippets}/update-study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/update-study/success/request-headers.adoc[]
+
+===== 파트
+include::{snippets}/update-study/success/request-parts.adoc[]
+
+===== 요청 파트 매개변수
+include::{snippets}/update-study/success/request-part-request-fields.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/update-study/success/response-body.adoc[]
+include::{snippets}/update-study/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 분야 ID를 요청한 경우
+include::{snippets}/update-study/fail/study-field-not-found/response-body.adoc[]
+include::{snippets}/update-study/fail/study-field-not-found/response-fields.adoc[]
+
+.일정 반복 유형 DAILY일 때를 제외하고 반복일을 null 값으로 요청한 경우
+include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-body.adoc[]
+include::{snippets}/update-study/fail/invalid-study-meeting-schedule/response-fields.adoc[]
+
+=== 스터디 완료
+
+스터디를 완료하는 API 입니다.
+
+==== PATCH /api/v1/studies/{studyId}/finish
+
+===== 요청
+include::{snippets}/finish-study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/finish-study/success/request-headers.adoc[]
+
+===== 경로 변수
+include::{snippets}/finish-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/finish-study/success/response-body.adoc[]
+include::{snippets}/finish-study/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.현재 날짜가 시작일보다 이전인 경우
+include::{snippets}/finish-study/fail/start-date-not-yet/response-body.adoc[]
+include::{snippets}/finish-study/fail/start-date-not-yet/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.완료를 시도하는 멤버가 스터디 멤버가 아닌 경우
+include::{snippets}/finish-study/fail/member-not-joined_study/response-body.adoc[]
+include::{snippets}/finish-study/fail/member-not-joined_study/response-fields.adoc[]
+
+.완료를 시도하는 멤버가 관리자가 아닌 경우
+include::{snippets}/finish-study/fail/member-not-admin/response-body.adoc[]
+include::{snippets}/finish-study/fail/member-not-admin/response-fields.adoc[]
+
+=== 스터디/활동 신고
+
+스터디와 활동을 신고하는 API 입니다.
+
+==== PATCH /api/v1/report
+
+===== 요청
+include::{snippets}/create-report/study/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/create-report/study/success/request-headers.adoc[]
+
+===== 본문
+include::{snippets}/create-report/study/success/request-fields.adoc[]
+
+===== 신고 카테고리 종류
+[cols="1,2", options="header"]
+|===
+| Category  | Description
+| STUDY     | 스터디
+| ACTIVITY  | 활동
+|===
+
+===== 신고 사유 종류
+[cols="1,2", options="header"]
+|===
+| Reason  | Description
+| COMMERCIAL_ADVERTISEMENT_AND_SPAM  | 상업적 광고 및 스팸
+| PORNOGRAPHY_AND_HARMFUL_ACTIVITIES  | 음란물 및 유해성 활동
+| PROFANITY_AND_SLANDER  | 욕설 및 비방
+| FRAUD_OR_IMPERSONATION  | 사기 또는 사칭
+| FLOODING  | 도배
+| OTHERS  | 기타
+|===
+
+===== 응답 성공 (200)
+include::{snippets}/create-report/study/success/response-body.adoc[]
+include::{snippets}/create-report/study/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.신고자를 찾을 수 없는 경우
+include::{snippets}/create-report/fail/reporter-not-found/response-body.adoc[]
+include::{snippets}/create-report/fail/reporter-not-found/response-fields.adoc[]
+
+
+== 스터디 멤버 관리
+
+=== 스터디 멤버 단일 상세 조회
+
+전달받은 스터디 ID의 단일 멤버 정보를 상세 조회하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/members/{memberId}
+
+===== 요청
+include::{snippets}/get-study-member-detail/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-detail/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-detail/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-detail/success/response-body.adoc[]
+include::{snippets}/get-study-member-detail/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 스터디의 멤버가 아닌 경우
+include::{snippets}/get-study-member-detail/fail/is-not-study-member/response-body.adoc[]
+include::{snippets}/get-study-member-detail/fail/is-not-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.요청한 스터디가 존재하지 않는 경우
+include::{snippets}/get-study-member-detail/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-detail/fail/study-not-found/response-fields.adoc[]
+
+
+=== 내 스터디 멤버 상세 정보 조회
+
+전달받은 스터디 ID의 내 스터디 멤버 정보를 상세 조회하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/members/me
+
+===== 요청
+include::{snippets}/get-my-study-member-detail/success/active-study/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-my-study-member-detail/success/active-study/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-my-study-member-detail/success/active-study/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+.활성화된 스터디의 경우
+include::{snippets}/get-my-study-member-detail/success/active-study/response-body.adoc[]
+include::{snippets}/get-my-study-member-detail/success/active-study/response-fields.adoc[]
+
+.완료된 스터디의 경우
+include::{snippets}/get-my-study-member-detail/success/finished-study/response-body.adoc[]
+include::{snippets}/get-my-study-member-detail/success/finished-study/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 스터디의 멤버가 아닌 경우
+include::{snippets}/get-my-study-member-detail/fail/not-joined-study-member/response-body.adoc[]
+include::{snippets}/get-my-study-member-detail/fail/not-joined-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.요청한 스터디가 존재하지 않는 경우
+include::{snippets}/get-my-study-member-detail/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-my-study-member-detail/fail/study-not-found/response-fields.adoc[]
+
+
+=== 스터디 멤버 목록 조회
+
+전달받은 스터디 ID의 속한 멤버들을 조회하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/members
+
+===== 요청
+
+include::{snippets}/get-study-members/success/http-request.adoc[]
+include::{snippets}/get-study-members/success/path-parameters.adoc[]
+include::{snippets}/get-study-members/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-members/success/response-body.adoc[]
+include::{snippets}/get-study-members/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+include::{snippets}/get-study-members/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/get-study-members/fail/not-joined-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+include::{snippets}/get-study-members/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/get-study-members/fail/not-exist-study/response-fields.adoc[]
+
+=== 스터디 멤버 리뷰 상태 목록 조회
+
+로그인 멤버 기준으로 해당 스터디 멤버들의 리뷰 상태를 포함하는 정보를 조회하는 API 입니다.
+
+==== GET /v1/api/studies/{studyId}/members/review-status
+
+===== 요청
+include::{snippets}/get-study-member-review-status/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-review-status/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-review-status/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-review-status/success/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청 멤버가 해당 스터디의 멤버가 아닌 경우
+include::{snippets}/get-study-member-review-status/fail/member-not-joined-member/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/fail/member-not-joined-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.요청한 스터디가 존재하지 않는 경우
+include::{snippets}/get-study-member-review-status/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/fail/study-not-found/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.요청한 스터디가 완료 스터디가 아닌 경우
+include::{snippets}/get-study-member-review-status/fail/study-not-legacy/response-body.adoc[]
+include::{snippets}/get-study-member-review-status/fail/study-not-legacy/response-fields.adoc[]
+
+=== 스터디 멤버 탈퇴
+
+전달받은 스터디에 대해 탈퇴하는 API입니다.
+
+==== DELETE /v1/api/studies/{studyId}/members/me
+
+===== 요청
+include::{snippets}/leave-study/success/http-request.adoc[]
+include::{snippets}/leave-study/success/request-headers.adoc[]
+include::{snippets}/leave-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+.스터디 탈퇴 성공
+include::{snippets}/leave-study/success/response-body.adoc[]
+include::{snippets}/leave-study/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.스터디에 가입한 멤버가 아닌 경우
+include::{snippets}/leave-study/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/leave-study/fail/not-joined-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.전달한 스터디가 존재하지 않는 경우
+include::{snippets}/leave-study/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/leave-study/fail/not-exist-study/response-fields.adoc[]
+
+=== 스터디 멤버 강퇴
+
+스터디 멤버를 강퇴하는 API입니다.
+
+==== DELETE /v1/api/studies/{studyId}/members/{memberId}
+
+===== 요청
+include::{snippets}/kick-study/success/http-request.adoc[]
+include::{snippets}/kick-study/success/request-headers.adoc[]
+include::{snippets}/kick-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/kick-study/success/response-body.adoc[]
+include::{snippets}/kick-study/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+include::{snippets}/kick-study/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/kick-study/fail/not-joined-member/response-fields.adoc[]
+
+include::{snippets}/kick-study/fail/not-admin/response-body.adoc[]
+include::{snippets}/kick-study/fail/not-admin/response-fields.adoc[]
+===== 응답 실패 (404)
+include::{snippets}/kick-study/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/kick-study/fail/not-exist-study/response-fields.adoc[]
+
+=== 스터디 가입
+
+멤버가 스터디에 가입할 때 사용하는 API 입니다.
+
+==== POST /v1/api/studies/{studyId}/members
+
+===== 요청
+include::{snippets}/study-member-join/success/http-request.adoc[]
+include::{snippets}/study-member-join/success/path-parameters.adoc[]
+include::{snippets}/study-member-join/success/request-headers.adoc[]
+
+===== 응답 성공 (201)
+include::{snippets}/study-member-join/success/response-body.adoc[]
+include::{snippets}/study-member-join/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.이미 스터디에 가입한 멤버인 경우
+include::{snippets}/study-member-join/fail/already-join-member/response-body.adoc[]
+include::{snippets}/study-member-join/fail/already-join-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디에 가입을 요청한 경우
+include::{snippets}/study-member-join/fail/not-exist-study/response-body.adoc[]
+include::{snippets}/study-member-join/fail/not-exist-study/response-fields.adoc[]
+
+.존재하지 않는 멤버가 가입을 요청한 경우
+include::{snippets}/study-member-join/fail/not-exist-member/response-body.adoc[]
+include::{snippets}/study-member-join/fail/not-exist-member/response-fields.adoc[]
+
+=== 관리자 위임
+
+다른 멤버에게 관리자를 위임하는 API입니다.
+
+==== PATCH /v1/api/studies/{studyId}/members/{memberId}/admin/delegate
+
+===== 요청
+include::{snippets}/delegate-admin/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/delegate-admin/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/delegate-admin/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/delegate-admin/success/response-body.adoc[]
+include::{snippets}/delegate-admin/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 해당 스터디 관리자가 아닌 경우
+include::{snippets}/delegate-admin/fail/not-admin/response-body.adoc[]
+include::{snippets}/delegate-admin/fail/not-admin/response-fields.adoc[]
+
+.위임 대상자가 스터디 멤버가 아닌 경우
+include::{snippets}/delegate-admin/fail/member-not-joined/response-body.adoc[]
+include::{snippets}/delegate-admin/fail/member-not-joined/response-fields.adoc[]
+
+
+=== 레거시 스터디 숨김 처리
+
+멤버의 레거시 스터디를 숨김 처리하는 API입니다.
+
+==== GET /v1/api/studies/{studyId}/legacy/hide
+
+===== 요청
+include::{snippets}/hide-legacy-study/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/hide-legacy-study/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/hide-legacy-study/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/hide-legacy-study/success/response-body.adoc[]
+include::{snippets}/hide-legacy-study/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.요청자가 스터디 멤버가 아닌 경우 경우
+include::{snippets}/hide-legacy-study/fail/not-joined-study-member/response-body.adoc[]
+include::{snippets}/hide-legacy-study/fail/not-joined-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디의 경우
+include::{snippets}/hide-legacy-study/fail/study-not-exist/response-body.adoc[]
+include::{snippets}/hide-legacy-study/fail/study-not-exist/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.레거시 스터디가 아닌 경우
+include::{snippets}/hide-legacy-study/fail/study-not-finished/response-body.adoc[]
+include::{snippets}/hide-legacy-study/fail/study-not-finished/response-fields.adoc[]
+
+
+== 스터디 활동 관리
+
+=== 스터디 활동 생성
+
+스터디 활동을 생성하는 API입니다.
+
+==== POST /api/v1/studies/{studyId}/activities
+
+===== 요청
+include::{snippets}/create-activity/success/http-request.adoc[]
+include::{snippets}/create-activity/success/path-parameters.adoc[]
+include::{snippets}/create-activity/success/request-headers.adoc[]
+include::{snippets}/create-activity/success/request-fields.adoc[]
+
+===== 응답 성공 (201)
+include::{snippets}/create-activity/success/response-body.adoc[]
+include::{snippets}/create-activity/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.활동 생성 요청 값이 유효하지 않은 경우
+include::{snippets}/create-activity/fail/invalid-request/response-body.adoc[]
+include::{snippets}/create-activity/fail/invalid-request/response-fields.adoc[]
+
+.존재하지 않는 활동 카테고리로 요청한 경우
+include::{snippets}/create-activity/fail/not-exists-category/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-exists-category/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.스터디의 관리자가 아닌 경우
+include::{snippets}/create-activity/fail/not-study-member/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-study-member/response-fields.adoc[]
+
+====== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/create-activity/fail/not-exists-study/response-body.adoc[]
+include::{snippets}/create-activity/fail/not-exists-study/response-fields.adoc[]
+
+.모임 활동 생성 시 장소 값이 null인 경우
+include::{snippets}/create-activity/fail/location-null-for-meet/response-body.adoc[]
+include::{snippets}/create-activity/fail/location-null-for-meet/response-fields.adoc[]
+
+.모임, 과제 활동 생성 시 활동 기간이 null인 경우
+include::{snippets}/create-activity/fail/period-null/response-body.adoc[]
+include::{snippets}/create-activity/fail/period-null/response-fields.adoc[]
+
+.모임, 과제 활동 생성 시 활동 기간이 유효하지 않은 경우
+include::{snippets}/create-activity/fail/period-invalid/response-body.adoc[]
+include::{snippets}/create-activity/fail/period-invalid/response-fields.adoc[]
+
+
+=== 스터디 활동 수정
+
+스터디 활동을 수정하는 API입니다.
+
+==== PATCH /api/v1/studies/{studyId}/activities/{activityId}
+
+===== 요청
+include::{snippets}/update-activity/success/http-request.adoc[]
+include::{snippets}/update-activity/success/path-parameters.adoc[]
+include::{snippets}/update-activity/success/request-headers.adoc[]
+include::{snippets}/update-activity/success/request-fields.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-details-by-condition/success/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.모임/과제 유형으로 수정할 때 활동 기간이 null인 경우
+include::{snippets}/update-activity/fail/period-null/response-body.adoc[]
+include::{snippets}/update-activity/fail/period-null/response-fields.adoc[]
+
+.모임/과제 유형으로 수정할 때 활동 기간이 유효하지 않은 경우
+include::{snippets}/update-activity/fail/period-invalid/response-body.adoc[]
+include::{snippets}/update-activity/fail/period-invalid/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.스터디 멤버가 아닌 경우
+include::{snippets}/update-activity/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/update-activity/fail/not-joined-member/response-fields.adoc[]
+
+.작성자가 아닌 경우
+include::{snippets}/update-activity/fail/not-author/response-body.adoc[]
+include::{snippets}/update-activity/fail/not-author/response-fields.adoc[]
+
+
+=== 스터디 활동 상세 목록 조회
+
+스터디 활동 상세 목록을 조회하는 API입니다.
+
+.정렬 기준
+[horizontal]
+`LATEST`:: 최신순
+** 모든 유형: 생성일 기준 정렬
+`SPECIFIC`:: 각 유형 기준
+** 활동 유형 `MEET`: 활동 시작일
+** 활동 유형 `ASSIGNMENT`: 활동 종료일
+** 활동 유형 `DEFAULT`: 생성일
+** 활동 유형 조건이 없는 경우: 생성일
+
+==== GET /api/v1/studies/activities/detail
+===== 요청
+include::{snippets}/get-activity-details-by-condition/success/http-request.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/request-headers.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-details-by-condition/success/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.유효하지 않은 활동 유형을 요청한 경우
+include::{snippets}/get-activity-details-by-condition/fail/activity-category-invalid/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/fail/activity-category-invalid/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/get-activity-details-by-condition/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-activity-details-by-condition/fail/study-not-found/response-fields.adoc[]
+
+
+=== 스터디 활동 간략 목록 조회
+
+스터디 활동 간략 목록을 조회하는 API입니다. 페이지네이션과 단순 조회를 모두 지원합니다.
+
+.날짜 기준
+* 활동 유형 `MEET`: 활동 시작일
+* 활동 유형 `ASSIGNMENT`: 활동 종료일
+* 활동 유형 `DEFAULT`: 생성일
+
+.정렬 기준
+[horizontal]
+`LATEST`:: 최신순
+** 모든 유형: 생성일 기준 정렬
+`SPECIFIC`:: 각 유형 기준
+** 활동 유형 `MEET`: 활동 시작일
+** 활동 유형 `ASSIGNMENT`: 활동 종료일
+** 활동 유형 `DEFAULT`: 생성일
+** 활동 유형 조건이 없는 경우: 생성일
+
+==== GET /api/v1/studies/activities/brief
+===== 요청
+include::{snippets}/get-activity-briefs-by-condition/success/http-request.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/success/request-headers.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-briefs-by-condition/success/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.불완전한 페이지네이션 요청변수로 요청하는 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-incomplete/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-incomplete/response-fields.adoc[]
+
+.0보다 작은 페이지네이션 요청변수로 요청하는 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-invalid/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/pagination-invalid/response-fields.adoc[]
+
+.유효하지 않은 활동 유형을 요청한 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/activity-category-invalid/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/activity-category-invalid/response-fields.adoc[]
+
+.시작기준일이 종료기준일보다 이후인 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/period_invalid/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/period_invalid/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 ID를 요청한 경우
+include::{snippets}/get-activity-briefs-by-condition/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-activity-briefs-by-condition/fail/study-not-found/response-fields.adoc[]
+
+
+=== 스터디 활동 단일 조회
+
+스터디 활동을 단일 조회하는 API입니다.
+
+==== GET /api/v1/studies/{studyId}/activities/{activityId}
+
+===== 요청
+include::{snippets}/get-activity-by-id/success/http-request.adoc[]
+include::{snippets}/get-activity-by-id/success/path-parameters.adoc[]
+include::{snippets}/get-activity-by-id/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-by-id/success/response-body.adoc[]
+include::{snippets}/get-activity-by-id/success/response-fields.adoc[]
+
+===== 응답 실패(403)
+.스터디의 멤버가 아닌 경우
+include::{snippets}/get-activity-by-id/fail/not-joined-study/response-body.adoc[]
+include::{snippets}/get-activity-by-id/fail/not-joined-study/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디를 전달한 경우
+include::{snippets}/get-activity-by-id/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-activity-by-id/fail/study-not-found/response-fields.adoc[]
+
+.존재하지 않는 활동을 전달한 경우
+include::{snippets}/get-activity-by-id/fail/activity-not-found/response-body.adoc[]
+include::{snippets}/get-activity-by-id/fail/activity-not-found/response-fields.adoc[]
+
+=== 스터디 활동에 참여중인 멤버 조회
+
+스터디 활동에 참여중인 멤버를 조회하는 API입니다.
+
+==== GET /api/v1/studies/{studyId}/activities/{activityId}/members
+
+===== 요청
+include::{snippets}/get-activity-participants/success/http-request.adoc[]
+include::{snippets}/get-activity-participants/success/path-parameters.adoc[]
+include::{snippets}/get-activity-participants/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-activity-participants/success/response-body.adoc[]
+include::{snippets}/get-activity-participants/success/response-fields.adoc[]
+
+===== 응답 실패(404)
+.존재하지 않는 스터디를 전달한 경우
+include::{snippets}/get-activity-participants/fail/not-found-study/response-body.adoc[]
+include::{snippets}/get-activity-participants/fail/not-found-study/response-fields.adoc[]
+
+.존재하지 않는 활동을 전달한 경우
+include::{snippets}/get-activity-participants/fail/not-found-activity/response-body.adoc[]
+include::{snippets}/get-activity-participants/fail/not-found-activity/response-fields.adoc[]
+
+
+=== 스터디 활동 참여멤버 상태 변경
+
+스터디 활동에 참여중인 멤버의 상태를 변경하는 API입니다.
+
+==== PATCH /api/v1/studies/{studyId}/members/{memberId}/activities/{activityId}/status
+
+===== 요청
+include::{snippets}/update-activity-participant-status/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/update-activity-participant-status/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/update-activity-participant-status/success/path-parameters.adoc[]
+
+====== 요청 본문
+include::{snippets}/update-activity-participant-status/success/request-fields.adoc[]
+
+===== 활동 멤버 상태 종류
+====== 공통
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| NOT_JOINED  | 미참여
+|===
+
+====== 모임 (Meet)
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| MEET_NOT_STARTED  | 시작 전
+| ATTENDANCE  | 출석
+| TARDINESS  | 지각
+| ACKNOWLEDGED_ABSENCE  | 인정결석
+| ABSENCE  | 결석
+|===
+
+====== 과제 (Assignment)
+[cols="1,2", options="header"]
+|===
+| Status  | Description
+| ASSIGNMENT_NOT_STARTED  | 시작 전
+| PERFORMED  | 수행
+| LATE_SUBMISSION  | 지각제출
+| UNPERFORMED  | 미수행
+|===
+
+===== 응답 실패 (400)
+.상태 수정 요청한 활동의 카테고리가 자유인 경우
+include::{snippets}/update-activity-participant-status/fail/activity-is-default/response-body.adoc[]
+include::{snippets}/update-activity-participant-status/fail/activity-is-default/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.수정하는 멤버가 관리자가 아닌 경우
+include::{snippets}/update-activity-participant-status/fail/member-is-not-admin/response-body.adoc[]
+include::{snippets}/update-activity-participant-status/fail/member-is-not-admin/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.요청한 스터디가 존재하지 않는 경우
+include::{snippets}/update-activity-participant-status/fail/study-not-found/response-body.adoc[]
+include::{snippets}/update-activity-participant-status/fail/study-not-found/response-fields.adoc[]
+
+
+=== 스터디 활동 삭제
+
+스터디 활동을 삭제하는 API입니다.
+
+==== POST /api/v1/studies/{studyId}/activities/{activityId}
+
+===== 요청
+include::{snippets}/delete-activity/success/http-request.adoc[]
+include::{snippets}/delete-activity/success/path-parameters.adoc[]
+include::{snippets}/delete-activity/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/delete-activity/success/response-body.adoc[]
+include::{snippets}/delete-activity/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.삭제를 시도하는 멤버가 일반 멤버인 경우
+include::{snippets}/delete-activity/fail/forbidden/response-body.adoc[]
+include::{snippets}/delete-activity/fail/forbidden/response-fields.adoc[]
+
+.스터디의 멤버가 아닌 경우
+include::{snippets}/delete-activity/fail/not-joined-member/response-body.adoc[]
+include::{snippets}/delete-activity/fail/not-joined-member/response-fields.adoc[]
+
+
+== 멤버 리뷰 관리
+
+=== 리뷰 등록
+
+스터디 완료 후 멤버의 리뷰를 등록하는 API입니다.
+
+==== POST /api/v1/reviews
+===== 요청
+include::{snippets}/register-review/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/register-review/success/request-headers.adoc[]
+
+====== 요청 본문
+include::{snippets}/register-review/success/request-fields.adoc[]
+
+===== 리뷰 태그 종류
+[cols="1,2", options="header"]
+|===
+| Tag                | Description
+| DILIGENCE          | 귀차니즘
+| TASK_COMMITMENT    | 과제 성실도
+| CONSISTENT_ATTENDANCE | 프로개근러
+| BEST_LEADER        | 최고의 리더
+| BEST_SUPPORTER     | 최고의 서포터
+| FAST_RESPONSE      | 빠른 응답
+| SLOW_RESPONSE      | 느린 응답
+| DECISIVE_J         | 확신의 J
+| FLEXIBLE_P         | 확신의 P
+| MAX_RESPONSIBILITY | 책임감 MAX
+| MOOD_MAKER         | 분위기 메이커
+| EFFORT_TOP         | 노력 1등
+| NEEDS_IMPROVEMENT  | 분발이 필요해요
+| NEAT_NOTES         | 깔끔한 필기
+| PINPOINT_TEACHER   | 쪽집게 강사
+|===
+
+===== 응답 성공 (201)
+include::{snippets}/register-review/success/response-body.adoc[]
+include::{snippets}/register-review/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.평점이 범위에서 벗어난 경우
+include::{snippets}/register-review/fail/rate-out-of-range/response-body.adoc[]
+include::{snippets}/register-review/fail/rate-out-of-range/response-fields.adoc[]
+
+.리뷰 태그 개수가 유효하지 않은 경우
+include::{snippets}/register-review/fail/invalid-review-tag-count/response-body.adoc[]
+include::{snippets}/register-review/fail/invalid-review-tag-count/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.리뷰어가 스터디 멤버가 아닌 경우
+include::{snippets}/register-review/fail/reviewer-not-joined/response-body.adoc[]
+include::{snippets}/register-review/fail/reviewer-not-joined/response-fields.adoc[]
+
+.리뷰 대상 멤버가 스터디 멤버가 아닌 경우
+include::{snippets}/register-review/fail/reviewee-not-joined/response-body.adoc[]
+include::{snippets}/register-review/fail/reviewee-not-joined/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.입력한 스터디가 존재하지 않는 경우
+include::{snippets}/register-review/fail/study-not-found/response-body.adoc[]
+include::{snippets}/register-review/fail/study-not-found/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.이미 작성된 리뷰가 존재하는 경우
+include::{snippets}/register-review/fail/review-already-exists/response-body.adoc[]
+include::{snippets}/register-review/fail/review-already-exists/response-fields.adoc[]
+
+=== 멤버 리뷰 조회
+
+멤버의 리뷰 목록을 조회하는 API입니다.
+
+==== GET /api/v1/reviews
+===== 요청
+include::{snippets}/get-member-reviews/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-member-reviews/success/request-headers.adoc[]
+
+====== 요청 파라미터
+include::{snippets}/get-member-reviews/success/query-parameters.adoc[]
+
+===== 리뷰 정렬 종류
+추가 및 수정 가능성 존재합니다.
+[cols="1,2", options="header"]
+|===
+| Sort                | Description
+| LATEST          | 최근등록순
+| HIGHEST_RATING    | 별점높은순
+| LOWEST_RATING    | 별점낮은순
+|===
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-reviews/success/response-body.adoc[]
+include::{snippets}/get-member-reviews/success/response-fields.adoc[]
+
+=== 멤버 리뷰 태그 개수 통계 조회
+
+멤버의 리뷰 태그 개수 통계를 조회하는 API입니다.
+
+==== GET /api/v1/reviews/tags/stats
+===== 요청
+include::{snippets}/get-member-review-tags-stats/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-member-review-tags-stats/success/request-headers.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-review-tags-stats/success/response-body.adoc[]
+include::{snippets}/get-member-review-tags-stats/success/response-fields.adoc[]
+
+=== 포도알 칭찬 전송
+
+같은 스터디원에게 포도알 칭찬을 전송하는 API입니다.
+
+==== GET /api/v1/reviews/grapes
+===== 요청
+include::{snippets}/send-grape-praise/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/send-grape-praise/success/request-headers.adoc[]
+
+====== 요청 본문
+include::{snippets}/send-grape-praise/success/request-fields.adoc[]
+
+===== 포도알 칭찬 종류
+[cols="1,2", options="header"]
+|===
+| Compliment   | Description
+| PASSIONATE   | 🔥 열정이 돋보이는 활동이에요
+| DILIGENT     | ✨ 성실하게 참여했어요
+| OUTSTANDING  | 👍 결과물이 훌륭해요
+|===
+
+===== 응답 성공 (201)
+include::{snippets}/send-grape-praise/success/response-body.adoc[]
+include::{snippets}/send-grape-praise/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.유효하지 않은 칭찬 타입으로 요청한 경우
+include::{snippets}/send-grape-praise/fail/invalid-compliment-type/response-body.adoc[]
+include::{snippets}/send-grape-praise/fail/invalid-compliment-type/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.존재하지 않는 스터디 멤버 ID로 요청한 경우
+include::{snippets}/send-grape-praise/fail/study-member-not-found/response-body.adoc[]
+include::{snippets}/send-grape-praise/fail/study-member-not-found/response-fields.adoc[]
+
+.전송자가 해당 스터디의 스터디원이 아닌 경우
+include::{snippets}/send-grape-praise/fail/sender_is_not_the_study_member/response-body.adoc[]
+include::{snippets}/send-grape-praise/fail/sender_is_not_the_study_member/response-fields.adoc[]
+
+===== 응답 실패 (409)
+.전송자가 해당 스터디의 이미 이번주 포도알을 전송한 경우
+include::{snippets}/send-grape-praise/fail/sender_already_sent_grape/response-body.adoc[]
+include::{snippets}/send-grape-praise/fail/sender_already_sent_grape/response-fields.adoc[]
+
+=== 포도알 칭찬 목록 조회
+
+받은 포도알 칭찬 목록을 조회하는 API입니다.
+
+==== GET /api/v1/reviews/grapes
+===== 요청
+include::{snippets}/get-member-grapes/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-member-grapes/success/request-headers.adoc[]
+
+====== 요청 매개 변수
+include::{snippets}/get-member-grapes/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-grapes/success/response-body.adoc[]
+include::{snippets}/get-member-grapes/success/response-fields.adoc[]
+
+
+== 파일 관리
+
+=== Presigned URL 발급
+
+파일 업로드를 위한 Presigned URL을 발급하는 API입니다.
+
+해당 API는 1시간동안 유효합니다.
+
+==== POST /api/v1/presigned-urls
+
+===== 요청
+
+include::{snippets}/presigned-urls-generate/success/http-request.adoc[]
+include::{snippets}/presigned-urls-generate/success/request-headers.adoc[]
+include::{snippets}/presigned-urls-generate/success/request-fields.adoc[]
+
+include::file-management-path.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/presigned-urls-generate/success/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.파일이름이 유효하지 않은 경우
+include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-name/response-fields.adoc[]
+
+.파일의 확장자가 유효하지 않은 경우
+include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-body.adoc[]
+include::{snippets}/presigned-urls-generate/fail/invalid-file-extension/response-fields.adoc[]
+
+
+== 알림
+=== 알림 토큰 갱신
+
+알림 토큰을 갱신하는 API 입니다.
+
+==== POST /api/v1/notification-token/renew
+
+===== 요청
+include::{snippets}/renew-notification-token/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/renew-notification-token/success/request-headers.adoc[]
+
+===== 요청 본문
+include::{snippets}/renew-notification-token/success/request-fields.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/renew-notification-token/success/response-body.adoc[]
+include::{snippets}/renew-notification-token/success/response-fields.adoc[]
+
+===== 응답 실패 (400)
+.존재하지 않는 스터디 분야 ID를 요청한 경우
+include::{snippets}/renew-notification-token/fail/invalid-format/response-body.adoc[]
+include::{snippets}/renew-notification-token/fail/invalid-format/response-fields.adoc[]
+
+=== 멤버 알림 기록 목록 조회
+
+멤버의 알림 기록 목록을 조회하는 API 입니다.
+
+==== GET /api/v1/notification/logs
+
+===== 요청
+include::{snippets}/get-member-notification-logs/success/http-request.adoc[]
+
+===== 헤더
+include::{snippets}/get-member-notification-logs/success/request-headers.adoc[]
+
+===== 요청 변수
+include::{snippets}/get-member-notification-logs/success/query-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-member-notification-logs/success/response-body.adoc[]
+include::{snippets}/get-member-notification-logs/success/response-fields.adoc[]
+
+
+== 통합 API
+
+=== 스터디 홈 화면 조회
+
+스터디 홈 화면을 조회하는 API입니다.
+
+==== GET /api/external/v1/studies/{studyId}
+
+===== 요청
+include::{snippets}/get-study-home-full/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-home-full/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-home-full/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-home-full/success/response-body.adoc[]
+include::{snippets}/get-study-home-full/success/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.스터디가 존재하지 않는 경우
+include::{snippets}/get-study-home-full/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-home-full/fail/study-not-found/response-fields.adoc[]
+
+=== 스터디 멤버 상세 화면 조회
+
+스터디 멤버 상세 화면을 조회하는 API입니다.
+
+==== GET /api/external/v1/studies/{studyId}/members/{memberId}
+
+===== 요청
+include::{snippets}/get-study-member-detail-full/success/http-request.adoc[]
+
+====== 헤더
+include::{snippets}/get-study-member-detail-full/success/request-headers.adoc[]
+
+====== 경로 변수
+include::{snippets}/get-study-member-detail-full/success/path-parameters.adoc[]
+
+===== 응답 성공 (200)
+include::{snippets}/get-study-member-detail-full/success/response-body.adoc[]
+include::{snippets}/get-study-member-detail-full/success/response-fields.adoc[]
+
+===== 응답 실패 (403)
+.해당 스터디에 가입한 멤버가 요청한 것이 아닌 경우
+include::{snippets}/get-study-member-detail-full/fail/is-not-study-member/response-body.adoc[]
+include::{snippets}/get-study-member-detail-full/fail/is-not-study-member/response-fields.adoc[]
+
+===== 응답 실패 (404)
+.스터디가 존재하지 않는 경우
+include::{snippets}/get-study-member-detail-full/fail/study-not-found/response-body.adoc[]
+include::{snippets}/get-study-member-detail-full/fail/study-not-found/response-fields.adoc[]

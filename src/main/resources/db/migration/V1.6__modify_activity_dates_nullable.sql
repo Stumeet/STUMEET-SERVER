@@ -1,0 +1,5 @@
+ALTER TABLE activity
+    MODIFY COLUMN start_date DATETIME NULL;
+
+ALTER TABLE activity
+    MODIFY COLUMN end_date DATETIME NULL;

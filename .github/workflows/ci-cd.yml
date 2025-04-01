@@ -4,7 +4,7 @@ name: CI/CD using github actions & docker
 # event trigger
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
 
 permissions:
   contents: read
@@ -27,10 +27,10 @@ jobs:
       - name: Set environment variables
         run: |
           cd ./src/main/resources
-          touch ./application-secret.properties
           echo "${{ secrets.ENV }}" > ./application-secret.properties
+          mkdir -p ./firebase
+          echo "${{ secrets.FCM_ACCOUNT_SECRET }}" > ./firebase/"${{ secrets.FCM_ACCOUNT_SECRET_FILE_NAME }}"
 
-      # gradle caching - 빌드 시간 향상
       - name: Gradle Caching
         uses: actions/cache@v3
         with:
@@ -41,14 +41,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # docker login
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # build gradle
       - name: Build gradlew
         run: |
           chmod +x gradlew 
@@ -57,11 +55,8 @@ jobs:
           -Djib.from.auth.password=${{ secrets.DOCKER_PASSWORD }} \
           -Dspring.profiles.active=prod
 
-      ## deploy to production
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
-        id: deploy-prod
-        if: contains(github.ref, 'main')
         with:
           host: ${{ secrets.AWS_PUBLIC_IP }}
           username: ${{ secrets.AWS_USER }}
@@ -69,7 +64,5 @@ jobs:
           port: ${{ secrets.AWS_SSH_PORT }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/server
-            sudo docker stop stumeet-server
-            docker container prune -f
             sudo docker-compose up -d --no-deps --force-recreate stumeet-server
             sudo docker image prune -f

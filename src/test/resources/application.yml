@@ -4,9 +4,16 @@ spring:
       on-profile: test
     import: application-secret.properties
   datasource:
-    url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
-    username: sa
-    password:
+    app:
+      jdbc-url: jdbc:h2:mem:testdb;DATABASE_TO_UPPER=false;MODE=MYSQL
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+    batch:
+      jdbc-url: jdbc:h2:mem:batchdb;DATABASE_TO_UPPER=false;MODE=MYSQL
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
   data:
     redis:
       host: localhost
@@ -18,16 +25,27 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    open-in-view: false
+  batch:
+    job:
+      enabled: false
   cloud:
     config:
       server:
-        awss3:
-          region: ${S3_REGION}
-          bucket: ${S3_BUCKET_NAME}
-          endpoint: ${S3_ENDPOINT}
-          credentials:
-            access-key: ${S3_ACCESS_KEY}
-            secret-key: ${S3_SECRET_KEY}
+        aws:
+          s3:
+            region: ${S3_REGION}
+            bucket: ${S3_BUCKET_NAME}
+            endpoint: ${S3_ENDPOINT}
+            credentials:
+              access-key: ${S3_ACCESS_KEY}
+              secret-key: ${S3_SECRET_KEY}
+          sqs:
+            region: ${SQS_REGION}
+            url: ${SQS_URL}
+            credentials:
+              access-key: ${SQS_ACCESS_KEY}
+              secret-key: ${SQS_SECRET_KEY}
 
 jwt:
   issuer: ${JWT_ISSUER}
@@ -40,3 +58,16 @@ oauth:
       url: http://localhost:8089
     kakao:
       url: http://localhost:8089
+
+presigned:
+  url:
+    expired-time: 3600
+
+fcm:
+  secret:
+    path: ${FCM_SECRET_PATH}
+
+discord:
+  webhook:
+    report:
+      url: ${DISCORD_REPORT_WEBHOOK_URL}

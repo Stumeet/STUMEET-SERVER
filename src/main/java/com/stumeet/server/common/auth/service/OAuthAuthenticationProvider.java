@@ -5,12 +5,13 @@ import com.stumeet.server.common.auth.token.StumeetAuthenticationToken;
 import com.stumeet.server.common.client.oauth.OAuthClient;
 import com.stumeet.server.common.client.oauth.model.OAuthUserProfileResponse;
 import com.stumeet.server.common.token.JwtTokenProvider;
-import com.stumeet.server.common.token.service.RefreshTokenService;
+import com.stumeet.server.common.token.service.JwtTokenService;
 import com.stumeet.server.member.application.port.in.MemberOAuthUseCase;
 import com.stumeet.server.member.domain.Member;
+
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -26,11 +27,11 @@ public class OAuthAuthenticationProvider implements AuthenticationProvider {
     private final Map<String, OAuthClient> oAuthClient;
     private final MemberOAuthUseCase memberOAuthUseCase;
     private final JwtTokenProvider jwtTokenProvider;
-    private final RefreshTokenService refreshTokenService;
+    private final JwtTokenService jwtTokenService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        StumeetAuthenticationToken token = (StumeetAuthenticationToken) authentication;
+        StumeetAuthenticationToken token = (StumeetAuthenticationToken)authentication;
         String providerAccessToken = token.getCredentials();
         String provider = token.getProvider();
 
@@ -41,7 +42,7 @@ public class OAuthAuthenticationProvider implements AuthenticationProvider {
 
             String accessToken = jwtTokenProvider.generateAccessToken(loginMember);
             String refreshToken = jwtTokenProvider.generateRefreshToken(member.getId());
-            refreshTokenService.save(accessToken, refreshToken);
+            jwtTokenService.saveNewTokens(accessToken, refreshToken);
 
             return StumeetAuthenticationToken.authenticateOAuth(
                     loginMember.getAuthorities(),

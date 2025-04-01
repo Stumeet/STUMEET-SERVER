@@ -38,4 +38,8 @@ out/
 
 application-secret.properties
 
-src/main/resources/static/docs/index.html
+src/main/resources/static/docs/**
+
+src/main/generated/**
+
+src/main/resources/firebase

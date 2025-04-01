@@ -29,7 +29,7 @@ ext {
 }
 
 dependencies {
-    // jwt 의존성 추가
+    // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
@@ -42,6 +42,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -52,8 +53,10 @@ dependencies {
     implementation 'org.flywaydb:flyway-mysql'
     implementation 'org.flywaydb:flyway-core'
 
+    // s3
     implementation(platform("software.amazon.awssdk:bom:2.21.1"))
     implementation 'software.amazon.awssdk:s3'
+    implementation 'software.amazon.awssdk:sqs'
 
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -68,7 +71,8 @@ dependencies {
     testImplementation 'org.springframework.cloud:spring-cloud-contract-stub-runner'
     testImplementation 'org.testcontainers:localstack'
 
-
+    // fcm
+    implementation 'com.google.firebase:firebase-admin:9.3.0'
 }
 
 dependencyManagement {
@@ -108,9 +112,10 @@ jib {
         tags = [version]
     }
     container {
-        jvmFlags = ["-Xms128m", "-Xmx128m"]
+        jvmFlags = ["-Xms128m", "-Xmx128m", "-Duser.timezone=Asia/Seoul"]
         environment = [
-                'SPRING_PROFILES_ACTIVE': 'prod'
+                'SPRING_PROFILES_ACTIVE': 'prod',
+                'TZ': 'Asia/Seoul'
         ]
     }
     extraDirectories {
